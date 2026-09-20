@@ -635,7 +635,7 @@ body.drawer-open{overflow:hidden}
 
 /* drawer */
 .backdrop{
-  position:fixed;inset:0;z-index:100;
+  position:fixed;inset:0;z-index:1190;
   background:rgba(22,25,39,.34);
   backdrop-filter:blur(4px);
   opacity:0;pointer-events:none;
@@ -644,7 +644,7 @@ body.drawer-open{overflow:hidden}
 .drawer{
   position:fixed;right:0;top:0;bottom:0;
   width:min(520px,94vw);
-  z-index:110;
+  z-index:1200;
   background:#fff;
   transform:translateX(104%);
   transition:.24s;
@@ -656,6 +656,10 @@ body.drawer-open .drawer{transform:translateX(0)}
   padding:22px;
   display:flex;justify-content:space-between;gap:16px;
   border-bottom:1px solid #dbe1e8;
+  position:sticky;
+  top:0;
+  z-index:1;
+  background:#fff;
 }
 .drawer-head h3{
   margin:0;
@@ -6894,13 +6898,13 @@ These portfolio modules use representative or fictionalized examples. They demon
 </div>
 </div>
 <div class="backdrop" id="backdrop"></div>
-<aside class="drawer">
+<aside aria-labelledby="drawerTitle" aria-modal="true" class="drawer" role="dialog">
 <div class="drawer-head">
 <div>
 <h3 id="drawerTitle">Project</h3>
 <p id="drawerSub">Project details</p>
 </div>
-<button class="close" id="closeDrawer"><i class="lni lni-close"></i></button>
+<button aria-label="Close project details and return to portfolio" class="close" id="closeDrawer" type="button"><i aria-hidden="true" class="lni lni-close"></i></button>
 </div>
 <div class="drawer-body">
 <div class="drawer-block"><h4>What it is</h4><p id="drawerWhat"></p></div>
@@ -6910,6 +6914,7 @@ These portfolio modules use representative or fictionalized examples. They demon
 </aside>
 <script>
 const body=document.body;
+let drawerTrigger=null;
 const data={
   taskflow:{
     title:"TaskFlow",
@@ -6962,20 +6967,25 @@ const data={
   }
 };
 
-function openDrawer(key){
+function openDrawer(key,trigger){
   const d=data[key];
   if(!d)return;
+  drawerTrigger=trigger || document.activeElement;
   document.getElementById("drawerTitle").textContent=d.title;
   document.getElementById("drawerSub").textContent=d.sub;
   document.getElementById("drawerWhat").textContent=d.what;
   document.getElementById("drawerDemo").textContent=d.demo;
   document.getElementById("drawerTags").innerHTML=d.tags.map(t=>`<span>${t}</span>`).join("");
   body.classList.add("drawer-open");
+  requestAnimationFrame(()=>document.getElementById("closeDrawer").focus());
 }
-function closeDrawer(){body.classList.remove("drawer-open")}
+function closeDrawer(){
+  body.classList.remove("drawer-open");
+  if(drawerTrigger && typeof drawerTrigger.focus==="function") drawerTrigger.focus();
+}
 
 document.querySelectorAll("[data-project]").forEach(btn=>{
-  btn.addEventListener("click",()=>openDrawer(btn.dataset.project));
+  btn.addEventListener("click",()=>openDrawer(btn.dataset.project,btn));
 });
 document.getElementById("closeDrawer").addEventListener("click",closeDrawer);
 document.getElementById("backdrop").addEventListener("click",closeDrawer);
