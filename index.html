@@ -666,6 +666,22 @@ body.drawer-open .drawer{transform:translateX(0)}
   font-family:"Manrope",sans-serif;
   font-size:26px;
 }
+.drawer-title-row{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+.drawer-title-icon{
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:var(--sky-2);
+  color:var(--navy);
+  font-size:17px;
+}
 .drawer-head p{
   margin:5px 0 0;
   color:var(--muted);
@@ -685,6 +701,20 @@ body.drawer-open .drawer{transform:translateX(0)}
 .drawer-block h4{
   margin:0 0 6px;
   font-family:"Manrope",sans-serif;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.drawer-block h4 i{
+  width:28px;
+  height:28px;
+  flex:0 0 28px;
+  border-radius:8px;
+  display:grid;
+  place-items:center;
+  background:#edf5fb;
+  color:var(--red);
   font-size:14px;
 }
 .drawer-block p{
@@ -6901,15 +6931,15 @@ These portfolio modules use representative or fictionalized examples. They demon
 <aside aria-labelledby="drawerTitle" aria-modal="true" class="drawer" role="dialog">
 <div class="drawer-head">
 <div>
-<h3 id="drawerTitle">Project</h3>
+<div class="drawer-title-row"><span aria-hidden="true" class="drawer-title-icon"><i class="lni lni-files"></i></span><h3 id="drawerTitle">Project</h3></div>
 <p id="drawerSub">Project details</p>
 </div>
 <button aria-label="Close project details and return to portfolio" class="close" id="closeDrawer" type="button"><i aria-hidden="true" class="lni lni-close"></i></button>
 </div>
 <div class="drawer-body">
-<div class="drawer-block"><h4>What it is</h4><p id="drawerWhat"></p></div>
-<div class="drawer-block"><h4>What it demonstrates</h4><p id="drawerDemo"></p></div>
-<div class="drawer-block"><h4>Focus areas</h4><div class="tags" id="drawerTags"></div></div>
+<div class="drawer-block"><h4><i aria-hidden="true" class="lni lni-eye"></i> What it is</h4><p id="drawerWhat"></p></div>
+<div class="drawer-block"><h4><i aria-hidden="true" class="lni lni-checkmark-circle"></i> What it demonstrates</h4><p id="drawerDemo"></p></div>
+<div class="drawer-block"><h4><i aria-hidden="true" class="lni lni-target"></i> Focus areas</h4><div class="tags" id="drawerTags"></div></div>
 </div>
 </aside>
 <script>
