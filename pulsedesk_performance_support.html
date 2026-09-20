@@ -1,0 +1,1071 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PulseDesk Support Hub — Performance Support Kit</title>
+<!-- Showcase-locked version: performance support artifact -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+
+<style>
+:root{
+  --navy:#173b7a;
+  --navy-2:#1f4b98;
+  --blue:#3779f2;
+  --blue-2:#4b8df8;
+  --blue-soft:#eaf1ff;
+  --blue-soft-2:#f3f7ff;
+  --ink:#202a3b;
+  --muted:#768196;
+  --line:#e3e9f3;
+  --surface:#ffffff;
+  --bg:#eef3fb;
+  --success:#4aa57a;
+  --warn:#f0b24a;
+  --danger:#e06a78;
+  --shadow:0 16px 40px rgba(34,65,120,.10);
+  --shadow-soft:0 8px 24px rgba(34,65,120,.07);
+  --r-xl:26px;
+  --r-lg:18px;
+  --r-md:14px;
+  --r-sm:10px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Poppins",sans-serif;
+  font-size:16px;
+  background:
+    radial-gradient(circle at 0% 0%,rgba(75,141,248,.16),transparent 28%),
+    linear-gradient(180deg,#f4f7fc 0%,#edf3fb 100%);
+  color:var(--ink);
+}
+button,input{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+
+.app{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:238px minmax(0,1fr);
+  gap:24px;
+  padding:24px;
+}
+
+.sidebar{
+  background:linear-gradient(180deg,var(--navy) 0%,#16346a 100%);
+  color:#fff;
+  border-radius:var(--r-xl);
+  padding:24px 16px 18px;
+  position:sticky;
+  top:24px;
+  height:calc(100vh - 48px);
+  box-shadow:0 20px 55px rgba(24,53,105,.18);
+  overflow:hidden;
+}
+.sidebar:before{
+  content:"";
+  position:absolute;
+  width:180px;height:180px;
+  border-radius:50%;
+  background:rgba(255,255,255,.06);
+  right:-90px;top:-50px;
+}
+.brand{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:2px 8px 22px;
+}
+.brand-mark{
+  width:42px;height:42px;
+  border-radius:13px;
+  background:#fff;
+  color:var(--blue);
+  display:grid;
+  place-items:center;
+  font-size:20px;
+  box-shadow:0 7px 18px rgba(0,0,0,.10);
+}
+.brand h1{
+  font-size:16px;
+  margin:0;
+  font-weight:700;
+  letter-spacing:-.02em;
+}
+.brand span{
+  display:block;
+  color:#bdd0f0;
+  font-size:11.5px;
+  margin-top:2px;
+  font-weight:500;
+}
+.nav{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  margin-top:8px;
+}
+.nav button{
+  border:0;
+  background:transparent;
+  color:#cfdbef;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:11px 12px;
+  border-radius:12px;
+  text-align:left;
+  font-size:14px;
+  font-weight:500;
+  transition:.18s ease;
+}
+.nav button i{
+  width:18px;
+  text-align:center;
+  font-size:19px;
+}
+.nav button:hover{
+  background:rgba(255,255,255,.08);
+  color:#fff;
+}
+.nav button.active{
+  background:#fff;
+  color:var(--navy);
+  font-weight:600;
+  box-shadow:0 8px 20px rgba(7,24,55,.15);
+}
+.sidebar-note{
+  position:absolute;
+  left:16px;right:16px;bottom:18px;
+  padding:13px 14px;
+  border-radius:14px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.10);
+  color:#d3def0;
+  font-size:12px;
+  line-height:1.55;
+}
+
+.main{min-width:0}
+.topbar{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  margin-bottom:18px;
+}
+.search-wrap{
+  flex:1;
+  position:relative;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:var(--shadow-soft);
+}
+.search-wrap input{
+  width:100%;
+  border:1px solid transparent;
+  border-radius:16px;
+  background:#fff;
+  padding:14px 16px 14px 45px;
+  outline:none;
+  color:var(--ink);
+  font-size:14.5px;
+}
+.search-wrap input::placeholder{color:#9aa5b7}
+.search-wrap input:focus{
+  border-color:#b9d0ff;
+  box-shadow:0 0 0 4px rgba(55,121,242,.08);
+}
+.search-wrap i{
+  position:absolute;
+  left:16px;top:14px;
+  color:#8090a9;
+  font-size:19px;
+}
+.user-chip{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  background:#fff;
+  border-radius:16px;
+  padding:8px 10px 8px 8px;
+  box-shadow:var(--shadow-soft);
+}
+.avatar{
+  width:34px;height:34px;
+  border-radius:11px;
+  background:var(--blue-soft);
+  color:var(--blue);
+  display:grid;place-items:center;
+  font-size:16px;
+}
+.user-chip strong{font-size:11px}
+.user-chip span{display:block;color:var(--muted);font-size:9px;margin-top:1px}
+
+.content{
+  max-width:1280px;
+  margin:0 auto;
+}
+.view{display:none}
+.view.active{display:block}
+
+.hero{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);
+  gap:18px;
+  margin-bottom:20px;
+}
+.hero-card{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 72%,#295bb5 100%);
+  color:#fff;
+  border-radius:var(--r-xl);
+  padding:30px;
+  min-height:220px;
+  box-shadow:0 18px 42px rgba(30,70,145,.18);
+}
+.hero-card:after{
+  content:"";
+  position:absolute;
+  width:260px;height:260px;
+  border-radius:50%;
+  right:-100px;bottom:-150px;
+  background:rgba(255,255,255,.08);
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  font-size:11.5px;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#d8e6ff;
+}
+.hero-card h2{
+  margin:10px 0 10px;
+  font-size:34px;
+  line-height:1.15;
+  letter-spacing:-.035em;
+  max-width:700px;
+}
+.hero-card p{
+  margin:0;
+  max-width:720px;
+  color:#dae7fb;
+  font-size:14.5px;
+  line-height:1.7;
+}
+.hero-actions{
+  position:relative;
+  z-index:2;
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+}
+.hero-btn{
+  border:0;
+  background:#fff;
+  color:var(--navy);
+  border-radius:999px;
+  padding:10px 14px;
+  font-size:12.5px;
+  font-weight:600;
+}
+.hero-btn.secondary{
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.18);
+}
+
+.quick-panel{
+  background:#fff;
+  border-radius:var(--r-xl);
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+.panel-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+.panel-title h3{margin:0;font-size:14px}
+.panel-title i{color:var(--blue);font-size:18px}
+.metric{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid #edf1f7;
+  font-size:12.5px;
+}
+.metric:last-child{border-bottom:0}
+.metric strong{
+  color:var(--blue);
+  background:var(--blue-soft);
+  border-radius:999px;
+  padding:4px 8px;
+  font-size:11px;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:18px;
+  margin:26px 0 14px;
+}
+.section-title{
+  margin:0;
+  font-size:24px;
+  letter-spacing:-.025em;
+}
+.section-copy{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.55;
+}
+.section-link{
+  border:0;background:transparent;color:var(--blue);
+  font-size:12px;font-weight:600;
+}
+
+.issue-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:12px;
+}
+.issue-card{
+  background:#fff;
+  border-radius:17px;
+  padding:15px;
+  box-shadow:var(--shadow-soft);
+  transition:.18s ease;
+  cursor:pointer;
+  border:1px solid transparent;
+}
+.issue-card:hover{
+  transform:translateY(-2px);
+  border-color:#cfe0ff;
+  box-shadow:0 14px 30px rgba(34,65,120,.10);
+}
+.issue-icon{
+  width:42px;height:42px;
+  border-radius:13px;
+  display:grid;place-items:center;
+  background:var(--blue-soft);
+  color:var(--blue);
+  margin-bottom:12px;
+  font-size:18px;
+}
+.issue-card h4{
+  margin:0 0 5px;
+  font-size:13.5px;
+  line-height:1.35;
+}
+.issue-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:11.2px;
+  line-height:1.5;
+}
+
+.card{
+  background:#fff;
+  border-radius:var(--r-xl);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.card-head{
+  padding:18px 20px;
+  border-bottom:1px solid #edf1f7;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+}
+.card-head h3{margin:0;font-size:14px}
+.card-body{padding:20px}
+
+.checklist{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.check-item{
+  display:flex;
+  gap:11px;
+  align-items:flex-start;
+  padding:14px;
+  background:var(--blue-soft-2);
+  border-radius:14px;
+  border:1px solid #edf2fb;
+}
+.check-item input{
+  margin-top:3px;
+  width:16px;height:16px;
+  accent-color:var(--blue);
+}
+.check-item strong{display:block;font-size:12.5px;margin-bottom:3px}
+.check-item span{font-size:9.7px;color:var(--muted);line-height:1.5}
+
+.decision-shell{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:16px;
+}
+.decision-options{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.option{
+  border:1px solid transparent;
+  background:#fff;
+  border-radius:14px;
+  padding:12px 14px;
+  text-align:left;
+  font-size:12px;
+  font-weight:500;
+  color:var(--ink);
+  box-shadow:var(--shadow-soft);
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.option i{color:var(--blue);font-size:16px}
+.option:hover,.option.active{
+  background:var(--blue-soft);
+  border-color:#cfe0ff;
+  color:var(--navy);
+}
+.decision-result{
+  min-height:250px;
+  background:#fff;
+  border-radius:var(--r-xl);
+  padding:22px;
+  box-shadow:var(--shadow);
+}
+.result-tag{
+  display:inline-flex;
+  padding:5px 8px;
+  border-radius:999px;
+  background:var(--blue-soft);
+  color:var(--blue);
+  font-size:9px;
+  font-weight:600;
+}
+.decision-result h3{margin:10px 0 7px;font-size:17px}
+.decision-result p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
+.next-actions{display:grid;gap:7px;margin-top:15px}
+.next-actions div{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  background:var(--blue-soft-2);
+  padding:10px 11px;
+  border-radius:11px;
+  font-size:11.2px;
+  color:#4f5c70;
+}
+.next-actions div:before{
+  content:"";
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--blue);
+  margin-top:4px;
+  flex:0 0 6px;
+}
+
+.accordion{
+  display:grid;
+  gap:10px;
+}
+.accordion-item{
+  background:#fff;
+  border-radius:15px;
+  box-shadow:var(--shadow-soft);
+  overflow:hidden;
+}
+.acc-toggle{
+  width:100%;
+  border:0;
+  background:#fff;
+  padding:14px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  text-align:left;
+  color:var(--ink);
+}
+.acc-toggle .left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.acc-toggle .mini-icon{
+  width:34px;height:34px;
+  border-radius:11px;
+  display:grid;place-items:center;
+  background:var(--blue-soft);
+  color:var(--blue);
+}
+.acc-toggle strong{font-size:11px}
+.acc-toggle .chev{color:#94a0b4;font-size:13px}
+.acc-panel{
+  display:none;
+  padding:0 16px 16px 60px;
+}
+.accordion-item.open .acc-panel{display:block}
+.acc-panel p{
+  margin:0 0 10px;
+  color:var(--muted);
+  font-size:11.2px;
+  line-height:1.55;
+}
+.fix-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+.fix{
+  background:var(--blue-soft-2);
+  border-radius:11px;
+  padding:11px;
+}
+.fix strong{display:block;font-size:11.2px;margin-bottom:3px}
+.fix span{font-size:10.8px;color:var(--muted);line-height:1.5}
+
+.escalation-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.level{
+  background:#fff;
+  border-radius:17px;
+  padding:17px;
+  box-shadow:var(--shadow-soft);
+  border-top:4px solid transparent;
+}
+.level.good{border-color:var(--success)}
+.level.warn{border-color:var(--warn)}
+.level.danger{border-color:var(--danger)}
+.level h3{font-size:13.5px;margin:0 0 5px}
+.level p{font-size:11px;color:var(--muted);line-height:1.5;margin:0 0 9px}
+.level ul{margin:0;padding-left:16px;color:#536073;font-size:11px;line-height:1.65}
+
+.ref-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.ref-card{
+  background:#fff;
+  border-radius:17px;
+  padding:18px;
+  box-shadow:var(--shadow-soft);
+}
+.ref-card h3{font-size:13.5px;margin:0 0 12px}
+.ref-card dl{
+  margin:0;
+  display:grid;
+  grid-template-columns:130px 1fr;
+  gap:8px;
+}
+.ref-card dt{font-size:11px;color:#8a95a7}
+.ref-card dd{margin:0;font-size:11.2px;font-weight:500;color:#435066}
+
+.hidden-search{display:none!important}
+
+@media(max-width:1050px){
+  .app{grid-template-columns:1fr;padding:16px}
+  .sidebar{
+    position:static;height:auto;
+    border-radius:20px;
+  }
+  .sidebar-note{display:none}
+  .nav{display:grid;grid-template-columns:repeat(3,1fr)}
+  .hero,.decision-shell{grid-template-columns:1fr}
+  .issue-grid{grid-template-columns:repeat(2,1fr)}
+  .escalation-grid{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .nav{grid-template-columns:1fr 1fr}
+  .issue-grid,.checklist,.fix-grid,.ref-grid{grid-template-columns:1fr}
+  .user-chip{display:none}
+  .hero-card h2{font-size:26px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark"><i class="lni lni-support"></i></div>
+      <div>
+        <h1>PulseDesk</h1>
+        <span>Support Hub</span>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <button class="active" data-view="home"><i class="lni lni-home"></i>Overview</button>
+      <button data-view="triage"><i class="lni lni-check-box"></i>Quick Triage</button>
+      <button data-view="decision"><i class="lni lni-network"></i>Decision Tree</button>
+      <button data-view="troubleshooting"><i class="lni lni-cog"></i>Troubleshooting</button>
+      <button data-view="escalation"><i class="lni lni-warning"></i>Escalation</button>
+      <button data-view="reference"><i class="lni lni-book"></i>Quick Reference</button>
+    </nav>
+
+    <div class="sidebar-note">
+      <strong style="display:block;color:#fff;margin-bottom:3px">Performance support</strong>
+      Fast help for employees who already know the process and need guidance while working.
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="search-wrap">
+        <i class="lni lni-search-alt"></i>
+        <input id="searchBox" type="search" placeholder="Search issues, symptoms, or fixes...">
+      </div>
+      <div class="user-chip">
+        <div class="avatar"><i class="lni lni-user"></i></div>
+        <div>
+          <strong>Support Agent</strong>
+          <span>Frontline Support</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <section id="home" class="view active">
+        <div class="hero">
+          <div class="hero-card">
+            <div class="eyebrow"><i class="lni lni-bolt-alt"></i>Just-in-time support</div>
+            <h2>Resolve common incidents faster.</h2>
+            <p>
+              Use this hub when you already know the support process but need fast guidance while working.
+              Start with triage, identify the issue, try the recommended fix, and escalate only when needed.
+            </p>
+            <div class="hero-actions">
+              <button class="hero-btn" onclick="showView('triage')"><i class="lni lni-check-box"></i>&nbsp; Start triage</button>
+              <button class="hero-btn secondary" onclick="showView('decision')"><i class="lni lni-network"></i>&nbsp; Decision tree</button>
+            </div>
+          </div>
+
+          <aside class="quick-panel">
+            <div class="panel-title">
+              <h3>Use this kit when…</h3>
+              <i class="lni lni-question-circle"></i>
+            </div>
+            <div class="metric"><span>You need a fast reminder</span><strong>Yes</strong></div>
+            <div class="metric"><span>The issue is common/repeatable</span><strong>Yes</strong></div>
+            <div class="metric"><span>You need formal training</span><strong>No</strong></div>
+            <div class="metric"><span>You need to decide next action</span><strong>Yes</strong></div>
+          </aside>
+        </div>
+
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Common issue types</h2>
+            <p class="section-copy">Choose the issue that best matches what the user is experiencing.</p>
+          </div>
+          <button class="section-link" onclick="showView('troubleshooting')">View all guides</button>
+        </div>
+
+        <div class="issue-grid">
+          <article class="issue-card search-item" data-target="troubleshooting" data-guide="login" data-keywords="login access password sign in authentication">
+            <div class="issue-icon"><i class="lni lni-lock-alt"></i></div>
+            <h4>Login / Access</h4>
+            <p>Cannot sign in, reset password, session blocked, or account access failure.</p>
+          </article>
+          <article class="issue-card search-item" data-target="troubleshooting" data-guide="slow" data-keywords="slow performance lag latency loading timeout">
+            <div class="issue-icon"><i class="lni lni-timer"></i></div>
+            <h4>Slow Performance</h4>
+            <p>Pages load slowly, actions lag, or the app becomes intermittently unresponsive.</p>
+          </article>
+          <article class="issue-card search-item" data-target="troubleshooting" data-guide="sync" data-keywords="sync data failed update refresh integration">
+            <div class="issue-icon"><i class="lni lni-reload"></i></div>
+            <h4>Failed Data Sync</h4>
+            <p>Records do not update, integrations fail, or new data does not appear.</p>
+          </article>
+          <article class="issue-card search-item" data-target="troubleshooting" data-guide="display" data-keywords="browser display layout cache rendering screen">
+            <div class="issue-icon"><i class="lni lni-display"></i></div>
+            <h4>Browser / Display</h4>
+            <p>Layout is broken, controls are missing, or the page displays incorrectly.</p>
+          </article>
+          <article class="issue-card search-item" data-target="troubleshooting" data-guide="permission" data-keywords="permission denied role access rights authorization">
+            <div class="issue-icon"><i class="lni lni-shield"></i></div>
+            <h4>Permission Error</h4>
+            <p>User can sign in but cannot open, edit, or complete a required action.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="triage" class="view">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Quick Triage Checklist</h2>
+            <p class="section-copy">Rule out common causes before deeper troubleshooting or escalation.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3><i class="lni lni-check-box" style="color:var(--blue);margin-right:8px"></i>Before you troubleshoot</h3>
+            <span style="font-size:11.5px;color:#8791a2">Target: under 2 minutes</span>
+          </div>
+          <div class="card-body checklist">
+            <label class="check-item">
+              <input type="checkbox">
+              <span><strong>Confirm the exact symptom</strong><span>Ask what the user expected, what happened, and whether an error message appeared.</span></span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox">
+              <span><strong>Check whether the issue is isolated</strong><span>Determine whether it affects one user, one browser, one account, or multiple users.</span></span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox">
+              <span><strong>Reproduce the issue</strong><span>If possible, repeat the action using the same account, browser, or workflow.</span></span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox">
+              <span><strong>Check service status</strong><span>Confirm whether a known outage or maintenance window is already active.</span></span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox">
+              <span><strong>Capture evidence</strong><span>Record error text, timestamp, affected record, browser, and screenshots before major changes.</span></span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox">
+              <span><strong>Identify urgency and impact</strong><span>Clarify whether this blocks one task, one team, or a business-critical workflow.</span></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section id="decision" class="view">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Incident Decision Tree</h2>
+            <p class="section-copy">Start with the symptom. The kit suggests the safest next action.</p>
+          </div>
+        </div>
+
+        <div class="decision-shell">
+          <div class="decision-options">
+            <button class="option" data-result="login"><i class="lni lni-lock-alt"></i>User cannot sign in</button>
+            <button class="option" data-result="slow"><i class="lni lni-timer"></i>Application is unusually slow</button>
+            <button class="option" data-result="sync"><i class="lni lni-reload"></i>Data is not updating</button>
+            <button class="option" data-result="display"><i class="lni lni-display"></i>Page looks broken or incomplete</button>
+            <button class="option" data-result="permission"><i class="lni lni-shield"></i>User sees access/permission error</button>
+          </div>
+
+          <div class="decision-result" id="decisionResult">
+            <span class="result-tag">Start here</span>
+            <h3>Select the closest symptom</h3>
+            <p>The recommended checks and escalation path will appear here.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="troubleshooting" class="view">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Troubleshooting Guides</h2>
+            <p class="section-copy">Open only the issue you need. Each guide prioritizes the fastest safe checks first.</p>
+          </div>
+        </div>
+
+        <div class="accordion">
+          <article class="accordion-item search-item" data-guide="login" data-keywords="login access password authentication sign in">
+            <button class="acc-toggle">
+              <span class="left"><span class="mini-icon"><i class="lni lni-lock-alt"></i></span><strong>Login / Access Issues</strong></span>
+              <i class="lni lni-chevron-down chev"></i>
+            </button>
+            <div class="acc-panel">
+              <p><strong>Typical symptoms:</strong> invalid login, repeated authentication prompt, locked account, or password reset without restored access.</p>
+              <div class="fix-grid">
+                <div class="fix"><strong>1. Confirm credentials</strong><span>Verify username/email and rule out saved stale credentials.</span></div>
+                <div class="fix"><strong>2. Check account state</strong><span>Confirm the account is active, not locked, and not pending activation.</span></div>
+                <div class="fix"><strong>3. Retry private session</strong><span>Use an incognito/private window to rule out stale cookies.</span></div>
+                <div class="fix"><strong>4. Check identity provider</strong><span>If SSO is used, confirm the user is assigned correctly.</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="accordion-item search-item" data-guide="slow" data-keywords="slow lag latency loading performance timeout">
+            <button class="acc-toggle">
+              <span class="left"><span class="mini-icon"><i class="lni lni-timer"></i></span><strong>Slow Performance</strong></span>
+              <i class="lni lni-chevron-down chev"></i>
+            </button>
+            <div class="acc-panel">
+              <p><strong>Typical symptoms:</strong> delayed page loads, spinning indicators, timeouts, or unusually slow save/search actions.</p>
+              <div class="fix-grid">
+                <div class="fix"><strong>1. Check scope</strong><span>Determine whether the issue affects one user, one page, or the entire application.</span></div>
+                <div class="fix"><strong>2. Check network</strong><span>Confirm the user has a stable connection and no active VPN/proxy issue.</span></div>
+                <div class="fix"><strong>3. Compare browsers</strong><span>Try a supported alternate browser to isolate local browser impact.</span></div>
+                <div class="fix"><strong>4. Check service status</strong><span>Review known degradation or active incidents before escalating.</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="accordion-item search-item" data-guide="sync" data-keywords="data sync failed integration update refresh">
+            <button class="acc-toggle">
+              <span class="left"><span class="mini-icon"><i class="lni lni-reload"></i></span><strong>Failed Data Sync</strong></span>
+              <i class="lni lni-chevron-down chev"></i>
+            </button>
+            <div class="acc-panel">
+              <p><strong>Typical symptoms:</strong> records remain outdated, imports appear incomplete, or connected-system changes do not arrive.</p>
+              <div class="fix-grid">
+                <div class="fix"><strong>1. Confirm sync window</strong><span>Check whether the integration is real-time or scheduled.</span></div>
+                <div class="fix"><strong>2. Verify source data</strong><span>Confirm the source record was saved successfully and has required fields.</span></div>
+                <div class="fix"><strong>3. Check integration status</strong><span>Review error logs, failed jobs, or health indicators if available.</span></div>
+                <div class="fix"><strong>4. Avoid duplicate retries</strong><span>Do not repeatedly resubmit if duplicate records could be created.</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="accordion-item search-item" data-guide="display" data-keywords="browser display layout cache rendering screen missing controls">
+            <button class="acc-toggle">
+              <span class="left"><span class="mini-icon"><i class="lni lni-display"></i></span><strong>Browser / Display Issues</strong></span>
+              <i class="lni lni-chevron-down chev"></i>
+            </button>
+            <div class="acc-panel">
+              <p><strong>Typical symptoms:</strong> missing buttons, overlapping text, blank panels, or controls in the wrong position.</p>
+              <div class="fix-grid">
+                <div class="fix"><strong>1. Refresh safely</strong><span>Reload after confirming no unsaved work will be lost.</span></div>
+                <div class="fix"><strong>2. Clear local issue</strong><span>Try private browsing or clear site-specific cache if permitted.</span></div>
+                <div class="fix"><strong>3. Confirm support</strong><span>Check whether the browser/version is officially supported.</span></div>
+                <div class="fix"><strong>4. Compare device</strong><span>Test another supported browser or device to confirm whether the issue is local.</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="accordion-item search-item" data-guide="permission" data-keywords="permission denied access role authorization rights">
+            <button class="acc-toggle">
+              <span class="left"><span class="mini-icon"><i class="lni lni-shield"></i></span><strong>Permission Errors</strong></span>
+              <i class="lni lni-chevron-down chev"></i>
+            </button>
+            <div class="acc-panel">
+              <p><strong>Typical symptoms:</strong> user can sign in but cannot access a page, edit a record, run an action, or view required data.</p>
+              <div class="fix-grid">
+                <div class="fix"><strong>1. Identify required action</strong><span>Confirm exactly what page, record, or operation is blocked.</span></div>
+                <div class="fix"><strong>2. Check assigned role</strong><span>Compare the user’s role with a known user who can complete the task.</span></div>
+                <div class="fix"><strong>3. Confirm recent changes</strong><span>Check whether role, team, or account permissions recently changed.</span></div>
+                <div class="fix"><strong>4. Escalate access changes</strong><span>Do not grant elevated access unless your role authorizes it.</span></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="escalation" class="view">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Escalation Guide</h2>
+            <p class="section-copy">Stop troubleshooting when impact or risk exceeds frontline support boundaries.</p>
+          </div>
+        </div>
+
+        <div class="escalation-grid">
+          <article class="level good">
+            <h3>Continue troubleshooting</h3>
+            <p>Stay with the issue when impact is limited and the checks are low-risk.</p>
+            <ul>
+              <li>Single user affected</li>
+              <li>Known/common symptom</li>
+              <li>No data-loss risk</li>
+              <li>Safe reversible checks available</li>
+            </ul>
+          </article>
+          <article class="level warn">
+            <h3>Prepare escalation</h3>
+            <p>Gather evidence and hand off when the issue persists after supported checks.</p>
+            <ul>
+              <li>Multiple users affected</li>
+              <li>Repeated failure after known fixes</li>
+              <li>Integration or permission change needed</li>
+              <li>Root cause remains unclear</li>
+            </ul>
+          </article>
+          <article class="level danger">
+            <h3>Escalate immediately</h3>
+            <p>Do not continue experimentation when the issue could create wider risk.</p>
+            <ul>
+              <li>Possible security incident</li>
+              <li>Data corruption or loss</li>
+              <li>Business-critical outage</li>
+              <li>Production-wide access failure</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="reference" class="view">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Quick Reference</h2>
+            <p class="section-copy">Common support information in one place for fast retrieval during an incident.</p>
+          </div>
+        </div>
+
+        <div class="ref-grid">
+          <article class="ref-card">
+            <h3><i class="lni lni-clipboard" style="color:var(--blue);margin-right:7px"></i>Capture before escalation</h3>
+            <dl>
+              <dt>User / account</dt><dd>Name, email, role</dd>
+              <dt>Timestamp</dt><dd>When the issue occurred</dd>
+              <dt>Environment</dt><dd>Browser, device, network</dd>
+              <dt>Exact symptom</dt><dd>Error text or observable behavior</dd>
+              <dt>Reproduction</dt><dd>Steps attempted</dd>
+              <dt>Evidence</dt><dd>Screenshot or relevant record ID</dd>
+            </dl>
+          </article>
+          <article class="ref-card">
+            <h3><i class="lni lni-warning" style="color:var(--blue);margin-right:7px"></i>Impact language</h3>
+            <dl>
+              <dt>Low</dt><dd>One user, workaround available</dd>
+              <dt>Medium</dt><dd>Several users or important workflow slowed</dd>
+              <dt>High</dt><dd>Core workflow blocked, no practical workaround</dd>
+              <dt>Critical</dt><dd>Security, widespread outage, or data risk</dd>
+            </dl>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+const navButtons=[...document.querySelectorAll('.nav button')];
+const views=[...document.querySelectorAll('.view')];
+
+function showView(id){
+  views.forEach(v=>v.classList.toggle('active',v.id===id));
+  navButtons.forEach(b=>b.classList.toggle('active',b.dataset.view===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navButtons.forEach(btn=>btn.addEventListener('click',()=>showView(btn.dataset.view)));
+document.querySelectorAll('.issue-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    showView(card.dataset.target);
+    const guide=document.querySelector(`.accordion-item[data-guide="${card.dataset.guide}"]`);
+    if(guide){
+      document.querySelectorAll('.accordion-item').forEach(item=>item.classList.remove('open'));
+      document.querySelectorAll('.acc-toggle .chev').forEach(icon=>{
+        icon.className='lni lni-chevron-down chev';
+      });
+      guide.classList.add('open');
+      const icon=guide.querySelector('.chev');
+      if(icon) icon.className='lni lni-chevron-up chev';
+      setTimeout(()=>guide.scrollIntoView({behavior:'smooth',block:'center'}),180);
+    }
+  });
+});
+document.querySelectorAll('.acc-toggle').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const item=btn.closest('.accordion-item');
+    item.classList.toggle('open');
+    const icon=btn.querySelector('.chev');
+    icon.className=item.classList.contains('open')?'lni lni-chevron-up chev':'lni lni-chevron-down chev';
+  });
+});
+
+const results={
+  login:{
+    tag:'Login / Access',
+    title:'Check account state before resetting again',
+    text:'If the user cannot sign in, first determine whether the problem is credentials, account state, local session data, or SSO assignment.',
+    actions:[
+      'Verify username/email and account activation.',
+      'Try a private browser session.',
+      'Check account lock or disable status.',
+      'If SSO is used, confirm identity-provider assignment.'
+    ]
+  },
+  slow:{
+    tag:'Performance',
+    title:'Determine whether the slowdown is local or systemic',
+    text:'The fastest decision is to identify scope. A single-user issue follows a different path from an application-wide slowdown.',
+    actions:[
+      'Check whether other users are affected.',
+      'Confirm network or VPN conditions.',
+      'Try another supported browser.',
+      'Check service-status information before escalating.'
+    ]
+  },
+  sync:{
+    tag:'Data Sync',
+    title:'Confirm the sync should already have completed',
+    text:'A delayed record is not always a failed sync. Check the expected sync schedule and integration status before retrying.',
+    actions:[
+      'Confirm the expected sync interval.',
+      'Verify source data was saved successfully.',
+      'Review integration status or error log.',
+      'Avoid repeated submissions that may create duplicates.'
+    ]
+  },
+  display:{
+    tag:'Browser / Display',
+    title:'Isolate the local browser condition first',
+    text:'Display problems are often browser-specific. Use low-risk checks before treating the issue as a product defect.',
+    actions:[
+      'Refresh after confirming there is no unsaved work.',
+      'Try a private browser window.',
+      'Confirm browser/version support.',
+      'Compare behavior in another supported browser.'
+    ]
+  },
+  permission:{
+    tag:'Permissions',
+    title:'Verify role and authorization before changing access',
+    text:'A permission error may be expected behavior. Confirm what the user needs to do and compare their role with the required access model.',
+    actions:[
+      'Identify the blocked page or action.',
+      'Confirm the user’s assigned role.',
+      'Check recent role or team changes.',
+      'Escalate permission changes to an authorized owner.'
+    ]
+  }
+};
+document.querySelectorAll('.option').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.option').forEach(o=>o.classList.remove('active'));
+    btn.classList.add('active');
+    const r=results[btn.dataset.result];
+    document.getElementById('decisionResult').innerHTML=`
+      <span class="result-tag">${r.tag}</span>
+      <h3>${r.title}</h3>
+      <p>${r.text}</p>
+      <div class="next-actions">${r.actions.map(a=>`<div>${a}</div>`).join('')}</div>
+    `;
+  });
+});
+const searchBox=document.getElementById('searchBox');
+searchBox.addEventListener('input',()=>{
+  const q=searchBox.value.trim().toLowerCase();
+  document.querySelectorAll('.search-item').forEach(el=>{
+    if(!q){el.classList.remove('hidden-search');return;}
+    const text=(el.innerText+' '+(el.dataset.keywords||'')).toLowerCase();
+    el.classList.toggle('hidden-search',!text.includes(q));
+  });
+});
+</script>
+</body>
+</html>

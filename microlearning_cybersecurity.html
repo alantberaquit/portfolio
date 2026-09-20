@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spot the Risk Before You Click — Cybersecurity Microlearning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f141b;
+  --panel:#151c25;
+  --panel2:#1a2330;
+  --card:#202b38;
+  --line:#2b3847;
+  --text:#eef4f8;
+  --muted:#9dadba;
+  --cyan:#4fd1c5;
+  --cyan2:#81e6d9;
+  --lime:#a3e635;
+  --amber:#f5b942;
+  --red:#ef6b6b;
+  --green:#46c28d;
+  --soft:#24303e;
+  --shadow:0 18px 44px rgba(0,0,0,.24);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}
+button{font:inherit}
+body{min-height:100vh}
+.app{min-height:100vh;display:grid;grid-template-rows:auto 1fr auto}
+.top{
+  position:sticky;top:0;z-index:20;background:rgba(15,20,27,.96);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px
+}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.logo{
+  width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,var(--cyan),#2a9d8f);
+  color:#0e171b;display:grid;place-items:center;font:700 17px "IBM Plex Mono",monospace
+}
+.brand strong{display:block;font-size:13px}
+.brand span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.pwrap{display:flex;align-items:center;gap:10px}
+.track{width:190px;height:7px;background:#202a36;border-radius:99px;overflow:hidden}
+.track span{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--lime));border-radius:99px;transition:width .2s ease}
+.counter{font-size:12px;color:var(--muted);font-weight:700;white-space:nowrap}
+.stage{width:min(1180px,calc(100% - 30px));margin:24px auto}
+.slide{display:none}.slide.active{display:block;animation:fade .2s ease}
+@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+.deck{
+  min-height:650px;background:linear-gradient(180deg,var(--panel),#121922);
+  border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);padding:38px;
+  display:grid;align-content:center;overflow:hidden;position:relative
+}
+.deck.top{align-content:start}
+.kicker{
+  font:600 11px "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);
+  margin-bottom:13px
+}
+h1,h2,h3{margin:0;color:var(--text)}
+h1{font-size:clamp(42px,5.5vw,72px);line-height:1;letter-spacing:-.04em;max-width:900px}
+h2{font-size:clamp(30px,4vw,48px);line-height:1.08;letter-spacing:-.025em}
+h3{font-size:19px;line-height:1.25}
+.lead{font-size:17px;line-height:1.7;color:var(--muted);max-width:860px;margin:17px 0 0}
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);gap:30px;align-items:center}
+.console{
+  background:#0b1016;border:1px solid #273443;border-radius:20px;padding:18px;min-height:330px;
+  font-family:"IBM Plex Mono",monospace
+}
+.console-head{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #26313d;padding-bottom:11px;margin-bottom:12px}
+.console-head span{font-size:10px;color:#71808d}
+.dots{display:flex;gap:6px}.dots i{width:8px;height:8px;border-radius:50%;display:block;background:#33414f}
+.log{font-size:12px;line-height:1.8;color:#b7c4cf}
+.log .ok{color:var(--green)}.log .warn{color:var(--amber)}.log .risk{color:var(--red)}.log .accent{color:var(--cyan2)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{padding:7px 9px;border-radius:999px;background:#202b38;border:1px solid #2e3b49;color:#b9c6d0;font-size:11px;font-weight:700}
+.objectives{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:24px}
+.obj{border:1px solid var(--line);background:var(--card);border-radius:17px;padding:17px}
+.obj .num{font:600 11px "IBM Plex Mono",monospace;color:var(--cyan)}
+.obj h3{font-size:16px;margin-top:8px}.obj p{font-size:12px;line-height:1.55;color:var(--muted);margin:6px 0 0}
+.signalgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:24px}
+.signal{border:1px solid var(--line);background:var(--card);border-radius:17px;padding:17px}
+.signal .tag{font:600 10px "IBM Plex Mono",monospace;color:var(--cyan);text-transform:uppercase;letter-spacing:.08em}
+.signal h3{font-size:17px;margin-top:7px}.signal p{font-size:12.5px;color:var(--muted);line-height:1.6;margin:6px 0 0}
+.signal code{font-family:"IBM Plex Mono",monospace;color:#d4f7f1}
+.inbox{
+  margin-top:22px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#10171f;
+  display:grid;grid-template-columns:300px minmax(0,1fr)
+}
+.mail-list{border-right:1px solid var(--line);background:#121922}
+.mailitem{padding:14px;border-bottom:1px solid #22303d}
+.mailitem.active{background:#1a2732;border-left:3px solid var(--cyan)}
+.mailitem strong{display:block;font-size:12px}.mailitem span{display:block;font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4}
+.mailview{padding:20px}
+.mailmeta{font-size:11px;color:var(--muted);line-height:1.6}
+.subject{font-size:20px;font-weight:800;margin:7px 0 14px}
+.mailbody{font-size:13px;line-height:1.7;color:#c5d0d8}
+.fake-link{
+  margin-top:14px;padding:11px 13px;border:1px solid #3a4a58;border-radius:10px;background:#16212b;
+  font:500 11px "IBM Plex Mono",monospace;color:#8cc6f0;overflow-wrap:anywhere
+}
+.redflags{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}
+.flag{background:#18222d;border:1px solid var(--line);border-radius:13px;padding:12px}
+.flag strong{display:block;font-size:12px;color:var(--amber)}.flag span{display:block;font-size:11px;line-height:1.5;color:var(--muted);margin-top:4px}
+.practice{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;margin-top:22px}
+.prompt{border:1px solid var(--line);background:var(--card);border-radius:17px;padding:18px}
+.prompt p{font-size:13px;line-height:1.65;color:#c6d2db}
+.actions{display:grid;gap:9px;margin-top:14px}
+.choice{
+  border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:12px;padding:12px 13px;text-align:left;cursor:pointer
+}
+.choice:hover{border-color:#466071;background:#1d2a35}
+.choice.correct{border-color:#318c6c;background:#173128}.choice.wrong{border-color:#aa4d4d;background:#351d20}
+.feedback{display:none;margin-top:11px;border-radius:11px;padding:11px 12px;font-size:12px;line-height:1.55}
+.feedback.show{display:block}.feedback.good{background:#173128;color:#bcebd8}.feedback.bad{background:#351d20;color:#f5c2c2}
+.sidecard{border:1px solid var(--line);background:#111820;border-radius:17px;padding:17px;height:max-content}
+.sidecard h3{font-size:15px}.sidecard ul{padding-left:18px;margin:10px 0 0;color:var(--muted);font-size:12px;line-height:1.75}
+.assess-layout{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:20px;margin-top:22px}
+.qpanel{border:1px solid var(--line);background:var(--card);border-radius:18px;padding:19px}
+.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.qnum,.qcat{font:600 10px "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.07em}
+.qnum{color:var(--cyan)}.qcat{color:var(--muted)}
+.qtext{font-size:18px;line-height:1.5;font-weight:800;margin:10px 0 14px}
+.options{display:grid;gap:9px}
+.option{
+  width:100%;text-align:left;border:1px solid var(--line);background:#17212b;color:var(--text);
+  border-radius:12px;padding:12px 13px;display:flex;gap:10px;align-items:flex-start;cursor:pointer
+}
+.option:hover{border-color:#466071}.option.selected{border-color:var(--cyan);background:#183039}
+.letter{width:28px;height:28px;border-radius:8px;background:#24313d;display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--cyan2);flex:0 0 auto}
+.opttext{font-size:12.5px;line-height:1.5}
+.aside{border:1px solid var(--line);background:#111820;border-radius:18px;padding:16px;height:max-content}
+.aside strong{font-size:12px}.aside p{font-size:11px;line-height:1.5;color:var(--muted)}
+.qdots{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:12px}
+.qdot{height:33px;border-radius:8px;border:1px solid var(--line);background:#17212b;color:var(--muted);font-size:10px;font-weight:800}
+.qdot.answered{background:#15323a;color:var(--cyan2);border-color:#2f7376}.qdot.current{outline:2px solid rgba(79,209,197,.16)}
+.smallbtn{border:1px solid var(--line);background:#18232d;color:var(--text);border-radius:10px;padding:9px 10px;font-size:11px;font-weight:800}
+.smallbtn.primary{background:var(--cyan);border-color:var(--cyan);color:#0c161a}
+.assess-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.result{display:grid;grid-template-columns:165px 1fr;gap:24px;align-items:center;margin-top:24px}
+.score{
+  width:155px;height:155px;border-radius:50%;display:grid;place-items:center;
+  background:conic-gradient(var(--cyan) 0deg,#25323f 0deg);position:relative
+}
+.score:after{content:"";position:absolute;inset:12px;border-radius:50%;background:#111820}
+.score .inner{position:relative;z-index:2;text-align:center}.score strong{display:block;font-size:34px}.score span{font-size:10px;color:var(--muted)}
+.review{display:grid;gap:8px;margin-top:14px}
+.reviewitem{border:1px solid var(--line);border-radius:11px;padding:10px 11px;font-size:11.5px;line-height:1.5}
+.reviewitem.good{background:#173128;border-color:#2e6e59}.reviewitem.bad{background:#351d20;border-color:#7e3e43}
+.footer{
+  position:sticky;bottom:0;z-index:20;background:rgba(15,20,27,.97);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);padding:11px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px
+}
+.navbtn{border:1px solid var(--line);background:#18232d;color:var(--text);border-radius:11px;padding:10px 13px;font-weight:800}
+.navbtn.primary{background:var(--cyan);border-color:var(--cyan);color:#0c161a}
+.navbtn:disabled{opacity:.35;cursor:not-allowed}
+.slidedots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+.sdot{width:7px;height:7px;border-radius:99px;background:#33414d}.sdot.active{width:22px;background:var(--cyan)}
+.note{font-size:10.5px;color:var(--muted);margin-top:14px}
+@media(max-width:900px){
+  .deck{padding:24px;min-height:0}.stage{width:calc(100% - 18px);margin:13px auto}
+  .hero,.practice,.assess-layout,.result{grid-template-columns:1fr}
+  .objectives,.signalgrid{grid-template-columns:1fr 1fr}
+  .inbox{grid-template-columns:1fr}.mail-list{border-right:0;border-bottom:1px solid var(--line)}
+  .mailitem:not(.active){display:none}.redflags{grid-template-columns:1fr}.score{margin:auto}.track{width:110px}
+}
+@media(max-width:560px){
+  .top{padding:10px 12px}.brand span,.track{display:none}.deck{padding:17px;border-radius:18px}
+  h1{font-size:39px}h2{font-size:30px}.lead{font-size:15.5px}.objectives,.signalgrid{grid-template-columns:1fr}
+  .footer{padding:9px 10px}.slidedots{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="app" id="course">
+<header class="top">
+  <div class="brand">
+    <div class="logo">SEC</div>
+    <div><strong>Security Awareness</strong><span>Interactive microlearning</span></div>
+  </div>
+  <div class="pwrap"><div class="track"><span id="progressBar"></span></div><div class="counter" id="counter">1 / 9</div></div>
+</header>
+
+<main class="stage">
+<section class="slide active" data-title="Title">
+  <div class="deck">
+    <div class="hero">
+      <div>
+        <div class="kicker">Cybersecurity awareness microlearning</div>
+        <h1>Spot the Risk Before You Click</h1>
+        <p class="lead">Recognize phishing, credential theft, suspicious links, unsafe attachments, impersonation, and MFA abuse before they become incidents.</p>
+        <div class="chips"><span class="chip">Risk recognition</span><span class="chip">Decision-making</span><span class="chip">20 scenarios</span></div>
+        <div class="note">Portfolio demonstration using fictional companies, accounts, messages, and security events.</div>
+      </div>
+      <div class="console">
+        <div class="console-head"><div class="dots"><i></i><i></i><i></i></div><span>SECURITY EVENT STREAM</span></div>
+        <div class="log">
+          <div><span class="accent">09:14:02</span> inbound email received</div>
+          <div><span class="warn">09:14:05</span> sender domain mismatch</div>
+          <div><span class="risk">09:14:07</span> urgent credential request detected</div>
+          <div><span class="accent">09:14:09</span> shortened link present</div>
+          <div><span class="ok">09:14:12</span> user reported suspicious message</div>
+          <div><span class="ok">09:14:13</span> incident contained</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Objectives">
+  <div class="deck top">
+    <div class="kicker">Learning objectives</div>
+    <h2>By the end of this module, you should be able to:</h2>
+    <div class="objectives">
+      <div class="obj"><div class="num">01</div><h3>Recognize suspicious signals</h3><p>Identify common signs of phishing, impersonation, credential harvesting, and malicious attachments.</p></div>
+      <div class="obj"><div class="num">02</div><h3>Choose a safe response</h3><p>Know when to verify independently, report a message, deny an MFA prompt, or avoid opening a file or link.</p></div>
+      <div class="obj"><div class="num">03</div><h3>Reduce human risk</h3><p>Respond deliberately to urgency, authority, curiosity, fear, and other social-engineering pressure tactics.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Signals">
+  <div class="deck top">
+    <div class="kicker">Discussion · Common warning signals</div>
+    <h2>Attackers often exploit pressure before they exploit technology.</h2>
+    <div class="signalgrid">
+      <div class="signal"><div class="tag">Signal 01</div><h3>Unexpected urgency</h3><p>“Act in 15 minutes,” “your account will be closed,” or “pay this immediately” can be designed to make you react before verifying.</p></div>
+      <div class="signal"><div class="tag">Signal 02</div><h3>Sender mismatch</h3><p>The display name may look familiar while the actual address or domain is slightly different: <code>company-support.net</code> instead of the real company domain.</p></div>
+      <div class="signal"><div class="tag">Signal 03</div><h3>Credential requests</h3><p>Messages that ask you to enter your password, recovery code, or MFA code into an unexpected page deserve immediate scrutiny.</p></div>
+      <div class="signal"><div class="tag">Signal 04</div><h3>Unexpected attachments or links</h3><p>Files and links can carry malware or send you to a fake sign-in page, especially when you were not expecting them.</p></div>
+      <div class="signal"><div class="tag">Signal 05</div><h3>Impersonation</h3><p>An attacker may pretend to be a manager, IT support, a vendor, a bank, or a delivery service to create authority or familiarity.</p></div>
+      <div class="signal"><div class="tag">Signal 06</div><h3>MFA fatigue</h3><p>Repeated login approval prompts you did not initiate may indicate someone already has your password and is trying to get you to approve access.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Worked email">
+  <div class="deck top">
+    <div class="kicker">Worked example · Inbox review</div>
+    <h2>Would you trust this message?</h2>
+    <div class="inbox">
+      <div class="mail-list">
+        <div class="mailitem active"><strong>IT Support</strong><span>Your mailbox will be suspended</span></div>
+        <div class="mailitem"><strong>Payroll</strong><span>Monthly payslip available</span></div>
+        <div class="mailitem"><strong>Project Team</strong><span>Weekly project update</span></div>
+      </div>
+      <div class="mailview">
+        <div class="mailmeta">From: IT Support &lt;security@company-helpdesk.net&gt;<br>To: employee@company.com</div>
+        <div class="subject">URGENT: Mailbox suspension in 30 minutes</div>
+        <div class="mailbody">
+          Your mailbox has exceeded the security limit. Confirm your account immediately to avoid suspension.
+          <div class="fake-link">https://company-login.verify-user-access.com/security</div>
+        </div>
+        <div class="redflags">
+          <div class="flag"><strong>Domain mismatch</strong><span>The sender uses a different domain from the employee's organization.</span></div>
+          <div class="flag"><strong>Urgency</strong><span>The message creates a short deadline to discourage careful verification.</span></div>
+          <div class="flag"><strong>Credential trap</strong><span>The link points to an unrelated domain that could imitate a login page.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Safe response">
+  <div class="deck top">
+    <div class="kicker">Discussion · Safe response</div>
+    <h2>When something feels wrong, verify outside the message.</h2>
+    <div class="signalgrid">
+      <div class="signal"><div class="tag">Step 01</div><h3>Do not use the suspicious link</h3><p>Open the known service or application independently instead of following the message's link.</p></div>
+      <div class="signal"><div class="tag">Step 02</div><h3>Verify through a trusted channel</h3><p>Contact the person or team using a known number, directory entry, or official channel—not the contact information provided in the suspicious message.</p></div>
+      <div class="signal"><div class="tag">Step 03</div><h3>Report it</h3><p>Use the organization’s phishing-reporting or security process so the message can be investigated and others can be protected.</p></div>
+      <div class="signal"><div class="tag">Step 04</div><h3>If you already interacted, act quickly</h3><p>Report what happened immediately. If credentials may have been exposed, follow the organization’s password and incident-response process.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Practice">
+  <div class="deck top">
+    <div class="kicker">Guided practice</div>
+    <h2>You receive an MFA prompt you did not initiate.</h2>
+    <div class="practice">
+      <div class="prompt">
+        <p>Your phone displays three approval requests for a corporate account. You are not signing in and did not request any authentication.</p>
+        <div class="actions" id="practiceChoices">
+          <button class="choice" data-correct="false">Approve one request so the prompts stop.</button>
+          <button class="choice" data-correct="true">Deny the request, do not approve any prompt, and report the unexpected authentication attempt.</button>
+          <button class="choice" data-correct="false">Ignore it and continue working; no other action is needed.</button>
+        </div>
+        <div class="feedback" id="practiceFeedback"></div>
+      </div>
+      <aside class="sidecard">
+        <h3>What the attacker may be trying</h3>
+        <ul>
+          <li>Using a password that has already been compromised</li>
+          <li>Sending repeated prompts until the user approves one</li>
+          <li>Relying on annoyance, confusion, or habit</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Assessment intro">
+  <div class="deck">
+    <div class="kicker">Assessment</div>
+    <h2>20 decisions. One goal: stop the incident before it starts.</h2>
+    <p class="lead">You will review realistic email, chat, login, file-sharing, and account-security situations. Choose the safest response based on the evidence available.</p>
+    <div class="chips"><span class="chip">Pass mark: 80%</span><span class="chip">16 / 20 correct</span><span class="chip">Scenario-based</span></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Assessment">
+  <div class="deck top">
+    <div class="kicker">20-scenario assessment</div>
+    <h2>What would you do?</h2>
+    <div class="assess-layout">
+      <div class="qpanel">
+        <div class="qmeta"><div class="qnum" id="qnum"></div><div class="qcat" id="qcat"></div></div>
+        <div class="qtext" id="qtext"></div>
+        <div class="options" id="options"></div>
+      </div>
+      <aside class="aside">
+        <strong>Assessment progress</strong>
+        <p>Answers are scored when you submit.</p>
+        <div class="qdots" id="qdots"></div>
+        <div class="assess-actions">
+          <button class="smallbtn" id="qprev" type="button">Previous</button>
+          <button class="smallbtn" id="qnext" type="button">Next</button>
+        </div>
+        <button class="smallbtn primary" id="submit" type="button" style="width:100%;margin-top:10px">Submit assessment</button>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Results">
+  <div class="deck top">
+    <div class="kicker">Assessment results</div>
+    <h2 id="resultTitle">Complete the assessment first.</h2>
+    <div class="result">
+      <div class="score" id="scoreCircle"><div class="inner"><strong id="scoreText">—</strong><span>assessment score</span></div></div>
+      <div>
+        <p class="lead" id="resultMsg" style="margin-top:0">Your results will appear here.</p>
+        <div class="review" id="review"></div>
+        <div class="assess-actions"><button class="smallbtn" id="retry" type="button">Retake assessment</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <button class="navbtn" id="prev" type="button">← Previous</button>
+  <div class="slidedots" id="slidedots"></div>
+  <button class="navbtn primary" id="next" type="button">Next →</button>
+</footer>
+</div>
+
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  let current=0,submitted=false;
+  const assessmentIndex=slides.findIndex(s=>s.dataset.title==='Assessment');
+  const resultsIndex=slides.findIndex(s=>s.dataset.title==='Results');
+  const prev=document.getElementById('prev'),next=document.getElementById('next');
+  const progressBar=document.getElementById('progressBar'),counter=document.getElementById('counter'),slidedots=document.getElementById('slidedots');
+
+  function updateSlides(){
+    slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+    prev.disabled=current===0;
+    next.disabled=current===slides.length-1 || (current===assessmentIndex&&!submitted);
+    counter.textContent=(current+1)+' / '+slides.length;
+    progressBar.style.width=((current)/(slides.length-1)*100)+'%';
+    slidedots.innerHTML=slides.map((_,i)=>'<span class="sdot '+(i===current?'active':'')+'"></span>').join('');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  prev.addEventListener('click',()=>{if(current>0){current--;updateSlides();}});
+  next.addEventListener('click',()=>{if(current<slides.length-1){if(current===assessmentIndex&&!submitted)return;current++;updateSlides();}});
+
+  const pChoices=[...document.querySelectorAll('#practiceChoices .choice')];
+  const pFeedback=document.getElementById('practiceFeedback');
+  pChoices.forEach(btn=>btn.addEventListener('click',()=>{
+    const correct=btn.dataset.correct==='true';
+    pChoices.forEach(b=>{b.disabled=true;if(b.dataset.correct==='true')b.classList.add('correct');});
+    if(!correct)btn.classList.add('wrong');
+    pFeedback.className='feedback show '+(correct?'good':'bad');
+    pFeedback.textContent=correct
+      ? 'Correct. An unexpected MFA prompt can indicate an account-compromise attempt. Do not approve it; deny and report the activity.'
+      : 'Not quite. Never approve an MFA request you did not initiate. Deny it and report the unexpected authentication attempt.';
+  }));
+
+  const qs=[
+    {cat:'Phishing email',q:'You receive an email from "IT Support" saying your account will be disabled in 20 minutes unless you sign in through a link. The sender domain is company-helpdesk.net, but your company uses company.com. What is the safest response?',o:['Use the link quickly before the deadline','Do not use the link; verify through the official IT channel and report the email','Reply to the sender asking if the message is real'],a:1,why:'The mismatched domain and urgency are strong phishing indicators. Verify independently and report the message.'},
+    {cat:'MFA',q:'Your phone receives an MFA approval request while you are not logging in. What should you do?',o:['Approve it if the location looks familiar','Deny it and report the unexpected request','Approve it once, then change your password later'],a:1,why:'Unexpected MFA prompts may indicate attempted account access. Do not approve them.'},
+    {cat:'Attachment',q:'A supplier you have never worked with sends an unexpected ZIP file labeled "Updated Invoice". What is the best first action?',o:['Open the ZIP to see whether it looks legitimate','Verify the sender and expected file through a trusted channel before opening it','Forward it to a coworker to see whether they can open it'],a:1,why:'Unexpected compressed attachments can carry malware. Verify before opening or sharing.'},
+    {cat:'Impersonation',q:'A chat message appearing to come from your manager asks you to urgently buy gift cards and send the codes. What should you do?',o:['Follow the request because it came from your manager’s account','Verify the request using a separate trusted channel before taking any action','Ask the manager in the same chat whether they are serious'],a:1,why:'Gift-card requests are a common impersonation tactic. Verification should use an independent trusted channel.'},
+    {cat:'Suspicious link',q:'An email link displays "portal.company.com" but hovering over it reveals a different unrelated domain. What should you do?',o:['Click it because the visible text is correct','Do not click it; navigate to the known portal independently and report the message if appropriate','Copy the link into another browser to test it'],a:1,why:'The real destination matters, not the displayed label. An unrelated destination is a warning sign.'},
+    {cat:'Password request',q:'Someone claiming to be from IT asks for your password to troubleshoot your account. What is the correct response?',o:['Share it if they know your employee ID','Do not share your password; verify the support request through official channels','Send only part of the password'],a:1,why:'Passwords should not be shared. Legitimate support processes should not require your password.'},
+    {cat:'QR phishing',q:'A message asks you to scan a QR code to "restore mailbox access." What is the risk?',o:['QR codes are always safer than links','The QR code can hide a malicious destination, so verify the request before scanning','There is no risk if the email contains a company logo'],a:1,why:'QR codes can obscure malicious URLs and are commonly used in phishing campaigns.'},
+    {cat:'Browser warning',q:'Your browser warns that a login site’s certificate is invalid. The page looks identical to your company login. What should you do?',o:['Proceed because the page looks correct','Stop and access the service through the known official URL or support channel','Enter your username only, but not your password'],a:1,why:'Visual similarity is not enough. Certificate warnings can indicate interception or a fraudulent site.'},
+    {cat:'File sharing',q:'You receive an unexpected shared-document notification from an unfamiliar external account. What should you do?',o:['Open the document because cloud documents are safe','Confirm whether you were expecting the share before opening it','Download the document to inspect it offline'],a:1,why:'Cloud-sharing invitations can be used for phishing. Verify unexpected shares.'},
+    {cat:'Urgent payment',q:'A vendor emails new bank details and asks you to use them for a payment due today. What is the safest action?',o:['Use the new details because the email is from the vendor contact','Verify the change using an established independent process or trusted contact before payment','Reply to the same email asking them to confirm'],a:1,why:'Payment-detail changes are a common business-email-compromise tactic and should be independently verified.'},
+    {cat:'USB device',q:'You find an unknown USB drive in the office parking area. What should you do?',o:['Plug it into a spare computer to identify the owner','Do not connect it; turn it over according to your organization’s security process','Take it home and test it there'],a:1,why:'Unknown removable media may contain malware and should not be connected to organizational or personal devices.'},
+    {cat:'Social engineering',q:'A caller says they are from support and needs your one-time verification code to fix a login issue. What should you do?',o:['Provide the code if the caller sounds professional','Do not provide the code; end the call and contact support through an official channel','Give the code only if the caller knows your name'],a:1,why:'One-time codes are authentication secrets and should not be given to unsolicited callers.'},
+    {cat:'Typosquatting',q:'Which domain deserves the most scrutiny if your real company domain is example.com?',o:['login.example.com','example-security.com','support.example.com'],a:1,why:'example-security.com is a separate domain that may be designed to look related to the real company.'},
+    {cat:'Unexpected login',q:'You receive a legitimate-looking security alert that your account signed in from a country you have never visited. What should you do?',o:['Ignore it if you can still access your account','Use the official account/security portal to review activity and follow the incident process immediately','Click the alert email link without checking the sender'],a:1,why:'Unexpected geographic login activity can indicate compromise. Review it through a known official channel.'},
+    {cat:'Public Wi-Fi',q:'You need to access a sensitive work system while connected to an unknown open Wi-Fi network. What is the safer choice?',o:['Proceed normally because the site uses a password','Use an organization-approved secure connection method or wait for a trusted network','Disable your browser history first'],a:1,why:'Unknown open networks can expose traffic or enable attacks. Use approved secure connectivity.'},
+    {cat:'Password reuse',q:'A personal website you use announces a breach. You reused the same password on a work account. What should you do?',o:['Change only the personal website password','Change the work password immediately according to policy and report the exposure if required','Wait to see whether the work account is attacked'],a:1,why:'Password reuse can turn a third-party breach into a work-account compromise.'},
+    {cat:'Macro document',q:'An unexpected spreadsheet says, "Enable macros to view protected content." What should you do?',o:['Enable macros because the file opened successfully','Do not enable macros; verify the file and sender first','Enable macros only if antivirus is installed'],a:1,why:'Malicious documents often use macros to execute code. Unexpected requests to enable them are risky.'},
+    {cat:'Authority pressure',q:'Someone claiming to be a senior executive tells you secrecy is required and asks you to bypass a normal approval process. What is the best response?',o:['Comply because seniority overrides process','Follow the established verification and approval process despite the urgency or authority claim','Ask a coworker whether they think the executive sounds legitimate'],a:1,why:'Authority and secrecy are social-engineering pressure tactics. Sensitive processes should not be bypassed.'},
+    {cat:'Credential page',q:'After clicking a link, you reach a login page with the right logo but the browser address is accounts-secure-login.co. What should you do?',o:['Enter your credentials because the branding matches','Close the page and navigate to the real service using a known URL','Try a fake password first to test the page'],a:1,why:'Attackers can copy logos and page designs. The actual domain is a critical trust signal.'},
+    {cat:'After interaction',q:'You entered your password into a suspicious page before realizing it may be fake. What is the best next step?',o:['Do nothing if the page returned an error','Report the incident immediately and follow the organization’s credential-reset/security process','Wait until someone contacts you about suspicious activity'],a:1,why:'Fast reporting and credential response can reduce the impact of a phishing compromise.'}
+  ];
+
+  let qi=0,answers=Array(qs.length).fill(null);
+  const qnum=document.getElementById('qnum'),qcat=document.getElementById('qcat'),qtext=document.getElementById('qtext'),options=document.getElementById('options'),qdots=document.getElementById('qdots');
+  const qprev=document.getElementById('qprev'),qnext=document.getElementById('qnext');
+
+  function renderQ(){
+    const item=qs[qi];
+    qnum.textContent='Question '+(qi+1)+' of '+qs.length;
+    qcat.textContent=item.cat;
+    qtext.textContent=item.q;
+    options.innerHTML=item.o.map((o,i)=>'<button type="button" class="option '+(answers[qi]===i?'selected':'')+'" data-i="'+i+'"><span class="letter">'+String.fromCharCode(65+i)+'</span><span class="opttext">'+o+'</span></button>').join('');
+    [...options.querySelectorAll('.option')].forEach(b=>b.addEventListener('click',()=>{answers[qi]=Number(b.dataset.i);renderQ();}));
+    qdots.innerHTML=qs.map((_,i)=>'<button type="button" class="qdot '+(answers[i]!==null?'answered ':'')+(i===qi?'current':'')+'" data-q="'+i+'">'+(i+1)+'</button>').join('');
+    [...qdots.querySelectorAll('.qdot')].forEach(b=>b.addEventListener('click',()=>{qi=Number(b.dataset.q);renderQ();}));
+    qprev.disabled=qi===0;qnext.disabled=qi===qs.length-1;
+  }
+  qprev.addEventListener('click',()=>{if(qi>0){qi--;renderQ();}});
+  qnext.addEventListener('click',()=>{if(qi<qs.length-1){qi++;renderQ();}});
+
+  document.getElementById('submit').addEventListener('click',()=>{
+    if(answers.some(a=>a===null)){alert('Please answer all 20 scenarios before submitting.');return;}
+    let correct=0;qs.forEach((q,i)=>{if(answers[i]===q.a)correct++;});
+    const pct=Math.round(correct/qs.length*100),passed=correct>=16;
+    submitted=true;
+    document.getElementById('scoreText').textContent=pct+'%';
+    document.getElementById('scoreCircle').style.background='conic-gradient('+(passed?'var(--cyan)':'var(--amber)')+' '+(pct*3.6)+'deg,#25323f 0deg)';
+    document.getElementById('resultTitle').textContent=passed?'Passed — strong security judgment.':'Review required before completion.';
+    document.getElementById('resultMsg').textContent=passed
+      ? 'You selected the recommended safe response in at least 16 of 20 scenarios.'
+      : 'Review the missed scenarios, revisit the warning signals and safe-response guidance, then retake the assessment.';
+    document.getElementById('review').innerHTML=qs.map((q,i)=>{
+      const ok=answers[i]===q.a;
+      return '<div class="reviewitem '+(ok?'good':'bad')+'"><strong>Q'+(i+1)+' · '+q.cat+' — '+(ok?'Correct':'Review')+'</strong><div style="margin-top:4px">'+q.why+'</div></div>';
+    }).join('');
+    current=resultsIndex;updateSlides();
+  });
+
+  document.getElementById('retry').addEventListener('click',()=>{
+    answers=Array(qs.length).fill(null);qi=0;submitted=false;renderQ();current=assessmentIndex;updateSlides();
+  });
+
+  renderQ();updateSlides();
+})();
+</script>
+</body>
+</html>

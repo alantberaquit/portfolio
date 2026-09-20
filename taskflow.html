@@ -1,0 +1,4177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TaskFlow — Getting Started Prototype v96</title>
+
+<style>
+:root{
+ --ink:#17252A;--muted:#5D7475;--line:#D6E7E6;--bg:#F7FBFA;--white:#fff;
+ --brand:#272c36;--brand-dark:#272c36;--brand-soft:#DEF2F1;--accent:#272c36;
+ --green:#2F8F67;--green-soft:#EAF7F1;--yellow:#B7791F;--yellow-soft:#FFF8E7;
+ --red:#D95555;--shadow:0 18px 50px rgba(31,25,64,.16)
+}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#FEFFFF 0,#F5FAF9 100%);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);letter-spacing:-.005em}
+button,input,select{font:inherit}button{cursor:pointer}.appbar{height:72px;background:rgba(254,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 25px;gap:22px;position:sticky;top:0;z-index:10}
+.brand{display:flex;align-items:center;gap:10px;font-weight:850;font-size:21px}.logo{width:34px;height:34px;border-radius:14px;background:#272c36;color:#fff;display:grid;place-items:center;font-weight:900}
+.search{flex:1;max-width:640px;position:relative}.search input{width:100%;padding:11px 14px 11px 38px;border:1px solid #d9dbe1;border-radius:10px;background:#fafafb}.search span{position:absolute;left:13px;top:10px;color:#777}
+.actions{margin-left:auto;display:flex;align-items:center;gap:9px}.iconbtn{border:1px solid #dedfe4;background:#fff;border-radius:10px;padding:9px 11px}.avatar{width:35px;height:35px;border-radius:50%;background:#D6ECF5;color:var(--brand-dark);display:grid;place-items:center;font-weight:800}
+.nav{height:50px;background:rgba(254,255,255,.92);padding:0 24px;display:flex;align-items:center;gap:4px;border-bottom:1px solid #BFDCE9}.nav button{border:0;background:transparent;color:#272c36;padding:12px 15px;border-radius:8px}.nav button.active{background:#D6ECF5;color:#272c36;font-weight:750}.nav button:hover{background:#E5F4FA;color:#17252A}
+.shell{max-width:1450px;margin:auto;padding:27px}.pagehead{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px}.pagehead h1{margin:0;font-size:28px}.pagehead p{margin:5px 0 0;color:var(--muted)}
+.primary{border:0;background:var(--brand);color:#fff;padding:10px 14px;border-radius:10px;font-weight:750}.secondary{border:1px solid #d7d9df;background:#fff;padding:10px 14px;border-radius:10px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}.stat{background:#FEFFFF;border:1px solid var(--line);border-radius:16px;padding:19px}.stat b{display:block;font-size:27px}.stat span{color:var(--muted);font-size:13px}.stat i{font-style:normal;font-size:12px;color:var(--green)}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.card{background:#FEFFFF;border:1px solid var(--line);border-radius:16px;padding:21px}.card h2{font-size:17px;margin:0 0 16px}.view{display:none}.view.active{display:block}
+table{width:100%;border-collapse:collapse}th{text-align:left;padding:10px 8px;color:#7a7f89;font-size:11px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line)}td{padding:13px 8px;border-bottom:1px solid #eff0f2;font-size:14px}.link{color:#272c36;font-weight:700}.pill{display:inline-block;padding:5px 9px;border-radius:999px;font-size:12px;background:var(--brand-soft);color:var(--brand-dark)}.pill.green{background:var(--green-soft);color:var(--green)}.pill.yellow{background:var(--yellow-soft);color:var(--yellow)}
+.activity{display:flex;gap:11px;padding:12px 0;border-bottom:1px solid #eff0f2}.activity .ico{width:31px;height:31px;border-radius:10px;background:#DCEEF5;display:grid;place-items:center}.activity small{display:block;color:var(--muted);margin-top:3px}
+.toolbar{display:flex;gap:10px;margin-bottom:15px}.toolbar input{min-width:320px;padding:10px;border:1px solid #d5d7dd;border-radius:10px}.clientrow{display:flex;justify-content:space-between;align-items:center;padding:16px;background:#FEFFFF;border:1px solid var(--line);border-radius:14px;margin-bottom:10px}.clientrow:hover{border-color:#EEF2F8}.clientrow h3{margin:0 0 4px}.clientrow p{margin:0;color:var(--muted);font-size:13px}
+.clienthead{background:#FEFFFF;border:1px solid var(--line);border-radius:13px;padding:22px;margin-bottom:16px}.clienthead h1{margin:0 0 4px}.tabs{display:flex;gap:20px;border-bottom:1px solid var(--line);margin-top:18px}.tabs span{padding:10px 2px}.tabs .on{color:var(--brand);font-weight:800;border-bottom:2px solid var(--brand)}
+.detailgrid{display:grid;grid-template-columns:.75fr 1.25fr;gap:18px}.details dl{display:grid;grid-template-columns:120px 1fr;gap:10px;font-size:14px}.details dt{color:var(--muted)}.details dd{margin:0;font-weight:650}
+.overlay{position:fixed;inset:0;background:rgba(22,18,42,.28);display:none;z-index:20}.overlay.show{display:block}.drawer{position:fixed;top:0;right:-455px;width:435px;max-width:94vw;height:100vh;background:#fff;z-index:30;box-shadow:var(--shadow);transition:right .27s;display:flex;flex-direction:column}.drawer.open{right:0}.drawerhead{background:#17252A;color:#FEFFFF;padding:21px}.drawerhead .row{display:flex;justify-content:space-between;align-items:center}.drawerhead h2{margin:0}.close{border:0;background:transparent;color:#FEFFFF;font-size:25px}.helpsearch{width:100%;margin-top:15px;padding:11px 13px;border:0;border-radius:10px;background:#D9EDF5;color:#17252A}.helpsearch::placeholder{color:#B8C9C9}.drawerbody{overflow:auto;padding-bottom:25px}
+.pathintro{padding:18px 20px;border-bottom:1px solid var(--line)}.pathintro h3{margin:0 0 6px}.pathintro p{font-size:13px;color:var(--muted);line-height:1.45;margin:0 0 12px}.progressline{height:7px;background:#ececf0;border-radius:999px;overflow:hidden}.progressline i{display:block;height:100%;width:0;background:var(--brand)}.progressmeta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:7px}
+.lesson{display:grid;grid-template-columns:28px 1fr auto;gap:10px;padding:15px 18px;border-bottom:1px solid #f0f0f2;align-items:start}.lesson:hover{background:#faf9ff}.num{width:25px;height:25px;border-radius:50%;border:1px solid #d8d8df;display:grid;place-items:center;font-size:12px;color:#737782}.lesson.done .num{background:var(--green);border-color:var(--green);color:#fff}.lesson b{display:block;font-size:14px}.lesson span{font-size:12px;color:var(--muted);display:block;margin-top:4px}.lesson button{border:0;background:var(--brand-soft);color:var(--brand-dark);border-radius:7px;padding:7px 9px;font-weight:750;font-size:12px}
+.contentpanel{padding:20px}.contentpanel h3{margin:0 0 8px}.contentpanel p,.contentpanel li{font-size:14px;color:#555d69;line-height:1.55}.callout{background:#E5F4FA;border-left:4px solid var(--brand);padding:13px;border-radius:8px;margin:13px 0}.back{border:0;background:transparent;color:var(--brand);font-weight:750;padding:0;margin-bottom:14px}
+.guide{position:fixed;right:22px;bottom:22px;width:360px;background:#fff;border-radius:14px;box-shadow:var(--shadow);z-index:40;display:none;overflow:hidden}.guide.show{display:block}.gbar{height:6px;background:#272c36}.gbar i{height:100%;display:block;background:var(--brand);transition:.2s}.gbody{padding:18px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#7a728e;font-weight:850}.guide h3{margin:7px 0}.guide p{margin:0 0 15px;color:#555d69;line-height:1.45}.gactions{display:flex;justify-content:space-between}.gactions button{border:0;background:transparent;color:#666}.highlight{position:relative;z-index:35!important;outline:4px solid rgba(108,76,241,.42)!important;box-shadow:0 0 0 8px rgba(108,76,241,.12)!important;border-radius:8px!important}
+.modalwrap{position:fixed;inset:0;background:rgba(20,17,37,.48);z-index:50;display:none;place-items:center}.modalwrap.show{display:grid}.modal{width:650px;max-width:93vw;background:#fff;border-radius:15px;padding:24px;box-shadow:var(--shadow)}.modal h2{margin-top:0}.request{background:#E5F4FA;border-left:4px solid var(--brand);padding:14px;border-radius:8px;line-height:1.5}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:17px}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}.field input,.field select{width:100%;padding:10px;border:1px solid #d2d5dc;border-radius:8px}.full{grid-column:1/-1}.success{display:none;margin-top:14px;padding:13px;background:var(--green-soft);color:var(--green);border-radius:8px}.toast{position:fixed;left:50%;bottom:25px;transform:translateX(-50%) translateY(15px);opacity:0;background:#2a2737;color:#fff;padding:12px 16px;border-radius:10px;z-index:70;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:850px){.stats,.grid,.detailgrid{grid-template-columns:1fr 1fr}.search{display:none}}@media(max-width:600px){.stats,.grid,.detailgrid{grid-template-columns:1fr}.shell{padding:16px}.nav{overflow:auto}}
+
+.welcomeModal{width:720px;max-width:94vw;padding:0;overflow:hidden}
+.welcomeHero{background:linear-gradient(135deg,#DEF2F1,#CBEAE7);color:#17252A;padding:28px 30px}
+.welcomeHero .tag{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.welcomeHero h2{font-size:29px;margin:8px 0}.welcomeHero p{margin:0;line-height:1.55;color:#17383A}
+.welcomeBody{padding:25px 30px}.rolebox{display:grid;grid-template-columns:55px 1fr;gap:14px;background:#E5F4FA;border:1px solid #E2E8F0;border-radius:12px;padding:15px;margin:16px 0}
+.roleicon{width:48px;height:48px;border-radius:12px;background:#D6ECF5;display:grid;place-items:center;font-size:22px}
+.outcomes{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:15px 0}.outcome{padding:11px;border:1px solid #e8e8ec;border-radius:10px;font-size:13px}
+.welcomeFooter{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #ececf0;padding-top:18px;margin-top:20px}.welcomeFooter small{color:#777}
+.tooltipBox{position:fixed;z-index:55;background:#17252A;color:#fff;width:285px;border-radius:14px;padding:14px 15px;box-shadow:0 12px 35px rgba(0,0,0,.22);display:none}
+.tooltipBox.show{display:block}
+.tooltipBox:after{content:"";position:absolute;width:12px;height:12px;background:#17252A;transform:rotate(45deg);left:var(--arrow-x,28px);top:var(--arrow-y,-6px)}
+.tooltipBox.arrow-bottom:after{top:auto;bottom:-6px}
+.tooltipBox.arrow-top:after{top:-6px;bottom:auto}
+.tooltipBox .ttStep{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#EEF2F8;font-weight:850}.tooltipBox b{display:block;margin:5px 0}.tooltipBox p{font-size:13px;line-height:1.45;color:#e5e3ec;margin:0 0 10px}.tooltipBox button{border:0;border-radius:7px;padding:7px 9px;font-weight:750}.ttNext{background:#272c36;color:#fff;float:right}.ttExit{background:transparent;color:#ddd}
+
+.lni{font-size:16px;vertical-align:-1px}.nav .lni{margin-right:7px;color:#272c36}.nav button.active .lni{color:#272c36}
+.iconbtn .lni{margin-right:6px;color:#272c36}.activity .ico .lni{color:#272c36}
+.logo .lni{font-size:18px;color:#FEFFFF}.outcome .lni{margin-right:7px;color:#272c36}
+.roleicon .lni{font-size:21px;color:#272c36}
+.primary .lni,.secondary .lni{margin-right:6px}
+.card,.stat,.clientrow,.clienthead{box-shadow:0 1px 2px rgba(16,42,58,.025),0 8px 24px rgba(16,42,58,.035)}
+.card,.stat,.clientrow,.clienthead{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.clientrow:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(16,42,58,.07);border-color:#A9D9D6}
+
+.stat b{font-weight:760;letter-spacing:-.035em}.pagehead h1{letter-spacing:-.035em;font-weight:760}
+.primary{box-shadow:0 5px 14px rgba(58,175,169,.18);transition:.18s}.primary:hover{background:#272c36;transform:translateY(-1px)}
+.iconbtn{transition:.18s}.iconbtn:hover{background:#F2F8F7;border-color:#C8E1DF}
+.pill{font-weight:650}
+.search input:focus,.toolbar input:focus,.field input:focus,.field select:focus{outline:none;border-color:#EEF2F8;box-shadow:0 0 0 3px rgba(58,175,169,.12)}
+.nav button{transition:.16s}.nav button.active{box-shadow:inset 0 -2px 0 #272c36;background:#E8F6F4}
+.drawer{border-left:1px solid #D6E7E6}
+.pathintro{background:linear-gradient(180deg,#FBFDFE,#F3F9FB)}
+.lesson button{transition:.15s}.lesson button:hover{background:#D4EFEC}
+
+/* v10 palette polish */
+.logo{background:linear-gradient(135deg,#272c36,#272c36)}
+.link{color:#272c36}
+.link:hover{text-decoration:underline}
+.primary{background:#272c36;color:#17252A}
+.primary:hover{background:#272c36;color:#FEFFFF}
+.lesson button{color:#272c36}
+.progressline i,.gbar i{background:#272c36}
+.tabs .on{color:#272c36;border-bottom-color:#272c36}
+.tooltipBox .ttNext{background:#272c36;color:#17252A}
+.tooltipBox .ttNext:hover{background:#272c36}
+</style>
+<style>
+/* v11 requested refinements */
+.nav{
+  background:#17252A !important;
+  border-bottom:1px solid #17252A !important;
+}
+.nav button{
+  color:#C9D8D8 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+}
+.nav button .lni{
+  color:#AFC4C4 !important;
+}
+.nav button:hover{
+  color:#FEFFFF !important;
+  background:#20383B !important;
+}
+.nav button.active{
+  color:#FEFFFF !important;
+  background:#272c36 !important;
+  box-shadow:inset 0 -3px 0 #272c36 !important;
+  border-radius:0 !important;
+}
+.nav button.active .lni{
+  color:#FEFFFF !important;
+}
+
+/* Highlighted guided-learning targets should be squared/clean rather than pill-like. */
+.highlight{
+  border-radius:0 !important;
+}
+
+/* Create-work / primary CTA text should stay light against #272c36. */
+.primary{
+  color:#FEFFFF !important;
+}
+.primary .lni{
+  color:#FEFFFF !important;
+}
+.primary:hover{
+  color:#FEFFFF !important;
+}
+</style>
+
+
+<style>
+/* v12 — single-color navbar approach */
+.nav{
+  background:#272c36 !important;
+  border-bottom:0 !important;
+  box-shadow:none !important;
+  gap:0 !important;
+}
+.nav button{
+  color:#DEF2F1 !important;
+  background:transparent !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  padding-left:16px !important;
+  padding-right:16px !important;
+}
+.nav button .lni{
+  color:#DEF2F1 !important;
+  opacity:.9;
+}
+.nav button:hover{
+  background:rgba(23,37,42,.12) !important;
+  color:#FEFFFF !important;
+}
+.nav button.active{
+  background:#272c36 !important;
+  color:#17252A !important;
+  box-shadow:none !important;
+  font-weight:750 !important;
+}
+.nav button.active .lni{
+  color:#17252A !important;
+  opacity:1;
+}
+</style>
+
+
+<style>
+/* v13 — primary color sampled from supplied Create work button */
+:root{
+  --primary:#272c36;
+  --primary-hover:#272c36;
+  --primary-deep:#272c36;
+  --primary-soft:#E8F2F6;
+}
+
+/* Primary actions */
+.primary{
+  background:#272c36 !important;
+  color:#FEFFFF !important;
+  border:0 !important;
+}
+.primary:hover{
+  background:#272c36 !important;
+  color:#FEFFFF !important;
+}
+.primary .lni{color:#FEFFFF !important}
+
+/* One continuous primary-color navigation band */
+.nav{
+  background:#272c36 !important;
+  border:0 !important;
+  box-shadow:none !important;
+  gap:0 !important;
+}
+.nav button{
+  position:relative;
+  background:transparent !important;
+  color:#EAF5F8 !important;
+  font-weight:700 !important;
+  border-radius:0 !important;
+  padding:13px 17px !important;
+  transition:background .16s ease,color .16s ease !important;
+}
+.nav button .lni{
+  color:#D6EAF1 !important;
+  opacity:1 !important;
+}
+.nav button:hover{
+  background:rgba(255,255,255,.10) !important;
+  color:#FFFFFF !important;
+}
+.nav button:hover .lni{color:#FFFFFF !important}
+
+/* Selected state: still part of the same band, but unmistakable */
+.nav button.active{
+  background:#272c36 !important;
+  color:#FFFFFF !important;
+  font-weight:800 !important;
+  box-shadow:none !important;
+}
+.nav button.active .lni{color:#FFFFFF !important}
+
+/* Keyboard/accessibility focus */
+.nav button:focus-visible{
+  outline:2px solid #FFFFFF !important;
+  outline-offset:-3px !important;
+}
+</style>
+
+
+<style>
+/* v15 — one-brand-color system */
+:root{
+  --brand:#272c36 !important;
+  --brand-dark:#272c36 !important;
+  --brand-soft:#EDF4F7 !important;
+  --accent:#272c36 !important;
+}
+
+/* Logo must match the primary brand */
+.logo{
+  background:#272c36 !important;
+  color:#FFFFFF !important;
+}
+.logo .lni{color:#FFFFFF !important}
+
+/* Help & Learning: use the same brand color, not #272c36/aqua */
+.drawerhead{
+  background:#272c36 !important;
+  color:#FFFFFF !important;
+}
+.drawerhead h2,.drawerhead .close{color:#FFFFFF !important}
+.helpsearch{
+  background:#FFFFFF !important;
+  color:#111827 !important;
+  border:1px solid #E5E7EB !important;
+}
+.helpsearch::placeholder{color:#9CA3AF !important}
+
+/* Welcome uses the same primary family */
+.welcomeHero{
+  background:#272c36 !important;
+  color:#FFFFFF !important;
+}
+.welcomeHero p{color:#E8F2F6 !important}
+.welcomeHero .tag{color:#D8E8EF !important}
+
+/* Learning accents stay in the same blue family */
+.progressline i,.gbar i{background:#272c36 !important}
+.lesson button{
+  background:#EDF4F7 !important;
+  color:#272c36 !important;
+}
+.lesson button:hover{background:#E1EDF2 !important}
+.tabs .on{
+  color:#272c36 !important;
+  border-bottom-color:#272c36 !important;
+}
+.link{color:#272c36 !important}
+.roleicon .lni,.outcome .lni{color:#272c36 !important}
+
+/* Tooltip remains dark neutral; action uses primary blue */
+.tooltipBox .ttNext{
+  background:#272c36 !important;
+  color:#FFFFFF !important;
+}
+.tooltipBox .ttNext:hover{background:#272c36 !important}
+
+/* Selected/active UI uses only primary blue tints */
+.nav button.active{
+  background:#272c36 !important;
+  color:#FFFFFF !important;
+}
+.nav button.active .lni{color:#FFFFFF !important}
+
+/* Focus and highlights use transparent versions of the same primary */
+.highlight{
+  outline-color:rgba(19,90,121,.42) !important;
+  box-shadow:0 0 0 8px rgba(19,90,121,.10) !important;
+}
+.search input:focus,.toolbar input:focus,.field input:focus,.field select:focus{
+  border-color:#272c36 !important;
+  box-shadow:0 0 0 3px rgba(19,90,121,.10) !important;
+}
+</style>
+
+
+<style>
+/* v16 — Deep Slate Blue */
+:root{
+  --brand:#272c36 !important;
+  --brand-dark:#272c36 !important;
+  --brand-soft:#EEF2F8 !important;
+  --primary:#272c36 !important;
+  --primary-hover:#272c36 !important;
+  --primary-deep:#203E55 !important;
+  --primary-soft:#EEF2F8 !important;
+}
+
+/* Brand */
+.logo{background:#272c36 !important}
+.primary{background:#272c36 !important;color:#FFFFFF !important}
+.primary:hover{background:#272c36 !important;color:#FFFFFF !important}
+
+/* Main navigation */
+.nav{background:#272c36 !important}
+.nav button{color:#EAF0F4 !important}
+.nav button .lni{color:#DCE6EC !important}
+.nav button:hover{
+  background:rgba(255,255,255,.09) !important;
+  color:#FFFFFF !important;
+}
+.nav button.active{
+  background:#272c36 !important;
+  color:#FFFFFF !important;
+  box-shadow:none !important;
+}
+.nav button.active .lni{color:#FFFFFF !important}
+
+/* Help & Learning */
+.drawerhead{background:#272c36 !important;color:#FFFFFF !important}
+.drawerhead h2,.drawerhead .close{color:#FFFFFF !important}
+
+/* Welcome */
+.welcomeHero{background:#272c36 !important;color:#FFFFFF !important}
+.welcomeHero p{color:#E7EEF3 !important}
+.welcomeHero .tag{color:#D5E1E8 !important}
+
+/* Learning / interaction states */
+.progressline i,.gbar i{background:#272c36 !important}
+.lesson button{background:#EEF2F8 !important;color:#272c36 !important}
+.lesson button:hover{background:#E2EBF0 !important}
+.tabs .on{color:#272c36 !important;border-bottom-color:#272c36 !important}
+.link{color:#272c36 !important}
+.roleicon .lni,.outcome .lni{color:#272c36 !important}
+.tooltipBox .ttNext{background:#272c36 !important;color:#FFFFFF !important}
+.tooltipBox .ttNext:hover{background:#272c36 !important}
+
+/* Focus / guide highlight */
+.highlight{
+  outline-color:rgba(49,91,124,.42) !important;
+  box-shadow:0 0 0 8px rgba(49,91,124,.10) !important;
+}
+.search input:focus,.toolbar input:focus,.field input:focus,.field select:focus{
+  border-color:#272c36 !important;
+  box-shadow:0 0 0 3px rgba(49,91,124,.10) !important;
+}
+</style>
+
+
+<style>
+/* v18 — refined instructional tooltip */
+.tooltipBox{
+  width:310px !important;
+  border-radius:6px !important;
+  padding:0 !important;
+  background:#17252A !important;
+  box-shadow:0 10px 28px rgba(15,23,42,.20) !important;
+  overflow:visible;
+}
+.tooltipBox:after{
+  border-radius:1px;
+}
+.tooltipBox .ttStep{
+  padding:14px 16px 0;
+  margin:0 0 7px;
+  font-size:10px;
+  line-height:1.2;
+  letter-spacing:.09em;
+  color:#B8CED8 !important;
+}
+.tooltipBox #ttTitle{
+  padding:0 16px;
+  margin:0 0 7px;
+  font-size:15px;
+  line-height:1.35;
+  font-weight:800;
+  color:#FFFFFF;
+}
+.tooltipBox #ttText{
+  padding:0 16px;
+  margin:0;
+  font-size:13px;
+  line-height:1.55;
+  color:#E4EDF1;
+}
+.tooltipBox .ttActions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:14px;
+  padding:11px 12px;
+  border-top:1px solid rgba(255,255,255,.12);
+}
+.tooltipBox button{
+  min-height:32px;
+  padding:6px 10px !important;
+  border-radius:4px !important;
+  font-size:12px;
+  font-weight:750;
+}
+.tooltipBox .ttExit{
+  color:#D5E2E7 !important;
+}
+.tooltipBox .ttExit:hover{
+  background:rgba(255,255,255,.08) !important;
+  color:#FFFFFF !important;
+}
+.tooltipBox .ttNext{
+  background:#272c36 !important;
+  color:#FFFFFF !important;
+  padding-left:13px !important;
+  padding-right:13px !important;
+}
+.tooltipBox .ttNext:hover{background:#272c36 !important}
+</style>
+
+
+<style>
+/* v19 — spacing + target corrections */
+
+/* Tooltip body gets more breathing room before the action footer */
+.tooltipBox #ttText{
+  padding:0 16px 16px !important;
+  margin:0 !important;
+  line-height:1.58 !important;
+}
+.tooltipBox .ttActions{
+  margin-top:0 !important;
+  padding:12px 14px !important;
+}
+
+/* Centered intro/completion cards: clean separation and spacing */
+.guide.centered .gbody{
+  padding:26px 28px 24px !important;
+}
+.guide.centered #gtitle{
+  margin:9px 0 0 !important;
+  line-height:1.3 !important;
+}
+.guide.centered #gtext{
+  margin-top:14px !important;
+  margin-bottom:0 !important;
+  line-height:1.62 !important;
+}
+.guide.centered #gtext > .centerGuideActions{
+  margin-top:22px !important;
+}
+
+/* Add clear visual space after the Guide complete heading */
+.guide.centered.complete-card #gtitle{
+  margin-bottom:16px !important;
+}
+.guide.centered.complete-card #gtitle:before{
+  margin-bottom:16px !important;
+}
+
+/* Hide the generic floating-guide footer for centered intro/complete cards.
+   These cards already have their own Back/Done controls. */
+.guide.centered > .gbody > .gactions{
+  display:none !important;
+}
+
+/* More deliberate spacing between completion text and buttons */
+.guide.centered.complete-card .centerGuideActions{
+  margin-top:24px !important;
+  padding-top:0 !important;
+}
+
+/* Search highlight should fit the search control cleanly */
+#globalSearch.highlight{
+  border-radius:8px !important;
+  outline-offset:2px !important;
+}
+</style>
+
+
+<style>
+/* v22 — cleaner contextual guidance */
+.tooltipBox #ttTitle{
+  display:none !important;
+}
+.tooltipBox .ttStep{
+  padding-top:15px !important;
+  margin-bottom:10px !important;
+}
+.tooltipBox #ttText{
+  padding-top:0 !important;
+}
+
+/* Gold guide target highlight: visually distinct from TaskFlow brand blue */
+.highlight{
+  outline:3px solid #b07bf1 !important;
+  outline-offset:3px !important;
+  box-shadow:0 0 0 7px rgba(214,167,44,.18) !important;
+}
+#globalSearch.highlight{
+  outline:3px solid #b07bf1 !important;
+  outline-offset:3px !important;
+  box-shadow:0 0 0 7px rgba(214,167,44,.18) !important;
+}
+</style>
+
+
+<style>
+.tooltipBox #ttText b{
+  display:inline !important;
+  margin:0 !important;
+  font-weight:800 !important;
+  color:#FFFFFF !important;
+}
+</style>
+
+<style>
+/* v23 — instructional tooltip polish */
+
+/* Keep Create Work CTA identical wherever it appears */
+.create-work-cta{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:7px !important;
+  min-width:132px !important;
+  height:40px !important;
+  padding:0 15px !important;
+  border-radius:8px !important;
+  white-space:nowrap !important;
+  line-height:1 !important;
+  font-size:14px !important;
+  font-weight:750 !important;
+}
+.create-work-cta .lni{
+  margin:0 !important;
+  font-size:14px !important;
+}
+
+/* A wider rectangular learning card rather than a compact square bubble */
+.tooltipBox{
+  width:360px !important;
+  max-width:calc(100vw - 28px) !important;
+  border-radius:5px !important;
+  box-shadow:
+    0 18px 45px rgba(15,23,42,.30),
+    0 5px 14px rgba(15,23,42,.18) !important;
+  border:1px solid rgba(255,255,255,.08) !important;
+}
+
+/* More deliberate instructional spacing */
+.tooltipBox .ttStep{
+  padding:16px 18px 0 !important;
+  margin-bottom:11px !important;
+}
+.tooltipBox #ttText{
+  padding:0 18px 18px !important;
+  font-size:13px !important;
+  line-height:1.62 !important;
+}
+.tooltipBox #ttText br + br{
+  line-height:2.15 !important;
+}
+.tooltipBox .ttActions{
+  padding:12px 16px !important;
+  min-height:55px;
+}
+
+/* Slightly stronger separation from the app beneath */
+.tooltipBox:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:5px;
+  pointer-events:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+}
+</style>
+
+
+<style>
+/* v24 — instructional content is the visual priority */
+.tooltipBox{
+  width:390px !important;
+  max-width:calc(100vw - 30px) !important;
+}
+.tooltipBox .ttStep{
+  font-size:11px !important;
+  line-height:1.3 !important;
+  letter-spacing:.085em !important;
+  padding:17px 20px 0 !important;
+  margin-bottom:12px !important;
+}
+.tooltipBox #ttText{
+  padding:0 20px 20px !important;
+  font-size:14.5px !important;
+  line-height:1.62 !important;
+  letter-spacing:0 !important;
+  color:#EEF3F5 !important;
+}
+.tooltipBox #ttText b{
+  font-size:inherit !important;
+  font-weight:800 !important;
+  color:#FFFFFF !important;
+}
+.tooltipBox .ttActions{
+  padding:13px 18px !important;
+  min-height:58px !important;
+}
+.tooltipBox button{
+  font-size:13px !important;
+  min-height:34px !important;
+}
+
+/* Centered intro / completion content deserves equal prominence */
+.guide.centered{
+  width:450px !important;
+  max-width:calc(100vw - 32px) !important;
+}
+.guide.centered #gtitle{
+  font-size:23px !important;
+  line-height:1.3 !important;
+  font-weight:800 !important;
+}
+.guide.centered #gtext{
+  font-size:15px !important;
+  line-height:1.65 !important;
+  color:#566273 !important;
+}
+.guide.centered #gtext b{
+  color:#27384A !important;
+  font-weight:800 !important;
+}
+.guide.centered .glabel{
+  font-size:11px !important;
+  letter-spacing:.09em !important;
+}
+.guide.centered .centerGuideActions button{
+  font-size:14px !important;
+  min-height:38px !important;
+  padding:8px 15px !important;
+}
+</style>
+
+
+<style>
+/* v25 — compact contextual tooltip */
+.tooltipBox{
+  width:330px !important;
+  max-width:calc(100vw - 24px) !important;
+  border-radius:3px !important;
+  box-shadow:
+    0 12px 30px rgba(15,23,42,.24),
+    0 3px 8px rgba(15,23,42,.14) !important;
+}
+.tooltipBox .ttStep{
+  padding:14px 16px 0 !important;
+  margin:0 0 10px !important;
+  font-size:10.5px !important;
+  line-height:1.25 !important;
+}
+.tooltipBox #ttText{
+  padding:0 16px 16px !important;
+  font-size:14px !important;
+  line-height:1.55 !important;
+}
+.tooltipBox .ttActions{
+  min-height:50px !important;
+  padding:9px 12px 10px 16px !important;
+}
+.tooltipBox button{
+  min-height:32px !important;
+  padding:6px 10px !important;
+  border-radius:3px !important;
+  font-size:12.5px !important;
+}
+</style>
+
+
+<style>
+.tooltipBox.arrow-left:after{
+  left:-6px !important;
+  right:auto !important;
+  top:var(--arrow-y,28px) !important;
+  bottom:auto !important;
+}
+.tooltipBox.arrow-right:after{
+  left:auto !important;
+  right:-6px !important;
+  top:var(--arrow-y,28px) !important;
+  bottom:auto !important;
+}
+</style>
+
+<style>
+/* v26 — Appcues-informed contextual guidance */
+.tooltipBox{
+  width:320px !important;
+  max-width:calc(100vw - 24px) !important;
+  border-radius:4px !important;
+}
+.tooltipBox .ttStep{
+  font-size:10px !important;
+  padding:13px 15px 0 !important;
+  margin-bottom:9px !important;
+}
+.tooltipBox #ttText{
+  font-size:14px !important;
+  line-height:1.5 !important;
+  padding:0 15px 15px !important;
+}
+.tooltipBox .ttActions{
+  min-height:48px !important;
+  padding:8px 10px 9px 14px !important;
+}
+.tooltipBox button{
+  min-height:32px !important;
+  border-radius:3px !important;
+}
+
+/* Gold means guided-attention, not TaskFlow selection */
+.highlight{
+  outline:3px solid #b07bf1 !important;
+  outline-offset:3px !important;
+  box-shadow:0 0 0 6px rgba(214,167,44,.16) !important;
+}
+
+/* Keyboard focus is separate from the gold guide target */
+.tooltipBox button:focus-visible{
+  outline:2px solid #FFFFFF !important;
+  outline-offset:2px !important;
+}
+</style>
+
+
+<style>
+/* v27 — lighter, cleaner contextual tooltip */
+.highlight{
+  outline:none !important;
+  box-shadow:none !important;
+}
+
+/* More horizontal card proportion with comfortable breathing room */
+.tooltipBox{
+  width:350px !important;
+  max-width:calc(100vw - 28px) !important;
+  border-radius:4px !important;
+  box-shadow:
+    0 14px 34px rgba(15,23,42,.22),
+    0 4px 10px rgba(15,23,42,.12) !important;
+}
+.tooltipBox .ttStep{
+  padding:16px 18px 0 !important;
+  margin-bottom:11px !important;
+}
+.tooltipBox #ttText{
+  padding:0 18px 19px !important;
+  font-size:14px !important;
+  line-height:1.58 !important;
+}
+.tooltipBox .ttActions{
+  padding:11px 14px 12px 18px !important;
+  min-height:52px !important;
+}
+.tooltipBox button{
+  min-height:33px !important;
+  padding:6px 11px !important;
+}
+
+/* Keep contextual guidance above the Create Work modal */
+.tooltipBox{
+  z-index:80 !important;
+}
+</style>
+
+
+<style>
+/* v28 — Create Work matches the compact Home-page CTA */
+.create-work-cta,
+#createWorkBtn{
+  min-width:0 !important;
+  width:auto !important;
+  height:34px !important;
+  min-height:34px !important;
+  padding:0 12px !important;
+  gap:6px !important;
+  border-radius:7px !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+  line-height:1 !important;
+}
+.create-work-cta .lni,
+#createWorkBtn .lni{
+  font-size:12px !important;
+}
+</style>
+
+
+<style>
+/* v29 — one Create Work component everywhere */
+#createWorkBtn{
+  min-width:unset !important;
+  width:auto !important;
+  height:auto !important;
+  min-height:unset !important;
+  padding:10px 14px !important;
+  border-radius:10px !important;
+  font-size:inherit !important;
+  font-weight:750 !important;
+  line-height:normal !important;
+  gap:normal !important;
+}
+#createWorkBtn .lni{
+  font-size:inherit !important;
+  margin:0 !important;
+}
+</style>
+
+
+<style>
+/* v30 — independent performance activity */
+.guide.centered #gtext{
+  max-width:390px;
+  margin-left:auto;
+  margin-right:auto;
+}
+</style>
+
+
+<style>
+#requestReminder{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:72;
+  display:none;
+  border:1px solid #D8E1E8;
+  background:#fff;
+  color:#272c36;
+  border-radius:6px;
+  padding:8px 11px;
+  font-size:12px;
+  font-weight:750;
+  box-shadow:0 6px 18px rgba(15,23,42,.14);
+  cursor:pointer;
+}
+#requestReminder.show{display:block}
+</style>
+
+
+<style>
+/* v33 — progressive three-step welcome */
+.welcomeModal.welcome3{width:620px;max-width:calc(100vw - 40px);border-radius:10px;overflow:hidden}
+.welcome3 .welcomeHero{padding:24px 30px 22px}
+.welcome3 .welcomeHero .tag{font-size:11px;letter-spacing:.12em;margin-bottom:9px}
+.welcome3 .welcomeHero h2{font-size:25px;line-height:1.2;margin:0 0 8px}
+.welcome3 .welcomeHero p{font-size:15px;line-height:1.5;margin:0;max-width:520px}
+.welcome3 .welcomeBody{padding:0}
+#welcomeContent{padding:28px 30px 30px;min-height:250px}
+.welcomeFocus{display:flex;gap:18px;align-items:flex-start}
+.welcomeIcon{width:48px;height:48px;flex:0 0 48px;border-radius:9px;background:#EEF2F8;color:#272c36;display:grid;place-items:center;font-size:21px}
+.welcomeFocus h3,.practiceClient h3{margin:0 0 8px;font-size:19px}
+.welcomeFocus p,.practiceCopy{margin:0;color:#596574;font-size:15px;line-height:1.65}
+.welcomeNote{margin-top:24px;padding:15px 17px;background:#F6F8FA;border:1px solid #E2E8ED;border-radius:7px}
+.welcomeNote b{display:block;font-size:14px;margin-bottom:4px}.welcomeNote span{font-size:13px;color:#65717E;line-height:1.45}
+.welcomeOutcomeGrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.welcomeOutcomeGrid>div{display:flex;gap:11px;align-items:flex-start;border:1px solid #DFE5EA;border-radius:7px;padding:13px 14px}
+.welcomeOutcomeGrid i{color:#272c36;margin-top:3px}.welcomeOutcomeGrid b{display:block;font-size:14px;margin-bottom:3px}.welcomeOutcomeGrid small{display:block;color:#687481;font-size:12.5px;line-height:1.4}
+.welcomeSupport{margin:20px 0 0;color:#596574;font-size:14px;line-height:1.55}
+.practiceClient{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.practiceMark{width:50px;height:50px;border-radius:8px;background:#EEF2F8;color:#272c36;display:grid;place-items:center;font-weight:800}
+.practiceClient h3{margin-bottom:2px}.practiceClient p{margin:0;color:#78838D;font-size:13px}
+.transferNote{display:flex;gap:11px;margin-top:22px;padding:14px 15px;border-left:3px solid #272c36;background:#F5F8FA;border-radius:0 6px 6px 0;color:#596574;font-size:13.5px;line-height:1.5}
+.transferNote i{color:#272c36;margin-top:3px}
+.welcome3 .welcomeFooter{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-top:1px solid #E4E9ED;padding:14px 20px}
+.welcome3 .welcomeFooter #finishWelcome{justify-self:end}
+.welcome3 .welcomeFooter #welcomeBack{justify-self:start}
+.welcomeDots{display:flex;gap:7px}.welcomeDots i{width:7px;height:7px;border-radius:50%;background:#CDD5DB}.welcomeDots i.active{background:#272c36}
+@media(max-width:620px){.welcomeOutcomeGrid{grid-template-columns:1fr}.welcomeModal.welcome3{max-width:calc(100vw - 20px)}#welcomeContent{padding:22px}}
+</style>
+
+
+<style>
+/* v34 — Deep Navy + Magenta palette */
+:root{
+  --brand:#272c36;
+  --brand-dark:#272c36;
+  --brand-soft:#EEF2F8;
+  --accent:#b07bf1;
+  --accent-soft:#fbe4ff;
+}
+
+/* Primary TaskFlow brand surfaces */
+.logo,
+.primary,
+#createWorkBtn{
+  background:#272c36 !important;
+}
+.primary:hover,
+#createWorkBtn:hover{
+  background:#272c36 !important;
+}
+
+/* Continuous application navigation */
+nav{
+  background:#272c36 !important;
+}
+nav a.active{
+  background:#272c36 !important;
+}
+nav a:hover{
+  background:#272c36 !important;
+}
+
+/* Welcome / learning headers use the same navy */
+.welcomeHero,
+.guide:not(.tooltipBox) .guideHead,
+.guide:not(.tooltipBox) .ghead{
+  background:#272c36 !important;
+}
+
+/* Learning UI accents */
+.drawer .pathIcon,
+.welcomeIcon,
+.practiceMark{
+  background:#fbe4ff !important;
+  color:#272c36 !important;
+}
+.welcomeDots i.active{
+  background:#b07bf1 !important;
+}
+.transferNote{
+  border-left-color:#b07bf1 !important;
+}
+.transferNote i,
+.welcomeOutcomeGrid i{
+  color:#b07bf1 !important;
+}
+
+/* Links and restrained application accents */
+.link{
+  color:#272c36 !important;
+}
+.progress > span,
+.progressbar > span{
+  background:#272c36 !important;
+}
+
+/* Contextual guide remains dark but now harmonizes with the navy palette */
+.tooltipBox{
+  background:#272c36 !important;
+  border-color:rgba(255,255,255,.10) !important;
+}
+.tooltipBox .ttActions{
+  border-top-color:rgba(255,255,255,.14) !important;
+}
+.tooltipBox #nextBtn,
+.tooltipBox .primary{
+  background:#b07bf1 !important;
+}
+.tooltipBox #nextBtn:hover,
+.tooltipBox .primary:hover{
+  background:#9f67e7 !important;
+}
+
+/* Soft learning callouts */
+.welcomeNote,
+.transferNote{
+  background:#F8F4F7 !important;
+}
+</style>
+
+
+<style>
+/* v35 — full TaskFlow palette replacement */
+:root{
+  --brand:#272c36 !important;
+  --brand-dark:#272c36 !important;
+  --brand-soft:#EEF2F8 !important;
+  --accent:#b07bf1 !important;
+  --accent-dark:#9f67e7 !important;
+  --accent-soft:#fbe4ff !important;
+}
+
+/* Replace legacy slate/#272c36 brand colors globally */
+.logo,
+.primary,
+#createWorkBtn,
+button.primary,
+.welcomeHero,
+.guideHead,
+.ghead{
+  background:#272c36 !important;
+  color:#fff !important;
+}
+.primary:hover,
+#createWorkBtn:hover,
+button.primary:hover{
+  background:#272c36 !important;
+}
+
+/* Main navigation */
+nav{background:#272c36 !important}
+nav a{color:rgba(255,255,255,.76) !important}
+nav a:hover,
+nav a.active{
+  background:#272c36 !important;
+  color:#fff !important;
+}
+
+/* Brand-colored text and interactive application elements */
+.link,
+a.link,
+.metric strong,
+.card .link{
+  color:#272c36 !important;
+}
+
+/* Learning/product accent */
+.progress > span,
+.progressbar > span,
+.welcomeDots i.active{
+  background:#272c36 !important;
+}
+.welcomeOutcomeGrid i,
+.transferNote i{
+  color:#b07bf1 !important;
+}
+.transferNote{
+  border-left-color:#b07bf1 !important;
+}
+
+/* Soft branded surfaces */
+.welcomeIcon,
+.practiceMark,
+.pathIcon{
+  background:#fbe4ff !important;
+  color:#272c36 !important;
+}
+
+/* Help & Learning */
+.drawer .lesson:hover{
+  background:#F7F8FB !important;
+}
+.drawer .lesson.done .check,
+.check.done{
+  background:#272c36 !important;
+  color:#fff !important;
+}
+
+/* Contextual learning layer */
+.tooltipBox{
+  background:#272c36 !important;
+  color:#fff !important;
+}
+.tooltipBox #ttText,
+.tooltipBox .ttStep{
+  color:#F5F7FB !important;
+}
+.tooltipBox #ttText b{
+  color:#fff !important;
+}
+.tooltipBox #nextBtn,
+.tooltipBox button.primary{
+  background:#b07bf1 !important;
+  color:#fff !important;
+}
+.tooltipBox #nextBtn:hover,
+.tooltipBox button.primary:hover{
+  background:#9f67e7 !important;
+}
+
+/* Form focus: use brand rather than the old slate/#272c36 */
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#272c36 !important;
+  box-shadow:0 0 0 3px rgba(10,34,87,.10) !important;
+  outline:none !important;
+}
+
+/* Request / information callouts use a navy-tinted neutral */
+.request,
+.clientRequest,
+.infoCallout{
+  border-left-color:#272c36 !important;
+  background:#EEF2F8 !important;
+}
+
+/* No guide-target highlighting */
+.highlight{
+  outline:none !important;
+  box-shadow:none !important;
+}
+</style>
+
+
+<style>
+/* v36 — final brand cleanup: no legacy #272c36 */
+:root{
+  --brand:#272c36 !important;
+  --brand-dark:#272c36 !important;
+  --brand-soft:#EEF2F8 !important;
+  --accent:#b07bf1 !important;
+  --accent-dark:#9f67e7 !important;
+  --accent-soft:#fbe4ff !important;
+}
+.logo, nav, .primary, button.primary, #createWorkBtn,
+.welcomeHero, .guideHead, .ghead{
+  background-color:#272c36 !important;
+}
+nav a:hover, nav a.active,
+.primary:hover, button.primary:hover, #createWorkBtn:hover{
+  background-color:#272c36 !important;
+}
+.tooltipBox{background-color:#272c36 !important}
+.link, a.link{color:#272c36 !important}
+input:focus, select:focus, textarea:focus{border-color:#272c36 !important}
+
+/* #272c36-like informational fills are now neutral/navy-tinted */
+.request, .clientRequest, .infoCallout,
+.welcomeIcon, .practiceMark{
+  border-color:#DCE4EE !important;
+}
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* v37 — typography, iconography, and remaining brand cleanup */
+html,body,button,input,select,textarea{
+  font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+}
+body{font-weight:400 !important}
+
+/* Navigation should feel lighter and more contemporary */
+nav a{
+  font-weight:500 !important;
+  letter-spacing:0 !important;
+}
+nav a.active{
+  font-weight:600 !important;
+}
+
+/* Keep headings strong, but not everything bold */
+h1,h2,h3,.cardTitle{letter-spacing:-.02em}
+.card h3,.panel h3{font-weight:700}
+
+/* Workload bars now use the TaskFlow brand system, never teal */
+.workbar > span,
+.workloadBar > span,
+.bar > span,
+.teamBar > span{
+  background:#272c36 !important;
+}
+.workbar.accent > span,
+.workloadBar.accent > span,
+.bar.accent > span{
+  background:#272c36 !important;
+}
+
+/* Lineicons for common dashboard/card headings */
+#openWork h3::before,
+#dueWeek h3::before,
+#activityCard h3::before,
+#teamWorkload h3::before,
+.card[data-card="work"] h3::before,
+.card[data-card="deadlines"] h3::before,
+.card[data-card="activity"] h3::before{
+  font-family:"Lineicons" !important;
+  display:inline-block;
+  margin-right:8px;
+  color:#272c36;
+  font-size:15px;
+  font-weight:400;
+}
+
+/* Small, restrained icon treatment on application controls */
+button i.lni,
+nav i.lni,
+.drawer i.lni{
+  font-weight:400 !important;
+}
+</style>
+
+
+<style>
+.card h3 > i.lni,
+.panel h3 > i.lni{
+  color:#272c36;
+  font-size:15px;
+  margin-right:8px;
+  vertical-align:-1px;
+}
+</style>
+
+<style>
+/* v39 — make pink a purposeful secondary brand color */
+
+/* Your Role icon: pink tile + navy user glyph */
+.welcomeIcon{
+  position:relative !important;
+  width:50px !important;
+  height:50px !important;
+  flex:0 0 50px !important;
+  display:grid !important;
+  place-items:center !important;
+  background:#fbe4ff !important;
+  color:#272c36 !important;
+  border:1px solid #e1c8f6 !important;
+  border-radius:10px !important;
+}
+.welcomeIcon i{
+  font-size:21px !important;
+  color:#272c36 !important;
+}
+
+/* If the icon font fails, keep a visible user symbol */
+.welcomeIcon:empty::before{
+  content:"👤";
+  font-size:20px;
+}
+
+/* Pink is now the clear secondary/accent — used for emphasis, not large surfaces */
+.welcome3 .tag,
+.tooltipBox .ttStep{
+  color:#e1c8f6 !important;
+}
+.welcomeDots i.active{
+  background:#b07bf1 !important;
+  width:18px !important;
+  border-radius:10px !important;
+}
+.welcomeOutcomeGrid > div{
+  position:relative;
+  overflow:hidden;
+}
+.welcomeOutcomeGrid > div::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:3px;
+  background:#b07bf1;
+}
+.welcomeOutcomeGrid i{
+  color:#b07bf1 !important;
+}
+
+/* Practice client / learning callouts */
+.practiceMark{
+  background:#fbe4ff !important;
+  color:#272c36 !important;
+  border:1px solid #e1c8f6 !important;
+}
+.transferNote{
+  background:#fff8ff !important;
+  border-left:3px solid #b07bf1 !important;
+}
+.transferNote i{
+  color:#b07bf1 !important;
+}
+
+/* Help & Learning progress and completion accents */
+.drawer .lesson.done .check,
+.check.done{
+  background:#b07bf1 !important;
+  color:#fff !important;
+}
+.progress > span,
+.progressbar > span{
+  background:#b07bf1 !important;
+}
+
+/* Small selected/accent details */
+.pill.accent,
+.badge.accent{
+  background:#fbe4ff !important;
+  color:#272c36 !important;
+}
+
+/* Keep major actions navy: pink supports the brand rather than competing with it */
+.tooltipBox #nextBtn,
+.tooltipBox button.primary{
+  background:#b07bf1 !important;
+  color:#fff !important;
+}
+.tooltipBox #nextBtn:hover,
+.tooltipBox button.primary:hover{
+  background:#9f67e7 !important;
+}
+</style>
+
+
+<style>
+/* v40 — richer application simulation */
+.tf-extra-grid,.client-rich-grid,.report-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0}
+.client-rich-grid.lower{margin-top:18px}
+.operational-card{padding:18px}
+.card-head-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.card-head-row h3{margin:0}.card-head-row h3 i{color:#b07bf1;margin-right:7px}
+.small-link,.text-btn{font-size:12px;font-weight:600;color:#272c36;background:none;border:0;cursor:pointer}
+.request-row,.doc-row,.contact-row,.attention-row{display:flex;align-items:center;gap:11px;padding:10px 0;border-top:1px solid #EEF0F3}
+.request-row:first-of-type,.contact-row:first-of-type,.attention-row:first-of-type{border-top:0}
+.request-row div,.doc-row div,.contact-row div,.attention-row div{flex:1}
+.request-row b,.doc-row b,.contact-row b,.attention-row b{display:block;font-size:13px}
+.request-row small,.doc-row small,.contact-row small,.attention-row small{display:block;color:#737E89;font-size:11.5px;margin-top:2px}
+.request-row .time,.doc-row>span{font-size:11px;color:#89939C}
+.request-dot{width:8px;height:8px;border-radius:50%;background:#272c36}.request-dot.urgent{background:#b07bf1}
+.attention-num{width:29px;height:29px;border-radius:7px;background:#fbe4ff;color:#272c36;display:grid;place-items:center;font-weight:800;font-size:12px}
+.mini-avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#EEF2F8;color:#272c36;font-size:11px;font-weight:800}.mini-avatar.pink{background:#fbe4ff}
+.doc-row>i{color:#b07bf1;font-size:17px}
+.mini-table,.rich-table{width:100%;border-collapse:collapse}.mini-table th,.mini-table td,.rich-table th,.rich-table td{text-align:left;padding:10px 8px;border-top:1px solid #EEF0F3;font-size:12px}.mini-table th,.rich-table th{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#77828C}
+.timeline-item{display:flex;gap:10px;padding:9px 0}.timeline-item>span{width:8px;height:8px;border-radius:50%;background:#b07bf1;margin-top:5px}.timeline-item b{font-size:12px}.timeline-item small{display:block;color:#77828C;font-size:11px;margin-top:2px}
+.task-toolbar{display:flex;align-items:center;gap:8px;margin:15px 0 18px;flex-wrap:wrap}.filter-chip{border:1px solid #DCE2E7;border-radius:20px;padding:7px 11px;font-size:12px;background:#fff}.filter-chip.active{background:#EEF2F8;border-color:#C8D3E0;color:#272c36;font-weight:600}.filter-chip span{margin-left:5px;color:#b07bf1;font-weight:700}.compact{padding:7px 10px!important}
+.task-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.task-summary-grid>div{background:#fff;border:1px solid #E0E5E9;border-radius:7px;padding:12px}.task-summary-grid span{display:block;font-size:19px;font-weight:800;color:#272c36}.task-summary-grid small{font-size:11px;color:#77828C}
+.page-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}.page-head h1{margin-bottom:5px}.page-head p{margin:0;color:#737E89}
+.report-grid{grid-template-columns:repeat(3,1fr)}.report-stat small{display:block;color:#77828C;font-size:11px}.report-stat b{display:block;font-size:27px;color:#272c36;margin:8px 0 5px}.report-stat span{font-size:11px;color:#68737E}
+.report-bars>div{margin:15px 0}.report-bars label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px}.report-bars>div>span{display:block;height:7px;background:#EDF0F3;border-radius:8px;overflow:hidden}.report-bars i{display:block;height:100%;background:#272c36;border-radius:8px}
+@media(max-width:850px){.tf-extra-grid,.client-rich-grid,.report-grid{grid-template-columns:1fr}.task-summary-grid{grid-template-columns:1fr 1fr}}
+</style>
+
+
+
+
+
+<style>
+/* v44 — consolidated structural repair */
+main.shell{
+  width:100%;
+  max-width:1180px;
+  margin:0 auto;
+  padding:28px 28px 44px;
+}
+#home .tf-extra-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:18px;
+  width:100%;
+  margin:18px 0 0;
+}
+#home .tf-extra-grid > .card{
+  width:100%;
+  min-width:0;
+  margin:0;
+}
+#teamWorkload i[style*="width"]{
+  background:#272c36 !important;
+}
+#home .pagehead .primary,
+#createWorkBtn,
+#saveWork{
+  background:#9f67e7 !important;
+  border-color:#9f67e7 !important;
+  color:#fff !important;
+}
+#home .pagehead .primary:hover,
+#createWorkBtn:hover,
+#saveWork:hover{
+  background:#8f59d7 !important;
+  border-color:#8f59d7 !important;
+}
+@media(max-width:850px){
+  #home .tf-extra-grid{grid-template-columns:1fr}
+}
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* v45 — modern typography, lighter controls, larger iconography, refined cards */
+
+/* Modern Google font: Manrope gives TaskFlow a distinct contemporary SaaS feel. */
+html,body,button,input,select,textarea{
+  font-family:"Manrope","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+}
+body{
+  font-weight:400 !important;
+  letter-spacing:-.01em;
+}
+
+/* Navbar: deliberately regular-weight, with larger Lineicons. */
+.nav button,
+.nav button.active,
+.nav button:hover{
+  font-weight:400 !important;
+  letter-spacing:0 !important;
+}
+.nav button .lni{
+  font-size:18px !important;
+  margin-right:8px !important;
+  vertical-align:-2px !important;
+}
+.nav button.active{
+  font-weight:400 !important;
+}
+
+/* Create Work / Create Task family: no bold text. */
+#home .pagehead .primary,
+#createWorkBtn,
+#saveWork,
+button[data-action="create-work"],
+.create-work-cta{
+  font-weight:400 !important;
+  letter-spacing:0 !important;
+}
+#home .pagehead .primary .lni,
+#createWorkBtn .lni,
+#saveWork .lni,
+.create-work-cta .lni{
+  font-size:17px !important;
+}
+
+/* Slightly larger app-level icons without making the interface noisy. */
+.appbar .iconbtn .lni{font-size:18px !important}
+.logo .lni{font-size:20px !important}
+.card h2 .lni,
+.card h3 .lni,
+.card-head-row h3 .lni{
+  font-size:18px !important;
+  margin-right:8px !important;
+  vertical-align:-2px !important;
+}
+
+/* Refined dashboard cards: cleaner border, softer depth, better spacing. */
+.card,
+.stat,
+.clientrow,
+.clienthead{
+  background:#FFFFFF !important;
+  border:1px solid #E3E8EE !important;
+  box-shadow:
+    0 1px 2px rgba(10,34,87,.025),
+    0 7px 22px rgba(10,34,87,.045) !important;
+}
+.card{
+  border-radius:12px !important;
+  padding:22px !important;
+}
+.stat{
+  border-radius:12px !important;
+  padding:20px 21px !important;
+}
+.card:hover{
+  border-color:#D5DEE8 !important;
+  box-shadow:
+    0 2px 4px rgba(10,34,87,.03),
+    0 10px 28px rgba(10,34,87,.06) !important;
+}
+
+/* More polished card hierarchy. */
+.card h2,
+.card h3{
+  color:#17252A;
+  font-weight:650 !important;
+  letter-spacing:-.025em;
+}
+.card h2{
+  font-size:16px !important;
+  margin-bottom:17px !important;
+}
+.stat b{
+  font-size:28px !important;
+  font-weight:650 !important;
+  color:#14202A;
+}
+.stat span{
+  margin-top:3px;
+  display:inline-block;
+}
+.stat > i{
+  margin-left:3px;
+}
+
+/* Tables breathe a little more and feel less spreadsheet-like. */
+.card th{
+  color:#7A8491 !important;
+  font-size:10px !important;
+  font-weight:600 !important;
+  letter-spacing:.07em !important;
+  padding:9px 8px 11px !important;
+}
+.card td{
+  padding:13px 8px !important;
+  font-size:13px !important;
+}
+.card tbody tr:last-child td{
+  border-bottom:0 !important;
+}
+.card tbody tr:hover{
+  background:#FAFBFC;
+}
+
+/* Activity and operational rows get cleaner hover affordance. */
+.activity,
+.request-row,
+.attention-row{
+  border-color:#EEF1F4 !important;
+}
+.activity{
+  padding:12px 2px !important;
+}
+.activity:hover,
+.request-row:hover,
+.attention-row:hover{
+  background:#FAFBFC;
+}
+
+/* Icon tiles are a touch larger and more deliberate. */
+.activity .ico{
+  width:34px !important;
+  height:34px !important;
+  border-radius:9px !important;
+  background:#EEF2F8 !important;
+}
+.activity .ico .lni{
+  font-size:17px !important;
+}
+
+/* Preserve magenta as purposeful secondary emphasis. */
+.card-head-row h3 i,
+.welcomeOutcomeGrid i,
+.transferNote i{
+  color:#b07bf1 !important;
+}
+
+/* Workload chart stays brand-neutral/navy. */
+#teamWorkload i[style*="width"]{
+  background:#272c36 !important;
+}
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* v46 — Plus Jakarta Sans + stronger controls + richer learning iconography */
+
+html,body,button,input,select,textarea{
+  font-family:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+}
+
+/* Slightly thicker than v45, without returning to heavy/bold navigation. */
+.nav button,
+.nav button.active,
+.nav button:hover{
+  font-weight:500 !important;
+  font-size:14px !important;
+}
+.nav button.active{
+  font-weight:500 !important;
+}
+.nav button .lni{
+  font-size:19px !important;
+  margin-right:9px !important;
+}
+
+/* Create Work: medium weight, not bold. */
+#home .pagehead .primary,
+#createWorkBtn,
+#saveWork,
+button[data-action="create-work"],
+.create-work-cta{
+  font-family:"Plus Jakarta Sans",sans-serif !important;
+  font-weight:500 !important;
+}
+#home .pagehead .primary .lni,
+#createWorkBtn .lni,
+#saveWork .lni{
+  font-size:18px !important;
+  margin-right:6px !important;
+}
+
+/* Help & Learning title/icon */
+.drawer h2{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+.drawer h2 > .lni{
+  font-size:21px !important;
+  color:#b07bf1 !important;
+}
+
+/* Start / Done become compact icon-label controls. */
+.drawer button.start,
+.drawer .start,
+.lesson button{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:7px !important;
+  font-weight:500 !important;
+}
+.drawer button.start .lni,
+.drawer .start .lni,
+.lesson button .lni{
+  font-size:16px !important;
+}
+.drawer .lesson.done button .lni,
+.drawer .lesson.done .start .lni{
+  color:#b07bf1 !important;
+}
+
+/* More useful icons in the learning path, but keep them visually subordinate. */
+.drawer .lesson .meta .lni,
+.drawer .lesson small .lni{
+  font-size:14px !important;
+  color:#7B8794 !important;
+  margin-right:5px !important;
+  vertical-align:-1px !important;
+}
+.drawer .pathIcon{
+  width:38px !important;
+  height:38px !important;
+  border-radius:9px !important;
+}
+.drawer .pathIcon .lni{
+  font-size:18px !important;
+}
+
+/* Guide controls get larger icons for faster scanning. */
+#backBtn .lni,
+#nextBtn .lni,
+#exitBtn .lni,
+#hintBtn .lni{
+  font-size:16px !important;
+}
+
+/* Keep headings modern and slightly tighter with the new font. */
+h1,h2,h3{
+  letter-spacing:-.025em !important;
+}
+.card h2,.card h3{
+  font-weight:600 !important;
+}
+</style>
+
+
+<style>
+/* v47 — stronger navigation + elevated SaaS card system */
+
+/* Navbar: stronger visual authority without becoming extra-bold */
+.nav button,
+.nav button.active,
+.nav button:hover{
+  font-weight:600 !important;
+}
+.nav button.active{
+  font-weight:700 !important;
+}
+.nav button .lni{
+  font-size:19px !important;
+}
+
+/* Keep Create Work slightly lighter than active nav, but clearly actionable */
+#home .pagehead .primary,
+#createWorkBtn,
+#saveWork,
+button[data-action="create-work"],
+.create-work-cta{
+  font-weight:600 !important;
+}
+
+/* Base card system */
+.card,
+.stat{
+  position:relative;
+  background:#FFFFFF !important;
+  border:1px solid #E2E7ED !important;
+  border-radius:14px !important;
+  box-shadow:
+    0 1px 2px rgba(10,34,87,.025),
+    0 8px 24px rgba(10,34,87,.045) !important;
+  transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+}
+.card{
+  padding:22px !important;
+}
+.card:hover{
+  border-color:#D4DDE7 !important;
+  box-shadow:
+    0 2px 4px rgba(10,34,87,.035),
+    0 12px 30px rgba(10,34,87,.065) !important;
+}
+
+/* Dashboard metric cards: add a small brand cue rather than a heavy colored border */
+.stat{
+  overflow:hidden;
+  padding:20px 21px !important;
+}
+.stat::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:3px;
+  background:#272c36;
+}
+.stat:nth-child(3)::before{
+  background:#b07bf1;
+}
+.stat b{
+  font-size:28px !important;
+  line-height:1.1 !important;
+  font-weight:700 !important;
+  letter-spacing:-.035em !important;
+}
+
+/* Card headings get clearer visual hierarchy */
+.card h2,
+.card h3{
+  display:flex;
+  align-items:center;
+  color:#17252A !important;
+  font-weight:650 !important;
+  letter-spacing:-.025em !important;
+}
+.card h2{
+  font-size:16px !important;
+  margin:0 0 17px !important;
+}
+.card h2 .lni,
+.card h3 .lni{
+  color:#272c36 !important;
+  font-size:18px !important;
+}
+
+/* Operational card headings use magenta as a secondary visual cue */
+.operational-card .card-head-row h3 .lni,
+.client-rich-grid .card-head-row h3 .lni{
+  color:#b07bf1 !important;
+}
+
+/* Tables feel like content inside cards rather than raw grids */
+.card table{
+  width:100%;
+}
+.card th{
+  background:#FAFBFC;
+  border-top:1px solid #EDF0F3 !important;
+  border-bottom:1px solid #E6EAEF !important;
+  padding:10px 9px !important;
+}
+.card td{
+  padding:13px 9px !important;
+  border-bottom:1px solid #EEF1F4 !important;
+}
+.card tbody tr{
+  transition:background .15s ease;
+}
+.card tbody tr:hover{
+  background:#F8FAFC !important;
+}
+
+/* Activity cards/rows */
+.activity{
+  border-radius:8px;
+  margin:0 -7px;
+  padding:11px 7px !important;
+}
+.activity:hover{
+  background:#F8FAFC !important;
+}
+.activity .ico{
+  width:36px !important;
+  height:36px !important;
+  border-radius:10px !important;
+  background:#EEF2F8 !important;
+  color:#272c36 !important;
+}
+
+/* Incoming Requests / Needs Attention: make these feel like true dashboard modules */
+#home .tf-extra-grid .card{
+  padding:20px !important;
+}
+#home .tf-extra-grid .card-head-row{
+  padding-bottom:12px;
+  margin-bottom:0 !important;
+  border-bottom:1px solid #EEF1F4;
+}
+.request-row,
+.attention-row{
+  padding:12px 3px !important;
+}
+.request-row:hover,
+.attention-row:hover{
+  background:#FAFBFC !important;
+}
+
+/* Client cards */
+.clientrow{
+  border-radius:12px !important;
+  transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+}
+.clientrow:hover{
+  border-color:#CBD6E2 !important;
+  box-shadow:0 8px 24px rgba(10,34,87,.055) !important;
+  transform:translateY(-1px);
+}
+
+/* Workload card: slightly more breathing room */
+#teamWorkload .load{
+  margin-bottom:14px !important;
+}
+#teamWorkload .load:last-child{
+  margin-bottom:0 !important;
+}
+#teamWorkload .bar{
+  height:7px !important;
+  border-radius:10px !important;
+  background:#ECEFF3 !important;
+}
+#teamWorkload .bar i{
+  border-radius:10px !important;
+}
+</style>
+
+
+<style>
+/* v48 — stronger navigation and Help & Learning typography */
+.nav button,.nav button:hover{font-weight:650 !important}
+.nav button.active{font-weight:750 !important}
+
+/* Help & Learning top navigation control */
+#helpBtn,.helpLearningBtn,button[aria-label*="Help"]{font-weight:650 !important}
+#helpBtn .lni,.helpLearningBtn .lni{font-size:19px !important}
+
+/* Learning drawer hierarchy */
+.drawer h2{font-weight:750 !important;letter-spacing:-.025em !important}
+.drawer h3,.drawer .sectionTitle,.drawer .pathTitle{font-weight:700 !important}
+.drawer .lesson b,.drawer .lesson strong,.drawer .lesson .title,.drawer .lessonTitle{font-weight:650 !important}
+.drawer .lesson small,.drawer .lesson .meta,.drawer .lesson p{font-weight:450 !important}
+.drawer button.start,.drawer .start,.drawer .lesson button{font-weight:650 !important}
+.drawer .category,.drawer .category button,.drawer .tabs button,.drawer .drawerNav button{font-weight:600 !important}
+
+/* Learning icons */
+.drawer .pathIcon{width:40px !important;height:40px !important}
+.drawer .pathIcon .lni{font-size:19px !important}
+.drawer h2>.lni{font-size:22px !important;color:#b07bf1 !important}
+</style>
+
+
+<style>
+/* v50 — complete the Client Overview so learning targets match the interface */
+.client-support-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-top:18px;
+}
+.client-support-card{min-width:0}
+.support-card-heading{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  padding-bottom:15px;
+  border-bottom:1px solid #EDF0F3;
+  margin-bottom:2px;
+}
+.support-card-heading h2{margin:0 0 4px !important}
+.support-card-heading p{
+  margin:0;
+  color:#77818D;
+  font-size:12px;
+  line-height:1.5;
+}
+.support-icon{
+  width:36px;height:36px;flex:0 0 36px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:9px;
+  background:#EEF2F8;color:#272c36;
+}
+.support-icon .lni{font-size:18px}
+.contact-row,.document-row,.recurring-row,.note-row{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:13px 2px;
+  border-bottom:1px solid #EEF1F4;
+}
+.contact-row:last-child,.document-row:last-child,.recurring-row:last-child,.note-row:last-child{border-bottom:0}
+.contact-avatar{
+  width:34px;height:34px;flex:0 0 34px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:50%;
+  background:#fbe4ff;color:#8a55d1;
+  font-size:11px;font-weight:700;
+}
+.contact-copy,.document-row>div,.recurring-row>div,.note-row>div{
+  display:flex;flex-direction:column;gap:3px;min-width:0;
+}
+.contact-copy strong,.document-row strong,.recurring-row strong,.note-row strong{
+  font-size:12px;font-weight:650;color:#1E2A32;
+}
+.contact-copy span,.document-row span,.recurring-row span,.note-row span{
+  font-size:11px;color:#7A8491;
+}
+.contact-tag,.due-label{
+  margin-left:auto;
+  white-space:nowrap;
+  font-size:10px;
+  font-weight:600;
+  color:#272c36;
+  background:#EEF2F8;
+  border-radius:999px;
+  padding:5px 8px;
+}
+.document-row>.lni{
+  width:34px;height:34px;flex:0 0 34px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:8px;background:#F7F8FA;color:#272c36;font-size:17px;
+}
+.note-dot{
+  width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#b07bf1;
+}
+@media(max-width:850px){.client-support-grid{grid-template-columns:1fr}}
+</style>
+
+
+<style>
+/* v51 — realistic professional-services client overview */
+.client-support-grid{align-items:stretch}
+.client-support-card{padding:0 !important;overflow:hidden}
+.support-card-heading{
+  min-height:72px;padding:18px 20px !important;margin:0 !important;
+  align-items:center !important;background:#FBFCFD;
+}
+.support-heading-copy{flex:1;min-width:0}
+.support-heading-copy h2{font-size:15px !important;margin:0 0 3px !important}
+.support-heading-copy p{font-size:11px !important}
+.support-icon{
+  width:38px !important;height:38px !important;flex-basis:38px !important;
+  background:#EEF2F8 !important;border:1px solid #E1E7EF;
+}
+.support-icon .lni{font-size:19px !important}
+.card-action,.text-action,.row-more{
+  font-family:inherit;border:0;background:transparent;cursor:pointer;color:#272c36;
+}
+.card-action{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 9px;border:1px solid #DDE4EC;border-radius:7px;background:#fff;
+  font-size:11px;font-weight:600;
+}
+.card-action .lni{font-size:13px}
+.row-more{
+  width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+  border-radius:7px;color:#7A8491;flex:0 0 30px;
+}
+.row-more:hover,.card-action:hover{background:#F4F6F9}
+.contact-row,.document-row,.recurring-row{
+  margin:0 20px;padding:15px 0 !important;
+}
+.contact-avatar{
+  width:38px !important;height:38px !important;flex-basis:38px !important;
+  border-radius:10px !important;background:#fbe4ff !important;
+}
+.contact-avatar.alt{background:#EEF2F8 !important;color:#272c36 !important}
+.contact-copy{flex:1}
+.person-line{display:flex;align-items:center;gap:8px}
+.person-line .contact-tag{margin:0 !important}
+.contact-details{
+  display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;
+}
+.contact-details span{
+  display:inline-flex;align-items:center;gap:5px;font-size:10px !important;color:#7B8794 !important;
+}
+.contact-details .lni{font-size:11px;color:#98A2AE}
+.file-icon,.work-type-icon,.timeline-icon{
+  width:34px;height:34px;flex:0 0 34px;display:flex;align-items:center;justify-content:center;
+  border-radius:8px;background:#F3F6FA;color:#272c36;
+}
+.file-icon .lni,.work-type-icon .lni,.timeline-icon .lni{font-size:16px}
+.document-row>div:nth-child(2),.recurring-row>div:nth-child(2){flex:1}
+.file-size{font-size:10px !important;color:#98A2AE !important;white-space:nowrap}
+.next-date{
+  margin-left:auto;text-align:right;display:flex !important;flex-direction:column;gap:2px !important;
+}
+.next-date small{font-size:9px;color:#98A2AE;text-transform:uppercase;letter-spacing:.06em}
+.next-date strong{font-size:11px !important;color:#1E2A32}
+.recurring-row span{display:flex;align-items:center;gap:5px}
+.recurring-row span .lni{font-size:11px}
+.text-action{
+  display:flex;align-items:center;gap:6px;
+  margin:2px 20px 16px;padding:7px 0;font-size:11px;font-weight:600;
+}
+.text-action .lni{font-size:12px}
+.timeline{padding:5px 20px 2px}
+.timeline-item{
+  position:relative;display:flex;gap:12px;padding:12px 0;
+}
+.timeline-item:not(:last-child)::after{
+  content:"";position:absolute;left:16px;top:46px;bottom:-4px;width:1px;background:#E5E9EE;
+}
+.timeline-item>div:last-child{min-width:0}
+.timeline-item strong{display:block;font-size:12px;font-weight:650;color:#1E2A32}
+.timeline-item p{margin:3px 0;font-size:11px;line-height:1.45;color:#5E6975}
+.timeline-item span{font-size:10px;color:#98A2AE}
+.timeline-icon{position:relative;z-index:1;background:#fbe4ff;color:#8f59d7}
+</style>
+
+
+<style>
+/* v65 — Managing Clients: concise point-of-need performance support */
+.helpDivider{height:8px;background:#F2F4F7;border-top:1px solid #E3E7EC;border-bottom:1px solid #E3E7EC}
+.clientLibraryIntro{padding-top:18px !important;padding-bottom:15px !important}
+.libraryHeading{display:flex;gap:11px;align-items:flex-start}
+.libraryIcon{
+ width:35px;height:35px;flex:0 0 35px;border-radius:9px;
+ display:flex;align-items:center;justify-content:center;
+ background:#EEF2F8;color:#272c36;border:1px solid #E0E6EE
+}
+.libraryIcon .lni{font-size:17px}
+.clientResource{align-items:flex-start !important;padding-top:13px !important;padding-bottom:13px !important}
+.resourceIcon{
+ width:30px;height:30px;flex:0 0 30px;border-radius:8px;
+ display:flex;align-items:center;justify-content:center;
+ background:#F4F6F9;color:#272c36;margin-right:0
+}
+.resourceIcon .lni{font-size:14px}
+.resourceCopy{flex:1;min-width:0}
+.resourceCopy>b{display:block;margin-bottom:2px}
+.resourceCopy>span{display:block}
+.resourceCopy p{
+ margin:4px 0 0;color:#697681;font-size:10.5px;line-height:1.38
+}
+.clientResource:nth-of-type(4) .resourceIcon{background:#fbe4ff;color:#9f67e7}
+.clientResource button{margin-top:1px}
+</style>
+
+
+<style>
+/* v66 — collapsible learning groups + consistent visual-cue system */
+.helpGroup{border-bottom:1px solid #E5E9EE;background:#fff}
+.helpGroupToggle{
+ width:100%;border:0;background:#fff;padding:15px 18px;
+ display:flex;align-items:center;justify-content:space-between;gap:12px;
+ font-family:inherit;text-align:left;cursor:pointer;color:#1C2932
+}
+.helpGroupToggle:hover{background:#FAFBFC}
+.helpGroupTitle{display:flex;align-items:center;gap:11px;min-width:0}
+.helpGroupTitle h3{margin:0 0 2px !important;font-size:13px !important;font-weight:700 !important}
+.helpGroupTitle span{display:block;color:#7B8794;font-size:10.5px;line-height:1.35}
+.groupIcon{
+ width:34px;height:34px;flex:0 0 34px;border-radius:9px;
+ display:flex;align-items:center;justify-content:center;
+ background:#EEF2F8;color:#272c36;border:1px solid #E0E6EE
+}
+.groupIcon .lni{font-size:17px}
+.groupChevron{font-size:13px;color:#87929E;flex:0 0 auto}
+.helpGroupPanel[hidden]{display:none !important}
+.compactIntro{padding-top:4px !important;padding-bottom:13px !important}
+.compactIntro p{margin-top:0 !important}
+
+/* Learning-type icons are semantic and consistent:
+   tour=map, walkthrough=mouse, quick guide=bolt. */
+.clientResource .resourceIcon{
+ background:#F4F6F9 !important;color:#272c36 !important
+}
+.clientResource .resourceIcon .lni{font-size:14px !important}
+
+/* Metadata uses normal title case and lighter visual weight */
+.lesson span,.resourceCopy>span{
+ text-transform:none !important;
+ letter-spacing:0 !important;
+ font-weight:500 !important;
+}
+
+/* Remove obsolete divider/introduction styling from v65 */
+.helpDivider,.clientLibraryIntro{display:none !important}
+</style>
+
+
+<style>
+/* v67 — larger, more readable Help & Learning experience */
+
+/* Drawer width and base reading size */
+.drawer{width:390px !important}
+.drawerBody{font-size:13px !important}
+
+/* Main drawer title */
+.drawerHead h2{
+  font-size:19px !important;
+  font-weight:750 !important;
+}
+.drawerHead p{
+  font-size:12px !important;
+  line-height:1.45 !important;
+}
+
+/* Group headers */
+.helpGroupToggle{
+  padding:18px 20px !important;
+}
+.helpGroupTitle{gap:13px !important}
+.helpGroupTitle h3{
+  font-size:15px !important;
+  font-weight:700 !important;
+  margin-bottom:3px !important;
+}
+.helpGroupTitle span{
+  font-size:12px !important;
+  line-height:1.4 !important;
+}
+.groupIcon{
+  width:40px !important;
+  height:40px !important;
+  flex-basis:40px !important;
+  border-radius:10px !important;
+}
+.groupIcon .lni{font-size:19px !important}
+.groupChevron{font-size:15px !important}
+
+/* Intro/supporting copy */
+.compactIntro{
+  padding:5px 20px 15px !important;
+}
+.compactIntro p{
+  font-size:12px !important;
+  line-height:1.5 !important;
+}
+
+/* Lesson/resource rows */
+.lesson,
+.clientResource{
+  padding:15px 20px !important;
+  gap:12px !important;
+}
+.lesson .num,
+.resourceIcon{
+  width:34px !important;
+  height:34px !important;
+  min-width:34px !important;
+  flex-basis:34px !important;
+}
+.resourceIcon .lni{
+  font-size:16px !important;
+  line-height:1 !important;
+}
+.lesson b,
+.resourceCopy>b{
+  font-size:13px !important;
+  font-weight:650 !important;
+  line-height:1.35 !important;
+}
+.lesson span,
+.resourceCopy>span{
+  font-size:10.5px !important;
+  line-height:1.45 !important;
+  margin-top:3px !important;
+}
+.resourceCopy p{
+  font-size:11.5px !important;
+  line-height:1.48 !important;
+  margin-top:6px !important;
+  color:#65727E !important;
+}
+.lesson button,
+.clientResource button{
+  font-size:11px !important;
+  font-weight:650 !important;
+  padding:8px 10px !important;
+}
+
+/* Progress information */
+.progressmeta{
+  font-size:10.5px !important;
+  margin-top:7px !important;
+}
+
+/* More breathing room between learning type icon and metadata */
+.lesson span .lni,
+.resourceCopy>span .lni{
+  font-size:12px !important;
+  margin-right:5px !important;
+  vertical-align:-1px;
+}
+
+/* Mobile: drawer can still fit viewport */
+@media(max-width:520px){
+  .drawer{width:min(390px,100vw) !important}
+}
+</style>
+
+
+<style>
+/* v70 — navigation-target tooltip placement
+   Navigation guidance appears below the navy bar so the pointer remains
+   visually distinct and the target is not obscured. */
+#tooltipBox.navBelow::before{
+  content:"";
+  position:absolute;
+  top:-9px;
+  left:50%;
+  transform:translateX(-50%);
+  width:0;height:0;
+  border-left:9px solid transparent;
+  border-right:9px solid transparent;
+  border-bottom:9px solid #272c36;
+  border-top:0;
+}
+#tooltipBox.navBelow::after{
+  display:none !important;
+}
+</style>
+
+
+<style>
+/* v71 — GLOBAL navigation-tooltip rule */
+#tooltipBox.navTooltipBelow{
+  margin:0 !important;
+  transform:none !important;
+  z-index:10000 !important;
+}
+#tooltipBox.navTooltipBelow::before{
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  top:-10px !important;
+  bottom:auto !important;
+  left:50% !important;
+  right:auto !important;
+  transform:translateX(-50%) !important;
+  width:0 !important;
+  height:0 !important;
+  border-left:10px solid transparent !important;
+  border-right:10px solid transparent !important;
+  border-bottom:10px solid #272c36 !important;
+  border-top:0 !important;
+}
+#tooltipBox.navTooltipBelow::after{
+  display:none !important;
+  content:none !important;
+}
+</style>
+
+
+<style>
+/* v75 — Actual Lineicons V2 icon system (FreeIcons-era collection) */
+.lni{
+  speak:none;
+  font-style:normal;
+}
+.nav .lni{
+  font-size:16px;
+  margin-right:5px;
+  vertical-align:-1px;
+}
+button .lni{vertical-align:-1px}
+.groupIcon .lni{font-size:18px !important}
+.resourceIcon .lni{font-size:15px !important}
+.lesson span .lni,
+.resourceCopy>span .lni{
+  font-size:12px !important;
+  width:14px;
+  display:inline-block;
+  text-align:center;
+  margin-right:5px !important;
+}
+</style>
+
+
+<style>
+/* v76 — Managing Clients intro follows Getting Started content rhythm */
+#guide.centered #gtext{line-height:1.58}
+#guide.centered #gtext b{font-weight:700}
+</style>
+
+
+<style>
+/* v77 — consistent content rhythm for all Managing Clients guides */
+#guide.centered #gtext{line-height:1.6 !important}
+#guide.centered #gtext b,
+#tooltipBox #ttText b{font-weight:700 !important}
+#guide.centered .clientResourceActions{
+  margin-top:26px !important;
+}
+#tooltipBox #ttText{line-height:1.58 !important}
+</style>
+
+
+<style>
+/* v78 — one entry-action vocabulary across learning experiences */
+#guide.centered .clientResourceActions{
+  display:flex !important;
+  justify-content:flex-end !important;
+  align-items:center;
+  gap:10px;
+  margin-top:26px !important;
+}
+#guide.centered .clientResourceActions .secondary{
+  margin-right:auto;
+}
+</style>
+
+
+<style>
+/* v79 — consistent entry actions across Getting Started + all Help resources */
+#guide.centered .centerGuideActions,
+#guide.centered .clientResourceActions{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+  gap:10px !important;
+  margin-top:26px !important;
+}
+#guide.centered #gback,
+#guide.centered .clientResourceActions .secondary{
+  margin-right:auto !important;
+}
+#guide.centered #gnext,
+#guide.centered .clientResourceActions .primary{
+  min-width:82px;
+}
+</style>
+
+
+<style>
+/* v80 — universal centered-guide spacing + action icons */
+#guide.centered #gtext{
+  margin-top:14px !important;
+  line-height:1.58 !important;
+}
+#guide.centered #gtext br + br{
+  display:block;
+  content:"";
+  margin-top:14px !important;
+}
+#guide.centered .centerGuideActions,
+#guide.centered .clientResourceActions{
+  margin-top:28px !important;
+  padding-top:0 !important;
+  min-height:40px;
+}
+#guide.centered #gback,
+#guide.centered #gnext,
+#guide.centered .clientResourceActions button{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:8px !important;
+  min-height:40px !important;
+  padding:9px 14px !important;
+}
+#guide.centered #gback .lni,
+#guide.centered #gnext .lni,
+#guide.centered .clientResourceActions .lni{
+  font-size:13px !important;
+  margin:0 !important;
+}
+#guide.centered #gnext .lni,
+#guide.centered .clientResourceActions .primary .lni{
+  order:2;
+}
+</style>
+
+<link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+<style>.fi{display:inline-flex;align-items:center;justify-content:center;line-height:1;vertical-align:middle}.nav .fi,.helpBtn .fi{font-size:18px}button .fi{font-size:15px}.resourceIcon .fi{font-size:18px}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style id="taskflow-v88-authoritative-theme">
+:root{
+ --tf-black:#111111;
+ --tf-ink:#272c36;
+ --tf-purple:#b07bf1;
+ --tf-purple-hover:#9f67e7;
+ --tf-lavender:#cdb7ea;
+ --tf-pink:#fbe4ff;
+ --tf-bg:#eeeeee;
+ --tf-white:#ffffff;
+ --tf-line:#dedede;
+ --tf-muted:#6f7278;
+}
+html,body,button,input,select,textarea{font-family:"Montserrat",sans-serif!important}
+body{background:var(--tf-bg)!important;color:var(--tf-black)!important}
+
+/* GLOBAL BRAND: no legacy blue/magenta */
+.nav,.topbar,.appbar{background:var(--tf-white)!important;color:var(--tf-ink)!important;border-color:#e6e6e6!important}
+.logo,.brand,.nav a,.nav button,.navitem{color:var(--tf-ink)!important}
+.nav .active,.nav a:hover,.nav button:hover,.navitem.active{background:var(--tf-pink)!important;color:var(--tf-black)!important}
+.fi{color:currentColor!important}
+
+/* ALL PAGE SURFACES */
+.card,.panel,.client-card,.stat,.group,.resource,.clientHeader,.client-header,
+.modal-card,.practice-card,.request-card,.work-card,.task-card,.drawer,.helpDrawer{
+ background:var(--tf-white)!important;border-color:var(--tf-line)!important
+}
+h1,h2,h3,h4,.card-title,.resourceTitle{color:var(--tf-black)!important} #guide.centered #gtitle{color:#fff!important;-webkit-text-fill-color:#fff!important}
+.subtitle,.muted,.meta,.resourceMeta{color:var(--tf-muted)!important}
+
+/* PRIMARY PURPLE */
+.primary,.btn-primary,#createWorkBtn,#gnext,.clientResourceActions button:last-child,
+button.primary,.createWork,.create-work,.progress-fill,.active-indicator{
+ background:var(--tf-purple)!important;border-color:var(--tf-purple)!important;color:#fff!important
+}
+.primary:hover,.btn-primary:hover,#createWorkBtn:hover,#gnext:hover{
+ background:var(--tf-purple-hover)!important;border-color:var(--tf-purple-hover)!important
+}
+.secondary,.btn-secondary,#gback,.card-action{
+ background:#fff!important;color:var(--tf-ink)!important;border-color:#cfcfd2!important
+}
+.card-action:hover,.resource:hover,.groupHeader:hover,.clientrow:hover,.taskrow:hover,.workrow:hover{
+ background:var(--tf-pink)!important
+}
+
+/* TABS / SELECTION / ACCENTS */
+.tab.active{background:var(--tf-pink)!important;color:var(--tf-black)!important;border-bottom-color:var(--tf-purple)!important}
+.resourceIcon,.iconBox,.icon-box{background:var(--tf-pink)!important;color:var(--tf-ink)!important}
+.stat::before{background:var(--tf-purple)!important}
+.badge.progress,.pill.progress,.tag.progress{background:var(--tf-pink)!important;color:#65438e!important}
+
+/* FORMS */
+input,select,textarea,.searchbox{background:#fff!important;color:var(--tf-black)!important;border-color:#272727!important}
+input:focus,select:focus,textarea:focus{border-color:var(--tf-purple)!important;box-shadow:0 0 0 3px rgba(176,123,241,.18)!important}
+
+/* LEARNING EXPERIENCES */
+#tooltipBox{background:var(--tf-ink)!important;color:#fff!important}
+#tooltipBox #ttStep{color:var(--tf-lavender)!important}
+#tooltipBox #ttNext{background:var(--tf-purple)!important;border-color:var(--tf-purple)!important;color:#fff!important}
+#guide.centered{background:#fff!important;border-color:var(--tf-line)!important}
+#guide.centered::before{background:var(--tf-purple)!important}
+#gtitle{color:var(--tf-black)!important}
+
+/* MODALS / OVERLAYS */
+.modal{background:rgba(39,44,54,.34)!important}
+
+/* Strong final overrides for legacy inline/component brand colors */
+[style*="#0a2257"],[style*="#071a45"]{color:var(--tf-ink)!important;border-color:var(--tf-ink)!important}
+[style*="#ec007a"],[style*="#c90069"],[style*="#a90059"],[style*="#9e0051"]{color:var(--tf-purple)!important;border-color:var(--tf-purple)!important}
+::selection{background:var(--tf-pink)!important;color:var(--tf-black)!important}
+</style>
+
+<style id="taskflow-v89-ui-polish">
+/* ===== v89: navbar consistency + guide/modal composition ===== */
+:root{
+ --ui-ink:#272c36;
+ --ui-black:#111111;
+ --ui-purple:#b07bf1;
+ --ui-purple-hover:#9f67e7;
+ --ui-lilac:#fbe4ff;
+ --ui-line:#dedee2;
+}
+
+/* NAVBAR: one icon/text system on every view */
+.nav{height:68px!important;min-height:68px!important;padding:0 26px!important}
+.navlinks{display:flex!important;align-items:center!important;gap:8px!important;height:100%!important}
+.nav a,.nav button,.navitem{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ gap:9px!important;height:42px!important;padding:0 12px!important;margin:0!important;
+ color:var(--ui-ink)!important;font-size:14px!important;font-weight:600!important;
+ line-height:1!important;border-radius:10px!important
+}
+.nav a .fi,.nav button .fi,.navitem .fi{
+ width:18px!important;height:18px!important;min-width:18px!important;
+ font-size:18px!important;line-height:18px!important;color:var(--ui-ink)!important;
+ margin:0!important;padding:0!important
+}
+.nav .active,.nav a.active,.navitem.active{
+ background:var(--ui-lilac)!important;color:var(--ui-black)!important
+}
+.nav .active .fi,.nav a.active .fi,.navitem.active .fi{color:var(--ui-black)!important}
+.helpBtn{
+ display:inline-flex!important;align-items:center!important;gap:9px!important;
+ height:42px!important;padding:0 13px!important;color:var(--ui-ink)!important
+}
+.helpBtn .fi{width:18px!important;min-width:18px!important;font-size:18px!important;margin:0!important}
+
+/* Create-work modal: cleaner, narrower and properly layered */
+#workModal .modal-card{
+ width:min(620px,calc(100vw - 48px))!important;
+ max-width:620px!important;padding:26px 28px!important;border-radius:18px!important;
+ background:#fff!important;box-shadow:0 26px 70px rgba(39,44,54,.22)!important
+}
+#workModal h2{margin:0 0 22px!important;font-size:25px!important}
+#workModal label{display:block!important;margin:0 0 8px!important;font-size:13px!important;font-weight:700!important}
+#workModal .field,#workModal .form-group{margin-bottom:17px!important}
+#workModal input,#workModal select,#workModal textarea{
+ width:100%!important;min-height:46px!important;font-size:15px!important;border-radius:10px!important;
+ padding:10px 13px!important;box-sizing:border-box!important
+}
+#workModal textarea{min-height:82px!important}
+#workModal .modal-actions{margin-top:22px!important;display:flex!important;justify-content:flex-end!important;gap:10px!important}
+#workModal .modal-actions button{min-height:42px!important;padding:0 17px!important}
+
+/* Guided tooltip: compact, readable, and never visually fused with a target */
+#tooltipBox{
+ width:360px!important;max-width:calc(100vw - 32px)!important;
+ padding:0!important;border-radius:14px!important;overflow:visible!important;
+ background:var(--ui-ink)!important;color:#fff!important;
+ box-shadow:0 18px 46px rgba(39,44,54,.26)!important
+}
+#tooltipBox .tooltipBody,#tooltipBox .ttBody{padding:18px 20px 16px!important}
+#ttStep{
+ padding:18px 20px 0!important;margin:0!important;
+ font-size:11px!important;line-height:1.3!important;letter-spacing:.08em!important;
+ color:#d9c4f4!important
+}
+#ttTitle{padding:0 20px!important;margin:8px 0 0!important;font-size:17px!important;line-height:1.35!important}
+#ttText{
+ padding:0 20px 18px!important;margin:14px 0 0!important;
+ font-size:14px!important;line-height:1.58!important;color:#fff!important
+}
+#tooltipBox .ttActions,#tooltipBox .tooltipActions{
+ min-height:54px!important;padding:9px 12px!important;border-top:1px solid rgba(255,255,255,.13)!important;
+ display:flex!important;align-items:center!important;gap:8px!important
+}
+#tooltipBox button{
+ min-height:36px!important;padding:0 11px!important;font-size:13px!important;
+ border-radius:8px!important;gap:7px!important
+}
+#ttExit{margin-right:auto!important;color:#eef0f3!important;background:transparent!important;border-color:transparent!important}
+#ttBack{color:#eef0f3!important;background:transparent!important;border-color:transparent!important}
+#ttNext{background:var(--ui-purple)!important;color:#fff!important;border-color:var(--ui-purple)!important}
+
+/* Keep tooltip separated from modal controls and make target state subtle */
+.highlight{
+ outline:3px solid rgba(176,123,241,.34)!important;
+ outline-offset:3px!important;border-radius:10px!important;
+ box-shadow:0 0 0 5px rgba(251,228,255,.38)!important
+}
+
+/* Modal overlay should not wash the guide itself out */
+.modal{background:rgba(39,44,54,.28)!important}
+#tooltipBox{z-index:10050!important}
+#guide{z-index:10050!important}
+
+/* Uniform icon/text rhythm in buttons throughout product */
+button .fi,.btn .fi,.card-action .fi{
+ width:16px!important;min-width:16px!important;height:16px!important;
+ font-size:16px!important;line-height:16px!important;margin:0!important
+}
+button,.btn,.card-action{gap:8px!important}
+</style>
+
+<style id="taskflow-v90-modal-fix">
+/* IMPORTANT: .modal is the white dialog itself; .modalwrap is the overlay. */
+.modalwrap{
+  background:rgba(39,44,54,.38)!important;
+  backdrop-filter:blur(1.5px)!important;
+}
+.modalwrap > .modal{
+  background:#fff!important;
+  opacity:1!important;
+  color:#111!important;
+  border:1px solid #e2e2e5!important;
+  box-shadow:0 28px 72px rgba(39,44,54,.22)!important;
+}
+
+/* Create Work dialog */
+#workModal > .modal{
+  width:620px!important;
+  max-width:calc(100vw - 48px)!important;
+  padding:26px 28px 24px!important;
+  border-radius:18px!important;
+}
+#workModal #modalTitle{
+  margin:0 0 22px!important;
+  font-size:25px!important;
+  line-height:1.25!important;
+  color:#111!important;
+}
+#workModal .request{
+  display:none!important; /* guided flow already establishes the scenario */
+}
+#workModal .formgrid{
+  margin-top:0!important;
+  gap:17px 16px!important;
+}
+#workModal .field label{
+  margin-bottom:7px!important;
+  color:#111!important;
+}
+#workModal .field input,
+#workModal .field select{
+  background:#fff!important;
+  color:#111!important;
+  opacity:1!important;
+}
+#workModal .field.full{grid-column:1/-1!important}
+#workModal #description{min-height:46px!important}
+#workModal #saveWork{background:#b07bf1!important;border-color:#b07bf1!important;color:#fff!important}
+#workModal #cancelWork{background:#fff!important;color:#272c36!important;border:1px solid #cfcfd2!important}
+
+/* Only independent practice gets a request brief inside the modal. */
+#workModal.practice-mode .request{
+  display:block!important;
+  background:#fbe4ff!important;
+  border-left:4px solid #b07bf1!important;
+  color:#272c36!important;
+  margin:0 0 20px!important;
+}
+</style>
+
+
+<style>
+/* v100 — Managing Work first resource */
+#workQueueCard{overflow:hidden}
+#workQueueCard table{margin-top:14px}
+#workQueueCard tbody tr{transition:background .15s ease}
+#workQueueCard tbody tr:hover{background:#FAF8FD}
+#workQueueCard .pill.accent{background:#F3EAFE !important;color:#6E42A8 !important}
+</style>
+</head>
+<body>
+<header class="appbar"><div class="brand"><div class="logo"><i class="fi fi-rr-layers"></i></div>TaskFlow</div><div class="search" id="globalSearch"><span>⌕</span><input placeholder="Search clients, work, tasks..."></div><div class="actions"><button class="iconbtn" id="helpBtn"><i class="fi fi-rr-book-open-cover" aria-hidden="true"></i> Help & Learning</button><button class="iconbtn notificationBtn" aria-label="Notifications" title="Notifications"><i class="fi fi-rr-bell" aria-hidden="true"></i></button><div class="avatar">AB</div></div></header>
+<nav class="nav"><button class="navbtn active" data-view="home"><i class="fi fi-rr-home"></i>Home</button><button class="navbtn" id="clientsNav" data-view="clients"><i class="fi fi-rr-users"></i>Clients</button><button class="navbtn" data-view="work"><i class="fi fi-rr-briefcase"></i>Work</button><button class="navbtn" id="tasksNav" data-view="tasks"><i class="fi fi-rr-checkbox-circle"></i>Tasks</button><button class="navbtn" data-view="reports"><i class="fi fi-rr-chart-histogram"></i>Reports</button></nav>
+<main class="shell">
+<section id="home" class="view active">
+ <div class="pagehead"><div><h1>Good afternoon, Alex</h1><p>Friday, September 18 · Summit Accounting</p></div><button class="primary"><i class="fi fi-rr-plus"></i> Create work</button></div>
+ <div class="stats"><div class="stat" id="openWork"><b>8</b><span>My open work</span><i>2 updated today</i></div><div class="stat" id="dueWeek"><b>3</b><span>Due this week</span><i>1 due today</i></div><div class="stat"><b>5</b><span><i class="fi fi-rr-checkbox-circle" aria-hidden="true"></i> Tasks due today</span><i>2 completed</i></div><div class="stat"><b>12</b><span>Active clients</span><i>1 new this month</i></div></div>
+ <div class="grid"><div class="card"><h2><i class="fi fi-rr-briefcase-1" aria-hidden="true"></i> My work</h2><table><thead><tr><th>Client</th><th>Work</th><th>Status</th><th>Due</th></tr></thead><tbody>
+ <tr><td class="link">Brightline Retail</td><td>Payroll Processing</td><td><span class="pill">In progress</span></td><td>Sep 21</td></tr><tr><td class="link">Acme Consulting</td><td>Quarterly Review</td><td><span class="pill yellow">Waiting</span></td><td>Sep 23</td></tr><tr><td class="link">Harbor & Co.</td><td>Tax Preparation</td><td><span class="pill green">Ready</span></td><td>Today</td></tr><tr><td class="link">Greenfield Labs</td><td>Monthly Close</td><td><span class="pill">In progress</span></td><td>Sep 25</td></tr></tbody></table></div>
+ <div class="card" id="activityCard"><h2><i class="fi fi-rr-pulse" aria-hidden="true"></i> Recent activity</h2><div class="activity"><div class="ico"><i class="fi fi-rr-checkbox-circle"></i></div><div><b>Maria completed a review</b><small>Brightline Retail · 18 min ago</small></div></div><div class="activity"><div class="ico"><i class="fi fi-rr-upload"></i></div><div><b>Client documents received</b><small>Northstar Foods · 42 min ago</small></div></div><div class="activity"><div class="ico"><i class="fi fi-rr-clock"></i></div><div><b>Due date updated</b><small>Acme Consulting · 1 hr ago</small></div></div><div class="activity"><div class="ico"><i class="fi fi-rr-comment-alt"></i></div><div><b>New client comment</b><small>Harbor & Co. · 2 hrs ago</small></div></div></div></div>
+ <div class="grid" style="margin-top:18px">
+   <div class="card">
+     <h2><i class="fi fi-rr-calendar" aria-hidden="true"></i> Upcoming deadlines</h2>
+     <table><thead><tr><th>Due</th><th>Client</th><th>Work</th><th>Owner</th></tr></thead><tbody>
+       <tr><td>Today</td><td class="link">Harbor & Co.</td><td>Tax Preparation</td><td>Alex Brown</td></tr>
+       <tr><td>Sep 20</td><td class="link">Northstar Foods</td><td>Payroll Processing</td><td>Daniel Cruz</td></tr>
+       <tr><td>Sep 21</td><td class="link">Brightline Retail</td><td>Payroll Processing</td><td>Alex Brown</td></tr>
+       <tr><td>Sep 23</td><td class="link">Acme Consulting</td><td>Quarterly Review</td><td>Maria Santos</td></tr>
+     </tbody></table>
+   </div>
+   <div class="card" id="teamWorkload">
+     <h2><i class="fi fi-rr-users" aria-hidden="true"></i> Team workload</h2>
+     <div style="display:grid;gap:14px">
+       <div><div style="display:flex;justify-content:space-between"><b>Maria Santos</b><span style="color:#6d7380">7 open</span></div><div style="height:8px;background:#eeeef2;border-radius:10px;margin-top:7px"><i style="display:block;width:70%;height:100%;background:#272c36;border-radius:10px"></i></div></div>
+       <div><div style="display:flex;justify-content:space-between"><b>Daniel Cruz</b><span style="color:#6d7380">5 open</span></div><div style="height:8px;background:#eeeef2;border-radius:10px;margin-top:7px"><i style="display:block;width:50%;height:100%;background:#272c36;border-radius:10px"></i></div></div>
+       <div><div style="display:flex;justify-content:space-between"><b>Alex Brown</b><span style="color:#6d7380">8 open</span></div><div style="height:8px;background:#eeeef2;border-radius:10px;margin-top:7px"><i style="display:block;width:80%;height:100%;background:#272c36;border-radius:10px"></i></div></div>
+     </div>
+   </div>
+ </div>
+<section class="tf-extra-grid">
+  <div class="card operational-card" id="incomingRequests">
+    <div class="card-head-row"><h3><i class="fi fi-rr-inbox-in"></i> Incoming requests</h3><a class="small-link">View all</a></div>
+    <div class="request-row"><span class="request-dot urgent"></span><div><b>Harbor & Co.</b><small>Q3 tax documents uploaded</small></div><span class="time">18m</span></div>
+    <div class="request-row"><span class="request-dot"></span><div><b>Northstar Foods</b><small>August bank statements received</small></div><span class="time">1h</span></div>
+    <div class="request-row"><span class="request-dot"></span><div><b>Brightline Retail</b><small>Monthly reporting request</small></div><span class="time">2h</span></div>
+    <div class="request-row"><span class="request-dot"></span><div><b>Acme Consulting</b><small>New contractor documents</small></div><span class="time">Yesterday</span></div>
+  </div>
+
+  <div class="card operational-card">
+    <div class="card-head-row"><h3><i class="fi fi-rr-triangle-warning"></i> Needs attention</h3><a class="small-link">Review</a></div>
+    <div class="attention-row"><span class="attention-num">3</span><div><b>Overdue tasks</b><small>Oldest is 2 days overdue</small></div></div>
+    <div class="attention-row"><span class="attention-num">2</span><div><b>Unassigned work</b><small>Ownership needs confirmation</small></div></div>
+    <div class="attention-row"><span class="attention-num">4</span><div><b>Waiting on client</b><small>Follow-up may be required</small></div></div>
+  </div>
+</section>
+</section>
+<section id="clients" class="view"><div class="pagehead"><div><h1>Clients</h1><p>Find and manage client relationships.</p></div><button class="primary"><i class="fi fi-rr-plus"></i> New client</button></div><div class="toolbar"><input id="clientSearch" placeholder="Search clients..."><button class="secondary">Filter</button></div><div>
+ <div class="clientrow" id="northstar" data-name="northstar foods"><div><h3>Northstar Foods</h3><p>Food & Beverage · Account manager: Maria Santos</p></div><span class="pill green">Active</span></div><div class="clientrow" id="brightline" data-name="brightline retail"><div><h3>Brightline Retail</h3><p>Retail · Account manager: Daniel Cruz</p></div><span class="pill green">Active</span></div><div class="clientrow" data-name="acme consulting"><div><h3>Acme Consulting</h3><p>Professional Services · Account manager: Maria Santos</p></div><span class="pill green">Active</span></div><div class="clientrow" data-name="greenfield labs"><div><h3>Greenfield Labs</h3><p>Technology · Account manager: Daniel Cruz</p></div><span class="pill green">Active</span></div></div></section>
+<section id="clientDetail" class="view"><div class="clienthead"><div style="display:flex;justify-content:space-between"><div><h1 id="clientName">Northstar Foods</h1><p style="color:#6d7380;margin:0">Food & Beverage · Active client</p></div><button class="primary" id="createWorkBtn"><i class="fi fi-rr-plus"></i> Create work</button></div><div class="tabs"><span class="on">Overview</span><span>Work</span><span>Tasks</span><span>Documents</span><span>Activity</span></div></div><div class="detailgrid"><div class="card details" id="clientDetailsCard"><h2>Client details</h2><dl><dt>Primary contact</dt><dd>Jordan Miller</dd><dt>Client since</dt><dd>March 2024</dd><dt>Account manager</dt><dd>Maria Santos</dd><dt>Services</dt><dd>Bookkeeping, Reporting, Payroll</dd></dl></div><div class="card" id="clientWorkCard"><h2>Active & recent work</h2><table><thead><tr><th>Work</th><th>Status</th><th>Assignee</th><th>Due</th></tr></thead><tbody><tr><td>August Bookkeeping</td><td><span class="pill green">Complete</span></td><td>Maria Santos</td><td>Sep 10</td></tr><tr><td>Payroll Processing</td><td><span class="pill">In progress</span></td><td>Daniel Cruz</td><td>Sep 20</td></tr></tbody></table></div>
+</div>
+
+
+<div class="client-support-grid">
+  <div class="card client-support-card" id="clientContacts">
+    <div class="support-card-heading">
+      <div class="support-icon"><i class="fi fi-rr-users"></i></div>
+      <div class="support-heading-copy">
+        <h2>Contacts</h2>
+        <p>Key people for day-to-day client communication</p>
+      </div>
+      <button class="card-action" id="addContactBtn" aria-label="Add contact"><i class="fi fi-rr-plus"></i> Add</button>
+    </div>
+
+    <div class="contact-row">
+      <div class="contact-avatar">JM</div>
+      <div class="contact-copy">
+        <div class="person-line"><strong>Jordan Miller</strong><span class="contact-tag">Primary</span></div>
+        <span>Finance Director</span>
+        <div class="contact-details">
+          <span><i class="fi fi-rr-envelope"></i> jordan.miller@northstar.example</span>
+          <span><i class="fi fi-rr-phone-call"></i> +1 312 555 0148</span>
+        </div>
+      </div>
+      <button class="row-more" aria-label="More contact options"><i class="fi fi-rr-menu-dots"></i></button>
+    </div>
+
+    <div class="contact-row">
+      <div class="contact-avatar alt">LC</div>
+      <div class="contact-copy">
+        <div class="person-line"><strong>Lisa Chen</strong></div>
+        <span>Payroll Manager</span>
+        <div class="contact-details">
+          <span><i class="fi fi-rr-envelope"></i> lisa.chen@northstar.example</span>
+          <span><i class="fi fi-rr-phone-call"></i> +1 312 555 0196</span>
+        </div>
+      </div>
+      <button class="row-more" aria-label="More contact options"><i class="fi fi-rr-menu-dots"></i></button>
+    </div>
+  </div>
+
+  <div class="card client-support-card" id="clientDocuments">
+    <div class="support-card-heading">
+      <div class="support-icon"><i class="fi fi-rr-folder"></i></div>
+      <div class="support-heading-copy">
+        <h2>Recent documents</h2>
+        <p>Latest files received or shared for active work</p>
+      </div>
+      <button class="card-action" id="uploadDocumentBtn"><i class="fi fi-rr-upload"></i> Upload</button>
+    </div>
+    <div class="document-row">
+      <div class="file-icon"><i class="fi fi-rr-archive"></i></div>
+      <div><strong>August Bank Statements.zip</strong><span>Client upload · Sep 17</span></div>
+      <span class="file-size">8.4 MB</span><button class="row-more"><i class="fi fi-rr-menu-dots"></i></button>
+    </div>
+    <div class="document-row">
+      <div class="file-icon"><i class="fi fi-rr-file-spreadsheet"></i></div>
+      <div><strong>Payroll Register - Aug.xlsx</strong><span>Lisa Chen · Sep 15</span></div>
+      <span class="file-size">426 KB</span><button class="row-more"><i class="fi fi-rr-menu-dots"></i></button>
+    </div>
+    <div class="document-row">
+      <div class="file-icon"><i class="fi fi-rr-file-pdf"></i></div>
+      <div><strong>Expense Receipts.pdf</strong><span>Client upload · Sep 12</span></div>
+      <span class="file-size">2.1 MB</span><button class="row-more"><i class="fi fi-rr-menu-dots"></i></button>
+    </div>
+    <button class="text-action"><i class="fi fi-rr-folder"></i> View all documents</button>
+  </div>
+
+  <div class="card client-support-card" id="clientRecurring">
+    <div class="support-card-heading">
+      <div class="support-icon"><i class="fi fi-rr-refresh"></i></div>
+      <div class="support-heading-copy">
+        <h2>Recurring work</h2>
+        <p>Services scheduled to repeat for this client</p>
+      </div>
+      <button class="card-action"><i class="fi fi-rr-plus"></i> Add</button>
+    </div>
+    <div class="recurring-row">
+      <div class="work-type-icon"><i class="fi fi-rr-book-open-cover"></i></div>
+      <div><strong>Monthly bookkeeping</strong><span><i class="fi fi-rr-user-4"></i> Maria Santos · Monthly</span></div>
+      <div class="next-date"><small>Next due</small><strong>Oct 10</strong></div>
+    </div>
+    <div class="recurring-row">
+      <div class="work-type-icon"><i class="fi fi-rr-wallet"></i></div>
+      <div><strong>Payroll processing</strong><span><i class="fi fi-rr-user-4"></i> Daniel Cruz · Twice monthly</span></div>
+      <div class="next-date"><small>Next due</small><strong>Sep 30</strong></div>
+    </div>
+    <div class="recurring-row">
+      <div class="work-type-icon"><i class="fi fi-rr-chart-histogram"></i></div>
+      <div><strong>Monthly reporting</strong><span><i class="fi fi-rr-user-4"></i> Maria Santos · Monthly</span></div>
+      <div class="next-date"><small>Next due</small><strong>Oct 15</strong></div>
+    </div>
+  </div>
+
+  <div class="card client-support-card" id="clientActivity">
+    <div class="support-card-heading">
+      <div class="support-icon"><i class="fi fi-rr-pulse"></i></div>
+      <div class="support-heading-copy">
+        <h2>Recent activity</h2>
+        <p>Updates that may affect current client work</p>
+      </div>
+      <button class="card-action"><i class="fi fi-rr-pencil"></i> Add note</button>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-icon"><i class="fi fi-rr-upload"></i></div>
+        <div><strong>Bank statements received</strong><p>Northstar Foods uploaded August bank statements.</p><span>1 hour ago · Client portal</span></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-icon"><i class="fi fi-rr-calendar"></i></div>
+        <div><strong>Payroll timing confirmed</strong><p>Lisa Chen confirmed the September 30 processing date.</p><span>Yesterday · Daniel Cruz</span></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-icon"><i class="fi fi-rr-checkbox-circle"></i></div>
+        <div><strong>August bookkeeping completed</strong><p>Monthly bookkeeping was marked complete.</p><span>Sep 10 · Maria Santos</span></div>
+      </div>
+    </div>
+    <button class="text-action"><i class="fi fi-rr-arrow-right"></i> View full activity</button>
+  </div>
+</div>
+</section>
+<section id="work" class="view"><div class="pagehead"><div><h1>Work</h1><p>Manage client engagements and recurring work.</p></div></div><div class="card" id="workQueueCard"><h2>Work queue</h2><p style="color:#6d7380;margin-top:-6px">Review status, ownership, and deadlines across active client work.</p><table id="workQueueTable"><thead><tr><th>Work</th><th>Client</th><th>Owner</th><th>Status</th><th>Due</th><th></th></tr></thead><tbody><tr id="workRowNotStarted"><td><b>Q3 Sales Tax Filing</b></td><td>Northstar Foods</td><td><span id="workOwnerQ3">Daniel Cruz</span></td><td><span class="pill" id="workStatusNotStarted">Not started</span></td><td><span id="workDueQ3">Sep 23</span></td><td><button class="secondary work-edit-btn" id="editWorkQ3" type="button">Edit</button></td></tr><tr id="workRowInProgress"><td><b>September Payroll</b></td><td>Northstar Foods</td><td><span id="workOwnerPayroll">Maria Santos</span></td><td><span class="pill yellow" id="workStatusInProgress">In progress</span></td><td><span id="workDuePayroll">Sep 25</span></td><td><button class="secondary work-edit-btn" id="editWorkPayroll" type="button">Edit</button></td></tr><tr id="workRowWaiting"><td><b>Bank Reconciliation</b></td><td>Harbor Dental Group</td><td>Alex Brown</td><td><span class="pill accent" id="workStatusWaiting">Waiting on client</span></td><td>Sep 27</td><td></td></tr><tr id="workRowComplete"><td><b>August Monthly Close</b></td><td>Brightline Studio</td><td>Maria Santos</td><td><span class="pill green" id="workStatusComplete">Complete</span></td><td>Sep 15</td><td></td></tr></tbody></table></div></section>
+<section id="tasks" class="view"><div class="pagehead"><div><h1>Tasks</h1>
+<div class="task-toolbar">
+  <div class="filter-chip active"><i class="fi fi-rr-list"></i> My tasks <span>6</span></div>
+  <div class="filter-chip">Due today <span>3</span></div>
+  <div class="filter-chip">Overdue <span>2</span></div>
+  <div class="filter-chip">Waiting <span>4</span></div>
+  <button class="secondary compact"><i class="fi fi-rr-filter"></i> Filter</button>
+</div>
+<div class="task-summary-grid">
+  <div><span>6</span><small>Open tasks</small></div>
+  <div><span>3</span><small>Due today</small></div>
+  <div><span>2</span><small>Overdue</small></div>
+  <div><span>4</span><small>Waiting</small></div>
+</div>
+<p>Prioritize and update your assigned actions.</p></div></div><div class="card"><h2><i class="fi fi-rr-checkbox-circle" aria-hidden="true"></i> Tasks due today</h2><table><thead><tr><th>Task</th><th>Client</th><th>Status</th><th>Due</th></tr></thead><tbody><tr id="reviewTask"><td>Review Northstar documents</td><td>Northstar Foods</td><td><select id="taskStatus"><option>Not Started</option><option>In Progress</option><option>Complete</option></select></td><td>Today</td></tr><tr><td>Confirm payroll inputs</td><td>Brightline Retail</td><td><span class="pill">In progress</span></td><td>Today</td></tr></tbody></table></div></section>
+<section id="reports" class="view"><div class="pagehead"><div><h1>Reports</h1><p>Monitor workload and client activity.</p></div></div><div class="card"><h2>Reporting overview</h2><p style="color:#6d7380">Reporting is outside the Getting Started path.</p></div></section>
+</main>
+
+<div class="overlay" id="overlay"></div><aside class="drawer" id="drawer"><div class="drawerhead"><div class="row"><h2><i class="fi fi-rr-graduation-cap" aria-hidden="true"></i> Help &amp; Learning</h2><button class="close" id="closeDrawer">×</button></div><input class="helpsearch" placeholder="Search help and learning..."></div><div class="drawerbody" id="drawerBody"></div></aside>
+<div class="guide" id="guide"><div class="gbar"><i id="gprogress"></i></div><div class="gbody"><div class="eyebrow" id="glabel"></div><h3 id="gtitle"></h3><p id="gtext"></p><div class="gactions"><button id="exitGuide">Exit</button><button id="hintGuide">Need a hint?</button></div></div></div>
+
+
+
+<div class="modalwrap" id="welcomeModal"><div class="modal welcomeModal welcome3">
+  <div class="welcomeHero">
+    <div class="tag" id="welcomeStepLabel">Getting Started · 1 of 3</div>
+    <h2 id="welcomeTitle">Welcome to TaskFlow</h2>
+    <p id="welcomeLead">Your workspace for coordinating client work at Summit Accounting.</p>
+  </div>
+  <div class="welcomeBody">
+    <div id="welcomeContent"></div>
+    <div class="welcomeFooter">
+      <button class="secondary" id="welcomeBack" style="visibility:hidden">← Back</button>
+      <div class="welcomeDots" aria-label="Welcome progress">
+        <i class="active"></i><i></i><i></i>
+      </div>
+      <button class="primary" id="finishWelcome">Next</button>
+    </div>
+  </div>
+</div></div>
+<div class="tooltipBox" id="tooltipBox" role="tooltip" aria-live="polite"><div class="ttStep" id="ttStep"></div><b id="ttTitle"></b><p id="ttText"></p><div class="ttActions"><button class="ttExit" id="ttExit">Exit</button><div style="display:flex;gap:6px"><button class="ttExit" id="ttBack">← Back</button><button class="ttNext" id="ttNext">Next</button></div></div></div>
+<div class="modalwrap" id="workModal"><div class="modal"><h2 id="modalTitle">Create Client Work</h2><div class="request" id="requestText"></div><div class="formgrid"><div class="field full"><label>Work type</label><select id="workType"><option value="">Select work type</option><option>Annual Tax Return</option><option>Monthly Financial Report</option><option>Payroll Processing</option><option>Client Onboarding</option></select></div><div class="field"><label>Assignee</label><select id="assignee"><option value="">Select assignee</option><option>Maria Santos</option><option>Daniel Cruz</option><option>Alex Brown</option></select></div><div class="field"><label>Due date</label><input type="date" id="dueDate"></div><div class="field full"><label>Description</label><input id="description" placeholder="Optional note for the team"></div></div><div style="display:flex;justify-content:flex-end;gap:9px;margin-top:19px"><button class="secondary" id="cancelWork">Cancel</button><button class="primary" id="saveWork">Create work</button></div><div class="success" id="success"></div></div></div>
+<div class="modalwrap" id="editWorkModal"><div class="modal"><h2 id="editWorkTitle">Edit work</h2><div class="request" id="editWorkContext"></div><div class="formgrid"><div class="field"><label>Assignee</label><select id="editAssignee"><option>Maria Santos</option><option>Daniel Cruz</option><option>Alex Brown</option></select></div><div class="field"><label>Due date</label><input type="date" id="editDueDate"></div></div><div style="display:flex;justify-content:flex-end;gap:9px;margin-top:19px"><button class="secondary" id="cancelEditWork" type="button">Cancel</button><button class="primary" id="saveEditWork" type="button">Save changes</button></div></div></div>
+<div class="toast" id="toast"></div>
+<button id="requestReminder" type="button">View request</button>
+<script>
+const lessons=[
+ ['Welcome to TaskFlow','<i class="fi fi-rr-sparkles"></i> Introduction · 2 min'],
+ ['Explore Your Workspace','<i class="fi fi-rr-map"></i> Guided tour · 3 min'],
+ ['Find and Understand a Client','<i class="fi fi-rr-cursor-finger"></i> Guided walkthrough · 3 min'],
+ ['Create Client Work','<i class="fi fi-rr-cursor-finger"></i> Guided walkthrough · 4 min'],
+ ['Manage Your Daily Tasks','<i class="fi fi-rr-cursor-finger"></i> Guided walkthrough · 3 min'],
+ ['Your First Client Request','<i class="fi fi-rr-bullseye-arrow"></i> Independent practice · 5 min']
+]; let done=new Set(),currentGuide=null,step=0,practice=false,currentClient='Northstar Foods';
+const $=id=>document.getElementById(id),drawer=$('drawer'),overlay=$('overlay'),body=$('drawerBody'),guide=$('guide');
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.view===id))}
+document.querySelectorAll('.navbtn').forEach(b=>b.onclick=()=>{showView(b.dataset.view);guideEvent('nav',b.dataset.view)});
+$('editWorkQ3').onclick=()=>openEditWork('q3');
+$('editWorkPayroll').onclick=()=>openEditWork('payroll');
+$('cancelEditWork').onclick=()=>closeEditWork();
+$('helpBtn').onclick=()=>{renderPath();drawer.classList.add('open');overlay.classList.add('show')};$('closeDrawer').onclick=closeDrawer;overlay.onclick=closeDrawer;
+function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('show')}
+const clientResources=[
+ ['Choose the Right Client Contact','<i class="fi fi-rr-cursor-finger"></i> Guided walkthrough · 2 min','Identify the right person for a client request based on responsibility, not just the Primary label.'],
+ ['Check Whether a Document Was Received','<i class="fi fi-rr-folder"></i> Quick guide · 1 min','Verify information already received before asking the client to send it again.'],
+ ['Understand Recurring Work','<i class="fi fi-rr-refresh"></i> Quick guide · 1 min','Use service, ownership, cadence, and next due date to decide whether new work is needed.'],
+ ['Add or Update a Client Contact','<i class="fi fi-rr-cursor-finger"></i> Guided walkthrough · 2 min','Keep the people and contact details on a client record accurate and useful.'],
+ ['Upload a Client Document','<i class="fi fi-rr-cursor-finger"></i> Guided walkthrough · 2 min','Add a file to the correct client record so the team can find and use it.']
+];
+
+const workResources=[
+ ['Understand Work Statuses','<i class="fi fi-rr-info"></i> Quick guide · 1 min','Read work status correctly before deciding what needs attention or what action to take.'],
+ ['Assign or Reassign Work','<i class="fi fi-rr-user-pen"></i> Guided walkthrough · 2 min','Update ownership when responsibility for an existing work item changes.'],
+ ['Change a Due Date','<i class="fi fi-rr-calendar-clock"></i> Guided walkthrough · 2 min','Adjust an existing deadline without creating duplicate work.']
+];
+
+function renderPath(){
+ let pct=Math.round(done.size/6*100);
+
+ const gettingStartedRows=lessons.map((l,i)=>`<div class="lesson ${done.has(i)?'done':''}">
+   <div class="num">${done.has(i)?'✓':i+1}</div>
+   <div><b>${l[0]}</b><span>${l[1]}</span></div>
+   <button onclick="openLesson(${i})">${done.has(i)?'Review':'Open'}</button>
+ </div>`).join('');
+
+ const managingClientRows=clientResources.map((r,i)=>`<div class="lesson clientResource">
+   <div class="resourceIcon"><i class="fi ${['fi-rr-map-marker','fi-rr-cursor-finger','fi-rr-cursor-finger','fi-rr-cursor-finger','fi-rr-bolt'][i]}"></i></div>
+   <div class="resourceCopy"><b>${r[0]}</b><span>${r[1]}</span><p>${r[2]}</p></div>
+   <button onclick="openClientResource(${i})">Open</button>
+ </div>`).join('');
+
+ const managingWorkRows=workResources.map((r,i)=>`<div class="lesson clientResource">
+   <div class="resourceIcon"><i class="fi fi-rr-briefcase"></i></div>
+   <div class="resourceCopy"><b>${r[0]}</b><span>${r[1]}</span><p>${r[2]}</p></div>
+   <button onclick="openClientResource(${clientResources.length+i})">Open</button>
+ </div>`).join('');
+
+ body.innerHTML=`
+ <section class="helpGroup" data-help-group="getting-started">
+   <button class="helpGroupToggle" type="button" aria-expanded="false" onclick="toggleHelpGroup(this)">
+     <div class="helpGroupTitle">
+       <div class="groupIcon"><i class="fi fi-rr-book-open-cover"></i></div>
+       <div><h3>Getting Started</h3><span>Your first week in TaskFlow</span></div>
+     </div>
+     <i class="fi fi-rr-angle-down groupChevron"></i>
+   </button>
+   <div class="helpGroupPanel" hidden>
+     <div class="pathintro compactIntro">
+       <p>Learn the essential workflows you'll use to manage clients and work at Summit Accounting.</p>
+       <div class="progressline"><i style="width:${pct}%"></i></div>
+       <div class="progressmeta"><span>${done.size} of 6 complete</span><span>~20 min</span></div>
+     </div>
+     ${gettingStartedRows}
+   </div>
+ </section>
+
+ <section class="helpGroup" data-help-group="managing-clients">
+   <button class="helpGroupToggle" type="button" aria-expanded="false" onclick="toggleHelpGroup(this)">
+     <div class="helpGroupTitle">
+       <div class="groupIcon"><i class="fi fi-rr-users"></i></div>
+       <div><h3>Managing Clients</h3><span>Point-of-need client support</span></div>
+     </div>
+     <i class="fi fi-rr-angle-down groupChevron"></i>
+   </button>
+   <div class="helpGroupPanel" hidden>
+     <div class="pathintro compactIntro">
+       <p>Get focused help for a client decision or task without replaying onboarding.</p>
+     </div>
+     ${managingClientRows}
+   </div>
+ </section>
+
+ <section class="helpGroup" data-help-group="managing-work">
+   <button class="helpGroupToggle" type="button" aria-expanded="false" onclick="toggleHelpGroup(this)">
+     <div class="helpGroupTitle">
+       <div class="groupIcon"><i class="fi fi-rr-briefcase"></i></div>
+       <div><h3>Managing Work</h3><span>Understand and maintain client work</span></div>
+     </div>
+     <i class="fi fi-rr-angle-down groupChevron"></i>
+   </button>
+   <div class="helpGroupPanel" hidden>
+     <div class="pathintro compactIntro">
+       <p>Get focused help for interpreting and maintaining existing work without replaying onboarding.</p>
+     </div>
+     ${managingWorkRows}
+   </div>
+ </section>`;
+}
+function toggleHelpGroup(btn){
+ const group=btn.closest('.helpGroup');
+ const panel=group.querySelector('.helpGroupPanel');
+ const isOpen=btn.getAttribute('aria-expanded')==='true';
+ btn.setAttribute('aria-expanded',String(!isOpen));
+ panel.hidden=isOpen;
+ group.classList.toggle('open',!isOpen);
+ const chevron=btn.querySelector('.groupChevron');
+ if(chevron)chevron.className='fi '+(!isOpen?'fi-rr-angle-up':'fi-rr-angle-down')+' groupChevron';
+}
+function openLesson(i){
+ if(i===0){closeDrawer();welcomeStep=0;renderWelcome();$('welcomeModal').classList.add('show');return}
+ closeDrawer();startGuide(i)
+}
+function completeIntro(){done.add(0);renderPath();toast('Welcome activity complete.')}
+const welcomeSteps=[
+ {
+   title:'Welcome to TaskFlow',
+   lead:'Your workspace for coordinating client work at Summit Accounting.',
+   html:`<div class="welcomeFocus">
+     <div class="welcomeIcon" aria-hidden="true"><i class="fi fi-rr-user"></i></div>
+     <div>
+       <h3>Your Role</h3>
+       <p>You’ve joined Summit Accounting as a <b>Client Services Coordinator</b>. You help turn incoming client requests into organized work so the right people know <b>what needs to happen, who owns it, and when it is due</b>.</p>
+     </div>
+   </div>
+   <div class="welcomeNote"><b>Alex Brown · Client Services Coordinator</b><span>You coordinate requests, maintain client work, monitor deadlines, and keep the delivery team informed.</span></div>`
+ },
+ {
+   title:'What You’ll Learn',
+   lead:'Getting Started focuses on the essential workflows you’ll use in your first week.',
+   html:`<div class="welcomeOutcomeGrid">
+     <div><i class="fi fi-rr-search"></i><span><b>Find client information</b><small>Locate and review the right client record.</small></span></div>
+     <div><i class="fi fi-rr-plus"></i><span><b>Create client work</b><small>Turn a request into trackable work.</small></span></div>
+     <div><i class="fi fi-rr-users"></i><span><b>Set ownership</b><small>Assign responsibility clearly.</small></span></div>
+     <div><i class="fi fi-rr-clock"></i><span><b>Manage progress</b><small>Track deadlines and update tasks.</small></span></div>
+   </div>
+   <p class="welcomeSupport">You’ll also see how <b>Help & Learning</b> provides support at the point of need.</p>`
+ },
+ {
+   title:'Meet Your Practice Client',
+   lead:'You’ll learn with one client, then transfer those skills to a different client independently.',
+   html:`<div class="practiceClient">
+     <div class="practiceMark">NF</div>
+     <div><h3>Northstar Foods</h3><p>Growing food and beverage company</p></div>
+   </div>
+   <p class="practiceCopy">During the guided activities, you’ll work with <b>Northstar Foods</b>, which uses Summit Accounting for bookkeeping, payroll, and monthly reporting.</p>
+   <div class="transferNote"><i class="fi fi-rr-arrow-right"></i><span>Your final activity uses a <b>different client</b>, so you can apply what you learned without step-by-step guidance.</span></div>`
+ }
+];
+let welcomeStep=0;
+function renderWelcome(){
+ const w=welcomeSteps[welcomeStep];
+ $('welcomeStepLabel').textContent=`Getting Started · ${welcomeStep+1} of ${welcomeSteps.length}`;
+ $('welcomeTitle').textContent=w.title;
+ $('welcomeLead').textContent=w.lead;
+ $('welcomeContent').innerHTML=w.html;
+ $('welcomeBack').style.visibility=welcomeStep===0?'hidden':'visible';
+ $('finishWelcome').textContent=welcomeStep===welcomeSteps.length-1?'Begin':'Next';
+ document.querySelectorAll('.welcomeDots i').forEach((d,i)=>d.classList.toggle('active',i===welcomeStep));
+}
+$('welcomeBack').onclick=()=>{if(welcomeStep>0){welcomeStep--;renderWelcome()}};
+$('finishWelcome').onclick=()=>{
+ if(welcomeStep<welcomeSteps.length-1){welcomeStep++;renderWelcome();return}
+ $('welcomeModal').classList.remove('show');
+ done.add(0);renderPath();drawer.classList.add('open');overlay.classList.add('show');
+ toast('Welcome complete — next, explore your workspace.');
+ welcomeStep=0;renderWelcome();
+};
+renderWelcome();
+const guides={
+ 1:[
+  ['Explore Your Workspace','Take a quick tour of the TaskFlow Home page. You’ll learn where to check <b>assigned work</b>, monitor <b>upcoming deadlines</b>, review <b>recent activity</b>, and quickly find records using search.','', 'intro'],
+  ['Your open work','Use <b>My open work</b> as a quick workload check. It shows the work currently assigned to you, so you can see what still needs your attention before opening the full Work queue.','openWork','none'],
+  ['Watch upcoming deadlines','The <b>Due this week</b> card highlights work with approaching deadlines. Check it regularly to identify items that may need follow-up, reprioritization, or coordination with a teammate.','dueWeek','none'],
+  ['Stay informed','<b><i class="fi fi-rr-pulse" aria-hidden="true"></i> Recent activity</b> gives you a running view of important updates from clients and teammates. Use it to spot document uploads, status changes, comments, and other activity without opening each client record.','activityCard','none'],
+  ['Find records quickly','Use <b>global search</b> when you already know what you need. Search for a client, work item, or task from anywhere in TaskFlow instead of navigating through multiple pages.','globalSearch', 'none'],
+  ['Guide complete','You’ve explored the main areas of your TaskFlow workspace. You now know how to <b>review your workload</b>, <b>watch deadlines</b>, <b>follow recent activity</b>, and <b>find records quickly</b>.','', 'guidecomplete']
+ ],
+ 2:[
+  ['Find and Understand a Client','Client records bring together the information your team needs before you act on a client’s behalf. You’ll locate <b>Northstar Foods</b>, confirm you have the correct client, and review the people, services, work, ownership, and deadlines connected to the account.<br><br>By the end, you should know what to check before creating or updating client work.','', 'intro'],
+  ['','Client records are managed from <b>Clients</b>.<br><br>Click <b>Clients</b> in the navigation bar.','clientsNav','clients'],
+  ['','Search is the quickest way to find a known client.<br><br>Type <b>Northstar Foods</b> in the search field.','clientSearch','search'],
+  ['','Open the client record to review its services, work, tasks, documents, and activity.<br><br>Click <b>Northstar Foods</b>.','northstar','northstar'],
+  ['','Confirm you have the correct client before making changes.<br><br>Verify <b>Northstar Foods</b>, then click <b>Next</b>.','clientName','next'],
+  ['','Check who owns the relationship and which services the firm provides.<br><br>Review the client details, then click <b>Next</b>.','clientDetailsCard','next'],
+  ['','Check existing work before adding anything new. Review the <b>status</b>, <b>assignee</b>, and <b>due date</b>, then click <b>Next</b>.','clientWorkCard','next'],
+  ['','Client contacts show who your team works with and each person’s role. Review the <b>primary contact</b> and payroll contact, then click <b>Next</b>.','clientContacts','next'],
+  ['','Recent documents help you confirm what the client has already provided before requesting files again. Review the latest uploads, then click <b>Next</b>.','clientDocuments','next'],
+  ['','Recurring work shows services that repeat on a schedule. Check the next due dates so new requests do not duplicate scheduled work, then click <b>Next</b>.','clientRecurring','next'],
+  ['Guide Complete','You found Northstar Foods and reviewed the information that provides context before taking action. You can now <b>confirm the client</b>, identify <b>contacts and services</b>, review <b>documents</b>, and check <b>existing and recurring work</b> before making changes.','', 'guidecomplete']
+ ],
+ 3:[
+  ['Create Client Work','Client work turns a request or recurring responsibility into something the team can track and complete. You’ll create a <b>Monthly Financial Report</b> for <b>Northstar Foods</b>, assign it to <b>Maria Santos</b>, and set the due date to <b>September 25</b>.<br><br>The guide will explain only the information you need at each point, while you perform the workflow yourself.','', 'intro'],
+  ['','Start from the client so the work is connected to the correct account.<br><br>Click <b>Clients</b>.','clientsNav','clients'],
+  ['','Find the client that requested the work.<br><br>Type <b>Northstar Foods</b> in the search field.','clientSearch','search'],
+  ['','Open the client before creating work so you can confirm its context.<br><br>Click <b>Northstar Foods</b>.','northstar','northstar'],
+  ['','Create work when a client need must be tracked, assigned, and completed by a deadline.<br><br>Click <b>Create work</b>.','createWorkBtn','create'],
+  ['','The work type identifies what your team will deliver.<br><br>Select <b>Monthly Financial Report</b>.','workType','worktype'],
+  ['','The form is already linked to <b>Northstar Foods</b> because you started from its client record.<br><br>Confirm the client name at the top of the form, then click <b>Next</b>.','modalTitle','next'],
+  ['','Every work item needs clear ownership.<br><br>Assign the work to <b>Maria Santos</b>.','assignee','assignee'],
+  ['','The due date helps the assignee prioritize the work.<br><br>Set the due date to <b>September 25</b>.','dueDate','due'],
+  ['','Review the <b>client</b>, <b>work type</b>, <b>assignee</b>, and <b>due date</b> before saving.<br><br>Click <b>Create work</b>.','saveWork','savework'],
+  ['Guide Complete','You created a <b>Monthly Financial Report</b> for <b>Northstar Foods</b>, assigned clear ownership to <b>Maria Santos</b>, and set a due date.<br><br>You now know the core workflow for turning a client need into trackable work.','', 'guidecomplete']
+ ],
+ 4:[
+  ['Manage Your Daily Tasks','Tasks turn larger pieces of client work into specific actions you can complete and update. Keeping task status current helps you prioritize your day and gives teammates a reliable view of progress.<br><br>In this guide, you’ll review a task for <b>Northstar Foods</b> and update it when work begins.','', 'intro'],
+  ['','Use <b>Tasks</b> to see the actions that need your attention across clients and work items.<br><br>Click <b>Tasks</b> in the navigation bar.','tasksNav','tasks'],
+  ['','Start with tasks that are due soon and confirm the client before taking action.<br><br>Find <b>Review Northstar documents</b>, then click <b>Next</b>.','reviewTask','next'],
+  ['','Task status tells the team where the action stands. Change it when work actually begins so others can rely on TaskFlow for current progress.<br><br>Set the status to <b>In Progress</b>.','taskStatus','status'],
+  ['Guide Complete','You reviewed your task list and updated a task when work began. Keeping task status current helps you <b>prioritize your own work</b> while giving teammates <b>clear visibility into progress</b>.','', 'guidecomplete']
+ ],
+ 5:[
+  ['Your First Client Request','You’ve practiced finding a client, reviewing its record, creating client work, and keeping task status current. Now you’ll apply those skills without step-by-step guidance.<br><br><b>Brightline Retail</b> needs its <b>Monthly Financial Report</b> prepared. Create the work, assign it to <b>Daniel Cruz</b>, and set the due date to <b>September 30, 2026</b>.<br><br>Use TaskFlow as you would during real work. If you get stuck, <b>Need a hint?</b> is available—but try completing the request independently first.','', 'independent'],
+  ['Activity Complete','You successfully turned the Brightline Retail request into trackable client work with the correct <b>work type</b>, <b>owner</b>, and <b>due date</b>.<br><br>This activity required you to transfer what you learned in the earlier guides rather than follow step-by-step instructions.','', 'guidecomplete']
+ ]
+};
+function startGuide(i){
+ currentGuide=i;step=0;practice=i===5;
+ const cs=$('clientSearch');
+ if(cs){cs.value='';document.querySelectorAll('.clientrow').forEach(r=>r.style.display='flex')}
+ if($('taskStatus'))$('taskStatus').value='Not Started';
+ if($('workType'))$('workType').value='';
+ if($('assignee'))$('assignee').value='';
+ if($('dueDate'))$('dueDate').value='';
+ $('workModal').classList.remove('show');
+ $('requestReminder').classList.remove('show');
+ currentClient='Northstar Foods';$('clientName').textContent=currentClient;
+ showView('home');renderGuide();
+}
+function clearHi(){document.querySelectorAll('.highlight').forEach(x=>{x.classList.remove('highlight');x.removeAttribute('aria-describedby')})}
+function placeTooltip(target){
+ const tt=$('tooltipBox');
+ target.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'});
+ setTimeout(()=>{
+   const r=target.getBoundingClientRect();
+   const gap=16;
+   const tw=Math.min(350,window.innerWidth-28);
+   const th=Math.max(130,tt.offsetHeight||160);
+   let left,top,side;
+
+   // Prefer the side of the target so the guide does not cover the content being explained.
+   if(r.right + gap + tw <= window.innerWidth-12){
+     side='right';
+     left=r.right+gap;
+     top=Math.max(12,Math.min(window.innerHeight-th-12,r.top+r.height/2-th/2));
+   } else if(r.left - gap - tw >= 12){
+     side='left';
+     left=r.left-gap-tw;
+     top=Math.max(12,Math.min(window.innerHeight-th-12,r.top+r.height/2-th/2));
+   } else if(r.bottom + gap + th <= window.innerHeight-12){
+     side='bottom';
+     left=Math.max(12,Math.min(window.innerWidth-tw-12,r.left+r.width/2-tw/2));
+     top=r.bottom+gap;
+   } else {
+     side='top';
+     left=Math.max(12,Math.min(window.innerWidth-tw-12,r.left+r.width/2-tw/2));
+     top=Math.max(12,r.top-gap-th);
+   }
+
+   tt.style.transform='none';
+   tt.style.left=left+'px';
+   tt.style.top=top+'px';
+   tt.classList.remove('arrow-top','arrow-bottom','arrow-left','arrow-right');
+
+   // Arrow points toward target.
+   if(side==='right'){
+     tt.classList.add('arrow-left');
+     tt.style.setProperty('--arrow-y',Math.max(18,Math.min(th-28,r.top+r.height/2-top-6))+'px');
+   } else if(side==='left'){
+     tt.classList.add('arrow-right');
+     tt.style.setProperty('--arrow-y',Math.max(18,Math.min(th-28,r.top+r.height/2-top-6))+'px');
+   } else {
+     const center=r.left+r.width/2;
+     const arrow=Math.max(18,Math.min(tw-30,center-left-6));
+     tt.style.setProperty('--arrow-x',arrow+'px');
+     tt.classList.add(side==='bottom'?'arrow-top':'arrow-bottom');
+   }
+ },320);
+}
+function renderTooltip(){
+ clearHi();
+ let st=guides[currentGuide][step], tt=$('tooltipBox');
+ // Intro and completion steps are centered guide cards with no target.
+ if(st[3]==='intro' || st[3]==='guidecomplete'){
+   tt.classList.remove('show');
+   guide.classList.add('show','centered');
+   guide.classList.toggle('complete-card',st[3]==='guidecomplete');
+   $('glabel').textContent = st[3]==='intro'
+  ? (currentGuide===0 ? 'INTRODUCTION'
+    : currentGuide===1 ? 'GUIDED TOUR'
+    : currentGuide>=2 && currentGuide<=4 ? 'GUIDED WALKTHROUGH'
+    : currentGuide===5 ? 'INDEPENDENT PRACTICE'
+    : 'GETTING STARTED')
+  : 'GETTING STARTED';
+   $('gtitle').textContent=st[0];
+   $('gtext').innerHTML=st[1];
+   $('gprogress').style.width='100%';
+   $('gtext').insertAdjacentHTML('beforeend',
+     `<div class="centerGuideActions">
+        ${st[3]==='guidecomplete'?'<button class="secondary" id="centerBack">← Back</button>':''}
+        <button class="primary" id="centerNext">${st[3]==='guidecomplete'?'Done':'Begin'}</button>
+      </div>`);
+   $('centerNext').onclick=()=>{
+     if(st[3]==='guidecomplete'){
+       guide.classList.remove('show','centered','complete-card');
+       finishLesson();
+     }else{
+       step++; guide.classList.remove('show','centered','complete-card'); renderTooltip();
+     }
+   };
+   let cb=$('centerBack'); if(cb) cb.onclick=()=>{step--;guide.classList.remove('show','centered','complete-card');renderTooltip()};
+   return;
+ }
+ guide.classList.remove('show','centered','complete-card');
+ $('ttStep').textContent=`${lessons[currentGuide][0]} · ${step+1} of ${guides[currentGuide].length}`;
+ $('ttTitle').textContent=st[0];$('ttText').innerHTML=st[1];
+ $('ttNext').textContent=step===guides[currentGuide].length-1?'Finish':'Next';
+ $('ttBack').style.visibility=step===0?'hidden':'visible';
+ const actionDriven=['clients','search','northstar','tasks','status','create','worktype','assignee','due','savework'];
+ $('ttNext').style.display=actionDriven.includes(st[3])?'none':'inline-block';
+ tt.classList.add('show');
+ if(st[2]){
+   let target=$(st[2]);
+   if(!target){
+     console.warn('TaskFlow guide target not found:',st[2]);
+     tt.style.left='50%';tt.style.top='150px';tt.style.transform='translateX(-50%)';
+     $('ttNext').style.display='inline-block'; return;
+   }
+   target.classList.add('highlight');target.setAttribute('aria-describedby','tooltipBox');
+   requestAnimationFrame(()=>placeTooltip(target));
+ } else {tt.style.left='50%';tt.style.top='150px';tt.style.transform='translateX(-50%)'}
+}
+$('ttNext').onclick=()=>{if(step<guides[currentGuide].length-1){step++;renderTooltip()}else{$('tooltipBox').classList.remove('show');$('tooltipBox').style.transform='';finishLesson()}};
+$('ttBack').onclick=()=>{if(step>0){step--;renderTooltip()}else{toast('You are at the first step.')}};
+$('ttExit').onclick=()=>{$('tooltipBox').classList.remove('show');$('tooltipBox').style.transform='';currentGuide=null;clearHi()};
+function reanchorTooltip(){
+ if((currentGuide===1||currentGuide===2||currentGuide===3||currentGuide===4) && $('tooltipBox').classList.contains('show')){
+   let st=guides[currentGuide][step];
+   if(st && st[2]) placeTooltip($(st[2]));
+ }
+}
+window.addEventListener('resize',reanchorTooltip);
+window.addEventListener('scroll',()=>{clearTimeout(window.__ttTimer);window.__ttTimer=setTimeout(reanchorTooltip,70)},{passive:true});
+function renderGuide(){clearHi();if(currentGuide===1||currentGuide===2||currentGuide===3||currentGuide===4){renderTooltip();return}guide.classList.add('show');let s=guides[currentGuide][step];$('glabel').textContent=currentGuide===5?'Independent practice':`${lessons[currentGuide][0]} · ${step+1} of ${guides[currentGuide].length}`;$('gtitle').textContent=s[0];$('gtext').innerHTML=s[1];$('gprogress').style.width=`${(step+1)/guides[currentGuide].length*100}%`;if(s[3]==='complete'){setTimeout(()=>{},1)}if(s[3]==='practice'){showView('clients')}}
+function next(){if(step<guides[currentGuide].length-1){step++;renderGuide()}else finishLesson()}
+function finishLesson(){done.add(currentGuide);clearHi();guide.classList.remove('show');$('tooltipBox').classList.remove('show');$('tooltipBox').style.transform='';currentGuide=null;toast('Activity complete.');renderPath()}
+function guideEvent(type,val){
+ if(currentGuide==null)return;let s=guides[currentGuide][step],need=s[3];
+ if((need==='clients'&&type==='nav'&&val==='clients')||(need==='tasks'&&type==='nav'&&val==='tasks'))next()
+}
+$('clientSearch').oninput=e=>{let q=e.target.value.toLowerCase();document.querySelectorAll('.clientrow').forEach(r=>r.style.display=r.dataset.name.includes(q)?'flex':'none');if((currentGuide===2||currentGuide===3)&&guides[currentGuide][step][3]==='search'&&q.includes('northstar'))next()};
+$('northstar').onclick=()=>{currentClient='Northstar Foods';$('clientName').textContent=currentClient;showView('clientDetail');if(currentGuide!=null&&guides[currentGuide][step]&&guides[currentGuide][step][3]==='northstar')next()};
+$('brightline').onclick=()=>{currentClient='Brightline Retail';$('clientName').textContent=currentClient;showView('clientDetail');};
+$('createWorkBtn').onclick=()=>{
+ const advanceCreate=currentGuide===3&&guides[3][step]&&guides[3][step][3]==='create';
+ if(currentGuide===5){
+   $('workType').value='';$('assignee').value='';$('dueDate').value='';
+   $('guide').classList.remove('show');$('requestReminder').classList.add('show');
+ }
+ $('workModal').classList.remove('practice-mode');
+ $('modalTitle').textContent=`Create work for ${currentClient}`;
+ $('requestText').style.display='none';
+ $('workModal').classList.add('show');
+ if(advanceCreate)requestAnimationFrame(()=>setTimeout(next,40));
+}
+function openWork(mode){
+ $('workModal').classList.toggle('practice-mode',mode==='practice');
+ $('requestText').style.display=mode==='practice'?'block':'none';
+ $('workModal').classList.add('show');$('success').style.display='none';$('workType').value='';$('assignee').value='';$('dueDate').value='';$('modalTitle').textContent=`Create work for ${currentClient}`;$('requestText').innerHTML=mode==='practice'?'<b>Client request</b><br>Brightline Retail needs its <b>Monthly Financial Report</b> prepared. <b>Daniel Cruz</b> is responsible for this work. Please have it completed by <b>September 30, 2026</b>.':'<b>Client request</b><br>Northstar Foods uploaded its September documents. Create a <b>Monthly Financial Report</b>, assign it to <b>Maria Santos</b>, and set the due date to <b>September 25, 2026</b>.'}
+
+$('workType').onchange=e=>{
+ if(currentGuide===3 && guides[3][step][3]==='worktype' && e.target.value==='Monthly Financial Report') next();
+};
+$('assignee').onchange=e=>{
+ if(currentGuide===3 && guides[3][step][3]==='assignee' && e.target.value==='Maria Santos') next();
+};
+$('dueDate').onchange=e=>{
+ if(currentGuide===3 && guides[3][step][3]==='due' && e.target.value==='2026-09-25') next();
+};
+
+$('cancelWork').onclick=()=>$('workModal').classList.remove('show');
+$('saveWork').onclick=()=>{let wt=$('workType').value,a=$('assignee').value,d=$('dueDate').value,ok=currentGuide===5?(wt==='Monthly Financial Report'&&a==='Daniel Cruz'&&d==='2026-09-30'):(wt==='Monthly Financial Report'&&a==='Maria Santos'&&d==='2026-09-25');if(ok){$('success').style.display='block';$('success').textContent='✓ Work created successfully.';toast('Correct — the work is set up properly.');setTimeout(()=>{$('workModal').classList.remove('show');if(currentGuide===5){$('requestReminder').classList.remove('show');finishLesson();}else if(currentGuide===3&&guides[3][step]&&guides[3][step][3]==='savework')next()},900)}else toast('Not quite. Review the client request and check the work type, assignee, and due date.')};
+$('taskStatus').onchange=e=>{if(currentGuide===4&&guides[4][step][3]==='status'&&e.target.value==='In Progress')next()};
+$('exitGuide').onclick=()=>{currentGuide=null;clearHi();guide.classList.remove('show')};$('hintGuide').onclick=()=>toast(currentGuide===5?'Start by finding Brightline Retail. Then use its client record to create the requested work.':'Follow the guide and use the control it points to.');
+document.addEventListener('click',e=>{if(currentGuide!=null){let s=guides[currentGuide][step];if(s&&s[3]==='none'&&e.target.closest('.highlight'))next();if(s&&s[3]==='complete'&&e.target.closest('#guide'))finishLesson()}});
+function toast(m){let t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+renderPath();
+
+
+
+const requestReminder=$('requestReminder');
+requestReminder.onclick=()=>{
+ if(currentGuide===5){
+   $('guide').classList.add('show');
+   requestReminder.classList.remove('show');
+ }
+};
+
+
+
+
+
+</script>
+
+<script>
+/* v49 content strategy:
+   Getting Started teaches the learner's job through the product:
+   orientation -> context -> guided practice -> daily workflow -> independent performance.
+   Product features that are not essential to first-week performance remain available
+   in the application and can be supported later through Help & Learning resources. */
+</script>
+
+
+<script>
+/* v59 canonical learning taxonomy — single source of truth */
+window.TASKFLOW_LEARNING_TYPES = {
+  0: "Introduction",
+  1: "Guided tour",
+  2: "Guided walkthrough",
+  3: "Guided walkthrough",
+  4: "Guided walkthrough",
+  5: "Independent practice"
+};
+</script>
+
+
+<script>
+(function(){
+  const labels = window.TASKFLOW_LEARNING_TYPES || {};
+  const canonicalTitles = [
+    "Welcome to TaskFlow",
+    "Explore Your Workspace",
+    "Find and Understand a Client",
+    "Create Client Work",
+    "Manage Your Daily Tasks",
+    "Your First Client Request"
+  ];
+
+  function alignLearningLabels(){
+    /* Drawer lesson rows */
+    document.querySelectorAll(".lesson").forEach((row,i)=>{
+      const text=row.textContent||"";
+      const guideIndex=canonicalTitles.findIndex(t=>text.includes(t));
+      if(guideIndex<0) return;
+      const type=labels[guideIndex];
+      row.querySelectorAll("small,.meta").forEach(el=>{
+        el.childNodes.forEach(node=>{
+          if(node.nodeType===3){
+            node.nodeValue=node.nodeValue.replace(
+              /Introduction|GUIDED WALKTHROUGH|Guided walkthrough|Independent practice/gi,type
+            );
+          }
+        });
+        el.innerHTML=el.innerHTML.replace(
+          /Introduction|GUIDED WALKTHROUGH|Guided walkthrough|Independent practice/gi,type
+        );
+      });
+    });
+
+    /* Guide intro/completion eyebrow */
+    const titleEl=document.querySelector(".guideIntro h1,.guideIntro h2,.guideIntro h3,.modalCard h1,.modalCard h2,.modalCard h3");
+    const eyebrow=document.querySelector(".guideIntro .eyebrow,.modalCard .eyebrow");
+    if(titleEl && eyebrow){
+      const idx=canonicalTitles.findIndex(t=>(titleEl.textContent||"").includes(t));
+      if(idx>=0) eyebrow.textContent=labels[idx].toUpperCase();
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded",alignLearningLabels);
+  document.addEventListener("click",()=>setTimeout(alignLearningLabels,0));
+  window.alignTaskFlowLearningLabels=alignLearningLabels;
+})();
+</script>
+
+
+<script>
+/* v60 — enforce walkthrough labels for task-performance guides */
+(function(){
+  const walkthroughTitles = new Set([
+    "Find and Understand a Client",
+    "Create Client Work",
+    "Manage Your Daily Tasks"
+  ]);
+
+  function fixGuideEyebrow(){
+    document.querySelectorAll(".modalCard,.guideIntro,.guideComplete,.tooltip").forEach(container=>{
+      const heading = container.querySelector("h1,h2,h3");
+      if(!heading) return;
+      const title=(heading.textContent||"").trim();
+      if(!walkthroughTitles.has(title)) return;
+      const eyebrow=container.querySelector(".eyebrow");
+      if(eyebrow) eyebrow.textContent="GUIDED WALKTHROUGH";
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded",fixGuideEyebrow);
+  document.addEventListener("click",()=>setTimeout(fixGuideEyebrow,10));
+
+  const observer=new MutationObserver(fixGuideEyebrow);
+  document.addEventListener("DOMContentLoaded",()=>{
+    observer.observe(document.body,{childList:true,subtree:true,characterData:true});
+  });
+})();
+</script>
+
+
+<script>
+/* v63 — definitive Help & Learning taxonomy */
+(function(){
+  const TYPES = {
+    "Welcome to TaskFlow":"Introduction",
+    "Explore Your Workspace":"Guided tour",
+    "Find and Understand a Client":"Guided walkthrough",
+    "Create Client Work":"Guided walkthrough",
+    "Manage Your Daily Tasks":"Guided walkthrough",
+    "Your First Client Request":"Independent practice"
+  };
+
+  function normalizeLearningDrawer(){
+    document.querySelectorAll(".lesson").forEach(row=>{
+      const titleEl = row.querySelector("b,strong,.title,.lessonTitle");
+      const title = titleEl ? titleEl.textContent.trim() : "";
+      const type = TYPES[title];
+      if(!type) return;
+
+      row.querySelectorAll("small,.meta").forEach(meta=>{
+        meta.innerHTML = meta.innerHTML.replace(
+          /Introduction|Guided tour|Guided walkthrough|Independent practice/gi,
+          type
+        );
+      });
+    });
+  }
+
+  function normalizeGuideIntro(){
+    const titleSelectors = [".guideIntro h1",".guideIntro h2",".guideIntro h3",".modalCard h1",".modalCard h2",".modalCard h3"];
+    let title="";
+    for(const sel of titleSelectors){
+      const el=document.querySelector(sel);
+      if(el && TYPES[el.textContent.trim()]){ title=el.textContent.trim(); break; }
+    }
+    if(!title) return;
+    const eyebrow=document.querySelector(".guideIntro .eyebrow,.modalCard .eyebrow");
+    if(eyebrow) eyebrow.textContent=TYPES[title].toUpperCase();
+  }
+
+  function normalizeAll(){normalizeLearningDrawer();normalizeGuideIntro();}
+  document.addEventListener("DOMContentLoaded",normalizeAll);
+  document.addEventListener("click",()=>setTimeout(normalizeAll,0));
+  new MutationObserver(normalizeAll).observe(document.documentElement,{subtree:true,childList:true});
+})();
+</script>
+
+
+
+
+
+<script>
+/* v68 — Managing Clients resource content */
+const clientResourceGuides = [
+ {title:"Choose the Right Client Contact",type:"Guided walkthrough",time:"2 min",steps:[
+  {kind:"intro",title:"Choose the Right Client Contact",body:"A client's <b>Primary</b> contact is not always the right person for every request.<br><br>Northstar Foods has a payroll question. You'll use each contact's <b>role</b> to identify who should receive it."},
+  {target:"clientContacts",body:"Northstar Foods has more than one contact. The <b>role</b> tells you what each person is responsible for.<br><br>Review the contacts and identify who is responsible for payroll, then click <b>Next</b>."},
+  {target:"clientContacts",body:"<b>Lisa Chen — Payroll Manager</b> is the appropriate contact for a payroll question. <b>Jordan Miller</b> remains the Primary relationship contact, but that label does not make him the best contact for every request.<br><br>Click <b>Next</b>."},
+  {kind:"complete",title:"Right contact identified",body:"You used <b>responsibility</b>, not just the Primary label, to identify the right person for the request."}
+ ]},
+ {title:"Check Whether a Document Was Received",type:"Quick guide",time:"1 min",steps:[
+  {kind:"intro",title:"Check Whether a Document Was Received",body:"Before asking a client to send information, check whether the team has <b>already received it</b>.<br><br>Northstar Foods says its <b>August bank statements</b> were uploaded. You'll verify that they're on the client record."},
+  {target:"clientDocuments",body:"Use <b>Recent documents</b> to check the file name, source, and received date.<br><br>Find <b>August Bank Statements.zip</b>, then click <b>Next</b>."},
+  {target:"clientDocuments",body:"The file was received through a <b>client upload</b> on <b>Sep 17</b>. The team already has what it needs, so there is <b>no reason to request the file again</b>.<br><br>Click <b>Next</b>."},
+  {kind:"complete",title:"Document verified",body:"You confirmed the document was already received and avoided an unnecessary client follow-up."}
+ ]},
+ {title:"Understand Recurring Work",type:"Quick guide",time:"1 min",steps:[
+  {kind:"intro",title:"Understand Recurring Work",body:"Before creating work for a service the client receives regularly, check whether it is <b>already scheduled</b>.<br><br>You'll review Northstar Foods' recurring services and the information that helps you decide what to do next."},
+  {target:"clientRecurring",body:"Recurring work shows the <b>service</b>, <b>owner</b>, <b>cadence</b>, and <b>next due date</b>. Together, these tell you what is already planned and who owns it.<br><br>Review the scheduled services, then click <b>Next</b>."},
+  {target:"clientRecurring",body:"Northstar Foods already has <b>Monthly reporting</b> scheduled. Before creating another reporting item, confirm whether the existing recurring work already covers the request.<br><br>Click <b>Next</b>."},
+  {kind:"complete",title:"Recurring work understood",body:"You used the recurring schedule to check whether new work is actually needed, helping prevent duplicate work."}
+ ]},
+ {title:"Add or Update a Client Contact",type:"Guided walkthrough",time:"2 min",steps:[
+  {kind:"intro",title:"Add or Update a Client Contact",body:"Accurate contact information helps the team reach the <b>right person</b> without relying on outdated details.<br><br>Use Contacts when a client adds a new contact or an existing person's information changes."},
+  {target:"clientContacts",body:"The <b>Contacts</b> section is the source of client communication details. Review existing contacts before adding another person so you don't create a duplicate.<br><br>Click <b>Next</b>."},
+  {target:"addContactBtn",action:"click",body:"If the person is not already listed, add them as a new contact. For an existing contact, update the current record instead of creating a duplicate.<br><br>Click <b>+ Add</b>."},
+  {kind:"complete",title:"Contact maintenance located",body:"You know where to add a new contact and why existing contacts should be updated rather than duplicated."}
+ ]},
+ {title:"Upload a Client Document",type:"Guided walkthrough",time:"2 min",steps:[
+  {kind:"intro",title:"Upload a Client Document",body:"Files should be stored on the <b>correct client record</b> so the rest of the team can find and use them.<br><br>You'll identify where a document should be added for Northstar Foods."},
+  {target:"clientDocuments",body:"The <b>Recent documents</b> section shows files already associated with this client. Check the client context before uploading so the document is not attached to the wrong record.<br><br>Click <b>Next</b>."},
+  {target:"uploadDocumentBtn",action:"click",body:"Add the file from the client record so it stays connected to the correct account.<br><br>Click <b>Upload</b>."},
+  {kind:"complete",title:"Upload location identified",body:"You know where to add a client document and what to verify after the upload."}
+ ]},
+ {title:"Understand Work Statuses",type:"Quick guide",time:"1 min",steps:[
+  {kind:"intro",title:"Understand Work Statuses",body:"A status tells you <b>where work currently stands</b>—not automatically what you should do next.<br><br>You'll review the Work queue and use status together with ownership and due date to understand what needs attention."},
+  {target:"workQueueCard",body:"The <b>Work queue</b> brings together active work across clients. Read the <b>Status</b> column together with the owner and due date before taking action.<br><br>Review the four examples, then click <b>Next</b>."},
+  {target:"workStatusNotStarted",body:"<b>Not started</b> means the work exists but execution has not begun. Check the <b>owner</b> and <b>due date</b> before assuming it is late or needs reassignment.<br><br>Click <b>Next</b>."},
+  {target:"workStatusInProgress",body:"<b>In progress</b> means someone is actively working on it. The next question is whether the current owner and deadline still make sense—not whether a new work item should be created.<br><br>Click <b>Next</b>."},
+  {target:"workStatusWaiting",body:"<b>Waiting on client</b> means progress depends on information or action from the client. This is different from unassigned or inactive work and may require follow-up rather than reassignment.<br><br>Click <b>Next</b>."},
+  {target:"workStatusComplete",body:"<b>Complete</b> means the work has been finished. Confirm completion before using it as a signal that no further action is needed.<br><br>Click <b>Next</b>."},
+  {kind:"complete",title:"Work statuses reviewed",body:"You can now use <b>status + owner + due date</b> together to understand the state of work before deciding what action to take."}
+ ]},
+ {title:"Assign or Reassign Work",type:"Guided walkthrough",time:"2 min",steps:[
+  {kind:"intro",title:"Assign or Reassign Work",body:"Reassign an <b>existing</b> work item when responsibility changes. You do not need to create another work item just because the owner changes.<br><br>For this practice, <b>Q3 Sales Tax Filing</b> is moving from Daniel Cruz to <b>Maria Santos</b>."},
+  {target:"workOwnerQ3",body:"Start by confirming the <b>current owner</b>. Q3 Sales Tax Filing is currently assigned to <b>Daniel Cruz</b>.<br><br>Click <b>Next</b>."},
+  {target:"editWorkQ3",action:"click",body:"Use the existing work item to change ownership rather than creating duplicate work.<br><br>Click <b>Edit</b>."},
+  {target:"editAssignee",action:"select",expected:"Maria Santos",body:"Change the <b>Assignee</b> to <b>Maria Santos</b>. The work itself stays the same; only ownership changes."},
+  {target:"saveEditWork",action:"saveReassign",body:"Review the change, then click <b>Save changes</b>."},
+  {kind:"complete",title:"Work reassigned",body:"You changed ownership on the existing work item without creating a duplicate. The work now remains intact with a clear new owner."}
+ ]},
+ {title:"Change a Due Date",type:"Guided walkthrough",time:"2 min",steps:[
+  {kind:"intro",title:"Change a Due Date",body:"When a deadline changes, update the <b>existing work item</b> so the team sees one current source of truth.<br><br>For this practice, <b>September Payroll</b> has moved from September 25 to <b>September 29, 2026</b>."},
+  {target:"workDuePayroll",body:"Confirm the current deadline first. September Payroll is due <b>Sep 25</b>.<br><br>Click <b>Next</b>."},
+  {target:"editWorkPayroll",action:"click",body:"Open the existing work item instead of creating a replacement.<br><br>Click <b>Edit</b>."},
+  {target:"editDueDate",action:"select",expected:"2026-09-29",body:"Set the <b>Due date</b> to <b>September 29, 2026</b>."},
+  {target:"saveEditWork",action:"saveDueDate",body:"Review the updated deadline, then click <b>Save changes</b>."},
+  {kind:"complete",title:"Due date updated",body:"You updated the deadline on the existing work item, keeping the work history and ownership intact."}
+ ]}
+];
+
+let clientResourceIndex=null, clientResourceStep=0;
+let editingWorkKey=null;
+const workEditData={
+ q3:{title:'Q3 Sales Tax Filing',client:'Northstar Foods',assignee:'Daniel Cruz',due:'2026-09-23'},
+ payroll:{title:'September Payroll',client:'Northstar Foods',assignee:'Maria Santos',due:'2026-09-25'}
+};
+function openEditWork(key){
+ editingWorkKey=key;
+ const d=workEditData[key];
+ if(!d)return;
+ $('editWorkTitle').textContent='Edit '+d.title;
+ $('editWorkContext').innerHTML='<b>'+d.client+'</b><br>Update ownership or deadline for this existing work item.';
+ $('editAssignee').value=d.assignee;
+ $('editDueDate').value=d.due;
+ $('editWorkModal').classList.add('show');
+}
+function closeEditWork(){ $('editWorkModal').classList.remove('show'); editingWorkKey=null; }
+function saveEditWork(){
+ if(!editingWorkKey)return false;
+ const d=workEditData[editingWorkKey];
+ d.assignee=$('editAssignee').value;
+ d.due=$('editDueDate').value;
+ if(editingWorkKey==='q3'){ $('workOwnerQ3').textContent=d.assignee; $('workDueQ3').textContent=formatWorkDate(d.due); }
+ if(editingWorkKey==='payroll'){ $('workOwnerPayroll').textContent=d.assignee; $('workDuePayroll').textContent=formatWorkDate(d.due); }
+ $('editWorkModal').classList.remove('show');
+ return true;
+}
+function formatWorkDate(value){
+ if(!value)return '';
+ const [y,m,d]=value.split('-').map(Number);
+ return new Date(y,m-1,d).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+}
+
+
+function openClientResource(i){
+ clientResourceIndex=i; clientResourceStep=0; closeDrawer();
+ const isWorkResource=i>=clientResources.length;
+ showView(isWorkResource?'work':'clientDetail');
+ requestAnimationFrame(()=>setTimeout(renderClientResourceStep,80));
+}
+
+function clientResourceLabel(g){
+  return g.type;
+}
+
+function isNavigationGuideTarget(target){
+  if(!target)return false;
+  return !!(
+    target.closest('.nav') ||
+    target.closest('nav') ||
+    target.closest('.appbar') ||
+    target.closest('.topbar') ||
+    target.id==='clientsNav' ||
+    target.id==='tasksNav' ||
+    target.id==='workNav' ||
+    target.id==='reportsNav'
+  );
+}
+
+function placeLearningTooltip(target){
+  const tt=$('tooltipBox');
+  tt.classList.remove('navTooltipBelow');
+
+  if(isNavigationGuideTarget(target)){
+    const nav =
+      target.closest('.nav') ||
+      target.closest('nav') ||
+      target.closest('.appbar') ||
+      target.closest('.topbar') ||
+      target.parentElement;
+
+    const tr=target.getBoundingClientRect();
+    const nr=nav.getBoundingClientRect();
+
+    /* IMPORTANT: position from the BOTTOM EDGE OF THE ENTIRE NAV,
+       never from the individual nav item. This guarantees the tooltip
+       clears the full navy navigation band. */
+    const gap=16;
+    const top=nr.bottom+gap;
+
+    let left=tr.left+(tr.width/2)-(tt.offsetWidth/2);
+    left=Math.max(16,Math.min(window.innerWidth-tt.offsetWidth-16,left));
+
+    tt.style.position='fixed';
+    tt.style.top=top+'px';
+    tt.style.left=left+'px';
+    tt.style.right='auto';
+    tt.style.bottom='auto';
+    tt.classList.add('navTooltipBelow');
+    return;
+  }
+
+  tt.style.position='';
+  tt.classList.remove('navTooltipBelow');
+  placeTooltip(target);
+}
+
+/* Apply the same navigation-placement rule to EVERY guide in TaskFlow,
+   including Getting Started and Managing Clients. */
+const originalPlaceTooltip=placeTooltip;
+placeTooltip=function(target){
+  const tt=$('tooltipBox');
+  if(isNavigationGuideTarget(target)){
+    const nav =
+      target.closest('.nav') ||
+      target.closest('nav') ||
+      target.closest('.appbar') ||
+      target.closest('.topbar') ||
+      target.parentElement;
+    const tr=target.getBoundingClientRect();
+    const nr=nav.getBoundingClientRect();
+    const gap=16;
+
+    let left=tr.left+(tr.width/2)-(tt.offsetWidth/2);
+    left=Math.max(16,Math.min(window.innerWidth-tt.offsetWidth-16,left));
+
+    tt.style.position='fixed';
+    tt.style.top=(nr.bottom+gap)+'px';
+    tt.style.left=left+'px';
+    tt.style.right='auto';
+    tt.style.bottom='auto';
+    tt.classList.add('navTooltipBelow');
+    return;
+  }
+  tt.classList.remove('navTooltipBelow');
+  originalPlaceTooltip(target);
+};
+
+function renderClientResourceStep(){
+  const g=clientResourceGuides[clientResourceIndex];
+  if(!g)return;
+  const st=g.steps[clientResourceStep];
+  if(!st)return;
+
+  clearHi();
+  const tt=$('tooltipBox');
+  const card=$('guide');
+
+  /* Intro and completion use the same centered guide component
+     already used by Getting Started. */
+  if(st.kind==='intro' || st.kind==='complete'){
+    tt.classList.remove('show');
+    card.classList.add('show','centered');
+    card.classList.toggle('complete-card',st.kind==='complete');
+
+    const totalSteps=g.steps.filter(x=>x.kind!=='complete').length;
+    const displayStep=g.steps.slice(0,clientResourceStep+1).filter(x=>x.kind!=='complete').length;
+    $('glabel').textContent=st.kind==='complete'
+      ? 'Complete'
+      : `${clientResourceLabel(g)} · Step ${displayStep} of ${totalSteps}\u00A0`;
+    $('gtitle').textContent=st.title;
+    $('gtext').innerHTML=st.body;
+    $('gprogress').style.width=st.kind==='complete'?'100%':'0%';
+
+    /* Remove actions inserted by any previous centered resource screen. */
+    const old=card.querySelector('.clientResourceActions');
+    if(old)old.remove();
+
+    $('gtext').insertAdjacentHTML('afterend',
+      `<div class="centerGuideActions clientResourceActions">
+        ${st.kind==='intro'
+          ?'<button type="button" class="secondary" id="crCancel"><i class="fi fi-rr-cross"></i><span>Cancel</span></button>'
+          :(clientResourceStep>0?'<button type="button" class="secondary" id="crBack">← Back</button>':'')}
+        <button type="button" class="primary" id="crNext">${st.kind==='complete'?'Done':'<span>Begin</span><i class="fi fi-rr-arrow-right"></i>'}</button>
+      </div>`);
+
+    const next=$('crNext');
+    next.onclick=()=>{
+      if(st.kind==='complete'){closeClientResource();return;}
+      clientResourceStep++;
+      card.classList.remove('show','centered','complete-card');
+      renderClientResourceStep();
+    };
+    const cancel=$('crCancel');
+    if(cancel)cancel.onclick=()=>{
+      card.classList.remove('show','centered','complete-card');
+      closeClientResource(false);
+    };
+    const back=$('crBack');
+    if(back)back.onclick=()=>{
+      clientResourceStep--;
+      card.classList.remove('show','centered','complete-card');
+      renderClientResourceStep();
+    };
+    return;
+  }
+
+  card.classList.remove('show','centered','complete-card');
+
+  const target=$(st.target);
+  if(!target){
+    toast('This help target is not available on the current screen.');
+    return;
+  }
+
+  const totalSteps=g.steps.filter(x=>x.kind!=='complete').length;
+  const displayStep=g.steps.slice(0,clientResourceStep+1).filter(x=>x.kind!=='complete').length;
+
+  $('ttStep').textContent=`${g.title} · Step ${displayStep} of ${totalSteps}\u00A0`;
+  $('ttTitle').textContent=g.type;
+  $('ttText').innerHTML=st.body;
+  $('ttBack').style.visibility='visible';
+  $('ttBack').onclick=()=>{
+    tt.classList.remove('show');
+    clientResourceStep--;
+    renderClientResourceStep();
+  };
+  $('ttExit').onclick=closeClientResource;
+
+  const next=$('ttNext');
+  next.textContent='Next';
+
+  target.scrollIntoView({behavior:'smooth',block:isNavigationGuideTarget(target)?'nearest':'center'});
+  tt.classList.add('show');
+  target.setAttribute('aria-describedby','tooltipBox');
+  requestAnimationFrame(()=>placeLearningTooltip(target));
+
+  if(st.action){
+    next.style.display='none';
+
+    if(st.action==='click'){
+      const handler=()=>{
+        target.removeEventListener('click',handler);
+        tt.classList.remove('show');
+        clientResourceStep++;
+        setTimeout(renderClientResourceStep,120);
+      };
+      target.addEventListener('click',handler,{once:true});
+    }
+
+    if(st.action==='type'){
+      const handler=()=>{
+        if(target.value.trim().toLowerCase()===st.expected.toLowerCase()){
+          target.removeEventListener('input',handler);
+          tt.classList.remove('show');
+          clientResourceStep++;
+          setTimeout(renderClientResourceStep,120);
+        }
+      };
+      target.addEventListener('input',handler);
+      target.focus();
+    }
+
+    if(st.action==='validateWork'){
+      const handler=()=>{
+        const ok=$('workType').value==='Monthly Financial Report' &&
+                 $('assignee').value==='Maria Santos' &&
+                 $('dueDate').value==='2026-09-25';
+        if(!ok)return;
+        target.removeEventListener('click',handler);
+        tt.classList.remove('show');
+        clientResourceStep++;
+        setTimeout(renderClientResourceStep,1050);
+      };
+      target.addEventListener('click',handler);
+    }
+
+    if(st.action==='select'){
+      const eventName=target.tagName==='SELECT'?'change':'input';
+      const handler=()=>{
+        if(target.value===st.expected){
+          target.removeEventListener(eventName,handler);
+          tt.classList.remove('show');
+          clientResourceStep++;
+          setTimeout(renderClientResourceStep,120);
+        }
+      };
+      target.addEventListener(eventName,handler);
+      target.focus();
+    }
+
+    if(st.action==='saveReassign' || st.action==='saveDueDate'){
+      const handler=()=>{
+        const isReassign=st.action==='saveReassign';
+        const ok=isReassign
+          ? ($('editAssignee').value==='Maria Santos')
+          : ($('editDueDate').value==='2026-09-29');
+        if(!ok){
+          toast(isReassign?'Choose Maria Santos before saving.':'Set the due date to September 29, 2026 before saving.');
+          return;
+        }
+        target.removeEventListener('click',handler);
+        saveEditWork();
+        tt.classList.remove('show');
+        clientResourceStep++;
+        setTimeout(renderClientResourceStep,160);
+      };
+      target.addEventListener('click',handler);
+    }
+  }else{
+    next.style.display='inline-block';
+    next.onclick=()=>{
+      tt.classList.remove('show');
+      clientResourceStep++;
+      renderClientResourceStep();
+    };
+  }
+}
+
+function closeClientResource(completed=true){
+  clearHi();
+  $('tooltipBox').classList.remove('show');
+  $('guide').classList.remove('show','centered','complete-card');
+  const old=$('guide').querySelector('.clientResourceActions');
+  if(old)old.remove();
+  clientResourceIndex=null;
+  clientResourceStep=0;
+  if(completed)toast('Help resource complete');
+}
+</script>
+
+
+<script>
+/* v79 — universal first-screen action standard for every learning experience */
+(function(){
+  function standardizeGuideEntry(){
+    const guide=document.getElementById('guide');
+    if(!guide || !guide.classList.contains('show') || !guide.classList.contains('centered')) return;
+
+    const label=(document.getElementById('glabel')?.textContent||'').trim().toLowerCase();
+    const title=(document.getElementById('gtitle')?.textContent||'').trim().toLowerCase();
+    const isComplete=label==='complete' || title.includes('complete') ||
+                     guide.classList.contains('complete-card');
+    if(isComplete)return;
+
+    /* Managing Clients uses its own centered action row. */
+    const crActions=guide.querySelector('.clientResourceActions');
+    if(crActions){
+      const primary=crActions.querySelector('.primary');
+      const secondary=crActions.querySelector('.secondary');
+      if(primary)primary.innerHTML='<span>Begin</span><i class="fi fi-rr-arrow-right"></i>';
+      if(secondary){
+        secondary.innerHTML='<i class="fi fi-rr-cross"></i><span>Cancel</span>';
+        secondary.style.display='inline-flex';
+      }
+      return;
+    }
+
+    /* Getting Started and all other guides use gback / gnext. */
+    const primary=document.getElementById('gnext');
+    const secondary=document.getElementById('gback');
+    if(primary)primary.innerHTML='<span>Begin</span><i class="fi fi-rr-arrow-right"></i>';
+    if(secondary){
+      secondary.innerHTML='<i class="fi fi-rr-cross"></i><span>Cancel</span>';
+      secondary.style.display='inline-flex';
+      secondary.style.visibility='visible';
+      secondary.onclick=function(e){
+        e.preventDefault();
+        if(typeof closeGuide==='function') closeGuide();
+        else {
+          guide.classList.remove('show','centered');
+          const overlay=document.getElementById('guideOverlay');
+          if(overlay)overlay.classList.remove('show');
+        }
+      };
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    const guide=document.getElementById('guide');
+    if(!guide)return;
+    new MutationObserver(()=>setTimeout(standardizeGuideEntry,0))
+      .observe(guide,{attributes:true,childList:true,subtree:true,characterData:true});
+    document.addEventListener('click',()=>setTimeout(standardizeGuideEntry,0));
+    standardizeGuideEntry();
+  });
+})();
+</script>
+
+<div style="position:fixed;right:14px;bottom:8px;font-size:9px;opacity:.42;z-index:1"><a href="https://www.flaticon.com/uicons" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Uicons by Flaticon</a></div>
+
+<style id="taskflow-v94-guide-system-reset">
+/* ===== Centered guide system: white panel ===== */
+html body #guide.centered{
+  background:#fff!important;
+  color:#111!important;
+  border:1px solid #e3e3e6!important;
+  border-radius:18px!important;
+  box-shadow:0 24px 70px rgba(39,44,54,.18)!important;
+  opacity:1!important;
+}
+html body #guide.centered #glabel{
+  color:#b07bf1!important;
+  -webkit-text-fill-color:#b07bf1!important;
+  font-size:11px!important;
+  font-weight:700!important;
+  letter-spacing:.08em!important;
+  line-height:1.35!important;
+  margin:0 0 14px!important;
+  text-transform:uppercase!important;
+}
+html body #guide.centered #gtitle{
+  color:#111!important;
+  -webkit-text-fill-color:#111!important;
+  font-size:24px!important;
+  font-weight:700!important;
+  line-height:1.25!important;
+  margin:0 0 14px!important;
+}
+html body #guide.centered #gtext{
+  color:#33343a!important;
+  -webkit-text-fill-color:#33343a!important;
+  font-size:14px!important;
+  line-height:1.62!important;
+  margin-top:0!important;
+}
+html body #guide.centered #gtext b,
+html body #guide.centered #gtext strong{
+  color:#111!important;
+  -webkit-text-fill-color:#111!important;
+}
+html body #guide.centered .centerGuideActions,
+html body #guide.centered .clientResourceActions{
+  margin-top:26px!important;
+  border-top:1px solid #eeeeef!important;
+  padding-top:16px!important;
+}
+html body #guide.centered #gnext,
+html body #guide.centered .clientResourceActions button:last-child{
+  background:#b07bf1!important;
+  border-color:#b07bf1!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html body #guide.centered #gback,
+html body #guide.centered .clientResourceActions button:first-child{
+  background:#fff!important;
+  border-color:#d4d4d8!important;
+  color:#272c36!important;
+  -webkit-text-fill-color:#272c36!important;
+}
+/* no decorative dark strip; use the reference purple accent */
+html body #guide.centered::before{
+  content:""!important;
+  display:block!important;
+  width:46px!important;
+  height:4px!important;
+  margin:0 0 18px!important;
+  border-radius:999px!important;
+  background:#b07bf1!important;
+}
+
+/* ===== Contextual tooltip system: dark panel ===== */
+html body #tooltipBox{
+  background:#272c36!important;
+  color:#fff!important;
+  opacity:1!important;
+}
+html body #tooltipBox #ttStep{
+  color:#d9c4f4!important;
+  -webkit-text-fill-color:#d9c4f4!important;
+  margin-bottom:10px!important;
+}
+html body #tooltipBox #ttTitle,
+html body #tooltipBox #ttText{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html body #tooltipBox #ttText b,
+html body #tooltipBox #ttText strong{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Remove browser-selection-like pink backgrounds from guide text. */
+html body #guide.centered #gtext,
+html body #guide.centered #gtext > b,
+html body #guide.centered #gtext > strong,
+html body #guide.centered #gtext > span,
+html body #tooltipBox #ttText,
+html body #tooltipBox #ttText > b,
+html body #tooltipBox #ttText > strong,
+html body #tooltipBox #ttText > span{
+  background-color:transparent!important;
+}
+
+/* Guide overlay only dims app; guide panels themselves stay opaque. */
+html body #guideOverlay,
+html body .guideOverlay{
+  background:rgba(39,44,54,.30)!important;
+}
+</style>
+
+<style id="taskflow-v96-final-sweep">
+/* FINAL GUIDE CTA SYSTEM — all centered intro Begin buttons are identical */
+html body #guide.centered #gnext,
+html body #guide.centered button#gnext,
+html body #guide.centered .clientResourceActions button:last-child,
+html body #guide.centered .centerGuideActions button:last-child{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  min-height:40px!important;
+  padding:9px 15px!important;
+  background:#b07bf1!important;
+  border:1px solid #b07bf1!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-weight:700!important;
+  border-radius:10px!important;
+  opacity:1!important;
+  box-shadow:none!important;
+}
+html body #guide.centered #gnext *,
+html body #guide.centered .clientResourceActions button:last-child *,
+html body #guide.centered .centerGuideActions button:last-child *{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html body #guide.centered #gnext:hover,
+html body #guide.centered .clientResourceActions button:last-child:hover,
+html body #guide.centered .centerGuideActions button:last-child:hover{
+  background:#9f67e7!important;
+  border-color:#9f67e7!important;
+}
+
+/* Cancel/Back stays white secondary everywhere */
+html body #guide.centered #gback,
+html body #guide.centered .clientResourceActions button:first-child,
+html body #guide.centered .centerGuideActions button:first-child{
+  background:#fff!important;
+  border:1px solid #d4d4d8!important;
+  color:#272c36!important;
+  -webkit-text-fill-color:#272c36!important;
+}
+
+/* Preserve contextual guide button hierarchy */
+html body #tooltipBox #ttNext{
+  background:#b07bf1!important;
+  border-color:#b07bf1!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html body #tooltipBox #ttExit,
+html body #tooltipBox #ttBack{
+  background:transparent!important;
+  border-color:transparent!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Navbar final alignment */
+html body .nav a,
+html body .nav button,
+html body .navitem,
+html body .helpBtn{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:9px!important;
+}
+html body .nav .fi,
+html body .helpBtn .fi{
+  width:18px!important;
+  min-width:18px!important;
+  height:18px!important;
+  margin:0!important;
+  color:#272c36!important;
+}
+
+/* Final palette guard for core interactive surfaces */
+html body #createWorkBtn,
+html body .primary,
+html body .btn-primary{
+  background:#b07bf1!important;
+  border-color:#b07bf1!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+</style>
+
+<style id="taskflow-v96-canonical-design-system">
+/* Canonical TaskFlow design system — final authority */
+:root{
+  --tf-ink:#272c36;
+  --tf-ink-2:#4f5968;
+  --tf-muted:#687381;
+  --tf-line:#e4e6ea;
+  --tf-surface:#ffffff;
+  --tf-bg:#f7f7f8;
+  --tf-purple:#b07bf1;
+  --tf-purple-hover:#9f67e7;
+  --tf-lilac:#f6edff;
+  --tf-lilac-strong:#ead8fb;
+  --tf-success:#2f8f67;
+  --tf-warning:#b7791f;
+  --tf-danger:#d95555;
+  --tf-radius-control:8px;
+  --tf-radius-card:12px;
+  --tf-radius-dialog:16px;
+}
+html,body,button,input,select,textarea{font-family:"Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important}
+body{color:var(--tf-ink)!important;background:var(--tf-bg)!important;font-weight:400!important;letter-spacing:0!important}
+
+/* Unified icon geometry */
+.fi{display:inline-flex!important;align-items:center!important;justify-content:center!important;line-height:1!important;vertical-align:middle!important;flex:0 0 auto}
+.nav .fi,.iconbtn .fi{width:18px!important;height:18px!important;min-width:18px!important;font-size:18px!important;margin:0!important}
+button:not(.iconbtn) .fi,.card h2>.fi,.card h3>.fi,.panel h3>.fi{width:16px!important;min-width:16px!important;font-size:16px!important;margin:0!important}
+.activity .ico .fi{font-size:17px!important}
+.logo .fi{font-size:18px!important;color:#fff!important}
+
+/* Header */
+.appbar{height:72px!important;background:#fff!important;border-bottom:1px solid var(--tf-line)!important;gap:22px!important}
+.brand{font-weight:700!important;letter-spacing:-.02em!important}
+.logo{width:34px!important;height:34px!important;border-radius:9px!important;background:var(--tf-ink)!important}
+.actions{gap:9px!important}
+.iconbtn{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;min-height:38px!important;padding:8px 11px!important;border:1px solid #dedfe4!important;border-radius:var(--tf-radius-control)!important;background:#fff!important;color:var(--tf-ink)!important;font-weight:600!important}
+.iconbtn:hover{background:var(--tf-lilac)!important;border-color:var(--tf-lilac-strong)!important}
+.notificationBtn{width:38px!important;padding:0!important}
+
+/* Navigation */
+.nav{height:54px!important;min-height:54px!important;padding:0 24px!important;gap:4px!important;background:#fff!important;border-bottom:1px solid var(--tf-line)!important}
+.nav button{display:inline-flex!important;align-items:center!important;gap:8px!important;height:100%!important;padding:0 14px!important;border:0!important;border-radius:0!important;background:transparent!important;color:#596270!important;font-size:14px!important;font-weight:600!important;box-shadow:none!important}
+.nav button .fi{color:#6b7280!important}
+.nav button:hover{background:var(--tf-lilac)!important;color:var(--tf-ink)!important}
+.nav button:hover .fi{color:var(--tf-ink)!important}
+.nav button.active{position:relative!important;background:transparent!important;color:var(--tf-ink)!important;font-weight:700!important}
+.nav button.active::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--tf-purple)}
+.nav button.active .fi{color:var(--tf-purple)!important}
+
+/* Typography hierarchy */
+.pagehead h1{font-weight:700!important;letter-spacing:-.03em!important}
+.card h2,.card h3,.panel h3{font-weight:700!important;letter-spacing:-.02em!important}
+.card p,.pagehead p,.clientrow p,.details dt{color:var(--tf-muted)!important}
+
+/* Surface / radius system */
+.card,.stat,.clientrow,.clienthead{background:var(--tf-surface)!important;border-color:var(--tf-line)!important;border-radius:var(--tf-radius-card)!important}
+.search input,.toolbar input,.field input,.field select,.helpsearch{border-radius:var(--tf-radius-control)!important}
+.modal,.welcomeModal,.guide.centered{border-radius:var(--tf-radius-dialog)!important}
+.tooltipBox{border-radius:8px!important}
+
+/* Primary and secondary actions */
+.primary,.btn-primary,#createWorkBtn,button.primary{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;min-height:38px!important;padding:9px 14px!important;border:1px solid var(--tf-purple)!important;border-radius:var(--tf-radius-control)!important;background:var(--tf-purple)!important;color:#fff!important;-webkit-text-fill-color:#fff!important;font-weight:700!important;box-shadow:none!important}
+.primary:hover,.btn-primary:hover,#createWorkBtn:hover,button.primary:hover{background:var(--tf-purple-hover)!important;border-color:var(--tf-purple-hover)!important;color:#fff!important}
+.secondary,.btn-secondary{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;min-height:38px!important;padding:9px 14px!important;border:1px solid #d7d9df!important;border-radius:var(--tf-radius-control)!important;background:#fff!important;color:var(--tf-ink)!important;font-weight:600!important}
+.secondary:hover,.btn-secondary:hover{background:#f8f8f9!important}
+
+/* Learning system */
+.drawerhead,.welcomeHero{background:var(--tf-ink)!important;color:#fff!important}
+/* Welcome wizard hero text must remain light on the dark header on every step. */
+html body .welcomeModal .welcomeHero h1,
+html body .welcomeModal .welcomeHero h2,
+html body .welcomeModal .welcomeHero h3,
+html body .welcomeModal .welcomeHero #welcomeTitle{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html body .welcomeModal .welcomeHero p{
+  color:#f4f5f7!important;
+  -webkit-text-fill-color:#f4f5f7!important;
+}
+html body .welcomeModal .welcomeHero .tag,
+html body .welcomeModal .welcomeHero #welcomeStepLabel{
+  color:#d9c4f4!important;
+  -webkit-text-fill-color:#d9c4f4!important;
+}
+.welcomeIcon,.practiceMark,.roleicon{background:var(--tf-lilac)!important;color:var(--tf-ink)!important;border-color:var(--tf-lilac-strong)!important}
+.welcomeDots i.active,.progressline i,.gbar i{background:var(--tf-purple)!important}
+.transferNote{background:#fbf8ff!important;border-left-color:var(--tf-purple)!important}
+.transferNote i,.welcomeOutcomeGrid i{color:var(--tf-purple)!important}
+.tooltipBox,#tooltipBox{background:var(--tf-ink)!important;color:#fff!important}
+#tooltipBox #ttNext,.tooltipBox .ttNext{background:var(--tf-purple)!important;border-color:var(--tf-purple)!important;color:#fff!important}
+#tooltipBox #ttNext:hover,.tooltipBox .ttNext:hover{background:var(--tf-purple-hover)!important;border-color:var(--tf-purple-hover)!important}
+
+/* Focus is separate from guide/selection color */
+.search input:focus,.toolbar input:focus,.field input:focus,.field select:focus,.helpsearch:focus{outline:none!important;border-color:var(--tf-purple)!important;box-shadow:0 0 0 3px rgba(176,123,241,.15)!important}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--tf-purple)!important;outline-offset:2px!important}
+
+/* Ensure icon/text spacing is controlled by flex gap, never inherited icon margins */
+.nav i,.iconbtn i,.primary i,.secondary i,.text-action i,.card-action i,.filter-chip i{margin-left:0!important;margin-right:0!important}
+</style>
+
+
+<style id="taskflow-v98-guide-button-fix">
+/* Protect centered guide action buttons from text-background reset rules. */
+html body #guide.centered #gtext #centerNext,
+html body #guide.centered #gtext #crNext,
+html body #guide.centered #gtext .centerGuideActions button.primary,
+html body #guide.centered #gtext .clientResourceActions button.primary{
+  background:#b07bf1!important;
+  background-color:#b07bf1!important;
+  border:1px solid #b07bf1!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  opacity:1!important;
+}
+html body #guide.centered #gtext #centerNext:hover,
+html body #guide.centered #gtext #crNext:hover,
+html body #guide.centered #gtext .centerGuideActions button.primary:hover,
+html body #guide.centered #gtext .clientResourceActions button.primary:hover{
+  background:#9f67e7!important;
+  background-color:#9f67e7!important;
+  border-color:#9f67e7!important;
+}
+html body #guide.centered #gtext #centerBack,
+html body #guide.centered #gtext .centerGuideActions button.secondary,
+html body #guide.centered #gtext .clientResourceActions button.secondary{
+  background:#fff!important;
+  background-color:#fff!important;
+  border:1px solid #d4d4d8!important;
+  color:#272c36!important;
+  -webkit-text-fill-color:#272c36!important;
+}
+</style>
+<!-- v102: Managing Work guides 1–3 -->
+
+<style id="taskflow-v102-managing-work-guides">
+#workQueueCard .work-edit-btn{padding:6px 10px!important;min-height:30px!important;border-radius:7px!important;font-size:12px!important;font-weight:600!important}
+#workQueueCard th:last-child,#workQueueCard td:last-child{text-align:right;width:70px}
+#editWorkModal .modal{width:560px;max-width:93vw}
+#editWorkModal #saveEditWork{background:#b07bf1!important;border-color:#b07bf1!important;color:#fff!important}
+#editWorkModal #saveEditWork:hover{background:#9f67e7!important;border-color:#9f67e7!important}
+</style>
+</body></html>

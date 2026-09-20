@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Choosing the Best Target Selector — Interactive Learning Module</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+<style>
+:root{
+  --bg:#f6f7fb;
+  --panel:#ffffff;
+  --ink:#182033;
+  --muted:#667085;
+  --line:#e5e9f1;
+  --accent:#6f5bd7;
+  --accent-soft:#eeeaff;
+  --teal:#2f9f91;
+  --teal-soft:#e9f7f4;
+  --amber:#c98223;
+  --amber-soft:#fff4e3;
+  --red:#c95656;
+  --red-soft:#fff0f0;
+  --dark:#1b2130;
+  --shadow:0 18px 46px rgba(24,32,51,.09);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button{font:inherit}
+body{min-height:100vh}
+.module{
+  min-height:100vh;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+}
+.topbar{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:16px;
+  align-items:center;
+  padding:16px 24px;
+  background:rgba(255,255,255,.94);
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:20;
+  backdrop-filter:blur(10px);
+}
+.brandline{display:flex;align-items:center;gap:12px;min-width:0}
+.brandmark{
+  width:40px;height:40px;border-radius:12px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,#8170e5,#5946bf);
+  color:white;font:700 18px Outfit,sans-serif;
+  flex:0 0 auto;
+}
+.brandtext strong{display:block;font-size:13px}
+.brandtext span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.progresswrap{display:flex;align-items:center;gap:12px}
+.progressbar{width:180px;height:7px;background:#eceff4;border-radius:99px;overflow:hidden}
+.progressbar span{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .25s ease}
+.stepcount{font-size:12px;color:var(--muted);font-weight:700;white-space:nowrap}
+.stage{
+  width:min(1180px,calc(100% - 36px));
+  margin:28px auto;
+  min-height:660px;
+  display:grid;
+}
+.slide{
+  display:none;
+  min-height:660px;
+}
+.slide.active{display:grid;animation:fade .22s ease}
+@keyframes fade{from{opacity:.45;transform:translateY(4px)}to{opacity:1;transform:none}}
+.deck{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  padding:42px;
+  min-height:660px;
+  display:grid;
+  align-content:center;
+  overflow:hidden;
+  position:relative;
+}
+.deck.compact{align-content:start}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--accent);
+  font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  margin-bottom:14px;
+}
+h1,h2,h3{font-family:Outfit,sans-serif;margin:0;color:var(--ink)}
+h1{font-size:clamp(40px,5vw,70px);line-height:1.02;letter-spacing:-.035em;max-width:900px}
+h2{font-size:clamp(31px,4vw,49px);line-height:1.08;letter-spacing:-.025em}
+h3{font-size:21px;line-height:1.2}
+.lead{font-size:18px;line-height:1.7;color:var(--muted);max-width:840px;margin:18px 0 0}
+.small{font-size:13px;line-height:1.6;color:var(--muted)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:32px;align-items:center}
+.hero-card{
+  background:linear-gradient(145deg,#1d2332,#2c3246);
+  color:#fff;border-radius:24px;padding:24px;min-height:300px;
+  display:grid;align-content:space-between;
+}
+.hero-card .mini{font-size:12px;color:#b8c0d2}
+.hero-card .big{font:700 46px/1 Outfit,sans-serif;margin:10px 0 8px}
+.hero-card p{color:#d0d5e0;font-size:13px;line-height:1.6;margin:0}
+.path{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:28px
+}
+.pathstep{
+  border:1px solid var(--line);background:#fbfcfe;border-radius:16px;padding:15px;min-height:120px
+}
+.pathstep.active{border-color:#c9c0fa;background:#faf8ff;box-shadow:0 0 0 2px rgba(111,91,215,.06)}
+.pathstep strong{display:block;font-size:13px}
+.pathstep span{display:block;color:var(--muted);font-size:11px;line-height:1.45;margin-top:5px}
+.objective{
+  display:grid;grid-template-columns:56px 1fr;gap:16px;
+  border:1px solid #d9d2fb;background:#faf9ff;border-radius:18px;padding:20px;margin-top:26px
+}
+.objective i{width:56px;height:56px;border-radius:16px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:24px}
+.objective strong{font-size:13px;display:block;margin-bottom:5px}
+.objective p{margin:0;color:#555f73;font-size:15px;line-height:1.65}
+.rulegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:26px}
+.rule{
+  border:1px solid var(--line);border-radius:18px;padding:18px;background:#fff
+}
+.rule .num{width:34px;height:34px;border-radius:10px;background:#f0f2f6;display:grid;place-items:center;font-size:12px;font-weight:800}
+.rule.primary .num{background:var(--teal-soft);color:#17796d}
+.rule h3{font-size:17px;margin-top:12px}
+.rule p{font-size:13px;line-height:1.6;color:var(--muted);margin:6px 0 0}
+.code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  background:#171c29;color:#eef1f7;border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.55;
+  overflow:auto
+}
+.compare{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+.choice-card{
+  border:1px solid var(--line);border-radius:18px;padding:16px;background:#fff;min-width:0
+}
+.choice-card.best{border-color:#b9e2d9;background:#fbfffe}
+.choice-card.risky{border-color:#ecd9b8;background:#fffdf9}
+.choice-card strong{display:block;font-size:13px;margin-bottom:8px}
+.choice-card p{font-size:12px;color:var(--muted);line-height:1.55;margin:10px 0 0}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:99px;font-size:11px;font-weight:800
+}
+.badge.good{background:var(--teal-soft);color:#17796d}
+.badge.warn{background:var(--amber-soft);color:#93611d}
+.badge.neutral{background:#f1f3f6;color:#687386}
+.interactive{
+  margin-top:26px;border-top:1px solid var(--line);padding-top:22px
+}
+.question{font-size:17px;font-weight:800;line-height:1.45;margin-bottom:12px}
+.options{display:grid;gap:10px}
+.option{
+  width:100%;text-align:left;border:1px solid var(--line);background:#fff;color:var(--ink);
+  border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;
+  transition:.15s ease
+}
+.option:hover{border-color:#bbb0f4;background:#faf9ff}
+.option .letter{width:30px;height:30px;border-radius:9px;background:#f0f2f6;display:grid;place-items:center;font-weight:800;font-size:12px;flex:0 0 auto}
+.option .opttext{min-width:0}
+.option .opttext strong{display:block;font-size:14px}
+.option .opttext span{display:block;font-size:12px;color:var(--muted);margin-top:3px;line-height:1.45}
+.option.correct{border-color:#9ed7ca;background:var(--teal-soft)}
+.option.correct .letter{background:#ccebe4;color:#147468}
+.option.incorrect{border-color:#ecc1c1;background:var(--red-soft)}
+.option.incorrect .letter{background:#f2cece;color:#9c3838}
+.option:disabled{cursor:default}
+.feedback{
+  display:none;margin-top:12px;border-radius:14px;padding:13px 15px;font-size:13px;line-height:1.6
+}
+.feedback.show{display:block}
+.feedback.good{background:var(--teal-soft);color:#176f65;border:1px solid #bce3da}
+.feedback.bad{background:var(--red-soft);color:#953b3b;border:1px solid #edc6c6}
+.quickref{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:26px
+}
+.refitem{border:1px solid var(--line);border-radius:16px;padding:15px;background:#fbfcfe}
+.refitem i{font-size:19px;color:var(--accent)}
+.refitem strong{display:block;font-size:12px;margin-top:9px}
+.refitem span{display:block;font-size:11px;color:var(--muted);line-height:1.45;margin-top:4px}
+.assess-card{border:1px solid var(--line);border-radius:18px;padding:18px;background:#fff;margin-top:18px}
+.assess-card h3{font-size:17px}
+.assess-card p{font-size:13px;color:var(--muted);line-height:1.6;margin:6px 0 0}
+.assessment-layout{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:22px;margin-top:22px}
+.qpanel{border:1px solid var(--line);border-radius:18px;padding:20px;background:#fff}
+.qpanel .qnum{font-size:11px;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.qpanel .qtext{font-size:17px;font-weight:800;line-height:1.5;margin:8px 0 14px}
+.aside{
+  background:#f8f9fc;border:1px solid var(--line);border-radius:18px;padding:18px;height:max-content
+}
+.aside strong{font-size:13px}
+.dotgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:12px}
+.dotbtn{
+  border:1px solid var(--line);background:#fff;border-radius:9px;height:34px;font-size:10px;font-weight:800;color:var(--muted)
+}
+.dotbtn.answered{background:var(--accent-soft);color:var(--accent);border-color:#c9c0fa}
+.result{
+  display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:center;margin-top:26px
+}
+.scorecircle{
+  width:150px;height:150px;border-radius:50%;display:grid;place-items:center;
+  background:conic-gradient(var(--teal) 0deg,#e9edf3 0deg);
+  position:relative
+}
+.scorecircle::after{content:"";position:absolute;inset:12px;background:#fff;border-radius:50%}
+.scorecircle .inner{position:relative;z-index:2;text-align:center}
+.scorecircle .inner strong{display:block;font:700 34px/1 Outfit}
+.scorecircle .inner span{display:block;font-size:11px;color:var(--muted);margin-top:5px}
+.reviewlist{display:grid;gap:9px;margin-top:16px}
+.reviewitem{border:1px solid var(--line);border-radius:12px;padding:11px 12px;font-size:12px}
+.reviewitem.good{border-color:#bce3da;background:var(--teal-soft)}
+.reviewitem.bad{border-color:#edc6c6;background:var(--red-soft)}
+.completion{
+  display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:26px;align-items:center
+}
+.cert{
+  border:1px solid var(--line);border-radius:22px;padding:22px;background:linear-gradient(145deg,#fff,#f8f7ff)
+}
+.cert .icon{width:54px;height:54px;border-radius:16px;background:var(--teal-soft);color:#17796d;display:grid;place-items:center;font-size:24px}
+.cert h3{margin-top:16px}
+.cert p{font-size:13px;color:var(--muted);line-height:1.6}
+.footer{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px 24px;background:#fff;border-top:1px solid var(--line);position:sticky;bottom:0;z-index:20
+}
+.navbtn{
+  border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:12px;padding:11px 15px;font-weight:800;
+  display:inline-flex;align-items:center;gap:8px
+}
+.navbtn.primary{background:var(--accent);color:white;border-color:var(--accent)}
+.navbtn:disabled{opacity:.35;cursor:not-allowed}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+.dot{width:8px;height:8px;border-radius:50%;background:#d8dde7}
+.dot.active{background:var(--accent);width:22px;border-radius:99px}
+.note{font-size:11px;color:var(--muted);margin-top:16px}
+
+.code-lab{
+  display:grid;
+  grid-template-columns:minmax(0,1.12fr) minmax(300px,.88fr);
+  gap:18px;
+  margin-top:22px;
+}
+.code-panel{
+  background:#171c29;
+  color:#eef1f7;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid #252c3d;
+}
+.code-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:11px 14px;
+  border-bottom:1px solid #2b3244;
+  background:#1d2332;
+}
+.code-head strong{font-size:12px}
+.code-head span{font-size:10px;color:#aeb7c8}
+pre.dom{
+  margin:0;
+  padding:16px;
+  overflow:auto;
+  font:12.5px/1.65 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  white-space:pre;
+}
+.code-tag{color:#8cc8ff}
+.code-attr{color:#d5a6ff}
+.code-val{color:#9fe3bd}
+.code-comment{color:#8792a6}
+.inspect-panel{
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:#fff;
+  padding:17px;
+}
+.inspect-panel h3{font-size:17px}
+.selector-stack{display:grid;gap:9px;margin-top:12px}
+.selector-row{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:11px 12px;
+  background:#fbfcfe;
+}
+.selector-row.good{border-color:#bce3da;background:var(--teal-soft)}
+.selector-row.warn{border-color:#ecd9b8;background:var(--amber-soft)}
+.selector-row.bad{border-color:#edc6c6;background:var(--red-soft)}
+.selector-row .top{
+  display:flex;align-items:center;justify-content:space-between;gap:10px
+}
+.selector-row code{
+  font:12px ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  overflow-wrap:anywhere
+}
+.selector-row p{font-size:11.5px;line-height:1.5;color:var(--muted);margin:6px 0 0}
+.reason-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin-top:16px;
+}
+.reason{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:13px;
+  background:#fff;
+}
+.reason strong{font-size:12px;display:block}
+.reason p{font-size:11.5px;line-height:1.5;color:var(--muted);margin:5px 0 0}
+.failure-demo{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:18px;
+}
+.failure-state{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+  background:#fff;
+}
+.failure-state h3{font-size:15px}
+.failure-state p{font-size:12px;color:var(--muted);line-height:1.55}
+.flowline{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+  margin-top:18px;
+}
+.flowpill{
+  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:#fff;
+  font-size:11px;
+  font-weight:800;
+}
+.arrowmini{color:#98a2b3}
+@media(max-width:900px){
+  .code-lab{grid-template-columns:1fr}
+  .reason-grid{grid-template-columns:1fr}
+  .failure-demo{grid-template-columns:1fr}
+}
+
+@media(max-width:900px){
+  .stage{width:min(100% - 20px,1180px);margin:14px auto}
+  .deck{padding:24px;min-height:0}
+  .slide{min-height:0}
+  .hero-grid,.completion,.assessment-layout{grid-template-columns:1fr}
+  .path{grid-template-columns:1fr 1fr}
+  .compare{grid-template-columns:1fr}
+  .quickref{grid-template-columns:1fr 1fr}
+  .rulegrid{grid-template-columns:1fr}
+  .progressbar{width:110px}
+  .result{grid-template-columns:1fr}
+  .scorecircle{margin:auto}
+}
+@media(max-width:560px){
+  .topbar{padding:12px 14px}
+  .brandtext span{display:none}
+  .progressbar{display:none}
+  .stage{width:calc(100% - 12px)}
+  .deck{padding:18px;border-radius:18px}
+  h1{font-size:38px}
+  h2{font-size:31px}
+  .lead{font-size:16px}
+  .path,.quickref{grid-template-columns:1fr}
+  .footer{padding:10px 12px}
+  .dots{display:none}
+  .navbtn{padding:10px 12px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="module" id="module">
+  <header class="topbar">
+    <div class="brandline">
+      <div class="brandmark">G</div>
+      <div class="brandtext">
+        <strong>Guide Developer Onboarding</strong>
+        <span>Interactive microlearning module</span>
+      </div>
+    </div>
+    <div class="progresswrap">
+      <div class="progressbar"><span id="topProgress" style="width:0%"></span></div>
+      <div class="stepcount" id="stepCount">1 / 11</div>
+    </div>
+  </header>
+
+  <main class="stage">
+
+    <section class="slide active" data-title="Title">
+      <div class="deck">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow"><i class="lni lni-target"></i> NetSuite Guide Developer Onboarding</div>
+            <h1>Choosing the Best Target Selector</h1>
+            <p class="lead">A practical developer module on selecting reliable UI targets — with DOM inspection, code examples, failure analysis, guided practice, and a scored assessment.</p>
+            <div class="note">Portfolio demonstration using representative, sanitized examples rather than proprietary production DOM.</div>
+          </div>
+          <div class="hero-card">
+            <div>
+              <div class="mini">Module length</div>
+              <div class="big">12–15 min</div>
+              <p>Learn the decision process, test your judgment, then complete a short assessment.</p>
+            </div>
+            <div>
+              <span class="badge neutral">Core skill module</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Onboarding context">
+      <div class="deck">
+        <div class="eyebrow">Where this fits</div>
+        <h2>Part of a larger Guide Developer onboarding path.</h2>
+        <p class="lead">Before new developers apply selector strategies in T1–T3 guide builds, they first learn the core decision rules and practice choosing reliable targets.</p>
+        <div class="path">
+          <div class="pathstep"><strong>1 · Foundation</strong><span>Role, workflow, Guide Library</span></div>
+          <div class="pathstep active"><strong>2 · Core Skill</strong><span>Target selectors</span></div>
+          <div class="pathstep"><strong>3 · T1</strong><span>Basic guide builds</span></div>
+          <div class="pathstep"><strong>4 · T2</strong><span>Applied troubleshooting</span></div>
+          <div class="pathstep"><strong>5 · T3</strong><span>Advanced independent work</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Objective">
+      <div class="deck">
+        <div class="eyebrow">Learning objective</div>
+        <h2>Make a reasoned selector choice — not a guess.</h2>
+        <div class="objective">
+          <i class="lni lni-bullseye"></i>
+          <div>
+            <strong>By the end of this module, you should be able to:</strong>
+            <p>Compare possible target selectors and choose the option that is most stable, appropriately specific, and resilient to normal UI changes.</p>
+          </div>
+        </div>
+        <p class="lead">The goal is not to memorize one selector pattern. The goal is to develop the judgment to choose the strongest available target for the situation.</p>
+      </div>
+    </section>
+
+    
+<section class="slide" data-title="Decision hierarchy">
+  <div class="deck compact">
+    <div class="eyebrow">Selector decision hierarchy</div>
+    <h2>Start with the most stable signal available.</h2>
+    <p class="lead">The first selector that works is not automatically the best selector. Evaluate the element from strongest evidence to weaker fallbacks.</p>
+
+    <div class="rulegrid">
+      <div class="rule primary">
+        <div class="num">1</div>
+        <h3>Stable unique ID</h3>
+        <p>Use an element or container ID when it is unique and remains unchanged across refreshes, sessions, roles, and expected UI states.</p>
+        <div class="code" style="margin-top:10px">#trandate_fs</div>
+      </div>
+
+      <div class="rule primary">
+        <div class="num">2</div>
+        <h3>Stable <code>data-*</code> attribute</h3>
+        <p>Automation-oriented attributes are often strong because they describe application intent instead of visual position.</p>
+        <div class="code" style="margin-top:10px">[data-automation-id="save"]</div>
+      </div>
+
+      <div class="rule">
+        <div class="num">3</div>
+        <h3>Stable semantic attribute</h3>
+        <p>Attributes such as <code>name</code>, <code>href</code>, <code>aria-label</code>, or another stable business-facing attribute can be good fallbacks.</p>
+        <div class="code" style="margin-top:10px">input[name="trandate"]</div>
+      </div>
+
+      <div class="rule">
+        <div class="num">4</div>
+        <h3>Stable contextual targeting</h3>
+        <p>When the child itself has no useful identifier, anchor the selector to a stable parent or section before targeting the child.</p>
+        <div class="code" style="margin-top:10px">#billing-panel button.edit</div>
+      </div>
+
+      <div class="rule">
+        <div class="num">5</div>
+        <h3>Position only as a fallback</h3>
+        <p><code>eq()</code>, <code>nth-child()</code>, and deep DOM paths can work, but they depend on current structure and should be used carefully.</p>
+        <div class="code" style="margin-top:10px">#item_headerrow td:eq(1)</div>
+      </div>
+
+      <div class="rule">
+        <div class="num">6</div>
+        <h3>Validate in context</h3>
+        <p>A strong selector must remain unique and reliable after refresh, navigation, expansion panels, role changes, or other relevant state changes.</p>
+        <div class="code" style="margin-top:10px">refresh → reopen → retest</div>
+      </div>
+    </div>
+
+    <div class="flowline">
+      <span class="flowpill">Stable ID?</span><span class="arrowmini">→</span>
+      <span class="flowpill">Stable data-*?</span><span class="arrowmini">→</span>
+      <span class="flowpill">Stable semantic attr?</span><span class="arrowmini">→</span>
+      <span class="flowpill">Stable parent context?</span><span class="arrowmini">→</span>
+      <span class="flowpill">Positional fallback</span>
+    </div>
+  </div>
+</section>
+
+    
+<section class="slide" data-title="Worked example 1">
+  <div class="deck compact">
+    <div class="eyebrow">Worked example 1 · Inspect the DOM</div>
+    <h2>One field. Three selectors. Only one should be your first choice.</h2>
+    <p class="lead">Imagine this simplified transaction form. Your guide needs to target the Date field.</p>
+
+    <div class="code-lab">
+      <div class="code-panel">
+        <div class="code-head"><strong>Representative DOM</strong><span>sanitized example</span></div>
+        <pre class="dom"><span class="code-tag">&lt;div</span> <span class="code-attr">id</span>=<span class="code-val">"main_form"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-val">"field-row"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;label</span> <span class="code-attr">for</span>=<span class="code-val">"trandate"</span><span class="code-tag">&gt;</span>Date<span class="code-tag">&lt;/label&gt;</span>
+
+    <span class="code-tag">&lt;input</span>
+      <span class="code-attr">id</span>=<span class="code-val">"trandate_fs"</span>
+      <span class="code-attr">name</span>=<span class="code-val">"trandate"</span>
+      <span class="code-attr">type</span>=<span class="code-val">"text"</span>
+      <span class="code-attr">class</span>=<span class="code-val">"inputreq"</span>
+    <span class="code-tag">/&gt;</span>
+  <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+      </div>
+
+      <div class="inspect-panel">
+        <h3>Candidate selectors</h3>
+        <div class="selector-stack">
+          <div class="selector-row good">
+            <div class="top"><code>#trandate_fs</code><span class="badge good">Preferred</span></div>
+            <p>Direct, unique, and independent of the field's current page position.</p>
+          </div>
+          <div class="selector-row">
+            <div class="top"><code>input[name="trandate"]</code><span class="badge neutral">Good fallback</span></div>
+            <p>Also meaningful if the name is stable and unique. Useful when the ID is unavailable or unstable.</p>
+          </div>
+          <div class="selector-row warn">
+            <div class="top"><code>#main_form div:nth-child(4) input</code><span class="badge warn">Fragile</span></div>
+            <p>Works only while that field remains in the same structural position.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reason-grid">
+      <div class="reason"><strong>Uniqueness</strong><p>The selector should identify one intended target, not several similar fields.</p></div>
+      <div class="reason"><strong>Stability</strong><p>The attribute should remain predictable after refresh, navigation, and normal application changes.</p></div>
+      <div class="reason"><strong>Minimal dependence</strong><p>Avoid depending on parent depth or sibling position when a direct stable identifier already exists.</p></div>
+    </div>
+  </div>
+</section>
+
+    
+<section class="slide" data-title="Worked example 2">
+  <div class="deck compact">
+    <div class="eyebrow">Worked example 2 · Automation attributes</div>
+    <h2>When there is no trustworthy ID, look for purposeful attributes.</h2>
+    <p class="lead">Here the button's CSS class looks generated, but the automation attribute communicates the actual application action.</p>
+
+    <div class="code-lab">
+      <div class="code-panel">
+        <div class="code-head"><strong>Representative DOM</strong><span>button example</span></div>
+        <pre class="dom"><span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-val">"transaction-actions"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;button</span>
+    <span class="code-attr">class</span>=<span class="code-val">"oj-button oj-component-9381"</span>
+    <span class="code-attr">data-automation-id</span>=<span class="code-val">"EDIT_TRAN_JOURNAL"</span>
+    <span class="code-attr">type</span>=<span class="code-val">"button"</span>
+  <span class="code-tag">&gt;</span>
+    Edit
+  <span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+      </div>
+
+      <div class="inspect-panel">
+        <h3>Compare the evidence</h3>
+        <div class="selector-stack">
+          <div class="selector-row good">
+            <div class="top"><code>[data-automation-id="EDIT_TRAN_JOURNAL"]</code><span class="badge good">Strong</span></div>
+            <p>Purposeful and tied to the application's action semantics.</p>
+          </div>
+          <div class="selector-row bad">
+            <div class="top"><code>.oj-component-9381</code><span class="badge warn">Risky</span></div>
+            <p>Looks generated. If the framework regenerates the class, the guide breaks.</p>
+          </div>
+          <div class="selector-row warn">
+            <div class="top"><code>button:contains("Edit")</code><span class="badge warn">Lower priority</span></div>
+            <p>Visible text may change, be translated, or appear on multiple buttons.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="objective" style="margin-top:18px">
+      <i class="lni lni-lightbulb"></i>
+      <div>
+        <strong>Important judgment</strong>
+        <p>A selector is not strong because it looks technical. It is strong because the underlying attribute is stable, unique, and meaningful in the application.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+    
+<section class="slide" data-title="Deep dive: dynamic attributes">
+  <div class="deck compact">
+    <div class="eyebrow">Deep dive · Dynamic attributes</div>
+    <h2>An ID is only useful if it stays the same.</h2>
+    <p class="lead">Developers often assume that every <code>id</code> is automatically the strongest selector. That is not always true.</p>
+
+    <div class="code-lab">
+      <div class="code-panel">
+        <div class="code-head"><strong>Session 1</strong><span>same field</span></div>
+        <pre class="dom"><span class="code-tag">&lt;input</span>
+  <span class="code-attr">id</span>=<span class="code-val">"custfield_948271"</span>
+  <span class="code-attr">name</span>=<span class="code-val">"custfield"</span>
+  <span class="code-attr">data-field-key</span>=<span class="code-val">"customer_reference"</span>
+<span class="code-tag">/&gt;</span></pre>
+      </div>
+
+      <div class="code-panel">
+        <div class="code-head"><strong>Session 2</strong><span>after refresh/login</span></div>
+        <pre class="dom"><span class="code-tag">&lt;input</span>
+  <span class="code-attr">id</span>=<span class="code-val">"custfield_612450"</span>
+  <span class="code-attr">name</span>=<span class="code-val">"custfield"</span>
+  <span class="code-attr">data-field-key</span>=<span class="code-val">"customer_reference"</span>
+<span class="code-tag">/&gt;</span></pre>
+      </div>
+    </div>
+
+    <div class="failure-demo">
+      <div class="failure-state">
+        <h3>Looks strong, but fails</h3>
+        <div class="code">#custfield_948271</div>
+        <p>The ID changed between sessions. A selector that was perfect yesterday no longer matches today.</p>
+      </div>
+      <div class="failure-state">
+        <h3>Better candidate</h3>
+        <div class="code">[data-field-key="customer_reference"]</div>
+        <p>If this attribute is verified stable and unique, it is a stronger target than the dynamic ID.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Deep dive: duplicate elements">
+  <div class="deck compact">
+    <div class="eyebrow">Deep dive · Duplicate elements</div>
+    <h2>Uniqueness can change when the UI state changes.</h2>
+    <p class="lead">A selector may be unique when a page first loads, then become ambiguous after a panel opens, a template renders, or another matching control appears.</p>
+
+    <div class="code-lab">
+      <div class="code-panel">
+        <div class="code-head"><strong>Expanded UI state</strong><span>two Edit buttons</span></div>
+        <pre class="dom"><span class="code-tag">&lt;section</span> <span class="code-attr">data-record-id</span>=<span class="code-val">"A102"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;button</span> <span class="code-attr">class</span>=<span class="code-val">"edit-btn"</span><span class="code-tag">&gt;</span>Edit<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/section&gt;</span>
+
+<span class="code-tag">&lt;section</span> <span class="code-attr">data-record-id</span>=<span class="code-val">"B410"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;button</span> <span class="code-attr">class</span>=<span class="code-val">"edit-btn"</span><span class="code-tag">&gt;</span>Edit<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/section&gt;</span></pre>
+      </div>
+
+      <div class="inspect-panel">
+        <h3>Why the simple selector fails</h3>
+        <div class="selector-stack">
+          <div class="selector-row bad">
+            <div class="top"><code>.edit-btn</code><span class="badge warn">2 matches</span></div>
+            <p>It does not identify which record's Edit button the guide needs.</p>
+          </div>
+          <div class="selector-row good">
+            <div class="top"><code>[data-record-id="B410"] .edit-btn</code><span class="badge good">Contextual</span></div>
+            <p>The stable parent provides the context needed to identify the correct child button.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="objective" style="margin-top:18px">
+      <i class="lni lni-search"></i>
+      <div>
+        <strong>Troubleshooting question</strong>
+        <p>When a selector starts matching the wrong element, ask first: “Did the number of matches change in this UI state?”</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Deep dive: positional fallback">
+  <div class="deck compact">
+    <div class="eyebrow">Deep dive · Positional selectors</div>
+    <h2>Position can be valid — but understand the tradeoff.</h2>
+    <p class="lead">Sometimes a stable direct identifier simply does not exist. Positional targeting can be acceptable as a fallback, especially when anchored to a stable context.</p>
+
+    <div class="code-lab">
+      <div class="code-panel">
+        <div class="code-head"><strong>Representative table</strong><span>role-dependent columns</span></div>
+        <pre class="dom"><span class="code-tag">&lt;tr</span> <span class="code-attr">id</span>=<span class="code-val">"item_headerrow"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;td&gt;</span>Item<span class="code-tag">&lt;/td&gt;</span>
+  <span class="code-tag">&lt;td&gt;</span>Account<span class="code-tag">&lt;/td&gt;</span>
+  <span class="code-tag">&lt;td&gt;</span>Amount<span class="code-tag">&lt;/td&gt;</span>
+<span class="code-tag">&lt;/tr&gt;</span></pre>
+      </div>
+
+      <div class="inspect-panel">
+        <h3>Possible approach</h3>
+        <div class="selector-stack">
+          <div class="selector-row warn">
+            <div class="top"><code>#item_headerrow td:eq(1)</code><span class="badge warn">Conditional</span></div>
+            <p>Reasonable only if the column order is known to be stable in every relevant role/state.</p>
+          </div>
+          <div class="selector-row good">
+            <div class="top"><code>#item_headerrow td[data-label="Account"]</code><span class="badge good">Better if available</span></div>
+            <p>A stable descriptive attribute survives column reordering better than index-based targeting.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reason-grid">
+      <div class="reason"><strong>Use position deliberately</strong><p>Do not reject positional selectors automatically. Use them when stronger signals truly are unavailable.</p></div>
+      <div class="reason"><strong>Anchor when possible</strong><p>Position inside a stable parent is safer than a global page position.</p></div>
+      <div class="reason"><strong>Test role/state changes</strong><p>If layout can vary by role, center, or expanded state, validate those variants.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Practice 1">
+      <div class="deck compact">
+        <div class="eyebrow">Guided practice</div>
+        <h2>Choose the best target.</h2>
+        <div class="interactive">
+          <div class="question">A Save button has a stable <code>data-automation-id</code>. Which selector would you choose?</div>
+          <div class="options" id="practice1">
+            <button class="option" data-correct="false"><span class="letter">A</span><span class="opttext"><strong>button:nth-child(2)</strong><span>Targets by position.</span></span></button>
+            <button class="option" data-correct="true"><span class="letter">B</span><span class="opttext"><strong>button[data-automation-id="save"]</strong><span>Targets a stable, meaningful attribute.</span></span></button>
+            <button class="option" data-correct="false"><span class="letter">C</span><span class="opttext"><strong>.page button</strong><span>Very broad; may match multiple buttons.</span></span></button>
+          </div>
+          <div class="feedback" id="practice1Feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Practice 2">
+      <div class="deck compact">
+        <div class="eyebrow">Guided practice</div>
+        <h2>Fix the fragile selector.</h2>
+        <div class="interactive">
+          <div class="question">A selector currently uses <code>#item_headerrow &gt; td:eq(1)</code>. A stable <code>data-label="Account"</code> is now available on the correct header. Which is the better choice?</div>
+          <div class="options" id="practice2">
+            <button class="option" data-correct="false"><span class="letter">A</span><span class="opttext"><strong>Keep <code>td:eq(1)</code></strong><span>It already works, so there is no reason to change it.</span></span></button>
+            <button class="option" data-correct="true"><span class="letter">B</span><span class="opttext"><strong>Use <code>td[data-label="Account"]</code></strong><span>Targets the intended column by a meaningful stable attribute.</span></span></button>
+            <button class="option" data-correct="false"><span class="letter">C</span><span class="opttext"><strong>Use <code>td:contains("Account")</code></strong><span>Text-based matching should not be preferred when a stronger attribute exists.</span></span></button>
+          </div>
+          <div class="feedback" id="practice2Feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Quick reference">
+      <div class="deck">
+        <div class="eyebrow">From the Guide Developer Library</div>
+        <h2>Five questions before you lock in a selector.</h2>
+        <div class="quickref">
+          <div class="refitem"><i class="lni lni-key"></i><strong>Is it unique?</strong><span>Does it identify only the intended target?</span></div>
+          <div class="refitem"><i class="lni lni-shield"></i><strong>Is it stable?</strong><span>Will the attribute persist across sessions and normal UI changes?</span></div>
+          <div class="refitem"><i class="lni lni-target"></i><strong>Is it meaningful?</strong><span>Does it describe the intended element rather than its current position?</span></div>
+          <div class="refitem"><i class="lni lni-code"></i><strong>Is it too brittle?</strong><span>Are you depending on deep DOM structure or generated classes?</span></div>
+          <div class="refitem"><i class="lni lni-reload"></i><strong>Did you test it?</strong><span>Validate uniqueness and stability after refresh or state changes.</span></div>
+        </div>
+        <div class="assess-card">
+          <h3>Decision shortcut</h3>
+          <p><strong>Prefer:</strong> stable ID → stable <code>data-*</code> → stable semantic attributes such as <code>name</code>/<code>href</code> → contextual/positional selectors only when stronger options are unavailable.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Assessment">
+      <div class="deck compact">
+        <div class="eyebrow">Assessment</div>
+        <h2>Apply the decision rules independently.</h2>
+        <p class="lead">Answer all 20 questions. You need <strong>16 out of 20</strong> correct to pass.</p>
+
+        <div class="assessment-layout">
+          <div class="qpanel">
+            <div class="qnum" id="assessmentQNum">Question 1 of 20</div>
+            <div class="qtext" id="assessmentQText"></div>
+            <div class="options" id="assessmentOptions"></div>
+          </div>
+          <aside class="aside">
+            <strong>Assessment progress</strong>
+            <div class="small" style="margin-top:5px">Answers are scored only when you submit.</div>
+            <div class="dotgrid" id="assessmentDots"></div>
+            <div class="actions" style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+              <button class="navbtn" id="assessPrev" type="button">Previous</button>
+              <button class="navbtn" id="assessNext" type="button">Next</button>
+            </div>
+            <button class="navbtn primary" id="submitAssessment" type="button" style="width:100%;justify-content:center;margin-top:10px">Submit assessment</button>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Results">
+      <div class="deck compact">
+        <div class="eyebrow">Assessment results</div>
+        <h2 id="resultHeadline">Complete the assessment first.</h2>
+        <div class="result">
+          <div class="scorecircle" id="scoreCircle">
+            <div class="inner"><strong id="scoreText">—</strong><span>assessment score</span></div>
+          </div>
+          <div>
+            <p class="lead" id="resultMessage" style="margin-top:0">Your result will appear here after submission.</p>
+            <div class="reviewlist" id="reviewList"></div>
+            <div class="actions" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+              <button class="navbtn" id="retryAssessment" type="button">Retake assessment</button>
+              <button class="navbtn primary" id="goCompletion" type="button" disabled>Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Complete">
+      <div class="deck">
+        <div class="completion">
+          <div>
+            <div class="eyebrow"><i class="lni lni-checkmark-circle"></i> Module complete</div>
+            <h2>Target Selector Foundations complete.</h2>
+            <p class="lead">You have demonstrated the foundational selector judgment expected before applying these skills in guided T1 build activities.</p>
+            <div class="objective">
+              <i class="lni lni-arrow-right"></i>
+              <div>
+                <strong>Next in the onboarding path</strong>
+                <p>T1 Guide Build — apply selector decisions inside a complete guided development activity.</p>
+              </div>
+            </div>
+          </div>
+          <div class="cert">
+            <div class="icon"><i class="lni lni-certificate"></i></div>
+            <h3>Target Selector Foundations</h3>
+            <p>Interactive onboarding module demonstrating selector judgment, guided practice, and assessment.</p>
+            <span class="badge good">Passed assessment</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <button class="navbtn" id="prevBtn" type="button"><i class="lni lni-arrow-left"></i> Previous</button>
+    <div class="dots" id="slideDots"></div>
+    <button class="navbtn primary" id="nextBtn" type="button">Next <i class="lni lni-arrow-right"></i></button>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const root=document.getElementById('module');
+  const slides=[...root.querySelectorAll('.slide')];
+  const prevBtn=document.getElementById('prevBtn');
+  const nextBtn=document.getElementById('nextBtn');
+  const stepCount=document.getElementById('stepCount');
+  const topProgress=document.getElementById('topProgress');
+  const slideDots=document.getElementById('slideDots');
+
+  let current=0;
+  let assessmentSubmitted=false;
+  let passed=false;
+
+  const assessmentIndex=slides.findIndex(s=>s.dataset.title==='Assessment');
+  const resultsIndex=slides.findIndex(s=>s.dataset.title==='Results');
+  const completionIndex=slides.findIndex(s=>s.dataset.title==='Complete');
+
+  function renderDots(){
+    slideDots.innerHTML=slides.map((_,i)=>'<span class="dot '+(i===current?'active':'')+'"></span>').join('');
+  }
+
+  function updateNav(){
+    slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+    prevBtn.disabled=current===0;
+    nextBtn.disabled=current===slides.length-1 || (current===assessmentIndex && !assessmentSubmitted) || (current===resultsIndex && !passed);
+    stepCount.textContent=(current+1)+' / '+slides.length;
+    topProgress.style.width=((current)/(slides.length-1)*100)+'%';
+    renderDots();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  prevBtn.addEventListener('click',()=>{if(current>0){current--;updateNav();}});
+  nextBtn.addEventListener('click',()=>{
+    if(current<slides.length-1){
+      if(current===assessmentIndex && !assessmentSubmitted) return;
+      if(current===resultsIndex && !passed) return;
+      current++;updateNav();
+    }
+  });
+
+  function bindPractice(groupId,feedbackId,goodText,badText){
+    const group=document.getElementById(groupId);
+    const feedback=document.getElementById(feedbackId);
+    [...group.querySelectorAll('.option')].forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const correct=btn.dataset.correct==='true';
+        [...group.querySelectorAll('.option')].forEach(b=>{
+          b.disabled=true;
+          if(b.dataset.correct==='true') b.classList.add('correct');
+        });
+        if(!correct) btn.classList.add('incorrect');
+        feedback.className='feedback show '+(correct?'good':'bad');
+        feedback.textContent=correct?goodText:badText;
+      });
+    });
+  }
+
+  bindPractice(
+    'practice1','practice1Feedback',
+    'Correct. A stable automation attribute is a stronger signal than button position or a broad class selector.',
+    'Not quite. Prefer the stable, meaningful automation attribute when it uniquely identifies the intended Save action.'
+  );
+  bindPractice(
+    'practice2','practice2Feedback',
+    'Correct. The data-label identifies the intended column directly and is less dependent on column position.',
+    'Not quite. When a meaningful stable attribute is available, prefer it over positional or text-based targeting.'
+  );
+
+  const assessment=[
+    {
+      category:'Stable identifiers',
+      q:'A transaction field has a unique ID that remains the same after refresh and across user sessions. Another selector uses a 5-level DOM path. Which is the stronger choice?',
+      options:['Use the stable unique ID','Use the DOM path because it is more specific','Use both together even when the ID is already unique'],
+      answer:0,
+      why:'A stable unique ID directly identifies the target and avoids unnecessary dependence on page structure.'
+    },
+    {
+      category:'Stable automation attributes',
+      q:'A Save button has no reliable ID but exposes data-automation-id="save". The button position changes when optional fields appear. What should you prefer?',
+      options:['button:nth-child(2)','button[data-automation-id="save"]','The visible text "Save" only'],
+      answer:1,
+      why:'A stable automation attribute is more resilient than position or text when the layout can change.'
+    },
+    {
+      category:'Dynamic IDs',
+      q:'You inspect an element and find id="custfield_948271". The numeric suffix changes every new session. What should you conclude?',
+      options:['The full ID is a strong selector because IDs are always stable','The ID appears dynamic and should not be trusted without further validation','Use the ID and add nth-child for extra safety'],
+      answer:1,
+      why:'An ID is only valuable when it is stable. A session-dependent suffix makes the selector brittle.'
+    },
+    {
+      category:'Generated classes',
+      q:'Two candidate selectors both match the target. One uses data-automation-id="EDIT_TRAN_JOURNAL"; the other uses class="oj-component-9381". Which is safer?',
+      options:['The generated-looking class','The automation attribute','Whichever is shorter'],
+      answer:1,
+      why:'A purposeful automation attribute is generally more stable than a framework-generated class.'
+    },
+    {
+      category:'Semantic attributes',
+      q:'There is no ID or data-* attribute. An input has name="email" and that name is stable and unique. What is the best next option?',
+      options:['input[name="email"]','input:nth-of-type(3)','input:contains("Email")'],
+      answer:0,
+      why:'A stable semantic attribute such as name is preferable to positional or text-based targeting.'
+    },
+    {
+      category:'Duplicate matches',
+      q:'Your selector input[name="email"] suddenly matches two elements because a hidden template was added to the page. What should you do first?',
+      options:['Add :eq(0) immediately','Inspect both matches and identify a stable context that distinguishes the live field','Switch to visible text matching'],
+      answer:1,
+      why:'When duplicates appear, first understand the new structure and use stable context rather than arbitrary position.'
+    },
+    {
+      category:'Contextual targeting',
+      q:'Two identical "Edit" links appear in separate cards. Each card has a stable data-record-id. What is the strongest strategy?',
+      options:['Use the first Edit link on the page','Anchor the selector to the card with the correct data-record-id, then target its Edit link','Use a global :contains("Edit") selector'],
+      answer:1,
+      why:'Stable parent context can disambiguate identical child elements without relying on position.'
+    },
+    {
+      category:'Positional selectors',
+      q:'A table column is currently the second column, so td:eq(1) works. The column order can change by role. What is the main risk?',
+      options:['eq(1) may point to the wrong column after reordering','eq(1) is always slower than an attribute selector','eq(1) cannot match table cells'],
+      answer:0,
+      why:'Position-based selectors can silently target the wrong element when layout or column order changes.'
+    },
+    {
+      category:'Text matching',
+      q:'A button can be targeted using :contains("Approve") or a stable data-action="approve". Which should you prefer?',
+      options:[':contains("Approve") because users can see the text','data-action="approve" because it is a stable meaningful attribute','Use both even if data-action is already unique'],
+      answer:1,
+      why:'Text can change due to wording, localization, or UI updates. A stable functional attribute is stronger.'
+    },
+    {
+      category:'Selector specificity',
+      q:'A selector .page button matches 12 buttons. Which improvement is most appropriate?',
+      options:['Add a stable attribute or contextual container that uniquely identifies the intended button','Keep the selector because broad selectors are more resilient','Add several nth-child segments without inspecting the DOM'],
+      answer:0,
+      why:'A selector should be specific enough to identify the intended target while still relying on stable signals.'
+    },
+    {
+      category:'Over-specific selectors',
+      q:'A selector works but uses six nested parent-child levels even though the element has a stable unique data-key. What is the better design?',
+      options:['Keep the long path because it proves precision','Use the stable data-key directly','Append the data-key to the long path'],
+      answer:1,
+      why:'Unnecessary DOM depth adds fragility. Prefer the stable direct signal when it is sufficient.'
+    },
+    {
+      category:'State changes',
+      q:'A selector works on initial page load but fails after the user opens a subpanel where a second matching element appears. What should you validate?',
+      options:['Only that the selector worked once before the subpanel opened','Uniqueness across the relevant UI states where the guide will run','Whether the selector is at least 30 characters long'],
+      answer:1,
+      why:'Guide targets should be validated across the states that users will actually encounter.'
+    },
+    {
+      category:'Refresh validation',
+      q:'You create a selector using a candidate attribute and it works. What is the best next step before treating it as reliable?',
+      options:['Refresh or revisit the workflow and confirm the attribute remains stable and unique','Assume it is stable because it worked once','Replace it with nth-child to be safe'],
+      answer:0,
+      why:'A single successful match is not enough. Stability should be checked across refreshes or relevant repetitions.'
+    },
+    {
+      category:'Troubleshooting',
+      q:'A previously reliable selector stops matching after a UI update. What is the strongest troubleshooting sequence?',
+      options:['Inspect the current element, identify what changed, then choose the strongest stable signal now available','Keep editing the old selector until something matches','Replace every selector in the guide'],
+      answer:0,
+      why:'Reasoned troubleshooting starts by understanding the change before choosing a new target strategy.'
+    },
+    {
+      category:'Competing stable attributes',
+      q:'An element has both a stable unique ID and a stable data-automation-id. Both are verified unique. Which statement is best?',
+      options:['The stable ID is usually the simplest first choice, but either can be valid if verified stable','The data-automation-id must always be used instead of an ID','Use a positional selector because two stable options create ambiguity'],
+      answer:0,
+      why:'The hierarchy is a preference, not a rigid rule. A stable unique ID is usually the simplest direct choice, while a stable automation attribute can also be valid.'
+    },
+    {
+      category:'Parent-child strategy',
+      q:'A child button has no useful attributes, but its parent panel has a stable ID and the child is uniquely identifiable within that panel. Is a parent-child selector reasonable?',
+      options:['Yes, because stable parent context can provide a reliable fallback','No, parent-child selectors should never be used','Only if the button is also the third child'],
+      answer:0,
+      why:'Contextual parent-child targeting is appropriate when stronger direct attributes are unavailable and the parent context is stable.'
+    },
+    {
+      category:'Avoiding false confidence',
+      q:'A selector is unique in your current role but the guide will also run for another role. What should you do?',
+      options:['Validate the selector in the other relevant role/state before finalizing it','Assume uniqueness is universal','Use text matching because text is always the same across roles'],
+      answer:0,
+      why:'A selector should be validated in the environments, roles, or states where the guide is expected to run.'
+    },
+    {
+      category:'Fallback judgment',
+      q:'No stable ID, data-* attribute, name, or href is available. A stable parent exists, and the target is consistently the only button of its type inside that parent. What is the best approach?',
+      options:['Use the stable parent context plus the child element','Use the third button on the page globally','Use any generated class that happens to work'],
+      answer:0,
+      why:'When direct stable attributes are unavailable, stable contextual targeting is a stronger fallback than global position or generated classes.'
+    },
+    {
+      category:'Failure diagnosis',
+      q:'A guide step intermittently targets the wrong button because two similar buttons appear after an expansion panel opens. Which issue is most likely?',
+      options:['The selector is not specific enough for the expanded state','The selector is too stable','The guide should use a longer visible label'],
+      answer:0,
+      why:'Intermittent wrong-target behavior often indicates that the selector is no longer unique in a relevant UI state.'
+    },
+    {
+      category:'Final validation',
+      q:'Which statement best describes a production-ready selector?',
+      options:[
+        'It is the shortest selector possible.',
+        'It uniquely targets the intended element, relies on stable signals, avoids unnecessary structural dependence, and is validated in relevant states.',
+        'It works once in the developer’s current session.'
+      ],
+      answer:1,
+      why:'Production readiness combines uniqueness, stability, appropriate specificity, resilience, and validation.'
+    }
+  ];
+
+  let qIndex=0;
+  let answers=Array(assessment.length).fill(null);
+
+  const qNum=document.getElementById('assessmentQNum');
+  const qText=document.getElementById('assessmentQText');
+  const qOptions=document.getElementById('assessmentOptions');
+  const qDots=document.getElementById('assessmentDots');
+  const assessPrev=document.getElementById('assessPrev');
+  const assessNext=document.getElementById('assessNext');
+  const submitAssessment=document.getElementById('submitAssessment');
+
+  function renderAssessment(){
+    const item=assessment[qIndex];
+    qNum.textContent='Question '+(qIndex+1)+' of '+assessment.length+' · '+item.category;
+    qText.textContent=item.q;
+    qOptions.innerHTML=item.options.map((opt,i)=>{
+      const selected=answers[qIndex]===i;
+      return '<button class="option" type="button" data-index="'+i+'" style="'+(selected?'border-color:#b8acf4;background:#faf9ff':'')+'"><span class="letter">'+String.fromCharCode(65+i)+'</span><span class="opttext"><strong>'+opt+'</strong></span></button>';
+    }).join('');
+    [...qOptions.querySelectorAll('.option')].forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        answers[qIndex]=Number(btn.dataset.index);
+        renderAssessment();
+      });
+    });
+    qDots.innerHTML=assessment.map((_,i)=>'<button type="button" class="dotbtn '+(answers[i]!==null?'answered':'')+'" data-q="'+i+'">'+(i+1)+'</button>').join('');
+    [...qDots.querySelectorAll('.dotbtn')].forEach(b=>b.addEventListener('click',()=>{qIndex=Number(b.dataset.q);renderAssessment();}));
+    assessPrev.disabled=qIndex===0;
+    assessNext.disabled=qIndex===assessment.length-1;
+  }
+
+  assessPrev.addEventListener('click',()=>{if(qIndex>0){qIndex--;renderAssessment();}});
+  assessNext.addEventListener('click',()=>{if(qIndex<assessment.length-1){qIndex++;renderAssessment();}});
+
+  submitAssessment.addEventListener('click',()=>{
+    if(answers.some(a=>a===null)){
+      alert('Please answer all 6 questions before submitting.');
+      return;
+    }
+    let correct=0;
+    assessment.forEach((item,i)=>{if(answers[i]===item.answer) correct++;});
+    passed=correct>=16;
+    assessmentSubmitted=true;
+
+    const pct=Math.round(correct/assessment.length*100);
+    document.getElementById('scoreText').textContent=pct+'%';
+    document.getElementById('scoreCircle').style.background='conic-gradient('+(passed?'var(--teal)':'var(--amber)')+' '+(pct*3.6)+'deg,#e9edf3 0deg)';
+    document.getElementById('resultHeadline').textContent=passed?'Passed — selector readiness demonstrated.':'Review required before T1 application.';
+    document.getElementById('resultMessage').textContent=passed
+      ? 'You correctly applied the selector decision hierarchy in at least 16 of 20 scenarios.'
+      : 'Review the items below, revisit the decision hierarchy, then retake the assessment.';
+
+    document.getElementById('reviewList').innerHTML=assessment.map((item,i)=>{
+      const ok=answers[i]===item.answer;
+      return '<div class="reviewitem '+(ok?'good':'bad')+'"><strong>Q'+(i+1)+' — '+(ok?'Correct':'Review')+'</strong><div style="margin-top:4px">'+item.why+'</div></div>';
+    }).join('');
+
+    document.getElementById('goCompletion').disabled=!passed;
+    current=resultsIndex;
+    updateNav();
+  });
+
+  document.getElementById('retryAssessment').addEventListener('click',()=>{
+    answers=Array(assessment.length).fill(null);
+    qIndex=0;
+    assessmentSubmitted=false;
+    passed=false;
+    renderAssessment();
+    current=assessmentIndex;
+    updateNav();
+  });
+
+  document.getElementById('goCompletion').addEventListener('click',()=>{
+    if(!passed) return;
+    current=completionIndex;
+    updateNav();
+  });
+
+  renderAssessment();
+  updateNav();
+})();
+</script>
+</body>
+</html>
