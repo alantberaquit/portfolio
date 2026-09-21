@@ -4153,10 +4153,10 @@ function selectChoice(c,idx){
       </button>
     `;
     const continueBtn=document.getElementById("continueBtn");
-    continueBtn.addEventListener("click",()=>{
+    continueBtn.onclick=()=>{
       state.step++;
       renderStep();
-    },{once:true});
+    };
   }
 }
 function finishScenario(){
