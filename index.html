@@ -6388,6 +6388,84 @@ body{
 .manager-path div{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:11px;background:#f2eef9;color:#4f4962;font-size:10px;font-weight:800}
 .manager-path span{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;background:#7464a5;color:#fff;font-size:9px}
 
+/* Final editorial structure for Digital Learning */
+.dle-group-head,.dle-structured-break{
+  margin:10px 0 22px;
+  padding-top:18px;
+  border-top:1px solid #cfd9e4;
+}
+.dle-group-head span,.dle-structured-break span{
+  color:var(--navy);
+  font:800 11px "Outfit",sans-serif;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.dle-group-head p,.dle-structured-break p{
+  max-width:700px;
+  margin:7px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+}
+.dle-final-grid{border-top:0}
+.dle-featured{padding-top:10px}
+.dle-secondary-copy{margin-top:10px!important}
+.dle-feature-strip{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  margin:-1px 0 34px;
+  background:#cfd9e4;
+  border:1px solid #cfd9e4;
+}
+.dle-feature-strip div{padding:16px;background:#fff}
+.dle-feature-strip strong,.dle-feature-strip span{display:block}
+.dle-feature-strip strong{font:800 12px "Outfit",sans-serif;color:var(--navy)}
+.dle-feature-strip span{margin-top:4px;color:var(--muted);font-size:10px;line-height:1.5}
+.dle-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.dle-compact{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:0;
+  padding:0 0 26px;
+  border:1px solid #d7e0e8;
+  background:#fff;
+}
+.dle-compact .dle-index{
+  position:absolute;
+  z-index:3;
+  top:12px;
+  right:12px;
+  padding:5px 8px;
+  border-radius:999px;
+  background:rgba(255,255,255,.92);
+  color:#667587;
+  font-size:10px;
+  letter-spacing:.08em;
+}
+.dle-card-group{
+  order:0;
+  padding:16px 18px;
+  border-bottom:1px solid #d7e0e8;
+  color:var(--navy);
+  font:800 9px "Outfit",sans-serif;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+.dle-compact .dle-visual{order:1;min-height:245px}
+.dle-compact .dle-copy{order:2;padding:24px 24px 0}
+.dle-compact .dle-copy h3{font-size:27px}
+.dle-structured-break{margin:54px 0 18px;padding-top:28px}
+.dle-course-pair .dle-visual{min-height:220px}
+.dle-course-pair + .shared-course-note{text-align:center;margin-bottom:0}
+
+@media(max-width:820px){
+  .dle-pair{grid-template-columns:1fr}
+  .dle-feature-strip{grid-template-columns:1fr}
+}
+
 @media(max-width:900px){
   .topnav{
     height:78px !important;
@@ -6483,53 +6561,24 @@ body{
 <section class="section" id="digital">
 <div class="section-head">
 <div>
-<div class="section-label"><i class="lni lni-display-alt"></i> Digital Learning Experiences</div>
+<div class="section-label"><i class="lni lni-display-alt"></i> Digital Learning</div>
 <h2>Learning built into the work.</h2>
 </div>
-<p>Selected work across employee onboarding, Digital Adoption Platforms, enterprise software learning, point-of-need performance support, and applied decision-making.</p>
+<p>Selected work across Digital Adoption Platforms, in-app learning, performance support, scenario-based learning, onboarding, and employee development.</p>
 </div>
-
-<div class="prototype-context"><strong>Prototype context</strong><p>The following two experiences are set within SeanDigital Inc., a fictional software company created to demonstrate how employee and manager learning can share one internal learning system while addressing different audiences and performance needs.</p></div>
-
-<div class="dle-showcase">
-
-<div class="dle-row">
+<div class="dle-group-head"><span>In-App Learning &amp; Performance Support</span><p>Learning does not always need to happen in a course. These experiences place guidance closer to the task itself, helping users learn while they work.</p></div>
+<div class="dle-showcase dle-final-grid">
+<div class="dle-row dle-featured">
 <div class="dle-index">01</div>
 <div class="dle-copy">
-<div class="dle-type"><i class="lni lni-users"></i> Company-wide onboarding</div>
-<h3>Employee Essentials</h3>
-<p>A structured onboarding experience for new employees covering company context, policies, technology, career expectations, performance practices, and the foundations needed before team-specific onboarding begins.</p>
-<div class="dle-tags"><span>Employee Onboarding</span><span>Curriculum Architecture</span><span>Interactive Learning</span><span>Assessment Design</span></div>
-<div class="dle-actions"><a class="dle-launch" href="employee_essentials.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a></div>
-</div>
-<div class="dle-visual employee"><div class="onboarding-preview"><div class="onboarding-preview-head"><strong>Employee Essentials</strong><span>New hire journey</span></div><div class="onboarding-modules"><div><i class="lni lni-apartment"></i>Company</div><div><i class="lni lni-shield"></i>Policies</div><div><i class="lni lni-display-alt"></i>Technology</div></div></div></div>
-</div>
-
-<div class="dle-row reverse">
-<div class="dle-index">02</div>
-<div class="dle-visual manager"><div class="onboarding-preview"><div class="onboarding-preview-head"><strong>Manager Essentials</strong><span>First 30 days</span></div><div class="manager-path"><div><span>01</span>Set priorities and expectations</div><div><span>02</span>Delegate with clear guardrails</div><div><span>03</span>Build feedback and accountability</div></div></div></div>
-<div class="dle-copy">
-<div class="dle-type"><i class="lni lni-target"></i> First 30 Days Manager Onboarding</div>
-<h3>Manager Essentials</h3>
-<p>A leadership onboarding experience for newly promoted and newly hired managers focused on coaching, delegation, priorities, feedback, accountability, conflict, and leadership judgment.</p>
-<div class="dle-tags"><span>Leadership Development</span><span>Scenario-Based Learning</span><span>Decision Practice</span><span>Applied Assessment</span></div>
-<div class="dle-actions"><a class="dle-launch" href="manager_essentials.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a></div>
-</div>
-</div>
-
-<div class="shared-course-note">Built on one shared design system, adapted for different audiences, responsibilities, and performance needs.</div>
-<h3 class="dle-subgroup">Interactive Learning &amp; Performance Support</h3>
-
-<div class="dle-row">
-<div class="dle-index">03</div>
-<div class="dle-copy">
-<div class="dle-type"><i class="lni lni-direction"></i> Guided Workflow Learning</div>
+<div class="dle-type"><i class="lni lni-direction"></i> In-App Learning / Digital Adoption</div>
 <h3>TaskFlow</h3>
-<p>A guided software-learning experience designed to move users from instruction to supported practice and independent task completion.</p>
-<div class="dle-tags"><span>Digital Adoption</span><span>Software Training</span><span>Guided Practice</span><span>Workflow Learning</span></div>
+<p>A guided learning experience embedded within a simulated SaaS workflow, designed to help users complete tasks through contextual instruction, progressive guidance, and independent practice.</p>
+<p class="dle-secondary-copy">TaskFlow demonstrates how learning can be embedded directly into a software environment rather than separated into a traditional course. Guidance appears when it is needed and gradually reduces as the user gains confidence.</p>
+<div class="dle-tags"><span>Digital Adoption</span><span>In-App Learning</span><span>Workflow Guidance</span><span>Performance Support</span></div>
 <div class="dle-actions">
-<button class="dle-action open-project" data-project="taskflow"><i class="lni lni-arrow-right"></i> View project details</button>
-<a class="dle-launch" href="taskflow.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch experience</a>
+<a class="dle-launch" href="taskflow.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a>
+<button class="dle-action open-project" data-project="taskflow"><i class="lni lni-arrow-right"></i> View Project Details</button>
 </div>
 </div>
 <div class="dle-visual taskflow">
@@ -6549,9 +6598,12 @@ body{
 </div>
 </div>
 </div>
+<div class="dle-feature-strip"><div><strong>Contextual Guidance</strong><span>Guidance appears inside the workflow at the point of need.</span></div><div><strong>Progressive Support</strong><span>Instruction decreases as the learner becomes more confident.</span></div><div><strong>Independent Practice</strong><span>The learner ultimately completes the task without step-by-step assistance.</span></div></div>
 
-<div class="dle-row reverse">
-<div class="dle-index">04</div>
+<div class="dle-pair">
+<div class="dle-row dle-compact">
+<div class="dle-index">02</div>
+<div class="dle-card-group">In-App Learning &amp; Performance Support</div>
 <div class="dle-visual pulsedesk">
 <div class="dle-illustration pulsedesk-illustration">
 <div class="pd-search"><i class="lni lni-search-alt"></i><span>Search support guidance...</span></div>
@@ -6567,25 +6619,24 @@ body{
 <div class="dle-copy">
 <div class="dle-type"><i class="lni lni-support"></i> Point-of-Need Performance Support</div>
 <h3>PulseDesk</h3>
-<p>A contextual performance-support experience that gives employees concise guidance while they make operational decisions.</p>
-<div class="dle-tags"><span>Performance Support</span><span>Decision Support</span><span>Workflow Learning</span><span>Just-in-Time Guidance</span></div>
+<p>A contextual support experience that helps employees diagnose issues, make decisions, and escalate appropriately while they work.</p>
+<div class="dle-tags"><span>Performance Support</span><span>Decision Support</span><span>Troubleshooting</span><span>Just-in-Time Guidance</span></div>
 <div class="dle-actions">
-<button class="dle-action open-project" data-project="pulsedesk"><i class="lni lni-arrow-right"></i> View project details</button>
-<a class="dle-launch" href="pulsedesk_performance_support.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch experience</a>
+<a class="dle-launch" href="pulsedesk_performance_support.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a>
 </div>
 </div>
 </div>
 
-<div class="dle-row">
-<div class="dle-index">05</div>
+<div class="dle-row dle-compact">
+<div class="dle-index">03</div>
+<div class="dle-card-group">Scenario-Based Learning</div>
 <div class="dle-copy">
 <div class="dle-type"><i class="lni lni-comments-alt"></i> Branching Scenario</div>
 <h3>Client Escalation: The Conversation</h3>
-<p>A branching customer conversation that lets learners practice communication, judgment, and escalation decisions while seeing the consequences of their choices.</p>
-<div class="dle-tags"><span>Scenario-Based Learning</span><span>Customer Experience</span><span>Decision Practice</span><span>Communication Skills</span></div>
+<p>A branching learning experience that develops communication, diagnostic reasoning, escalation judgment, and expectation management through realistic client decisions.</p>
+<div class="dle-tags"><span>Scenario-Based Learning</span><span>Branching</span><span>Decision Practice</span><span>Consequence-Based Feedback</span></div>
 <div class="dle-actions">
-<button class="dle-action open-project" data-project="scenario"><i class="lni lni-arrow-right"></i> View project details</button>
-<a class="dle-launch" href="client_escalation.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch experience</a>
+<a class="dle-launch" href="client_escalation.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a>
 </div>
 </div>
 <div class="dle-visual scenario">
@@ -6602,6 +6653,23 @@ body{
 </div>
 </div>
 </div>
+</div>
+
+<div class="dle-structured-break"><span>Structured Employee Learning</span><p>Learning programs designed for longer-term capability building, onboarding, and role development.</p></div>
+<div class="prototype-context"><strong>Prototype context</strong><p>The following two experiences are set within SeanDigital Inc., a fictional software company created to demonstrate employee and manager learning within a shared internal learning environment.</p></div>
+<div class="dle-pair dle-course-pair">
+<div class="dle-row dle-compact">
+<div class="dle-index">04</div>
+<div class="dle-visual employee"><div class="onboarding-preview"><div class="onboarding-preview-head"><strong>Employee Essentials</strong><span>New hire journey</span></div><div class="onboarding-modules"><div><i class="lni lni-apartment"></i>Company</div><div><i class="lni lni-shield"></i>Policies</div><div><i class="lni lni-display-alt"></i>Technology</div></div></div></div>
+<div class="dle-copy"><div class="dle-type"><i class="lni lni-users"></i> Company-Wide Onboarding</div><h3>Employee Essentials</h3><p>A structured onboarding experience for new employees covering company context, policies, technology, career expectations, performance practices, and the foundations needed before team-specific onboarding begins.</p><div class="dle-tags"><span>Employee Onboarding</span><span>Curriculum Architecture</span><span>Interactive Learning</span><span>Assessment Design</span></div><div class="dle-actions"><a class="dle-launch" href="employee_essentials.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a></div></div>
+</div>
+<div class="dle-row dle-compact">
+<div class="dle-index">05</div>
+<div class="dle-visual manager"><div class="onboarding-preview"><div class="onboarding-preview-head"><strong>Manager Essentials</strong><span>First 30 days</span></div><div class="manager-path"><div><span>01</span>Set priorities and expectations</div><div><span>02</span>Delegate with clear guardrails</div><div><span>03</span>Build feedback and accountability</div></div></div></div>
+<div class="dle-copy"><div class="dle-type"><i class="lni lni-target"></i> First 30 Days Manager Onboarding</div><h3>Manager Essentials</h3><p>A leadership onboarding experience for newly promoted and newly hired managers focused on coaching, delegation, priorities, feedback, accountability, conflict, and leadership judgment.</p><div class="dle-tags"><span>Leadership Development</span><span>Scenario-Based Learning</span><span>Decision Practice</span><span>Applied Assessment</span></div><div class="dle-actions"><a class="dle-launch" href="manager_essentials.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a></div></div>
+</div>
+</div>
+<div class="shared-course-note">Built on one shared design system, adapted for different audiences, responsibilities, and performance needs.</div>
 
 </div>
 </section>
