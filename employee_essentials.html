@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SeanDigital — Employee Essentials</title>
+<style>
+:root{
+  --primary:#1B4059;
+  --primary-strong:#143348;
+  --primary-soft:#E8F0F5;
+  --secondary:#5F7D92;
+  --canvas:#DCE7EF;
+  --surface:#FFFFFF;
+  --surface-soft:#F5F8FA;
+  --line:#D5E0E7;
+  --ink:#152B3A;
+  --body:#536979;
+  --muted:#8194A3;
+  --highlight:#C89B3C;
+  --highlight-soft:#FBF4E5;
+  --success:#2E8B72;
+  --danger:#C85B64;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--canvas);color:var(--ink)}
+button{font:inherit;cursor:pointer}
+.icon{width:18px;height:18px;display:block;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+.app{min-height:100vh;display:grid;grid-template-rows:64px 1fr}
+.topbar{
+  background:var(--primary);color:white;border-bottom:1px solid rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:16px
+}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{
+  width:34px;height:34px;display:grid;place-items:center;
+  background:#fff;color:var(--primary);font-weight:800;font-size:13px;
+  border-radius:6px
+}
+.brand-copy strong{display:block;font-size:14px;letter-spacing:-.01em}
+.brand-copy span{display:block;font-size:10.5px;color:#C8D7E1;letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.top-actions{display:flex;align-items:center;gap:8px}
+.top-btn{
+  height:36px;padding:0 12px;border:1px solid rgba(255,255,255,.16);
+  background:transparent;color:#EFF5F8;display:inline-flex;align-items:center;gap:7px;border-radius:5px
+}
+.top-btn:hover{background:rgba(255,255,255,.07)}
+.avatar{width:34px;height:34px;border-radius:5px;background:#E7EEF3;color:var(--primary);display:grid;place-items:center;font-size:12px;font-weight:800}
+
+.workspace{display:grid;grid-template-columns:300px minmax(0,1fr);min-height:0}
+.sidebar{
+  background:rgba(255,255,255,.68);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;min-height:calc(100vh - 64px)
+}
+.course-head{padding:20px 18px 16px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--highlight)}
+.course-head h1{font-size:21px;margin:8px 0 6px;letter-spacing:-.03em}
+.course-head p{margin:0;color:var(--body);font-size:12px;line-height:1.55}
+.progress-row{display:flex;align-items:center;justify-content:space-between;margin-top:15px;color:var(--muted);font-size:11px}
+.progress{height:6px;background:#E6EDF2;margin-top:7px;overflow:hidden}
+.progress>span{display:block;height:100%;width:0;background:var(--primary);transition:width .2s}
+.outline{padding:12px;overflow:auto}
+.module{margin-bottom:6px}
+.module-btn{
+  width:100%;border:0;background:transparent;color:var(--ink);padding:10px;
+  display:grid;grid-template-columns:20px 1fr 16px;gap:9px;align-items:center;text-align:left;border-radius:4px
+}
+.module-btn:hover{background:rgba(255,255,255,.7)}
+.module-btn .module-icon{color:var(--primary)}
+.module-btn strong{font-size:12.5px}
+.module-btn small{display:block;color:var(--muted);font-size:10.5px;margin-top:2px}
+.chev{color:var(--muted);transition:.18s}
+.module.open .chev{transform:rotate(90deg)}
+.lesson-list{display:none;margin-left:29px;border-left:1px solid var(--line);padding-left:9px}
+.module.open .lesson-list{display:block}
+.lesson-btn{
+  width:100%;border:1px solid transparent;background:transparent;color:var(--body);
+  display:grid;grid-template-columns:17px 1fr 14px;gap:8px;align-items:center;
+  padding:8px 9px;text-align:left;border-radius:4px
+}
+.lesson-btn:hover{background:rgba(255,255,255,.72)}
+.lesson-btn.active{background:#fff;border-color:var(--line);color:var(--primary)}
+.lesson-btn .lesson-title{font-size:11.5px;line-height:1.35}
+.lesson-btn .type{color:var(--secondary)}
+.check{
+  width:18px;height:18px;border:1px solid #C8D4DC;display:grid;place-items:center;color:transparent;border-radius:999px;background:#fff
+}
+.check .icon{width:11px;height:11px}
+.lesson-btn.done .check{background:var(--primary);border-color:var(--primary);color:#fff}
+.sidebar-note{margin:auto 14px 14px;padding:13px;border:1px solid #E8D9B7;background:var(--highlight-soft);color:var(--body);font-size:11.5px;line-height:1.5}
+.sidebar-note strong{display:block;color:var(--ink);margin-bottom:4px}
+
+.main{min-width:0;display:grid;grid-template-rows:70px 1fr 70px}
+.lesson-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 26px}
+.breadcrumb{font-size:10.5px;color:var(--muted);margin-bottom:5px}
+.lesson-head h2{margin:0;font-size:20px;letter-spacing:-.03em}
+.position{text-align:right;color:var(--muted);font-size:11px}
+.position strong{display:block;color:var(--body);font-size:12px;margin-bottom:2px}
+
+.stage{overflow:auto;padding:0 26px 20px}
+.deck{max-width:1120px;margin:0 auto}
+.slide{
+  min-height:600px;background:rgba(255,255,255,.84);border:1px solid var(--line);
+  padding:38px 40px;position:relative
+}
+.kicker{display:flex;align-items:center;gap:7px;color:var(--highlight);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:800}
+.slide h3{font-size:39px;line-height:1.05;letter-spacing:-.045em;margin:16px 0 14px;max-width:760px}
+.lead{font-size:16.5px;line-height:1.68;color:var(--body);max-width:780px;margin:0 0 24px}
+
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:start}
+.panel{border:1px solid var(--line);background:var(--surface-soft);padding:20px}
+.panel.dark{background:var(--primary);border-color:var(--primary);color:white}
+.panel.dark h4{color:white}
+.panel.dark p{color:#C8D7E1}
+.panel h4{font-size:20px;margin:0 0 8px;letter-spacing:-.02em}
+.panel p{font-size:12.5px;line-height:1.6;color:var(--body);margin:0}
+.list{display:grid;gap:8px;margin-top:18px}
+.list-row{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid var(--line);background:#fff;font-size:12px;color:var(--ink)}
+.panel.dark .list-row{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:white}
+.list-row .icon{color:currentColor}
+.products{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.product{padding:12px;border:1px solid rgba(255,255,255,.14);font-size:11px;color:#D7E2E8}
+.product strong{display:block;color:#fff;font-size:12.5px;margin-bottom:4px}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.card{background:#fff;border:1px solid var(--line);padding:16px}
+.card-icon{width:32px;height:32px;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary);margin-bottom:12px}
+.card strong{display:block;font-size:13px;margin-bottom:5px}
+.card p{margin:0;color:var(--body);font-size:12px;line-height:1.5}
+.callout{margin-top:18px;padding:15px;border-left:3px solid var(--highlight);background:var(--highlight-soft);color:var(--body);font-size:12.5px;line-height:1.6}
+
+.process{display:grid;gap:10px;margin-top:18px}
+.step{display:grid;grid-template-columns:34px 1fr;gap:11px;align-items:start;border:1px solid var(--line);background:#fff;padding:13px}
+.num{width:34px;height:34px;background:var(--highlight-soft);color:var(--highlight);display:grid;place-items:center;font-size:12px;font-weight:800}
+.step strong{font-size:13px}.step span{display:block;color:var(--body);font-size:12px;line-height:1.5;margin-top:3px}
+
+.assessment{display:grid;gap:12px;margin-top:18px}
+.question{border:1px solid var(--line);background:#fff;padding:16px}
+.question h4{margin:0 0 12px;font-size:14px;line-height:1.5}
+.answer{width:100%;text-align:left;padding:11px 12px;margin-top:7px;background:#fff;border:1px solid var(--line);color:var(--body)}
+.answer:hover{background:var(--surface-soft)}
+.answer.selected{border-color:var(--primary);background:var(--primary-soft);color:var(--primary)}
+.result strong{color:var(--highlight)}
+.answer.correct{border-color:var(--success);background:#F2FAF6}
+.answer.wrong{border-color:var(--danger);background:#FFF5F6}
+.result{display:none;padding:13px;background:#fff;border:1px solid var(--line);color:var(--body);font-size:12.5px}
+.result.show{display:block}
+
+.player-nav{
+  display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:10px;
+  padding:10px 26px 16px
+}
+.nav-btn{
+  height:40px;padding:0 14px;border:1px solid var(--line);background:#fff;color:var(--primary);
+  display:inline-flex;align-items:center;gap:7px;border-radius:4px
+}
+.nav-btn:hover{background:var(--surface-soft)}
+.nav-btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.nav-btn.primary:hover{background:var(--primary-strong)}
+.nav-btn:disabled{opacity:.42;cursor:not-allowed}
+.nav-meta{text-align:center;color:var(--muted);font-size:10.5px}
+.nav-meta strong{display:block;color:var(--body);font-size:11.5px;margin-bottom:2px}
+
+body.fullscreen{overflow:hidden}
+body.fullscreen .topbar,body.fullscreen .sidebar,body.fullscreen .lesson-head{display:none}
+body.fullscreen .workspace,body.fullscreen .main{display:block}
+body.fullscreen .stage{position:fixed;inset:0;z-index:50;padding:20px 20px 86px;background:var(--canvas);overflow:auto}
+body.fullscreen .deck{max-width:none;min-height:calc(100vh - 106px);display:flex;align-items:center;justify-content:center}
+body.fullscreen .slide{width:min(1320px,100%);min-height:calc(100vh - 106px)}
+body.fullscreen .player-nav{
+  position:fixed;z-index:70;left:50%;bottom:14px;transform:translateX(-50%);
+  width:min(880px,calc(100vw - 28px));background:rgba(255,255,255,.95);border:1px solid var(--line);padding:9px
+}
+
+.mobile-menu{display:none}
+@media(max-width:780px){
+  .workspace{grid-template-columns:1fr}
+  .sidebar{display:none;position:fixed;left:0;top:64px;bottom:0;width:min(88vw,330px);z-index:40}
+  .sidebar.open{display:flex}
+  .mobile-menu{display:inline-flex}
+  .topbar{padding:0 12px}
+  .brand-copy span{display:none}
+  .main{grid-template-rows:66px 1fr 66px}
+  .lesson-head{padding:0 16px}
+  .stage{padding:0 14px 14px}
+  .slide{padding:26px 22px;min-height:540px}
+  .slide h3{font-size:31px}
+  .hero,.cards,.products{grid-template-columns:1fr}
+  .player-nav{grid-template-columns:1fr 1fr;padding:10px 14px 14px}
+  .nav-meta,.fullscreen-btn{display:none}
+  body.fullscreen .stage{padding:10px 10px 78px}
+  body.fullscreen .slide{min-height:calc(100vh - 88px)}
+  body.fullscreen .player-nav{grid-template-columns:1fr 1fr;width:calc(100vw - 18px);bottom:9px}
+}
+
+/* expanded 10-slide course navigation */
+.sidebar{
+  height:calc(100vh - 64px) !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+}
+.course-head{flex:0 0 auto !important}
+.outline{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+}
+.sidebar-note{flex:0 0 auto !important}
+.workspace{
+  height:calc(100vh - 64px) !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+}
+.main{height:100% !important;min-height:0 !important}
+.stage{min-height:0 !important;overflow-y:auto !important}
+
+
+/* enhanced showcase layouts */
+.split-layout{display:grid;grid-template-columns:minmax(0,1.08fr) 360px;gap:16px;align-items:start;margin-top:20px}
+.visual-panel{border:1px solid var(--line);background:linear-gradient(180deg,#fff 0%,#f8fbfd 100%);padding:16px}
+.visual-panel h4{margin:0 0 4px;font-size:13px;color:var(--ink)}
+.visual-panel p{margin:0 0 12px;color:var(--body);font-size:12px;line-height:1.5}
+.flow-row,.route-list,.mock-flow{display:grid;gap:10px}
+.flow-row{grid-template-columns:repeat(auto-fit,minmax(90px,1fr))}
+.flow-node{border:1px solid var(--line);background:#fff;padding:12px 10px;position:relative;min-height:58px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11.5px;font-weight:700;color:var(--ink)}
+.flow-node:not(:last-child):after{content:"→";position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--highlight);font-weight:700}
+.stack-grid{display:grid;gap:10px}
+.stack-col{border:1px solid var(--line);background:#fff;padding:12px}
+.stack-col strong{display:block;font-size:12px;margin-bottom:8px;color:var(--primary)}
+.stack-chip{display:inline-block;padding:5px 8px;border:1px solid var(--line);background:var(--surface-soft);font-size:11px;margin:0 6px 6px 0;color:var(--body)}
+.org-grid{display:grid;gap:10px}
+.org-group{border:1px solid var(--line);background:#fff;padding:12px}
+.org-group strong{display:block;font-size:12px;margin-bottom:8px;color:var(--primary)}
+.org-group ul{margin:0;padding-left:16px;color:var(--body);font-size:11.8px;line-height:1.6}
+.data-table{margin-top:20px;border:1px solid var(--line);background:#fff;overflow:auto}
+.data-table table{width:100%;border-collapse:collapse;font-size:12px}
+.data-table th,.data-table td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+.data-table th{background:var(--surface-soft);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--secondary)}
+.timeline{display:grid;gap:10px;margin-top:20px}
+.timeline-item{display:grid;grid-template-columns:88px 1fr;gap:12px;padding:12px;border:1px solid var(--line);background:#fff}
+.timeline-item .tag{display:inline-grid;place-items:center;padding:8px 10px;background:var(--highlight-soft);color:var(--highlight);font-size:11px;font-weight:800;align-self:start}
+.timeline-item strong{display:block;font-size:13px;color:var(--ink);margin-bottom:4px}
+.timeline-item p{margin:0;color:var(--body);font-size:12px;line-height:1.55}
+.checklist{display:grid;gap:8px;margin-top:20px}
+.check-item{display:grid;grid-template-columns:18px 1fr;gap:10px;padding:11px 12px;border:1px solid var(--line);background:#fff;align-items:start}
+.check-item .bullet{width:18px;height:18px;border:1.5px solid var(--highlight);display:grid;place-items:center;color:var(--highlight)}
+.check-item span{font-size:12px;color:var(--body);line-height:1.55}
+.cards.compact .card{padding:14px}
+.process{display:grid;gap:10px;margin-top:20px}
+.step{display:grid;grid-template-columns:34px 1fr;gap:11px;align-items:start;border:1px solid var(--line);background:#fff;padding:13px}
+.num{width:34px;height:34px;background:var(--highlight-soft);color:var(--highlight);display:grid;place-items:center;font-size:12px;font-weight:800}
+.route-row{display:grid;grid-template-columns:120px 1fr;gap:10px;padding:10px;border:1px solid var(--line);background:#fff}
+.route-row strong{font-size:12px;color:var(--primary)}
+.route-row span{font-size:12px;color:var(--body);line-height:1.5}
+.mock-device{border:1px solid var(--line);background:#fff;padding:12px}
+.mock-window{border:1px solid var(--line);background:var(--surface-soft)}
+.mock-window .bar{height:28px;background:var(--primary-soft);border-bottom:1px solid var(--line)}
+.mock-window .body{padding:12px;display:grid;gap:8px}
+.mock-pill{height:10px;background:#d7e4ed}
+.mock-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mock-box{height:46px;background:#eef4f8;border:1px solid var(--line)}
+.question.unanswered{border-color:var(--danger);box-shadow:inset 0 0 0 1px var(--danger)}
+.question-flag{display:none;margin-bottom:10px;font-size:11px;font-weight:700;color:var(--danger)}
+.question.unanswered .question-flag{display:block}
+.answer{display:block;width:100%;text-align:left}
+.answer.correct{background:#EAF7F1;border-color:#9ED4C0;color:#1C6B52}
+.answer.wrong{background:#FDECEE;border-color:#E8ADB3;color:#9B2E3E}
+.assessment-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.assessment-status{font-size:12px;color:var(--body)}
+@media(max-width:1100px){.split-layout{grid-template-columns:1fr}}
+
+
+/* v3 bug fix + assessment UX polish */
+.question{
+  transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.question.unanswered{
+  border:2px solid var(--danger) !important;
+  background:#FFF8F8 !important;
+  box-shadow:0 0 0 3px rgba(200,91,100,.08) !important;
+}
+.question.unanswered h4{
+  color:#8E3440 !important;
+}
+.question-flag{
+  display:none;
+  width:max-content;
+  padding:5px 8px;
+  margin-bottom:10px;
+  background:#FDECEE;
+  border:1px solid #EAB9BF;
+  color:#A33D49;
+  font-size:10.5px;
+  font-weight:800;
+  letter-spacing:.02em;
+}
+.question.unanswered .question-flag{
+  display:block;
+}
+.assessment-toolbar{
+  position:sticky;
+  bottom:0;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(8px);
+  padding:12px 0 2px;
+  border-top:1px solid var(--line);
+  z-index:2;
+}
+.assessment-status{
+  font-weight:600;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* === Employee Essentials restyled to match Manager Essentials v21 === */
+:root{
+  --primary:#3B5DF5;
+  --primary-strong:#2F4BE0;
+  --primary-soft:#EEF2FF;
+  --secondary:#737D8D;
+  --canvas:#F4F6FB;
+  --surface:#FFFFFF;
+  --surface-soft:#F8FAFD;
+  --line:#DDE3EE;
+  --ink:#262B35;
+  --body:#5F6775;
+  --muted:#97A0AE;
+  --highlight:#8A5A00;
+  --highlight-soft:#FFF4D8;
+  --success:#278A66;
+  --danger:#C95A68;
+  --shadow:0 18px 50px rgba(28,44,82,.08);
+}
+
+html,body{background:var(--canvas)!important;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{
+  min-height:100vh!important;
+  display:grid!important;
+  grid-template-rows:72px 1fr!important;
+  background:var(--canvas)!important;
+}
+
+.topbar{
+  height:72px!important;
+  position:relative!important;
+  overflow:hidden!important;
+  background:var(--primary)!important;
+  border-bottom:1px solid rgba(255,255,255,.12)!important;
+  padding:0 24px!important;
+}
+.topbar::before{
+  content:"";
+  position:absolute;
+  width:320px;
+  height:320px;
+  right:-70px;
+  top:-180px;
+  background:rgba(255,255,255,.075);
+  border-radius:50%;
+  pointer-events:none;
+}
+.topbar::after{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  right:120px;
+  top:-300px;
+  border:1.5px solid rgba(255,255,255,.12);
+  border-radius:50%;
+  pointer-events:none;
+}
+.brand{position:relative;z-index:2;gap:12px!important}
+.logo{
+  width:40px!important;
+  height:40px!important;
+  border-radius:10px!important;
+  background:linear-gradient(145deg,#5E7BFF 0%, #3B5DF5 100%)!important;
+  color:#fff!important;
+  position:relative!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18)!important;
+}
+.logo span{position:relative;z-index:2;font-weight:800;font-size:14px;letter-spacing:-.03em}
+.logo i{
+  position:absolute;right:3px;bottom:3px;width:10px;height:10px;border-radius:999px;
+  background:#8FD3FF;opacity:.95;
+}
+.brand-copy strong{font-size:22px!important;line-height:1!important;color:#fff!important;letter-spacing:-.04em}
+.brand-copy span{
+  font-size:10.5px!important;
+  color:rgba(255,255,255,.75)!important;
+  text-transform:uppercase;
+  letter-spacing:.14em!important;
+  margin-top:5px!important;
+}
+.top-actions{position:relative;z-index:2;display:flex;align-items:center;gap:10px!important}
+.top-btn{
+  height:40px!important;
+  padding:0 14px!important;
+  border-radius:10px!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  background:rgba(255,255,255,.08)!important;
+  color:#fff!important;
+}
+.top-btn:hover{background:rgba(255,255,255,.14)!important}
+.top-btn.light{
+  background:#fff!important;
+  color:var(--primary)!important;
+  border-color:#fff!important;
+}
+.nav-pill{
+  height:32px;
+  display:inline-flex;
+  align-items:center;
+  padding:0 11px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.01em;
+}
+.employee-profile{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-left:2px;
+}
+.employee-profile::before{
+  content:"";
+  position:absolute;
+  width:220px;
+  height:220px;
+  right:-40px;
+  top:-170px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:50%;
+  pointer-events:none;
+}
+.avatar{
+  width:38px!important;
+  height:38px!important;
+  border-radius:999px!important;
+  background:#fff!important;
+  color:var(--primary)!important;
+  font-weight:800!important;
+}
+.profile-copy strong{
+  display:block;
+  font-size:13px;
+  color:#fff;
+  line-height:1.1;
+}
+.profile-copy span{
+  display:block;
+  margin-top:3px;
+  font-size:10.5px;
+  color:rgba(255,255,255,.72);
+  line-height:1.1;
+}
+
+.workspace{
+  grid-template-columns:320px minmax(0,1fr)!important;
+  min-height:0!important;
+  height:calc(100vh - 72px)!important;
+}
+.sidebar{
+  min-height:calc(100vh - 72px)!important;
+  background:#fff!important;
+  border-right:1px solid var(--line)!important;
+}
+.course-head{
+  padding:24px 20px 18px!important;
+  border-bottom:1px solid var(--line)!important;
+}
+.eyebrow{
+  font-size:11px!important;
+  color:var(--primary)!important;
+  letter-spacing:.12em!important;
+}
+.course-head h1{
+  font-size:31px!important;
+  margin:10px 0 8px!important;
+  letter-spacing:-.045em!important;
+}
+.course-head p{
+  font-size:15px!important;
+  line-height:1.55!important;
+  color:var(--body)!important;
+}
+.progress-row{
+  margin-top:18px!important;
+  font-size:13px!important;
+  color:var(--muted)!important;
+}
+.progress-row strong{color:#5B6270!important;font-size:13px}
+.progress{
+  margin-top:9px!important;
+  height:8px!important;
+  border-radius:999px!important;
+  background:#E9EEF5!important;
+  overflow:hidden!important;
+}
+.progress>span{
+  background:linear-gradient(90deg,#6280FF 0%, #3B5DF5 100%)!important;
+  border-radius:999px!important;
+}
+
+.outline{padding:14px 12px!important}
+.module{
+  margin-bottom:10px!important;
+  padding-bottom:12px!important;
+  border-bottom:1px solid #EDF1F6!important;
+}
+.module:last-child{border-bottom:0!important}
+.module-btn{
+  padding:12px 12px!important;
+  border-radius:12px!important;
+  grid-template-columns:22px 1fr 16px!important;
+}
+.module-btn:hover{background:#F7F9FD!important}
+.module-btn .module-icon{color:var(--primary)!important}
+.module-btn strong{
+  font-size:16px!important;
+  color:#313746!important;
+  letter-spacing:-.02em!important;
+}
+.module-btn small{
+  font-size:12px!important;
+  color:#9099A7!important;
+  margin-top:4px!important;
+}
+.lesson-list{
+  margin-top:6px!important;
+  margin-left:32px!important;
+  padding-left:12px!important;
+  border-left:1px solid #E6EBF4!important;
+}
+.lesson-btn{
+  padding:11px 12px!important;
+  border-radius:10px!important;
+  grid-template-columns:18px 1fr 18px!important;
+}
+.lesson-btn .lesson-title{font-size:13px!important}
+.lesson-btn:hover{background:#F7F9FD!important}
+.lesson-btn.active{
+  background:#EEF2FF!important;
+  border-color:#D9E2FF!important;
+  color:var(--primary)!important;
+}
+.check{
+  width:20px!important;height:20px!important;
+  border-color:#D4DAE4!important;
+  background:#fff!important;
+}
+.lesson-btn.done .check{
+  background:var(--success)!important;
+  border-color:var(--success)!important;
+}
+.sidebar-note{
+  margin:14px!important;
+  padding:16px!important;
+  border:1px solid #DCE6FF!important;
+  background:#F5F8FF!important;
+  color:var(--body)!important;
+  border-radius:14px!important;
+  font-size:12.5px!important;
+}
+.sidebar-note strong{font-size:13px!important}
+
+.main{
+  grid-template-rows:88px minmax(0,1fr) 78px!important;
+}
+.lesson-head{
+  padding:22px 34px 14px!important;
+  align-items:flex-end!important;
+}
+.breadcrumb{
+  color:var(--primary)!important;
+  font-size:11px!important;
+  font-weight:800!important;
+  letter-spacing:.12em!important;
+}
+.lesson-head h2{
+  font-size:30px!important;
+  letter-spacing:-.04em!important;
+}
+.position{
+  font-size:12px!important;
+  color:var(--muted)!important;
+}
+.position strong{
+  font-size:14px!important;
+  color:#515A69!important;
+}
+
+.stage{padding:0 34px 22px!important}
+.deck{max-width:1180px!important}
+.slide{
+  min-height:640px!important;
+  background:#fff!important;
+  border:1px solid var(--line)!important;
+  box-shadow:var(--shadow)!important;
+  padding:42px 44px!important;
+}
+.kicker{
+  color:var(--primary)!important;
+  font-size:11px!important;
+}
+.slide h3{
+  font-size:48px!important;
+  line-height:1.02!important;
+  letter-spacing:-.055em!important;
+  margin:14px 0 16px!important;
+}
+.lead{
+  font-size:18px!important;
+  line-height:1.72!important;
+  color:var(--body)!important;
+  max-width:820px!important;
+}
+.panel{
+  border-radius:14px!important;
+  background:var(--surface-soft)!important;
+  border:1px solid var(--line)!important;
+}
+.panel.dark{
+  position:relative!important;
+  overflow:hidden!important;
+  background:var(--primary)!important;
+  border-color:var(--primary)!important;
+  color:#fff!important;
+}
+.panel.dark::before{
+  content:"";
+  position:absolute;
+  width:290px;
+  height:290px;
+  right:-85px;
+  bottom:-145px;
+  background:rgba(255,255,255,.08);
+  border-radius:50%;
+}
+.panel.dark::after{
+  content:"";
+  position:absolute;
+  width:360px;
+  height:360px;
+  right:-145px;
+  bottom:-180px;
+  border:1.4px solid rgba(255,255,255,.14);
+  border-radius:50%;
+}
+.panel.dark > *{position:relative;z-index:2}
+.panel h4{font-size:22px!important;letter-spacing:-.03em!important}
+.panel p{font-size:13.5px!important}
+.list-row{
+  border-radius:10px!important;
+  font-size:13px!important;
+}
+.cards{
+  gap:14px!important;
+  margin-top:22px!important;
+}
+.card{
+  border-radius:14px!important;
+  padding:18px!important;
+  box-shadow:0 8px 24px rgba(28,44,82,.04)!important;
+}
+.card-icon{
+  width:38px!important;
+  height:38px!important;
+  border-radius:10px!important;
+  background:var(--primary-soft)!important;
+  color:var(--primary)!important;
+}
+.card strong{font-size:14px!important}
+.card p{font-size:12.5px!important}
+.callout{
+  border-left:4px solid var(--primary)!important;
+  background:#F7F9FE!important;
+  font-size:13px!important;
+  border-radius:0 12px 12px 0!important;
+}
+.step{
+  border-radius:14px!important;
+  padding:16px!important;
+}
+.num{
+  border-radius:10px!important;
+  background:var(--primary-soft)!important;
+  color:var(--primary)!important;
+}
+.assessment{gap:14px!important}
+.question{
+  border-radius:16px!important;
+  padding:18px!important;
+  box-shadow:0 8px 24px rgba(28,44,82,.03)!important;
+}
+.question h4{font-size:15px!important}
+.answer{
+  border-radius:12px!important;
+  padding:13px 14px!important;
+  font-size:13px!important;
+}
+.result{
+  border-radius:14px!important;
+  font-size:13px!important;
+}
+
+.player-nav{
+  padding:14px 34px 18px!important;
+  border-top:1px solid #E7ECF3!important;
+  background:transparent!important;
+}
+.nav-btn{
+  height:46px!important;
+  border-radius:12px!important;
+  border:1px solid var(--line)!important;
+  background:#fff!important;
+  color:#4E5665!important;
+  padding:0 16px!important;
+}
+.nav-btn.primary{
+  background:var(--primary)!important;
+  border-color:var(--primary)!important;
+  color:#fff!important;
+}
+.nav-btn.primary:hover{background:var(--primary-strong)!important}
+.nav-meta{
+  font-size:11px!important;
+}
+.nav-meta strong{
+  font-size:12px!important;
+  color:#515A69!important;
+}
+body.fullscreen .stage{
+  background:var(--canvas)!important;
+}
+body.fullscreen .player-nav{
+  background:rgba(255,255,255,.96)!important;
+  border-radius:18px!important;
+  box-shadow:var(--shadow)!important;
+  border:1px solid var(--line)!important;
+}
+
+@media(max-width:980px){
+  .nav-pill{display:none!important}
+  .profile-copy{display:none!important}
+}
+@media(max-width:780px){
+  .app{grid-template-rows:66px 1fr!important}
+  .topbar{height:66px!important;padding:0 14px!important}
+  .workspace{height:calc(100vh - 66px)!important}
+  .brand-copy span{display:none!important}
+  .brand-copy strong{font-size:18px!important}
+  .course-head h1{font-size:25px!important}
+  .course-head p{font-size:14px!important}
+  .lesson-head{padding:16px 16px 10px!important}
+  .lesson-head h2{font-size:24px!important}
+  .stage{padding:0 14px 14px!important}
+  .slide{padding:28px 24px!important}
+  .slide h3{font-size:34px!important}
+  .lead{font-size:16px!important}
+}
+
+
+/* === v23 navigation fix + tighter radii === */
+
+/* Keep topic title, status, and chevron on one line */
+.module-btn{
+  grid-template-columns:22px minmax(0,1fr) auto!important;
+  column-gap:10px!important;
+  align-items:center!important;
+  white-space:normal!important;
+}
+.module-btn > span:nth-child(2){
+  min-width:0!important;
+}
+.module-btn strong{
+  display:block!important;
+  overflow-wrap:anywhere!important;
+}
+.module-tail{display:inline-flex!important;align-items:center!important;gap:7px!important;justify-self:end!important;white-space:nowrap!important}
+.module-btn .chev{
+  flex:0 0 auto!important;
+  justify-self:end!important;
+  width:16px!important;
+  height:16px!important;
+  display:grid!important;
+  place-items:center!important;
+}
+
+/* When a module is complete, keep Complete + chevron compact */
+.module-complete,
+.module-pending{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  white-space:nowrap!important;
+  flex:0 0 auto!important;
+}
+.module-complete{
+  font-size:0!important;
+}
+.module-complete > span:last-child{
+  display:none!important;
+}
+.module-check{
+  width:18px!important;
+  height:18px!important;
+}
+
+/* Slightly reduce rounded corners across controls */
+.top-btn{border-radius:7px!important}
+.logo{border-radius:8px!important}
+.nav-pill{border-radius:7px!important}
+.module-btn{border-radius:8px!important}
+.lesson-btn{border-radius:7px!important}
+.sidebar-note{border-radius:10px!important}
+.panel{border-radius:10px!important}
+.list-row{border-radius:7px!important}
+.card{border-radius:10px!important}
+.card-icon{border-radius:7px!important}
+.callout{border-radius:0 8px 8px 0!important}
+.step{border-radius:10px!important}
+.num{border-radius:7px!important}
+.question{border-radius:10px!important}
+.answer{border-radius:8px!important}
+.result{border-radius:10px!important}
+.nav-btn{border-radius:8px!important}
+body.fullscreen .player-nav{border-radius:12px!important}
+
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+<defs>
+<symbol id="menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+<symbol id="building" viewBox="0 0 24 24"><path d="M4 21V5l8-3 8 3v16M8 8h1M8 12h1M8 16h1M15 8h1M15 12h1M15 16h1M2 21h20"/></symbol>
+<symbol id="shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-5"/></symbol>
+<symbol id="heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></symbol>
+<symbol id="device" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="11"/><path d="M2 19h20"/></symbol>
+<symbol id="layers" viewBox="0 0 24 24"><path d="m12 2 9 5-9 5-9-5zM3 12l9 5 9-5M3 17l9 5 9-5"/></symbol>
+<symbol id="trend" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-9M16 6h5v5"/></symbol>
+<symbol id="file" viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6zM14 2v5h5"/></symbol>
+<symbol id="quiz" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4.6 1.3c-.7 1-2.1 1.4-2.1 3.2M12 17h.01"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"/></symbol>
+<symbol id="chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+<symbol id="right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="expand" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M3 16v5h5"/></symbol>
+<symbol id="collapse" viewBox="0 0 24 24"><path d="M9 3v6H3M15 3v6h6M21 15h-6v6M3 15h6v6"/></symbol>
+<symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+<symbol id="help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4.6 1.3c-.7 1-2.1 1.4-2.1 3.2M12 17h.01"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5"/></symbol>
+</defs>
+</svg>
+
+<div class="app">
+
+<header class="topbar">
+  <div class="brand">
+    <button class="top-btn mobile-menu" id="menuBtn"><svg class="icon"><use href="#menu"/></svg></button>
+    <div class="logo"><span>SD</span><i></i></div>
+    <div class="brand-copy"><strong>SeanDigital</strong><span>Software and Platforms</span></div>
+  </div>
+  <div class="top-actions">
+    <button class="top-btn light" id="topFull"><svg class="icon"><use href="#expand"/></svg><span>Full screen</span></button>
+    <span class="nav-pill">Required onboarding</span>
+    <span class="nav-pill">All employees</span>
+    <span class="nav-pill">6 modules</span>
+    <div class="employee-profile">
+      <div class="avatar">JR</div>
+      <div class="profile-copy"><strong>Jordan Reyes</strong><span>New employee · Manila</span></div>
+    </div>
+  </div>
+</header>
+
+
+<div class="workspace">
+<aside class="sidebar" id="sidebar">
+  <div class="course-head">
+    <div class="eyebrow">Required onboarding</div>
+    <h1>Employee Essentials</h1>
+    <p>Company-wide foundations every SeanDigital employee completes before team-specific onboarding.</p>
+    <div class="progress-row"><span>Course progress</span><strong id="progressText">0%</strong></div>
+    <div class="progress"><span id="progressBar"></span></div>
+  </div>
+  <div class="outline" id="outline"></div>
+  <div class="sidebar-note"><strong>What comes next?</strong>After Employee Essentials, each department continues with its own team onboarding, tools, workflows, and SOPs.</div>
+</aside>
+
+<main class="main">
+  <div class="lesson-head">
+    <div><div class="breadcrumb" id="breadcrumb"></div><h2 id="lessonTitle"></h2></div>
+    <div class="position"><strong id="position"></strong><span id="duration"></span></div>
+  </div>
+  <div class="stage">
+    <div class="deck"><section class="slide" id="slide"></section></div>
+  </div>
+  <div class="player-nav">
+    <button class="nav-btn" id="prev"><svg class="icon"><use href="#left"/></svg>Back</button>
+    <div class="nav-meta"><strong id="moduleMeta"></strong><span>Progress saves automatically</span></div>
+    <button class="nav-btn fullscreen-btn" id="footerFull"><svg class="icon"><use href="#expand"/></svg><span>Full screen</span></button>
+    <button class="nav-btn primary" id="next">Next<svg class="icon"><use href="#right"/></svg></button>
+  </div>
+</main>
+</div>
+</div>
+
+
+
+
+<script>
+const I=id=>`<svg class="icon"><use href="#${id}"/></svg>`;
+const courseModules=[{"title": "Getting to Know SeanDigital", "icon": "building", "slides": [["Welcome to SeanDigital", "Your first week", "Welcome to SeanDigital, a software and platforms company building products for learning, events, and operational enablement.", [["What to expect", "Your first week focuses on access, people, products, and role clarity—not memorizing everything."], ["Your onboarding owner", "Your manager is responsible for your role plan; People Operations owns company onboarding."], ["Your goal by Day 5", "Know what SeanDigital does, who your customers are, and where to go for help."]]], ["SeanDigital at a Glance", "Company overview", "SeanDigital is organized around two product lines—Learnova and Conferia—with shared Product, Engineering, Go-to-Market, and Operations teams.", [["Business model", "We sell annual software subscriptions, implementation services, and selected enterprise support packages."], ["Customer profile", "Most customers are mid-sized organizations with distributed teams or recurring training and event operations."], ["Operating model", "Product teams own the roadmap; customer-facing teams bring implementation and adoption feedback into planning."]]], ["Learnova", "Product overview", "Learnova is SeanDigital’s learning and development platform for employee onboarding, skill development, and internal academies.", [["Typical customer", "People, L&D, enablement, and operations teams running structured learning programs."], ["Core workflows", "Course assignment, learning paths, skill tracking, manager follow-up, and reporting."], ["What matters commercially", "Adoption, completion, administrator efficiency, and measurable employee development."]]], ["Conferia", "Product overview", "Conferia is our event and conference operations platform for organizations managing recurring programs, events, speakers, sessions, and participants.", [["Typical customer", "Associations, training providers, universities, and enterprise event teams."], ["Core workflows", "Registration, program scheduling, speaker coordination, attendee communications, and event reporting."], ["What matters commercially", "Reliable execution, reduced manual coordination, and a smoother participant experience."]]], ["Who Our Customers Are", "Customer context", "Understanding the customer matters because many internal decisions—roadmap, support, documentation, and training—depend on how customers actually work.", [["People teams", "Need consistent onboarding, role development, and visibility into learning activity."], ["Program teams", "Need repeatable processes for complex events and multi-stakeholder coordination."], ["Administrators", "Value reliability, clear permissions, useful reporting, and lower manual effort."]]], ["How SeanDigital Is Organized", "Organization", "The company is structured so product development, customer delivery, and business operations have clear ownership.", [["Product & Engineering", "Product Management, Design, Engineering, QA, Data, and Platform."], ["Go-to-Market", "Sales, Marketing, Customer Success, and Professional Services."], ["Business Operations", "People Operations, Finance, IT, Security, Legal, and Learning & Development."]]], ["How Work Gets Prioritized", "Ways of working", "Not every request becomes an immediate priority. Teams balance customer impact, product strategy, revenue risk, security, and operational cost.", [["Roadmap work", "Planned product investments tied to strategy and customer needs."], ["Operational work", "Bugs, incidents, support escalations, internal requests, and compliance work."], ["Priority changes", "Major incidents, security issues, contractual commitments, or critical customer risk can interrupt planned work."]]], ["How We Communicate", "Communication norms", "SeanDigital uses chat for coordination, project tools for tracked work, and written documentation for decisions that should survive beyond a conversation.", [["Chat", "Use for quick coordination, questions, and short-lived updates."], ["Work tracking", "Use the team’s project system for assigned work, owners, status, and due dates."], ["Documentation", "Record decisions, procedures, handoffs, and repeatable knowledge in the company knowledge base."]]], ["Your First 30 Days", "Onboarding expectations", "Your first month should build confidence and context—not just activity.", [["Week 1", "Complete company onboarding, get access, meet key partners, and understand your role."], ["Weeks 2–3", "Begin routine work with support, observe team workflows, and ask for feedback early."], ["Week 4", "Own agreed responsibilities, identify one development focus, and review your onboarding plan with your manager."]]], ["Where to Get Help", "Employee support", "Use the right channel so your question reaches the right owner quickly.", [["PeopleHub", "HR records, benefits, leave, payroll documents, and employment information."], ["ServiceDesk", "IT incidents, equipment, software, account issues, and access requests."], ["Employee Help Center", "Policies, common questions, onboarding resources, and routing when you are unsure who owns a request."]]]], "assessment": [["A customer-facing team asks Engineering for an urgent feature. What should happen first?", ["Engineering starts immediately", "The request is routed through the normal prioritization process with customer impact and business context", "The customer success manager promises a delivery date", "The requester opens multiple tickets"], 1], ["Where should a lasting process decision be documented?", ["Only in chat", "In the appropriate company knowledge base or system of record", "In a private message", "Only in meeting notes on a personal device"], 1], ["What is a realistic goal for a new employee by the end of Week 1?", ["Know every policy from memory", "Understand the company, products, role expectations, and where to get help", "Own every routine process independently", "Complete a promotion plan"], 1], ["Which SeanDigital product is focused on employee learning and development?", ["Conferia", "Learnova", "ServiceDesk", "PeopleHub"], 1], ["Who normally owns company onboarding while the manager owns role onboarding?", ["Finance", "People Operations", "Sales", "Security"], 1]]}, {"title": "Policies & SOPs", "icon": "shield", "slides": [["Code of Conduct", "Professional standards", "SeanDigital expects employees to act with respect, honesty, sound judgment, and accountability in all work-related interactions.", [["Respect at work", "Harassment, discrimination, intimidation, and retaliation are not acceptable."], ["Integrity", "Do not misrepresent work, falsify records, or knowingly hide material risks."], ["Speak up", "Concerns can be raised with your manager, People Operations, or the confidential reporting channel."]]], ["Working Hours & Timekeeping", "Attendance", "Employees are expected to follow their agreed schedule and record time accurately where timekeeping is required.", [["Core availability", "Teams may define overlapping hours for meetings, customer support, or collaboration."], ["Time records", "Submit accurate entries by the published payroll cutoff when your role requires timekeeping."], ["Schedule changes", "Agree recurring schedule changes with your manager instead of handling them informally."]]], ["Leave & Unplanned Absence", "Leave", "Planned leave should be requested in PeopleHub. Unplanned absence should be communicated as early as reasonably possible.", [["Planned leave", "Submit requests early enough for workload and coverage planning."], ["Sick or emergency leave", "Notify your manager promptly; documentation may be required under local rules."], ["Coverage", "For customer-facing or time-sensitive work, leave a clear handoff before time away."]]], ["Remote & Hybrid Work", "Workplace expectations", "Remote work does not change expectations for availability, confidentiality, security, or performance.", [["Work environment", "Use a location where confidential conversations and company information can be protected."], ["Connectivity", "Employees are responsible for having reliable connectivity appropriate for their role."], ["Presence", "Join required meetings on time and communicate when temporary conditions affect availability."]]], ["Confidentiality & Data Classification", "Information handling", "Not all information can be handled the same way. Employees should understand whether information is public, internal, confidential, or restricted.", [["Internal", "Routine company information intended for employees."], ["Confidential", "Customer, commercial, financial, employee, or product information with limited access."], ["Restricted", "Highly sensitive information such as credentials, security records, regulated data, or legal materials."]]], ["Data Privacy", "Privacy", "Only access or use personal information when your role requires it and the use is consistent with policy and applicable privacy requirements.", [["Purpose limitation", "Use personal data only for the approved business purpose."], ["Minimum access", "Do not browse customer or employee records out of curiosity."], ["Incident reporting", "Report accidental disclosure, misdirected files, or unauthorized access immediately."]]], ["Acceptable Use of Company Systems", "Technology use", "Company systems may be monitored and must be used responsibly, securely, and in accordance with policy.", [["Software", "Install or use only approved business software on company-managed devices."], ["Credentials", "Never share passwords, MFA codes, or session access."], ["Personal use", "Limited personal use may be allowed, but it must not create security risk or interfere with work."]]], ["Use of AI & External Tools", "AI policy", "AI tools can improve productivity, but employees remain responsible for data protection, accuracy, copyright, and final decisions.", [["Approved tools only", "Use company-approved AI services for company work."], ["Sensitive information", "Do not enter customer data, source code, employee information, or confidential content into unapproved tools."], ["Human review", "Verify important outputs before they are used in customer, legal, financial, or operational decisions."]]], ["Conflicts, Gifts & Outside Work", "Integrity", "Employees should disclose situations that could reasonably affect—or appear to affect—their business judgment.", [["Conflicts", "Disclose financial interests, family relationships, or outside roles that overlap with company decisions."], ["Gifts", "Do not accept gifts or hospitality that could influence a business decision or violate local limits."], ["Outside work", "External employment or consulting must not compete with SeanDigital or misuse company information."]]], ["Finding the Right Policy or SOP", "Source of truth", "Always use the current published version of a policy or procedure.", [["Policy Library", "Company-wide requirements such as conduct, privacy, security, travel, and leave."], ["Team SOPs", "Step-by-step procedures maintained by the team that owns the process."], ["When documents conflict", "Use the most current approved document and ask the owning team if something is unclear."]]]], "assessment": [["A teammate sends a customer file to the wrong external recipient. What is the best action?", ["Delete your own copy and say nothing", "Report the potential data incident immediately through the approved channel", "Wait to see if the recipient opens it", "Ask the teammate to handle it privately"], 1], ["Which is the best use of chat?", ["The only record of a policy decision", "Quick coordination and short-lived updates", "Storage of customer passwords", "A replacement for project tracking"], 1], ["Can confidential customer information be pasted into any public AI tool if names are removed?", ["Yes", "Only if the employee thinks it is harmless", "No—use only approved tools and follow data handling rules", "Only outside working hours"], 2], ["Where should planned leave be requested?", ["PeopleHub", "ServiceDesk", "A public calendar only", "A customer ticket"], 0], ["What should happen if an employee has an outside role that may conflict with SeanDigital responsibilities?", ["Keep it private", "Disclose it through the appropriate process", "Resign immediately", "Tell only coworkers"], 1]]}, {"title": "Employee Benefits", "icon": "heart", "slides": [["Your Benefits Package", "Benefits overview", "SeanDigital’s benefits are designed to support health, time away, financial well-being, and professional growth. Exact coverage varies by country.", [["Eligibility", "PeopleHub shows the plans available to you based on location and employment status."], ["Enrollment windows", "Some benefits can be changed only during onboarding, annual enrollment, or a qualifying life event."], ["Source of truth", "Use the current regional benefits guide for limits, providers, and exclusions."]]], ["Medical Coverage", "Healthcare", "Eligible employees receive company-sponsored medical coverage through the provider listed in PeopleHub.", [["Member information", "Keep your provider card and dependent information current."], ["Network use", "Coverage is usually strongest within the approved provider network."], ["Pre-approval", "Certain procedures, diagnostics, or hospital services may require authorization."]]], ["Dental, Vision & Preventive Care", "Healthcare", "Where offered, dental and vision benefits cover routine care subject to annual limits and provider rules.", [["Routine care", "Check coverage before booking non-routine treatment."], ["Prescription eyewear", "Frames, lenses, or eye exams may have separate limits."], ["Preventive care", "Use available screenings and preventive services rather than waiting for an urgent issue."]]], ["Dependents & Life Events", "Eligibility", "Marriage, birth, adoption, or loss of other coverage may allow you to update benefit elections outside annual enrollment.", [["Update promptly", "Qualifying events usually have a submission deadline."], ["Documentation", "People Operations may require supporting documents before coverage changes are approved."], ["Effective dates", "Coverage does not always start on the day a request is submitted."]]], ["Paid Time Off", "Leave benefits", "Vacation and sick leave are recorded in PeopleHub and should be used according to local policy.", [["Vacation", "Plan ahead and coordinate coverage for critical work."], ["Sick leave", "Use when illness prevents you from working effectively or safely."], ["Other leave", "Bereavement, parental, emergency, or statutory leave may have separate rules."]]], ["Wellness & Employee Support", "Well-being", "Regional programs may include wellness allowances, counseling, preventive health support, or employee assistance services.", [["Employee assistance", "Confidential support may be available for personal, family, financial, or work-related concerns."], ["Wellness allowance", "Eligible expenses must follow the current program rules and annual limit."], ["Privacy", "Managers do not receive private medical or counseling details."]]], ["Learning & Certification Support", "Development", "SeanDigital may reimburse approved role-relevant learning, certification exams, or professional memberships.", [["Pre-approval", "Get manager approval before committing company funds."], ["Business relevance", "The learning should support your current role or an agreed development plan."], ["Completion evidence", "Reimbursement may require proof of payment and completion."]]], ["Reimbursements", "Expenses", "Business reimbursements are submitted through ExpenseHub and must include the required documentation.", [["Receipt quality", "Use itemized official receipts whenever possible."], ["Business purpose", "Explain why the expense was required for work."], ["Submission deadline", "Submit expenses within the timeframe in the expense policy."]]], ["Payroll & Tax Documents", "Pay", "Payslips and annual tax documents are available through PeopleHub or the regional payroll provider.", [["Check your payslip", "Review salary, deductions, allowances, and benefit deductions each pay period."], ["Bank changes", "Update payroll banking information only through the approved secure process."], ["Errors", "Raise payroll discrepancies promptly so they can be investigated before the next cycle."]]], ["Where to Get Benefits Help", "Support", "Benefit questions should go to the team that can see your plan and eligibility details.", [["People Operations", "Eligibility, enrollment, leave, payroll records, and policy questions."], ["Benefit provider", "Claims status, provider network, and plan-specific service questions."], ["Expense Support", "Reimbursement workflow and rejected expense questions."]]]], "assessment": [["Which is the best source for your specific benefit limits and providers?", ["A coworker's experience", "The current regional benefits guide and PeopleHub", "An old onboarding deck", "A public forum"], 1], ["You want to take a certification and have SeanDigital pay for it. What should you do before enrolling?", ["Enroll first and ask later", "Get the required manager approval and confirm eligibility", "Use a customer budget", "Submit it as a medical claim"], 1], ["Where are normal business reimbursements submitted?", ["ExpenseHub", "ServiceDesk", "Conferia", "Learnova"], 0], ["What should you do if a qualifying life event affects dependent coverage?", ["Wait until next year", "Update PeopleHub and submit required documents within the allowed window", "Tell only your manager", "Do nothing unless the provider contacts you"], 1], ["Who should you contact about a rejected medical provider claim?", ["Product Management", "The benefits provider or People Operations, depending on the issue", "Marketing", "IT Security"], 1]]}, {"title": "Technology, Devices & Access", "icon": "device", "slides": [["Your Digital Workspace", "Technology", "Your first-day setup includes your company identity, device, collaboration tools, and role-based access.", [["Managed account", "Your SeanDigital account is the identity used across approved systems."], ["Company device", "Use the managed device assigned to you unless IT has approved another arrangement."], ["Access baseline", "Your manager and IT determine the standard access package for your role."]]], ["Passwords & MFA", "Identity security", "Multi-factor authentication is required on core systems and should never be shared or bypassed.", [["MFA prompts", "Approve only prompts you personally initiated."], ["Password hygiene", "Use unique passwords stored in the approved password manager."], ["Unexpected sign-in", "Report unusual login activity or repeated MFA prompts immediately."]]], ["AccessHub Requests", "Access management", "Software and permission requests are submitted through AccessHub so approvals and ownership are auditable.", [["Business reason", "Explain what work requires the access."], ["Role requested", "Request the least privilege needed for the task."], ["Approval chain", "Manager, system owner, Security, or Finance may approve depending on risk."]]], ["Privileged Access", "Security", "Administrative, production, finance, and security permissions are treated as high-risk access.", [["Time-limited access", "Some elevated permissions expire automatically."], ["Separate approval", "Privileged roles require explicit approval and may require training."], ["Logging", "Administrative actions may be logged and reviewed."]]], ["Company Devices", "Asset management", "IT records every assigned laptop, monitor, mobile device, and other managed asset.", [["Asset record", "Serial number, employee owner, issue date, and return status are tracked."], ["Configuration", "Do not remove endpoint protection, disk encryption, or device management tools."], ["Accessories", "Return chargers, adapters, and assigned peripherals with the device."]]], ["Borrowing Equipment", "Temporary assets", "Temporary devices are reserved through ServiceDesk and must be returned by the agreed date.", [["Request", "State the business need and requested period."], ["Condition check", "IT records the condition before issue."], ["Extension", "Request an extension before the due date if the device is still required."]]], ["Lost or Stolen Equipment", "Security incident", "Lost devices are both an asset issue and a potential security incident.", [["Report immediately", "Contact ServiceDesk or Security as soon as you know the device is missing."], ["Do not wait", "Remote lock, account reset, or device wipe may be time-sensitive."], ["Provide facts", "Location, time, device type, and circumstances help the incident team respond."]]], ["Damaged Devices", "Asset support", "Do not continue using equipment that is unsafe, unstable, or likely to worsen damage.", [["Stop if unsafe", "Battery swelling, liquid exposure, or damaged power equipment requires immediate attention."], ["ServiceDesk ticket", "Document the issue and any visible damage."], ["Repair decision", "IT determines repair, replacement, or retirement."]]], ["Software Installation", "Approved software", "Company software is installed through managed deployment or approved self-service tools.", [["No unlicensed software", "Do not install pirated, cracked, or unapproved tools."], ["Browser extensions", "Extensions can access company data and may require approval."], ["Developer tooling", "Engineering tools follow the same licensing and security standards."]]], ["Getting Technical Support", "ServiceDesk", "Use ServiceDesk so incidents and requests are tracked, prioritized, and assigned to the correct team.", [["Incident", "Something that previously worked is broken or unavailable."], ["Service request", "You need software, equipment, access, or a standard service."], ["Security issue", "Phishing, account compromise, lost devices, or suspicious activity should be escalated immediately."]]]], "assessment": [["You receive an MFA prompt you did not initiate. What should you do?", ["Approve it to clear the notification", "Deny it and report the suspicious activity", "Ignore it indefinitely", "Share it with a coworker"], 1], ["Where should normal software access be requested?", ["AccessHub", "A coworker's account", "A customer ticket", "A personal email"], 0], ["What is the correct approach to privileged access?", ["Request the broadest access possible", "Use the least privilege required and follow the separate approval process", "Share an admin account", "Keep access forever once granted"], 1], ["A company laptop is stolen from your car. What should happen first?", ["Wait until the next business day", "Report it immediately to ServiceDesk or Security", "Buy a replacement privately", "Only tell your manager"], 1], ["What should you do before installing a browser extension that can read page content?", ["Install it if it has good reviews", "Check whether it is approved under company software/security rules", "Use a personal browser profile", "Disable endpoint protection"], 1]]}, {"title": "Career Framework", "icon": "layers", "slides": [["Why Career Levels Exist", "Career framework", "SeanDigital’s career framework gives employees and managers a shared language for scope, independence, complexity, and impact.", [["Clarity", "Employees can see what strong performance looks like at their current level."], ["Consistency", "Managers use the same level definitions across comparable roles."], ["Development", "The framework helps identify the experiences needed for growth."]]], ["The Four Core Levels", "Levels", "Most individual contributor roles use four core levels: Junior 1, Junior 2, Senior 1, and Senior 2.", [["Junior 1", "Learns the role and delivers defined work with regular guidance."], ["Junior 2", "Handles routine work independently and owns small outcomes."], ["Senior 1 / Senior 2", "Progress from complex independent work to wider influence and system-level impact."]]], ["Junior 1", "Level expectations", "Junior 1 employees are expected to build reliable fundamentals and use feedback actively.", [["Scope", "Defined tasks with clear procedures or examples."], ["Independence", "Regular check-ins and review are normal."], ["Evidence of growth", "Fewer repeated errors, better questions, and more consistent delivery."]]], ["Junior 2", "Level expectations", "Junior 2 employees can own routine work end-to-end with less supervision.", [["Scope", "Standard customer, product, or operational work."], ["Independence", "Can resolve common problems using documented processes and judgment."], ["Evidence of growth", "Reliable ownership, clear communication, and early risk identification."]]], ["Senior 1", "Level expectations", "Senior 1 employees handle complex work, navigate ambiguity, and improve how the team delivers.", [["Scope", "Complex projects, cross-functional coordination, or high-value customer work."], ["Independence", "Sets an approach without needing detailed direction."], ["Team impact", "Mentors others, improves standards, and helps resolve difficult problems."]]], ["Senior 2", "Level expectations", "Senior 2 employees influence systems, strategy, standards, and capability beyond their own workload.", [["Scope", "Cross-team, high-risk, or strategically important problems."], ["Influence", "Shapes decisions across functions and helps leaders see trade-offs."], ["Capability building", "Raises team quality through standards, coaching, reusable approaches, or technical direction."]]], ["What Changes Across Levels", "Progression", "Promotion is not simply more volume. The type of work, ambiguity, and impact should change.", [["Task → outcome", "More senior employees own results, not only assigned activities."], ["Known → ambiguous", "Problems become less defined and require stronger judgment."], ["Individual → system", "Impact expands from personal execution to team, customer, or organizational improvement."]]], ["Competencies & Role Expectations", "Competency model", "Each job family combines shared company competencies with role-specific technical or functional expectations.", [["Shared competencies", "Ownership, communication, collaboration, judgment, and customer focus."], ["Role competencies", "Capabilities specific to Engineering, Product, Customer Success, Finance, and other functions."], ["Evidence", "Performance discussions should use examples, outcomes, and observed behavior—not impressions alone."]]], ["Promotion Readiness", "Promotion", "A promotion case should show sustained performance at the next level, not only potential or tenure.", [["Consistent evidence", "Multiple examples over time are stronger than one successful project."], ["Current-level strength", "Employees should already be performing reliably at their current level."], ["Business context", "Promotion timing may also depend on role scope, organizational need, and calibration."]]], ["Career Conversations", "Development", "Employees should discuss career direction before a promotion cycle, not only when a promotion decision is due.", [["Current level", "Clarify which expectations are already strong and which need development."], ["Next experiences", "Choose work that gives you evidence at the desired scope."], ["Check progress", "Use 1:1s and development reviews to assess whether the evidence is becoming consistent."]]]], "assessment": [["What is the main purpose of SeanDigital's career levels?", ["To rank employee worth", "To create shared expectations for scope, independence, complexity, and impact", "To guarantee promotion after a set period", "To determine leave balances"], 1], ["What best distinguishes Senior 2 from Senior 1?", ["More meetings", "Broader system-level influence and capability building", "A different work schedule", "No need for collaboration"], 1], ["Does strong performance automatically result in immediate promotion?", ["Yes", "No—promotion also requires next-level scope, sustained evidence, calibration, and organizational context", "Only after one project", "Only if the employee asks"], 1], ["Which is the strongest promotion evidence?", ["One successful week", "Sustained examples of next-level work across meaningful situations", "High tenure only", "Completing many courses without applying them"], 1], ["When should career conversations happen?", ["Only during promotion decisions", "Regularly, so development can be planned before a promotion cycle", "Only after poor performance", "Only when changing departments"], 1]]}, {"title": "Performance & Growth", "icon": "trend", "slides": [["How Performance Works", "Performance", "SeanDigital uses ongoing goal, feedback, and development conversations supported by formal review checkpoints.", [["Results", "What outcomes did you deliver against agreed priorities?"], ["Ways of working", "How did you communicate, collaborate, and demonstrate company expectations?"], ["Growth", "What capability improved, and what should you develop next?"]]], ["Setting Goals", "Goals", "Good goals are specific enough to guide decisions and measurable enough to discuss honestly.", [["Outcome", "Describe the result, not just the activity."], ["Measure", "Define how progress or success will be recognized."], ["Scope", "Make sure the goal is realistic for the role, timeframe, and available resources."]]], ["Weekly & Monthly Check-ins", "Manager rhythm", "Managers and employees should discuss priorities, blockers, and feedback regularly rather than waiting for formal reviews.", [["Current priorities", "What matters most right now?"], ["Blockers and risk", "What needs escalation, support, or a decision?"], ["Feedback", "What should continue, change, or improve?"]]], ["Giving & Receiving Feedback", "Feedback", "Useful feedback is specific, timely, respectful, and connected to observable behavior or outcomes.", [["Describe the situation", "Use facts rather than assumptions about intent."], ["Explain the impact", "Why did the behavior or outcome matter?"], ["Agree on next steps", "Clarify what to repeat, change, or practice."]]], ["Mid-Year Review", "Review cycle", "The mid-year review is a structured checkpoint, not a surprise performance verdict.", [["Progress", "Review goals and meaningful outcomes from the first half."], ["Patterns", "Discuss repeated strengths and development needs."], ["Reset", "Adjust goals when business priorities have materially changed."]]], ["Year-End Review", "Review cycle", "The year-end review summarizes the year and informs development, recognition, and future expectations.", [["Evidence", "Use documented goals, outcomes, customer feedback, and examples."], ["Balance", "Consider both what was achieved and how the work was done."], ["Forward look", "End with clear development and role expectations for the next period."]]], ["Performance Concerns", "Accountability", "When performance is below expectations, managers should communicate the gap clearly and give the employee a fair opportunity to improve.", [["Be specific", "Identify the missed expectation and supporting examples."], ["Define improvement", "Set clear expected behavior, support, and timeframe."], ["Document appropriately", "Formal performance processes should involve People Operations."]]], ["Promotion & Calibration", "Growth decisions", "Promotion and performance ratings are reviewed across teams to improve consistency and reduce isolated manager bias.", [["Shared standards", "Managers compare evidence against the same level framework."], ["Calibration", "Leaders discuss differences in interpretation and evidence quality."], ["Not automatic", "Strong performance at one level does not automatically prove readiness for the next."]]], ["Development Plans", "Growth", "A practical development plan combines learning with real work and feedback.", [["Capability goal", "Identify one or two specific capabilities to strengthen."], ["Practice opportunity", "Choose projects, stretch work, mentoring, or shadowing where the skill can be used."], ["Evidence", "Decide what observable result will show progress."]]], ["Your First 90 Days", "New employee growth", "Onboarding should finish with clearer ownership and a development plan—not just completed courses.", [["Days 1–30", "Learn the role, systems, customers, and team expectations."], ["Days 31–60", "Own routine responsibilities and ask for targeted feedback."], ["Days 61–90", "Take on broader ownership and agree on one development priority with your manager."]]]], "assessment": [["Which statement best describes SeanDigital's performance approach?", ["Performance is discussed only once a year", "Results, behaviors, and growth are discussed continuously and at formal checkpoints", "Only numerical targets matter", "Managers decide without employee input"], 1], ["What is the best way to write a goal?", ["List a task only", "Define an outcome, measure, and realistic scope", "Use vague language to allow flexibility", "Copy last year's goal"], 1], ["What should happen when performance is below expectations?", ["Avoid discussing it until year-end", "Communicate the gap clearly, define improvement, and provide appropriate support", "Immediately terminate without discussion", "Ask coworkers to coach the employee privately"], 1], ["What is the purpose of calibration?", ["Guarantee the same rating for everyone", "Improve consistency in how evidence and level expectations are interpreted", "Replace manager judgment entirely", "Reward tenure"], 1], ["What makes a development plan practical?", ["Only taking online courses", "A specific capability goal plus real practice and evidence", "Waiting for a promotion", "Changing job title"], 1]]}];
+
+const modules=courseModules.map((m,mi)=>({
+  title:m.title,
+  icon:m.icon,
+  lessons:[
+    ...m.slides.map((s,si)=>{
+      const normalized=Array.isArray(s)
+        ? {
+            title:s[0],
+            kicker:s[1],
+            lead:s[2],
+            cards:(s[3]||[]).map(b=>({title:b[0],text:b[1]}))
+          }
+        : s;
+      return {
+        title:normalized.title,
+        duration:"4 min",
+        view:"content",
+        slideData:normalized,
+        slideIndex:si
+      };
+    }),
+    {title:mi===courseModules.length-1?"Final Assessment":"Module Assessment",duration:mi===courseModules.length-1?"10 min":"6 min",view:"assessment",assessment:true}
+  ],
+  assessment:m.assessment
+}));
+
+const flat=[];
+modules.forEach((m,mi)=>m.lessons.forEach((l,li)=>flat.push({...l,mi,li,module:m.title})));
+let current=0;
+const done=new Set(),passedAssessments=new Set(),opened=new Set([0]);
+const el=id=>document.getElementById(id);
+
+function moduleIndexes(mi){return flat.map((x,i)=>x.mi===mi?i:null).filter(x=>x!==null)}
+function moduleComplete(mi){const ids=moduleIndexes(mi);return ids.length&&ids.every(i=>done.has(i))}
+
+function renderOutline(){
+ el("outline").innerHTML=modules.map((m,mi)=>{
+   const complete=moduleComplete(mi);
+   const rows=m.lessons.map((l,li)=>{
+     const idx=flat.findIndex(x=>x.mi===mi&&x.li===li);
+     return `<button class="lesson-btn ${idx===current?'active':''} ${done.has(idx)?'done':''}" data-index="${idx}">
+       <span class="type">${I(l.assessment?'quiz':'file')}</span>
+       <span class="lesson-title">${l.title}</span>
+       <span class="check">${done.has(idx)?I('check'):''}</span>
+     </button>`;
+   }).join("");
+   return `<div class="module ${opened.has(mi)?'open':''}">
+     <button class="module-btn" data-module="${mi}">
+       <span class="module-icon">${I(m.icon)}</span>
+       <span><strong>${m.title}</strong><small>${m.lessons.length} items</small></span>
+       <span class="module-tail">
+         <span class="${complete?'module-complete':'module-pending'}">${complete?`<span class="module-check">${I('check')}</span><span>Complete</span>`:''}</span>
+         <span class="chev">${I('chev')}</span>
+       </span>
+     </button>
+     <div class="lesson-list">${rows}</div>
+   </div>`;
+ }).join("");
+ document.querySelectorAll(".module-btn").forEach(b=>b.onclick=()=>{const mi=+b.dataset.module;opened.has(mi)?opened.delete(mi):opened.add(mi);renderOutline()});
+ document.querySelectorAll(".lesson-btn").forEach(b=>b.onclick=()=>{current=+b.dataset.index;opened.add(flat[current].mi);render();el("sidebar").classList.remove("open")});
+}
+
+function renderCards(cards){
+ return `<div class="cards compact">${cards.map((b,i)=>`<div class="card"><div class="card-icon">${I(['user','check','arrow','target','briefcase','help'][i%6])}</div><strong>${b.title}</strong><p>${b.text}</p></div>`).join("")}</div>`;
+}
+function renderProcess(steps){
+ return `<div class="process">${steps.map((s,i)=>`<div class="step"><div class="num">${i+1}</div><div><strong>${s.title}</strong><span>${s.text}</span></div></div>`).join("")}</div>`;
+}
+function renderTimeline(items){
+ return `<div class="timeline">${items.map(it=>`<div class="timeline-item"><div class="tag">${it.label}</div><div><strong>${it.title}</strong><p>${it.text}</p></div></div>`).join("")}</div>`;
+}
+function renderChecklist(items){
+ return `<div class="checklist">${items.map(t=>`<div class="check-item"><div class="bullet">${I('check')}</div><span>${t}</span></div>`).join("")}</div>`;
+}
+function renderTable(table){
+ return `<div class="data-table"><table><thead><tr>${table.columns.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${table.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+function renderDiagram(d){
+ if(!d) return '';
+ if(d.type==='flow') return `<div class="visual-panel"><h4>${d.title}</h4><p>${d.subtitle||''}</p><div class="flow-row">${d.nodes.map(n=>`<div class="flow-node">${n}</div>`).join('')}</div></div>`;
+ if(d.type==='mock') return `<div class="visual-panel mock-device"><h4>${d.title}</h4><p>${d.subtitle||''}</p><div class="mock-window"><div class="bar"></div><div class="body"><div class="mock-pill" style="width:72%"></div><div class="mock-grid"><div class="mock-box"></div><div class="mock-box"></div></div><div class="flow-row mock-flow">${d.nodes.map(n=>`<div class="flow-node">${n}</div>`).join('')}</div></div></div></div>`;
+ if(d.type==='stack') return `<div class="visual-panel"><h4>${d.title}</h4><p>${d.subtitle||''}</p><div class="stack-grid">${d.columns.map(col=>`<div class="stack-col"><strong>${col[0]}</strong>${col.slice(1).map(x=>`<span class="stack-chip">${x}</span>`).join('')}</div>`).join('')}</div></div>`;
+ if(d.type==='org') return `<div class="visual-panel"><h4>${d.title}</h4><p>${d.subtitle||''}</p><div class="org-grid">${d.groups.map(g=>`<div class="org-group"><strong>${g.name}</strong><ul>${g.items.map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')}</div></div>`;
+ if(d.type==='matrix') return `<div class="visual-panel"><h4>${d.title}</h4><p>${d.subtitle||''}</p>${renderTable({columns:d.columns,rows:d.rows})}</div>`;
+ if(d.type==='route') return `<div class="visual-panel"><h4>${d.title}</h4><p>${d.subtitle||''}</p><div class="route-list">${d.routes.map(r=>`<div class="route-row"><strong>${r[0]}</strong><span>${r[1]}</span></div>`).join('')}</div></div>`;
+ return '';
+}
+
+function autoVisualFromCards(s,item){
+ if(!s.cards || !s.cards.length) return '';
+ const mode=item.li % 4;
+
+ if(mode===0){
+   const nodes=s.cards.map(c=>c.title);
+   return `<div class="split-layout">
+     <div>${renderCards(s.cards)}</div>
+     <div>${renderDiagram({
+       type:'flow',
+       title:'How this connects',
+       subtitle:'A simplified view of the workflow',
+       nodes
+     })}</div>
+   </div>`;
+ }
+
+ if(mode===1){
+   return renderTable({
+     columns:['Area','What it means in practice'],
+     rows:s.cards.map(c=>[c.title,c.text])
+   });
+ }
+
+ if(mode===2){
+   return renderProcess(
+     s.cards.map(c=>({title:c.title,text:c.text}))
+   );
+ }
+
+ return renderTimeline(
+   s.cards.map((c,i)=>({
+     label:`0${i+1}`,
+     title:c.title,
+     text:c.text
+   }))
+ );
+}
+
+function contentView(item){
+ const s=item.slideData || {};
+ let body='';
+
+ if(s.cards && s.diagram){
+   body += `<div class="split-layout"><div>${renderCards(s.cards)}</div><div>${renderDiagram(s.diagram)}</div></div>`;
+ } else if(s.diagram){
+   body += renderDiagram(s.diagram);
+   if(s.cards) body += renderCards(s.cards);
+ } else if(s.cards){
+   body += autoVisualFromCards(s,item);
+ }
+
+ if(s.process) body += renderProcess(s.process);
+ if(s.timeline) body += renderTimeline(s.timeline);
+ if(s.table) body += renderTable(s.table);
+ if(s.checklist) body += renderChecklist(s.checklist);
+ if(s.note) body += `<div class="callout"><strong>Practical note:</strong> ${s.note}</div>`;
+
+ return `<div class="kicker">${I(modules[item.mi].icon)}${s.kicker || 'Employee Essentials'}</div>
+ <h3>${s.title || item.title}</h3>
+ <p class="lead">${s.lead || ''}</p>${body}`;
+}
+
+function assessmentView(mi){
+ const data=modules[mi].assessment;
+ return `<div class="kicker">${I('quiz')}Assessment</div>
+ <h3>${modules[mi].title}</h3>
+ <p class="lead">Choose the best response for each question. You need 80% to pass this assessment.</p>
+ <div class="assessment">
+   ${data.map((q,qi)=>`<div class="question" data-question="${qi}"><div class="question-flag">Please answer this question.</div><h4>${qi+1}. ${q[0]}</h4>${q[1].map((o,oi)=>`<button class="answer" data-q="${qi}" data-a="${oi}">${o}</button>`).join("")}</div>`).join("")}
+   <div class="assessment-toolbar">
+      <button class="nav-btn primary" id="submitAssessment" style="width:max-content">Submit assessment</button>
+      <div class="assessment-status" id="assessmentStatus">Unanswered questions will be highlighted when you submit.</div>
+   </div>
+   <div class="result" id="assessmentResult"></div>
+ </div>`;
+}
+
+function completion(){
+ return `<div class="kicker">${I('check')}Course complete</div>
+ <h3>Employee Essentials complete.</h3>
+ <p class="lead">You have completed SeanDigital's company-wide onboarding foundation.</p>
+ <div class="callout"><strong>Next:</strong> continue to your department onboarding and role-specific training. Your manager will confirm the tools, workflows, team expectations, and first-quarter goals for your role.</div>`;
+}
+
+function render(){
+ if(current===flat.length){
+   el("breadcrumb").textContent="Course completed";
+   el("lessonTitle").textContent="Employee Essentials";
+   el("position").textContent="Complete";
+   el("duration").textContent="";
+   el("moduleMeta").textContent="All modules completed";
+   el("slide").innerHTML=completion();
+   el("prev").disabled=false;
+   el("next").innerHTML=`Restart ${I('right')}`;
+   el("progressText").textContent="100%";
+   el("progressBar").style.width="100%";
+   renderOutline(); return;
+ }
+ const item=flat[current];
+ opened.add(item.mi);
+ el("breadcrumb").textContent=`Module ${item.mi+1} · ${item.module}`;
+ el("lessonTitle").textContent=item.title;
+ el("position").textContent=`Lesson ${current+1} of ${flat.length}`;
+ el("duration").textContent=`Approx. ${item.duration}`;
+ el("moduleMeta").textContent=`Module ${item.mi+1} of ${modules.length}`;
+
+ if(item.assessment){
+   el("slide").innerHTML=assessmentView(item.mi);
+   bindAssessment(item.mi);
+ } else {
+   el("slide").innerHTML=contentView(item);
+   done.add(current);
+ }
+
+ el("prev").disabled=current===0;
+ el("next").innerHTML=current===flat.length-1?`Finish ${I('check')}`:`Next ${I('right')}`;
+ const pct=Math.round(done.size/flat.length*100);
+ el("progressText").textContent=pct+"%";
+ el("progressBar").style.width=pct+"%";
+ renderOutline();
+}
+
+function bindAssessment(mi){
+ const data=modules[mi].assessment,selected={};
+ document.querySelectorAll(".answer").forEach(btn=>btn.onclick=()=>{
+   const q=+btn.dataset.q,a=+btn.dataset.a;
+   selected[q]=a;
+   const qWrap=document.querySelector(`.question[data-question="${q}"]`);
+   qWrap.classList.remove("unanswered");
+   document.querySelectorAll(`.answer[data-q="${q}"]`).forEach(x=>x.classList.remove("selected"));
+   btn.classList.add("selected");
+ });
+ el("submitAssessment").onclick=()=>{
+   const r=el("assessmentResult");
+   const unanswered=[];
+   data.forEach((q,qi)=>{
+     const qWrap=document.querySelector(`.question[data-question="${qi}"]`);
+     qWrap.classList.remove("unanswered");
+     if(selected[qi]===undefined) unanswered.push(qi);
+   });
+   if(unanswered.length){
+     unanswered.forEach(qi=>document.querySelector(`.question[data-question="${qi}"]`).classList.add("unanswered"));
+     el("assessmentStatus").textContent = `${unanswered.length} question${unanswered.length>1?'s':''} still need${unanswered.length>1?'':'s'} an answer.`;
+     r.className="result show";
+     r.textContent="Please answer the highlighted questions before submitting.";
+     document.querySelector(`.question[data-question="${unanswered[0]}"]`).scrollIntoView({behavior:'smooth',block:'center'});
+     return;
+   }
+   let score=0;
+   data.forEach((q,qi)=>{
+     document.querySelectorAll(`.answer[data-q="${qi}"]`).forEach(btn=>{
+       const a=+btn.dataset.a;
+       btn.classList.remove("correct","wrong");
+       if(a===q[2]) btn.classList.add("correct");
+       else if(a===selected[qi]) btn.classList.add("wrong");
+     });
+     if(selected[qi]===q[2]) score++;
+   });
+   const pct=Math.round(score/data.length*100),pass=pct>=80;
+   el("assessmentStatus").textContent = `Answered ${data.length} of ${data.length}.`;
+   r.className="result show";
+   r.innerHTML=pass?`<strong>Passed — ${pct}%</strong><br>You can continue to the next section.`:`<strong>Score — ${pct}%</strong><br>Review the correct answers and try again. You need 80% to pass.`;
+   if(pass){
+     done.add(current);
+     passedAssessments.add(mi);
+     renderOutline();
+     const p=Math.round(done.size/flat.length*100);
+     el("progressText").textContent=p+"%";
+     el("progressBar").style.width=p+"%";
+   }
+ };
+}
+
+function canMoveNext(){return !flat[current]?.assessment||passedAssessments.has(flat[current].mi)}
+function updateFullLabels(){
+ const fs=document.body.classList.contains("fullscreen");
+ [el("topFull"),el("footerFull")].forEach(btn=>{
+   if(!btn)return;
+   btn.querySelector("use").setAttribute("href",fs?"#collapse":"#expand");
+   btn.querySelector("span").textContent=fs?"Exit full screen":"Full screen";
+ });
+}
+async function toggleFull(){
+ const entering=!document.body.classList.contains("fullscreen");
+ document.body.classList.toggle("fullscreen",entering);
+ updateFullLabels();
+ if(entering){try{if(document.documentElement.requestFullscreen&&!document.fullscreenElement)await document.documentElement.requestFullscreen()}catch(e){}}
+ else{try{if(document.fullscreenElement&&document.exitFullscreen)await document.exitFullscreen()}catch(e){}}
+}
+document.addEventListener("fullscreenchange",()=>{
+ if(!document.fullscreenElement&&document.body.classList.contains("fullscreen")){document.body.classList.remove("fullscreen");updateFullLabels()}
+});
+
+el("prev").onclick=()=>{if(current===flat.length){current=flat.length-1;render();return}if(current>0){current--;render()}};
+el("next").onclick=()=>{
+ if(current===flat.length){current=0;done.clear();passedAssessments.clear();opened.clear();opened.add(0);render();return}
+ if(!canMoveNext()){const r=el("assessmentResult"); if(r){r.className="result show"; r.textContent="Pass this assessment before continuing.";} return}
+ if(current<flat.length-1){current++;render()}else{done.add(current);current=flat.length;render()}
+};
+el("topFull").onclick=toggleFull;
+el("footerFull").onclick=toggleFull;
+el("menuBtn").onclick=()=>el("sidebar").classList.toggle("open");
+
+render();
+updateFullLabels();
+</script>
+
+
+
+</body>
+</html>

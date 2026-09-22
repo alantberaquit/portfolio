@@ -604,7 +604,7 @@ body.drawer-open{overflow:hidden}
 /* education */
 .education-row{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:12px;
 }
 .edu{
@@ -6336,6 +6336,58 @@ body{
   font-size:14px;
 }
 
+.prototype-context{
+  margin:0 0 22px;
+  padding:18px 20px;
+  border:1px solid rgba(44,47,69,.12);
+  border-radius:18px;
+  background:rgba(255,255,255,.58);
+}
+.prototype-context strong{
+  display:block;
+  margin-bottom:5px;
+  color:var(--red);
+  font-family:"Outfit",sans-serif;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.prototype-context p{margin:0;color:var(--muted);font-size:13px;line-height:1.65}
+.shared-course-note{
+  margin:16px 0 34px;
+  padding:12px 16px;
+  border-left:3px solid var(--red);
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+}
+.dle-subgroup{
+  margin:34px 0 18px;
+  font-family:"Outfit",sans-serif;
+  color:var(--navy);
+  font-size:20px;
+  font-weight:800;
+}
+.dle-visual.employee{background:#dcecf8}
+.dle-visual.manager{background:#e8e2f5}
+.onboarding-preview{
+  width:min(100%,430px);
+  padding:22px;
+  border-radius:22px;
+  background:#fff;
+  border:1px solid #cedce8;
+  box-shadow:0 16px 32px rgba(35,50,74,.12);
+}
+.onboarding-preview-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.onboarding-preview-head strong{font:800 16px "Outfit",sans-serif;color:var(--navy)}
+.onboarding-preview-head span{padding:6px 9px;border-radius:999px;background:var(--red);color:#fff;font-size:9px;font-weight:800}
+.onboarding-modules{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:18px}
+.onboarding-modules div{padding:13px 8px;border-radius:12px;background:#edf4fa;text-align:center;color:#506274;font-size:9px;font-weight:800}
+.onboarding-modules i{display:block;margin-bottom:7px;color:var(--red);font-size:18px}
+.manager-path{display:grid;gap:9px;margin-top:18px}
+.manager-path div{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:11px;background:#f2eef9;color:#4f4962;font-size:10px;font-weight:800}
+.manager-path span{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;background:#7464a5;color:#fff;font-size:9px}
+
 @media(max-width:900px){
   .topnav{
     height:78px !important;
@@ -6382,7 +6434,7 @@ body{
 <div class="hero-copy">
 <div class="hero-kicker"><i class="lni lni-sparkles"></i> Portfolio · 2026</div>
 <h1>Technical education and digital learning experiences.</h1>
-<p>Built on 20+ years in education, technical training, workforce development, and enterprise software learning.</p>
+<p>Built on 20+ years across education, technical training, workforce development, enterprise software learning, and Digital Adoption Platform design.</p>
 <div class="hero-actions">
 <a class="btn red" href="#digital"><i class="lni lni-arrow-down"></i> Explore work</a>
 <a class="btn dark" href="#web"><i class="lni lni-code-alt"></i> Web projects</a>
@@ -6434,18 +6486,47 @@ body{
 <div class="section-label"><i class="lni lni-display-alt"></i> Digital Learning Experiences</div>
 <h2>Learning built into the work.</h2>
 </div>
-<p>Selected experiences that support onboarding, point-of-need performance, and decision-making through guided workflows, contextual support, and realistic scenarios.</p>
+<p>Selected work across employee onboarding, Digital Adoption Platforms, enterprise software learning, point-of-need performance support, and applied decision-making.</p>
 </div>
+
+<div class="prototype-context"><strong>Prototype context</strong><p>The following two experiences are set within SeanDigital Inc., a fictional software company created to demonstrate how employee and manager learning can share one internal learning system while addressing different audiences and performance needs.</p></div>
 
 <div class="dle-showcase">
 
 <div class="dle-row">
 <div class="dle-index">01</div>
 <div class="dle-copy">
+<div class="dle-type"><i class="lni lni-users"></i> Company-wide onboarding</div>
+<h3>Employee Essentials</h3>
+<p>A structured onboarding experience for new employees covering company context, policies, technology, career expectations, performance practices, and the foundations needed before team-specific onboarding begins.</p>
+<div class="dle-tags"><span>Employee Onboarding</span><span>Curriculum Architecture</span><span>Interactive Learning</span><span>Assessment Design</span></div>
+<div class="dle-actions"><a class="dle-launch" href="employee_essentials.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a></div>
+</div>
+<div class="dle-visual employee"><div class="onboarding-preview"><div class="onboarding-preview-head"><strong>Employee Essentials</strong><span>New hire journey</span></div><div class="onboarding-modules"><div><i class="lni lni-apartment"></i>Company</div><div><i class="lni lni-shield"></i>Policies</div><div><i class="lni lni-display-alt"></i>Technology</div></div></div></div>
+</div>
+
+<div class="dle-row reverse">
+<div class="dle-index">02</div>
+<div class="dle-visual manager"><div class="onboarding-preview"><div class="onboarding-preview-head"><strong>Manager Essentials</strong><span>First 30 days</span></div><div class="manager-path"><div><span>01</span>Set priorities and expectations</div><div><span>02</span>Delegate with clear guardrails</div><div><span>03</span>Build feedback and accountability</div></div></div></div>
+<div class="dle-copy">
+<div class="dle-type"><i class="lni lni-target"></i> First 30 Days Manager Onboarding</div>
+<h3>Manager Essentials</h3>
+<p>A leadership onboarding experience for newly promoted and newly hired managers focused on coaching, delegation, priorities, feedback, accountability, conflict, and leadership judgment.</p>
+<div class="dle-tags"><span>Leadership Development</span><span>Scenario-Based Learning</span><span>Decision Practice</span><span>Applied Assessment</span></div>
+<div class="dle-actions"><a class="dle-launch" href="manager_essentials.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a></div>
+</div>
+</div>
+
+<div class="shared-course-note">Built on one shared design system, adapted for different audiences, responsibilities, and performance needs.</div>
+<h3 class="dle-subgroup">Interactive Learning &amp; Performance Support</h3>
+
+<div class="dle-row">
+<div class="dle-index">03</div>
+<div class="dle-copy">
 <div class="dle-type"><i class="lni lni-direction"></i> Guided Workflow Learning</div>
 <h3>TaskFlow</h3>
-<p>A guided digital learning experience that introduces a workflow, supports practice, and provides contextual help at the moment of need. The experience moves learners from structured onboarding to independent performance through progressively reduced support.</p>
-<div class="dle-tags"><span>Onboarding</span><span>Scaffolding</span><span>Performance Support</span><span>Product Education</span></div>
+<p>A guided software-learning experience designed to move users from instruction to supported practice and independent task completion.</p>
+<div class="dle-tags"><span>Digital Adoption</span><span>Software Training</span><span>Guided Practice</span><span>Workflow Learning</span></div>
 <div class="dle-actions">
 <button class="dle-action open-project" data-project="taskflow"><i class="lni lni-arrow-right"></i> View project details</button>
 <a class="dle-launch" href="taskflow.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch experience</a>
@@ -6470,7 +6551,7 @@ body{
 </div>
 
 <div class="dle-row reverse">
-<div class="dle-index">02</div>
+<div class="dle-index">04</div>
 <div class="dle-visual pulsedesk">
 <div class="dle-illustration pulsedesk-illustration">
 <div class="pd-search"><i class="lni lni-search-alt"></i><span>Search support guidance...</span></div>
@@ -6484,10 +6565,10 @@ body{
 </div>
 </div>
 <div class="dle-copy">
-<div class="dle-type"><i class="lni lni-support"></i> Performance Support</div>
+<div class="dle-type"><i class="lni lni-support"></i> Point-of-Need Performance Support</div>
 <h3>PulseDesk</h3>
-<p>A just-in-time support experience designed to help employees diagnose issues, make decisions, and escalate appropriately while working. It organizes troubleshooting around quick triage, decision support, escalation guidance, and searchable reference material.</p>
-<div class="dle-tags"><span>Performance Support</span><span>Troubleshooting</span><span>Decision Support</span><span>Progressive Disclosure</span></div>
+<p>A contextual performance-support experience that gives employees concise guidance while they make operational decisions.</p>
+<div class="dle-tags"><span>Performance Support</span><span>Decision Support</span><span>Workflow Learning</span><span>Just-in-Time Guidance</span></div>
 <div class="dle-actions">
 <button class="dle-action open-project" data-project="pulsedesk"><i class="lni lni-arrow-right"></i> View project details</button>
 <a class="dle-launch" href="pulsedesk_performance_support.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch experience</a>
@@ -6496,12 +6577,12 @@ body{
 </div>
 
 <div class="dle-row">
-<div class="dle-index">03</div>
+<div class="dle-index">05</div>
 <div class="dle-copy">
 <div class="dle-type"><i class="lni lni-comments-alt"></i> Branching Scenario</div>
 <h3>Client Escalation: The Conversation</h3>
-<p>A branching learning experience that develops communication, diagnostic reasoning, escalation judgment, and expectation management through realistic client decisions. Learners see the consequences of their choices and receive feedback tied to professional judgment.</p>
-<div class="dle-tags"><span>Scenario-Based Learning</span><span>Branching</span><span>Authentic Assessment</span><span>Consequence-Based Feedback</span></div>
+<p>A branching customer conversation that lets learners practice communication, judgment, and escalation decisions while seeing the consequences of their choices.</p>
+<div class="dle-tags"><span>Scenario-Based Learning</span><span>Customer Experience</span><span>Decision Practice</span><span>Communication Skills</span></div>
 <div class="dle-actions">
 <button class="dle-action open-project" data-project="scenario"><i class="lni lni-arrow-right"></i> View project details</button>
 <a class="dle-launch" href="client_escalation.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch experience</a>
@@ -6530,7 +6611,7 @@ body{
 <div class="section-label"><i class="lni lni-graduation"></i> Microlearning</div>
 <h2>Short learning experiences built around decisions.</h2>
 </div>
-<p>Three focused modules demonstrate different instructional approaches: technical judgment, situational judgment, and cybersecurity risk recognition. Each includes guided instruction, practice, and a 20-question assessment.</p>
+<p>Focused learning interventions designed around a specific decision, behavior, or performance gap.</p>
 </div>
 
 <div class="microlearning-grid">
@@ -6561,8 +6642,8 @@ body{
 <div class="micro-body">
 <div class="micro-eyebrow"><i class="lni lni-code-alt"></i> Technical Microlearning</div>
 <h3>Choosing the Best Target Selector</h3>
-<p>A developer-focused module on evaluating stable IDs, automation attributes, semantic attributes, contextual targeting, dynamic selectors, and positional fallbacks through representative DOM examples.</p>
-<div class="micro-meta"><span>Technical onboarding</span><span>DOM & selectors</span><span>20-question assessment</span></div>
+<p>Technical microlearning focused on helping developers select reliable targeting strategies for contextual in-app guidance.</p>
+<div class="micro-meta"><span>Technical Training</span><span>Digital Adoption</span><span>Decision Support</span><span>Microlearning</span></div>
 <a class="micro-launch" href="microlearning_target_selectors.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch interactive module</a>
 </div>
 </article>
@@ -6591,8 +6672,8 @@ body{
 <div class="micro-body">
 <div class="micro-eyebrow"><i class="lni lni-users"></i> Situational Microlearning</div>
 <h3>Professional Judgment &amp; Decorum</h3>
-<p>An instructor-onboarding experience focused on dignity, professional boundaries, proportional responses, accountability, and discernment across realistic classroom situations.</p>
-<div class="micro-meta"><span>Instructor onboarding</span><span>Situational judgment</span><span>20 scenarios</span></div>
+<p>Situational judgment learning focused on professional behavior, communication, and workplace decision-making.</p>
+<div class="micro-meta"><span>Behavioral Learning</span><span>Situational Judgment</span><span>Workplace Skills</span><span>Microlearning</span></div>
 <a class="micro-launch" href="microlearning_instructor_judgment.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch interactive module</a>
 </div>
 </article>
@@ -6617,8 +6698,8 @@ body{
 <div class="micro-body">
 <div class="micro-eyebrow"><i class="lni lni-shield"></i> Security Awareness</div>
 <h3>Spot the Risk Before You Click</h3>
-<p>A cybersecurity awareness module where learners evaluate phishing emails, suspicious links, MFA prompts, impersonation attempts, unsafe attachments, and credential risks.</p>
-<div class="micro-meta"><span>Risk recognition</span><span>Security awareness</span><span>20 scenarios</span></div>
+<p>Cybersecurity microlearning that asks learners to identify risk signals before taking action.</p>
+<div class="micro-meta"><span>Cybersecurity</span><span>Risk Awareness</span><span>Decision Practice</span><span>Microlearning</span></div>
 <a class="micro-launch" href="microlearning_cybersecurity.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch interactive module</a>
 </div>
 </article>
@@ -6635,7 +6716,7 @@ These portfolio modules use representative or fictionalized examples. They demon
 <div class="section-label"><i class="lni lni-layers"></i> Curriculum Development</div>
 <h2>Programs built for progression.</h2>
 </div>
-<p>Curriculum work is shown separately, with emphasis on sequencing, practice, assessment, and facilitator-ready materials across technical domains.</p>
+<p>Structured learning programs designed around progression, practice, assessment, and real-world application.</p>
 </div>
 <div class="card-grid-2">
 <article class="curr-card">
@@ -6653,7 +6734,7 @@ These portfolio modules use representative or fictionalized examples. They demon
 <div class="curr-body">
 <div class="card-kicker"><i class="lni lni-code-alt"></i> TECHNICAL CURRICULUM</div>
 <h3>DICT MERN Full-Stack Curriculum</h3>
-<p>A multi-week technical curriculum progressing from modern JavaScript to React, MongoDB, REST APIs, and integrated full-stack projects.</p>
+<p>A structured full-stack development curriculum covering MongoDB, Express, React, and Node through progressive technical practice and applied projects.</p>
 <div class="tags"><span>12 weeks</span><span>Project-based learning</span><span>Workforce readiness</span></div>
 <button class="card-action" data-project="mern"><i class="lni lni-eye"></i> View curriculum details</button>
 </div>
@@ -6683,9 +6764,9 @@ These portfolio modules use representative or fictionalized examples. They demon
 </div>
 <div class="curr-body">
 <div class="card-kicker"><i class="lni lni-bar-chart"></i> DATA ANALYTICS EDUCATION</div>
-<h3>LifeSkills PH Data Analytics Curriculum</h3>
-<p>A structured curriculum combining sequenced instruction, guided practice, assessment, and facilitator-ready learning materials.</p>
-<div class="tags"><span>Adult learning</span><span>Assessment</span><span>Instructor materials</span></div>
+<h3>Data Analytics Curriculum</h3>
+<p>A practical data analytics curriculum focused on working with data, interpreting results, and applying analysis to real-world decisions.</p>
+<div class="tags"><span>Data Analytics</span><span>Workforce Development</span><span>Applied Learning</span><span>Assessment</span></div>
 <button class="card-action" data-project="analytics"><i class="lni lni-eye"></i> View curriculum details</button>
 </div>
 </article>
@@ -6709,7 +6790,7 @@ These portfolio modules use representative or fictionalized examples. They demon
 <div class="curr-body">
 <div class="card-kicker"><i class="lni lni-shield"></i> CYBERSECURITY EDUCATION</div>
 <h3>Cybersecurity Curriculum</h3>
-<p>A curriculum space for cybersecurity foundations, risk awareness, safe practices, and applied learning activities for technical or workforce audiences.</p>
+<p>A structured cybersecurity learning program combining foundational concepts, practical risk awareness, technical skills, and assessment.</p>
 <div class="tags"><span>Cybersecurity</span><span>Applied learning</span><span>Risk awareness</span></div>
 <button class="card-action" data-project="cybersecurity"><i class="lni lni-eye"></i> View curriculum details</button>
 </div>
@@ -6720,14 +6801,14 @@ These portfolio modules use representative or fictionalized examples. They demon
 <div class="section-head">
 <div>
 <div class="section-label"><i class="lni lni-code-alt"></i> Web Development</div>
-<h2>Full-stack work alongside learning design.</h2>
+<h2>Full-stack and product development alongside learning design.</h2>
 </div>
 <p>Selected full-stack and learning-technology projects, including Conferia, Learnova, and SkillTrack.</p>
 </div>
 <div class="conferia">
 <div class="conferia-copy">
-<span class="conferia-badge"><i class="lni lni-code-alt"></i> Featured full-stack project</span><h3>Conferia</h3>
-<p>A full-stack event registration and session-management platform with participant and administrator workflows, protected authentication, session selection, registration tracking, and manual payment verification.</p>
+<span class="conferia-badge"><i class="lni lni-code-alt"></i> Full-Stack Event Platform</span><h3>Conferia</h3>
+<p>A web application for managing conferences, sessions, speakers, participants, scheduling, and event operations.</p>
 <div class="stack"><span>React</span><span>Vite</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>JWT</span><span>Vercel</span></div>
 <div class="conferia-actions">
 <a class="primary" href="https://conferia-phi.vercel.app/events" rel="noopener" target="_blank"><i class="lni lni-website"></i> Live demo</a>
@@ -6834,9 +6915,9 @@ These portfolio modules use representative or fictionalized examples. They demon
 <div class="learnova-body">
 
 
-<div class="card-kicker"><i class="lni lni-target"></i> ADAPTIVE LEARNING PLATFORM</div>
+<div class="card-kicker"><i class="lni lni-target"></i> LEARNING PLATFORM / SAAS APPLICATION</div>
 <h3>Learnova</h3>
-<p>A long-term adaptive learning and college entrance preparation platform that recommends what a student should practice next based on demonstrated performance and mastery.</p>
+<p>A learning platform concept that combines structured progression, assessments, question banks, readiness gates, learner tracking, and administrative controls.</p>
 <div class="tags">
 <span>Adaptive Learning</span>
 <span>Mastery</span>
@@ -6854,13 +6935,13 @@ These portfolio modules use representative or fictionalized examples. They demon
 <div class="third-project-visual skilltrack-visual">
   <div class="skilltrack-board">
     <div class="skilltrack-head">
-      <div class="skilltrack-person"><div class="skilltrack-avatar">M</div><div><strong>Maya Santos</strong><small>Customer Support Specialist</small></div></div>
+      <div class="skilltrack-person"><div class="skilltrack-avatar">ES</div><div><strong>Everett Sean</strong><small>Customer Support Specialist</small></div></div>
       <div class="skilltrack-role">Target: Team Lead</div>
     </div>
     <div class="skilltrack-content">
       <div class="readiness-ring"><div><strong>8/10</strong><small>Role readiness</small></div></div>
       <div class="skilltrack-skills">
-        <div class="skilltrack-skill"><span>Coaching</span><div class="skilltrack-bar"><i style="width:62%"></i></div><em>62%</em></div>
+        <div class="skilltrack-skill"><span>Mentoring</span><div class="skilltrack-bar"><i style="width:62%"></i></div><em>62%</em></div>
         <div class="skilltrack-skill"><span>Leadership</span><div class="skilltrack-bar"><i style="width:74%"></i></div><em>74%</em></div>
         <div class="skilltrack-skill"><span>Delegation</span><div class="skilltrack-bar"><i style="width:48%"></i></div><em>48%</em></div>
         <div class="skilltrack-skill"><span>Analysis</span><div class="skilltrack-bar"><i style="width:86%"></i></div><em>86%</em></div>
@@ -6875,7 +6956,7 @@ These portfolio modules use representative or fictionalized examples. They demon
 </div>
 <div class="third-project-body">
 
-<div class="card-kicker"><i class="lni lni-target"></i> SKILL DEVELOPMENT PLATFORM</div>
+<div class="card-kicker"><i class="lni lni-target"></i> SKILLS &amp; PROGRESSION APPLICATION</div>
 <h3>SkillTrack</h3>
 <p>A professional-growth platform that connects role goals with skill gaps, practical development activities, workplace evidence, and manager validation—not just course completion.</p>
 <div class="tags">
@@ -6895,12 +6976,13 @@ These portfolio modules use representative or fictionalized examples. They demon
 <div class="section-label"><i class="lni lni-blackboard"></i> Education</div>
 <h2>The practice behind the portfolio.</h2>
 </div>
-<p>Teaching and facilitation remain part of the work, while the portfolio itself stays focused on the artifacts that came from that experience.</p>
+<p>Teaching and facilitation remain part of the work, while the portfolio itself stays focused on the artifacts, systems, and learning experiences that came from that practice.</p>
 </div>
 <div class="education-row">
-<div class="edu"><i class="lni lni-blackboard"></i><h4>Teaching &amp; Facilitation</h4><p>Technical and computing subjects across secondary, higher education, and adult-learning contexts.</p></div>
-<div class="edu"><i class="lni lni-users"></i><h4>Instructor Support</h4><p>Coaching, onboarding, and supporting instructors and learners across varying skill levels.</p></div>
-<div class="edu"><i class="lni lni-target"></i><h4>Assessment &amp; Progression</h4><p>Practice and evaluation designed to connect learning objectives to real performance.</p></div>
+<div class="edu"><i class="lni lni-blackboard"></i><h4>Teaching &amp; Facilitation</h4><p>Technical and computing subjects across secondary, higher education, workforce development, and adult-learning contexts.</p></div>
+<div class="edu"><i class="lni lni-users"></i><h4>Instructor Support</h4><p>Coaching, onboarding, mentoring, and supporting instructors and learners across varying skill levels and delivery environments.</p></div>
+<div class="edu"><i class="lni lni-target"></i><h4>Assessment &amp; Progression</h4><p>Practice and evaluation designed to connect learning objectives, demonstrated mastery, and progression toward real performance.</p></div>
+<div class="edu"><i class="lni lni-stats-up"></i><h4>Data-Informed Decision Making</h4><p>Gathering and analyzing learning, performance, and operational data to identify patterns, evaluate effectiveness, and guide evidence-based decisions.</p></div>
 </div>
 <div class="institutions-block">
 <div class="institutions-head">
@@ -7024,36 +7106,36 @@ const data={
   mern:{
     title:"DICT MERN Full-Stack Curriculum",
     sub:"Curriculum Development · Technical Education",
-    what:"A multi-week technical curriculum covering modern JavaScript, React, MongoDB, REST APIs, backend development, and integrated full-stack application projects.",
+    what:"A structured full-stack development curriculum covering MongoDB, Express, React, and Node through progressive technical practice and applied projects.",
     demo:"Curriculum sequencing, learning progression, applied practice, project-based learning, technical skill development, and workforce readiness.",
     tags:["MERN","JavaScript","React","MongoDB","REST APIs","Project-Based Learning"]
   },
   analytics:{
-    title:"LifeSkills PH Data Analytics Curriculum",
+    title:"Data Analytics Curriculum",
     sub:"Curriculum Development · Data Analytics Education",
-    what:"A curriculum translating learning goals into sequenced instruction, examples, practice, assessment, and facilitator-ready materials.",
-    demo:"Curriculum design, objectives alignment, instructional sequencing, assessment, adult learning, and translation of technical content into teachable experiences.",
-    tags:["Data Analytics","Curriculum Development","Assessment","Adult Learning"]
+    what:"A practical data analytics curriculum focused on working with data, interpreting results, and applying analysis to real-world decisions.",
+    demo:"A structured progression from working with data to interpreting results and applying analysis to practical decisions.",
+    tags:["Data Analytics","Workforce Development","Applied Learning","Assessment"]
   },
   cybersecurity:{
     title:"Cybersecurity Curriculum",
     sub:"Curriculum Development · Cybersecurity Education",
-    what:"A curriculum placeholder focused on cybersecurity foundations, risk awareness, secure practices, and applied learning experiences for technical or workforce audiences.",
+    what:"A structured cybersecurity learning program combining foundational concepts, practical risk awareness, technical skills, and assessment.",
     demo:"Curriculum sequencing, technical-content simplification, scenario-based practice, applied learning, and alignment of learning objectives to real-world security awareness and safe behavior.",
     tags:["Cybersecurity","Risk Awareness","Applied Learning","Curriculum Development"]
   },
   learnova:{
     title:"Learnova",
-    sub:"Adaptive Learning Platform · College Entrance Preparation",
-    what:"A long-term adaptive learning and college entrance preparation platform designed to begin at a student's current ability and progressively develop academic and reasoning skills across multiple years.",
+    sub:"Learning Platform / SaaS Application",
+    what:"A learning platform concept that combines structured progression, assessments, question banks, readiness gates, learner tracking, and administrative controls.",
     demo:"A mastery-driven learning loop where the system assesses performance, assigns practice, analyzes results, recommends the next activity, tests progress, adjusts mastery, and advances or reviews as needed. Learning areas include Mathematics, Science, Abstract Reasoning, Logical Reasoning, and Reading Comprehension.",
     tags:["Adaptive Learning","Mastery","Assessment","Worksheets","Reasoning","College Entrance Preparation"]
   },
   skilltrack:{
     title:"SkillTrack",
-    sub:"Skill Development Platform · Workforce Growth",
+    sub:"Skills & Progression Application",
     what:"A professional-growth application for employees, managers, and Learning & Development teams. It compares an employee's current capabilities with the competencies required for a target role, then turns identified gaps into a practical development path.",
-    demo:"A broader view of skill development that connects courses and microlearning with projects, workplace assignments, coaching, mentoring, assessments, workshops, job shadowing, certifications, evidence of work, and manager observations. Progress is measured through demonstrated competencies and role readiness rather than course completion alone.",
+    demo:"A broader view of skill development that connects courses and microlearning with projects, workplace assignments, mentoring, guided practice, assessments, workshops, job shadowing, certifications, evidence of work, and manager observations. Progress is measured through demonstrated competencies and role readiness rather than course completion alone.",
     tags:["Competency Mapping","Role Readiness","Development Paths","Workplace Learning","Evidence","Manager Validation"]
   }
 };
