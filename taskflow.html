@@ -2623,10 +2623,204 @@ button,.btn,.card-action{gap:8px!important}
 #workQueueCard tbody tr:hover{background:#FAF8FD}
 #workQueueCard .pill.accent{background:#F3EAFE !important;color:#6E42A8 !important}
 </style>
+<style>
+/* v97 — production SaaS shell */
+:root{
+  --tf-navy:#0f172a;
+  --tf-sidebar:#111827;
+  --tf-blue:#2563eb;
+  --tf-blue-soft:#eff6ff;
+  --tf-surface:#ffffff;
+  --tf-canvas:#f5f7fb;
+  --tf-border:#e2e8f0;
+  --tf-text:#172033;
+  --tf-muted:#64748b;
+}
+html{background:var(--tf-canvas)}
+body{
+  min-height:100vh;
+  padding-left:236px;
+  background:var(--tf-canvas)!important;
+  color:var(--tf-text)!important;
+  letter-spacing:0!important;
+}
+.appbar{
+  height:68px!important;
+  padding:0 30px!important;
+  background:rgba(255,255,255,.96)!important;
+  border-bottom:1px solid var(--tf-border)!important;
+  box-shadow:none!important;
+}
+.brand{
+  position:fixed;
+  z-index:100;
+  top:0;
+  left:0;
+  width:236px;
+  height:74px;
+  padding:0 22px;
+  color:#fff!important;
+  background:var(--tf-sidebar);
+  font-size:18px!important;
+  letter-spacing:-.02em;
+}
+.logo{
+  width:36px!important;
+  height:36px!important;
+  border-radius:9px!important;
+  background:var(--tf-blue)!important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.12),0 8px 20px rgba(37,99,235,.22)!important;
+}
+.search{max-width:620px!important;margin-left:0}
+.search input{
+  height:40px;
+  padding-left:40px!important;
+  border:1px solid var(--tf-border)!important;
+  border-radius:8px!important;
+  background:#f8fafc!important;
+  color:var(--tf-text)!important;
+  font-size:14px!important;
+}
+.search input:focus{background:#fff!important;border-color:#94a3b8!important;box-shadow:0 0 0 3px rgba(37,99,235,.1)!important}
+.actions{gap:10px!important}
+.iconbtn{
+  height:40px;
+  border-color:var(--tf-border)!important;
+  border-radius:8px!important;
+  color:#334155!important;
+  background:#fff!important;
+  font-size:13px!important;
+  font-weight:700!important;
+}
+.avatar{width:38px!important;height:38px!important;background:#dbeafe!important;color:#1d4ed8!important;font-size:13px!important}
+.nav{
+  position:fixed!important;
+  z-index:90!important;
+  top:74px!important;
+  bottom:0!important;
+  left:0!important;
+  width:236px!important;
+  height:auto!important;
+  padding:58px 12px 18px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  gap:4px!important;
+  overflow:auto!important;
+  background:var(--tf-sidebar)!important;
+}
+.nav:before{
+  content:"SUMMIT ACCOUNTING";
+  position:absolute;
+  top:22px;
+  left:22px;
+  color:#64748b;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.12em;
+}
+.nav button{
+  width:100%;
+  min-height:42px;
+  padding:0 13px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:11px!important;
+  border-radius:7px!important;
+  color:#94a3b8!important;
+  font-size:13px!important;
+  font-weight:650!important;
+  text-align:left!important;
+}
+.nav button .lni,.nav button i{width:18px;margin:0!important;color:#64748b!important;font-size:16px!important}
+.nav button:hover{background:#1e293b!important;color:#f8fafc!important}
+.nav button.active{
+  background:#1e3a5f!important;
+  color:#fff!important;
+  box-shadow:inset 3px 0 0 #60a5fa!important;
+}
+.nav button.active .lni,.nav button.active i{color:#60a5fa!important}
+.shell{max-width:1320px!important;padding:32px 34px 56px!important}
+.pagehead{margin-bottom:24px!important;align-items:center!important}
+.pagehead h1{font-size:25px!important;font-weight:750!important;letter-spacing:-.025em!important}
+.pagehead p{color:var(--tf-muted)!important;font-size:13px!important}
+.primary{
+  min-height:40px;
+  padding:0 15px!important;
+  border-radius:8px!important;
+  background:var(--tf-blue)!important;
+  color:#fff!important;
+  box-shadow:0 1px 2px rgba(15,23,42,.08)!important;
+  font-size:13px!important;
+}
+.primary:hover{background:#1d4ed8!important;transform:none!important}
+.secondary{border-color:var(--tf-border)!important;border-radius:8px!important;color:#334155!important}
+.stats{gap:14px!important;margin-bottom:18px!important}
+.stat,.card,.clientrow,.clienthead{
+  border:1px solid var(--tf-border)!important;
+  border-radius:10px!important;
+  background:var(--tf-surface)!important;
+  box-shadow:0 1px 2px rgba(15,23,42,.035)!important;
+}
+.stat{position:relative;padding:17px 18px 16px!important;overflow:hidden}
+.stat:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#cbd5e1}
+.stat:first-child:before{background:var(--tf-blue)}
+.stat b{font-size:25px!important;color:var(--tf-navy)!important}
+.stat span{display:block;margin-top:3px;color:#475569!important;font-size:12px!important;font-weight:650}
+.stat i{color:#0f8a5f!important;font-size:11px!important}
+.grid{gap:18px!important}
+.card{padding:20px!important}
+.card h2,.card h3{color:var(--tf-navy)!important;font-size:15px!important;font-weight:750!important;letter-spacing:-.01em}
+th{padding:10px 8px!important;color:#94a3b8!important;font-size:10px!important;font-weight:800!important;border-bottom-color:var(--tf-border)!important}
+td{padding:13px 8px!important;color:#334155!important;font-size:12px!important;border-bottom-color:#eef2f7!important}
+.link{color:#1e293b!important;font-weight:700!important}
+.pill{padding:4px 8px!important;background:#eef2f7!important;color:#475569!important;font-size:10px!important;font-weight:750!important}
+.pill.green{background:#ecfdf5!important;color:#047857!important}.pill.yellow{background:#fffbeb!important;color:#b45309!important}
+.activity{padding:11px 0!important}.activity .ico{background:#eff6ff!important;color:#2563eb!important}.activity b{font-size:12px!important}.activity small{color:#94a3b8!important;font-size:11px!important}
+#teamWorkload i{background:var(--tf-blue)!important}
+.tf-extra-grid{gap:18px!important}
+.operational-card{border-radius:10px!important}
+.drawer{border-left:1px solid var(--tf-border)!important}.drawerhead{background:var(--tf-sidebar)!important}
+.guide,.tooltipBox{border-radius:10px!important;box-shadow:0 24px 60px rgba(15,23,42,.22)!important}
+.highlight{outline:3px solid rgba(37,99,235,.5)!important;box-shadow:0 0 0 7px rgba(37,99,235,.1)!important}
+
+@media(max-width:900px){
+  body{padding-left:0}
+  .appbar{padding:0 16px!important}
+  .brand{position:static;width:auto;height:auto;padding:0;background:transparent;color:var(--tf-navy)!important}
+  .brand .logo{width:32px!important;height:32px!important}
+  .nav{position:sticky!important;top:68px!important;bottom:auto!important;width:100%!important;height:48px!important;padding:0 12px!important;flex-direction:row!important;align-items:center!important;overflow-x:auto!important}
+  .nav:before{display:none}
+  .nav button{width:auto;min-width:max-content;padding:0 12px!important}
+  .shell{padding:24px 18px 44px!important}
+}
+@media(max-width:600px){
+  .actions .iconbtn:first-child{font-size:0!important;padding:0 11px!important}
+  .actions .iconbtn:first-child i{font-size:16px!important;margin:0!important}
+  .pagehead{align-items:flex-start!important;gap:14px}
+  .pagehead .primary{white-space:nowrap}
+  .stats{grid-template-columns:1fr 1fr!important}
+  .card{overflow-x:auto}
+}
+</style>
 </head>
 <body>
-<header class="appbar"><div class="brand"><div class="logo"><i class="fi fi-rr-layers"></i></div>TaskFlow</div><div class="search" id="globalSearch"><span>⌕</span><input placeholder="Search clients, work, tasks..."></div><div class="actions"><button class="iconbtn" id="helpBtn"><i class="fi fi-rr-book-open-cover" aria-hidden="true"></i> Help & Learning</button><button class="iconbtn notificationBtn" aria-label="Notifications" title="Notifications"><i class="fi fi-rr-bell" aria-hidden="true"></i></button><div class="avatar">AB</div></div></header>
-<nav class="nav"><button class="navbtn active" data-view="home"><i class="fi fi-rr-home"></i>Home</button><button class="navbtn" id="clientsNav" data-view="clients"><i class="fi fi-rr-users"></i>Clients</button><button class="navbtn" data-view="work"><i class="fi fi-rr-briefcase"></i>Work</button><button class="navbtn" id="tasksNav" data-view="tasks"><i class="fi fi-rr-checkbox-circle"></i>Tasks</button><button class="navbtn" data-view="reports"><i class="fi fi-rr-chart-histogram"></i>Reports</button></nav>
+<div class="brand"><div class="logo"><i class="fi fi-rr-layers"></i></div>TaskFlow</div>
+<header class="appbar"><div class="search" id="globalSearch"><span>⌕</span><input placeholder="Search clients, work, tasks..."></div><div class="actions"><button class="iconbtn" id="helpBtn"><i class="fi fi-rr-book-open-cover" aria-hidden="true"></i> Help & Learning</button><button class="iconbtn notificationBtn" aria-label="Notifications" title="Notifications"><i class="fi fi-rr-bell" aria-hidden="true"></i></button><div class="avatar">AB</div></div></header>
+<nav class="nav">
+  <span class="nav-label">Workspace</span>
+  <button class="navbtn active" data-view="home"><i class="fi fi-rr-home"></i>Home</button>
+  <button class="navbtn" id="clientsNav" data-view="clients"><i class="fi fi-rr-users"></i>Clients</button>
+  <button class="navbtn" data-view="work"><i class="fi fi-rr-briefcase"></i>Work</button>
+  <button class="navbtn" id="tasksNav" data-view="tasks"><svg class="nav-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Tasks</button>
+  <span class="nav-label secondary-label">Operations</span>
+  <button class="navbtn" data-view="calendar"><i class="fi fi-rr-calendar"></i>Calendar</button>
+  <button class="navbtn" data-view="documents"><i class="fi fi-rr-folder"></i>Documents</button>
+  <button class="navbtn" data-view="team"><i class="fi fi-rr-users-alt"></i>Team</button>
+  <button class="navbtn" data-view="reports"><i class="fi fi-rr-chart-histogram"></i>Reports</button>
+  <div class="nav-spacer"></div>
+  <button class="navbtn" data-view="settings"><i class="fi fi-rr-settings"></i>Settings</button>
+</nav>
 <main class="shell">
 <section id="home" class="view active">
  <div class="pagehead"><div><h1>Good afternoon, Alex</h1><p>Friday, September 18 · Summit Accounting</p></div><button class="primary"><i class="fi fi-rr-plus"></i> Create work</button></div>
@@ -2810,7 +3004,11 @@ button,.btn,.card-action{gap:8px!important}
   <div><span>4</span><small>Waiting</small></div>
 </div>
 <p>Prioritize and update your assigned actions.</p></div></div><div class="card"><h2><i class="fi fi-rr-checkbox-circle" aria-hidden="true"></i> Tasks due today</h2><table><thead><tr><th>Task</th><th>Client</th><th>Status</th><th>Due</th></tr></thead><tbody><tr id="reviewTask"><td>Review Northstar documents</td><td>Northstar Foods</td><td><select id="taskStatus"><option>Not Started</option><option>In Progress</option><option>Complete</option></select></td><td>Today</td></tr><tr><td>Confirm payroll inputs</td><td>Brightline Retail</td><td><span class="pill">In progress</span></td><td>Today</td></tr></tbody></table></div></section>
-<section id="reports" class="view"><div class="pagehead"><div><h1>Reports</h1><p>Monitor workload and client activity.</p></div></div><div class="card"><h2>Reporting overview</h2><p style="color:#6d7380">Reporting is outside the Getting Started path.</p></div></section>
+<section id="calendar" class="view"><div class="pagehead"><div><h1>Calendar</h1><p>Coordinate client deadlines, reviews, and recurring work.</p></div><button class="primary"><i class="fi fi-rr-plus"></i> Add event</button></div><div class="card"><h2><i class="fi fi-rr-calendar"></i> September schedule</h2><table><thead><tr><th>Date</th><th>Event</th><th>Client</th><th>Owner</th></tr></thead><tbody><tr><td>Sep 20</td><td>Payroll processing</td><td>Northstar Foods</td><td>Daniel Cruz</td></tr><tr><td>Sep 21</td><td>Monthly review</td><td>Brightline Retail</td><td>Alex Brown</td></tr><tr><td>Sep 23</td><td>Quarterly review</td><td>Acme Consulting</td><td>Maria Santos</td></tr></tbody></table></div></section>
+<section id="documents" class="view"><div class="pagehead"><div><h1>Documents</h1><p>Review files shared across active client work.</p></div><button class="primary"><i class="fi fi-rr-upload"></i> Upload document</button></div><div class="card"><h2><i class="fi fi-rr-folder"></i> Recent documents</h2><table><thead><tr><th>File</th><th>Client</th><th>Updated</th><th>Status</th></tr></thead><tbody><tr><td><b>August Bank Statements.zip</b></td><td>Northstar Foods</td><td>Today</td><td><span class="pill green">Received</span></td></tr><tr><td><b>Payroll Register - Aug.xlsx</b></td><td>Northstar Foods</td><td>Yesterday</td><td><span class="pill">In review</span></td></tr><tr><td><b>Q3 Supporting Documents.pdf</b></td><td>Harbor &amp; Co.</td><td>Sep 16</td><td><span class="pill yellow">Action needed</span></td></tr></tbody></table></div></section>
+<section id="team" class="view"><div class="pagehead"><div><h1>Team</h1><p>Understand ownership, capacity, and current assignments.</p></div><button class="secondary"><i class="fi fi-rr-users"></i> Manage team</button></div><div class="stats"><div class="stat"><b>8</b><span>Team members</span><i>7 available today</i></div><div class="stat"><b>42</b><span>Open work items</span><i>Across 12 clients</i></div><div class="stat"><b>6</b><span>Due this week</span><i>2 need review</i></div><div class="stat"><b>91%</b><span>On-time completion</span><i>Last 30 days</i></div></div><div class="card"><h2><i class="fi fi-rr-users"></i> Team capacity</h2><table><thead><tr><th>Team member</th><th>Role</th><th>Open work</th><th>Availability</th></tr></thead><tbody><tr><td><b>Maria Santos</b></td><td>Senior Accountant</td><td>7</td><td><span class="pill green">Available</span></td></tr><tr><td><b>Daniel Cruz</b></td><td>Payroll Specialist</td><td>5</td><td><span class="pill green">Available</span></td></tr><tr><td><b>Alex Brown</b></td><td>Client Services Coordinator</td><td>8</td><td><span class="pill yellow">Near capacity</span></td></tr></tbody></table></div></section>
+<section id="reports" class="view"><div class="pagehead"><div><h1>Reports</h1><p>Monitor delivery performance, workload, and client activity.</p></div><button class="secondary"><i class="fi fi-rr-download"></i> Export</button></div><div class="stats"><div class="stat"><b>91%</b><span>On-time completion</span><i>+3% this month</i></div><div class="stat"><b>4.2d</b><span>Average cycle time</span><i>0.6d faster</i></div><div class="stat"><b>12</b><span>Active clients</span><i>1 added this month</i></div><div class="stat"><b>86%</b><span>Team utilization</span><i>Within target</i></div></div><div class="card"><h2><i class="fi fi-rr-chart-histogram"></i> Delivery overview</h2><p style="color:#6d7380">Reporting summarizes operational performance across clients, work, and team capacity.</p></div></section>
+<section id="settings" class="view"><div class="pagehead"><div><h1>Settings</h1><p>Manage workspace preferences and operating rules.</p></div></div><div class="grid"><div class="card"><h2><i class="fi fi-rr-settings"></i> Workspace</h2><div class="clientrow"><div><h3>Organization profile</h3><p>Summit Accounting · Client services workspace</p></div><button class="secondary">Edit</button></div><div class="clientrow"><div><h3>Notifications</h3><p>Deadline, assignment, and client activity alerts</p></div><button class="secondary">Configure</button></div></div><div class="card"><h2><i class="fi fi-rr-shield-check"></i> Access &amp; permissions</h2><div class="clientrow"><div><h3>Team roles</h3><p>8 members across 4 permission groups</p></div><button class="secondary">Manage</button></div><div class="clientrow"><div><h3>Security</h3><p>Single sign-on and session controls</p></div><button class="secondary">Review</button></div></div></div></section>
 </main>
 
 <div class="overlay" id="overlay"></div><aside class="drawer" id="drawer"><div class="drawerhead"><div class="row"><h2><i class="fi fi-rr-graduation-cap" aria-hidden="true"></i> Help &amp; Learning</h2><button class="close" id="closeDrawer">×</button></div><input class="helpsearch" placeholder="Search help and learning..."></div><div class="drawerbody" id="drawerBody"></div></aside>
@@ -3063,7 +3261,7 @@ const guides={
 function startGuide(i){
  currentGuide=i;step=0;practice=i===5;
  const cs=$('clientSearch');
- if(cs){cs.value='';document.querySelectorAll('.clientrow').forEach(r=>r.style.display='flex')}
+ if(cs){cs.value='';document.querySelectorAll('.clientrow[data-name]').forEach(r=>r.style.display='flex')}
  if($('taskStatus'))$('taskStatus').value='Not Started';
  if($('workType'))$('workType').value='';
  if($('assignee'))$('assignee').value='';
@@ -3194,7 +3392,7 @@ function guideEvent(type,val){
  if(currentGuide==null)return;let s=guides[currentGuide][step],need=s[3];
  if((need==='clients'&&type==='nav'&&val==='clients')||(need==='tasks'&&type==='nav'&&val==='tasks'))next()
 }
-$('clientSearch').oninput=e=>{let q=e.target.value.toLowerCase();document.querySelectorAll('.clientrow').forEach(r=>r.style.display=r.dataset.name.includes(q)?'flex':'none');if((currentGuide===2||currentGuide===3)&&guides[currentGuide][step][3]==='search'&&q.includes('northstar'))next()};
+$('clientSearch').oninput=e=>{let q=e.target.value.toLowerCase();document.querySelectorAll('.clientrow[data-name]').forEach(r=>r.style.display=r.dataset.name.includes(q)?'flex':'none');if((currentGuide===2||currentGuide===3)&&guides[currentGuide][step][3]==='search'&&q.includes('northstar'))next()};
 $('northstar').onclick=()=>{currentClient='Northstar Foods';$('clientName').textContent=currentClient;showView('clientDetail');if(currentGuide!=null&&guides[currentGuide][step]&&guides[currentGuide][step][3]==='northstar')next()};
 $('brightline').onclick=()=>{currentClient='Brightline Retail';$('clientName').textContent=currentClient;showView('clientDetail');};
 $('createWorkBtn').onclick=()=>{
@@ -3225,7 +3423,7 @@ $('dueDate').onchange=e=>{
 };
 
 $('cancelWork').onclick=()=>$('workModal').classList.remove('show');
-$('saveWork').onclick=()=>{let wt=$('workType').value,a=$('assignee').value,d=$('dueDate').value,ok=currentGuide===5?(wt==='Monthly Financial Report'&&a==='Daniel Cruz'&&d==='2026-09-30'):(wt==='Monthly Financial Report'&&a==='Maria Santos'&&d==='2026-09-25');if(ok){$('success').style.display='block';$('success').textContent='✓ Work created successfully.';toast('Correct — the work is set up properly.');setTimeout(()=>{$('workModal').classList.remove('show');if(currentGuide===5){$('requestReminder').classList.remove('show');finishLesson();}else if(currentGuide===3&&guides[3][step]&&guides[3][step][3]==='savework')next()},900)}else toast('Not quite. Review the client request and check the work type, assignee, and due date.')};
+$('saveWork').onclick=()=>{let wt=$('workType').value,a=$('assignee').value,d=$('dueDate').value,ok=currentGuide===5?(wt==='Monthly Financial Report'&&a==='Daniel Cruz'&&d==='2026-09-30'):(wt==='Monthly Financial Report'&&a==='Maria Santos'&&d==='2026-09-25');if(ok){$('success').style.display='block';$('success').textContent='✓ Work created successfully.';toast('Correct — the work is set up properly.');setTimeout(()=>{$('workModal').classList.remove('show');if(currentGuide===5){$('requestReminder').classList.remove('show');step=1;renderTooltip();}else if(currentGuide===3&&guides[3][step]&&guides[3][step][3]==='savework')next()},900)}else toast('Not quite. Review the client request and check the work type, assignee, and due date.')};
 $('taskStatus').onchange=e=>{if(currentGuide===4&&guides[4][step][3]==='status'&&e.target.value==='In Progress')next()};
 $('exitGuide').onclick=()=>{currentGuide=null;clearHi();guide.classList.remove('show')};$('hintGuide').onclick=()=>toast(currentGuide===5?'Start by finding Brightline Retail. Then use its client record to create the requested work.':'Follow the guide and use the control it points to.');
 document.addEventListener('click',e=>{if(currentGuide!=null){let s=guides[currentGuide][step];if(s&&s[3]==='none'&&e.target.closest('.highlight'))next();if(s&&s[3]==='complete'&&e.target.closest('#guide'))finishLesson()}});
@@ -3520,6 +3718,13 @@ function isNavigationGuideTarget(target){
   );
 }
 
+function isVerticalNavigation(nav){
+  if(!nav)return false;
+  const styles=getComputedStyle(nav);
+  const rect=nav.getBoundingClientRect();
+  return styles.flexDirection==='column' || rect.height>window.innerHeight*.55;
+}
+
 function placeLearningTooltip(target){
   const tt=$('tooltipBox');
   tt.classList.remove('navTooltipBelow');
@@ -3534,6 +3739,14 @@ function placeLearningTooltip(target){
 
     const tr=target.getBoundingClientRect();
     const nr=nav.getBoundingClientRect();
+
+    /* The desktop SaaS shell uses a persistent left sidebar. Anchor
+       guidance beside the selected item instead of below the full nav. */
+    if(isVerticalNavigation(nav)){
+      tt.classList.remove('navTooltipBelow');
+      originalPlaceTooltip(target);
+      return;
+    }
 
     /* IMPORTANT: position from the BOTTOM EDGE OF THE ENTIRE NAV,
        never from the individual nav item. This guarantees the tooltip
@@ -3573,6 +3786,12 @@ placeTooltip=function(target){
     const tr=target.getBoundingClientRect();
     const nr=nav.getBoundingClientRect();
     const gap=16;
+
+    if(isVerticalNavigation(nav)){
+      tt.classList.remove('navTooltipBelow');
+      originalPlaceTooltip(target);
+      return;
+    }
 
     let left=tr.left+(tr.width/2)-(tt.offsetWidth/2);
     left=Math.max(16,Math.min(window.innerWidth-tt.offsetWidth-16,left));
@@ -3675,6 +3894,7 @@ function renderClientResourceStep(){
 
   target.scrollIntoView({behavior:'smooth',block:isNavigationGuideTarget(target)?'nearest':'center'});
   tt.classList.add('show');
+  target.classList.add('highlight');
   target.setAttribute('aria-describedby','tooltipBox');
   requestAnimationFrame(()=>placeLearningTooltip(target));
 
@@ -4173,5 +4393,63 @@ html body #guide.centered #gtext .clientResourceActions button.secondary{
 #editWorkModal .modal{width:560px;max-width:93vw}
 #editWorkModal #saveEditWork{background:#b07bf1!important;border-color:#b07bf1!important;color:#fff!important}
 #editWorkModal #saveEditWork:hover{background:#9f67e7!important;border-color:#9f67e7!important}
+</style>
+<style id="taskflow-v103-production-shell-final">
+/* Final cascade layer for the production SaaS presentation. */
+:root{--tf-purple:#2563eb!important;--tf-purple-hover:#1d4ed8!important;--tf-lilac:#eff6ff!important;--tf-lilac-strong:#bfdbfe!important}
+html body{padding-left:236px!important;background:#f5f7fb!important}
+html body .appbar{height:68px!important;padding:0 30px!important;background:rgba(255,255,255,.97)!important;border-bottom:1px solid #e2e8f0!important}
+html body .brand{position:fixed!important;z-index:100!important;top:0!important;left:0!important;transform:none!important;width:236px!important;height:74px!important;padding:0 22px!important;background:#111827!important;color:#fff!important}
+html body .logo{width:36px!important;height:36px!important;border-radius:9px!important;background:#2563eb!important}
+html body .nav{position:fixed!important;z-index:90!important;top:74px!important;bottom:0!important;left:0!important;width:236px!important;height:auto!important;min-height:0!important;padding:18px 12px!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:4px!important;overflow:auto!important;background:#111827!important;border:0!important}
+html body .nav:before{display:none!important}
+html body .nav-label{display:block;padding:8px 12px 7px;color:#64748b;font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+html body .nav-label.secondary-label{margin-top:12px}
+html body .nav-spacer{flex:1;min-height:24px}
+html body .nav button{position:relative!important;width:100%!important;height:42px!important;min-height:42px!important;padding:0 13px!important;display:flex!important;align-items:center!important;gap:11px!important;border-radius:7px!important;color:#94a3b8!important;background:transparent!important;font-size:13px!important;font-weight:650!important;text-align:left!important}
+html body .nav button:after{display:none!important}
+html body .nav button .fi{color:#64748b!important}
+html body .nav button:hover{background:#1e293b!important;color:#fff!important}
+html body .nav button.active{background:#1e3a5f!important;color:#fff!important;box-shadow:inset 3px 0 0 #60a5fa!important}
+html body .nav button.active .fi{color:#60a5fa!important}
+html body .nav-svg{width:18px;height:18px;flex:0 0 18px;fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+html body .nav button:hover .nav-svg{stroke:#fff}
+html body .nav button.active .nav-svg{stroke:#60a5fa}
+html body .search input{border-color:#e2e8f0!important;border-radius:8px!important;background:#f8fafc!important}
+html body .iconbtn{border-color:#e2e8f0!important;border-radius:8px!important;color:#334155!important;background:#fff!important}
+html body .primary,html body .btn-primary,html body #createWorkBtn,html body button.primary{border-color:#2563eb!important;border-radius:8px!important;background:#2563eb!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+html body .primary:hover,html body .btn-primary:hover,html body #createWorkBtn:hover,html body button.primary:hover{border-color:#1d4ed8!important;background:#1d4ed8!important}
+html body .stat,html body .card,html body .clientrow,html body .clienthead{border-color:#e2e8f0!important;border-radius:10px!important;box-shadow:0 1px 2px rgba(15,23,42,.035)!important}
+html body .stat:first-child:before{background:#2563eb!important}
+html body #teamWorkload i{background:#2563eb!important}
+html body .activity .ico{background:#eff6ff!important;color:#2563eb!important}
+html body .card h2,html body .card h3{display:flex!important;align-items:center!important;gap:8px!important}
+html body .card h2>.fi,html body .card h3>.fi{color:#2563eb!important}
+html body #home .pagehead button.primary{border-color:#2563eb!important;background:#2563eb!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+html body #home .pagehead button.primary:hover{border-color:#1d4ed8!important;background:#1d4ed8!important}
+html body .drawerhead{background:#111827!important}
+html body .highlight{outline-color:rgba(37,99,235,.5)!important;box-shadow:0 0 0 7px rgba(37,99,235,.1)!important}
+html body button:focus-visible,html body a:focus-visible,html body input:focus-visible,html body select:focus-visible{outline-color:#2563eb!important}
+html body #tooltipBox #ttStep{color:#bfdbfe!important}
+html body #tooltipBox #ttNext,
+html body #guide.centered #centerNext,
+html body #guide.centered #crNext,
+html body #guide.centered .centerGuideActions button.primary,
+html body #guide.centered .clientResourceActions button.primary{border-color:#2563eb!important;background:#2563eb!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+html body #tooltipBox #ttNext:hover,
+html body #guide.centered #centerNext:hover,
+html body #guide.centered #crNext:hover{border-color:#1d4ed8!important;background:#1d4ed8!important}
+@media(max-width:900px){
+  html,html body{overflow-x:hidden!important}
+  html body{padding-left:0!important}
+  html body .appbar{padding:0 16px 0 174px!important}
+  html body .brand{position:fixed!important;transform:none!important;width:164px!important;height:68px!important;padding:0 16px!important;background:#fff!important;color:#0f172a!important;border-bottom:1px solid #e2e8f0!important}
+  html body .nav{position:sticky!important;top:68px!important;bottom:auto!important;width:100%!important;height:48px!important;min-height:48px!important;padding:0 12px!important;flex-direction:row!important;align-items:center!important;overflow-x:auto!important}
+  html body .nav:before{display:none!important}
+  html body .nav-label,html body .nav-spacer{display:none!important}
+  html body .nav button{width:auto!important;min-width:max-content!important;padding:0 12px!important}
+  html body .drawer{left:0!important;right:auto!important;width:100vw!important;max-width:100vw!important;transform:translateX(100%)!important;transition:transform .27s ease!important}
+  html body .drawer.open{transform:translateX(0)!important}
+}
 </style>
 </body></html>
