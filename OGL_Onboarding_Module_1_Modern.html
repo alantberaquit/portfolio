@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oracle Guided Learning Developer — Module 1</title>
+<style>
+:root{
+  --nav:#0b2948; --slide:#153f6b; --slide2:#1d4f7f; --ink:#20252d;
+  --module-accent:#2f80c9; --module-accent-soft:#edf6fd; --module-accent-line:#c9def0;
+  --muted:#6b7580; --line:#d9e1e8; --bg:#f0f5f9; --soft:#f7fafc;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
+button{font:inherit}.player{min-height:100vh;display:grid;grid-template-columns:350px minmax(0,1fr)}
+.sidebar{background:var(--nav);color:#fff;min-height:100vh;display:flex;flex-direction:column}
+.brand{padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,.14)}
+.brand strong{display:block;font-size:17px;font-weight:600}.brand small{display:block;margin-top:4px;font-size:12px;color:rgba(255,255,255,.64)}
+.module{padding:17px 20px 13px}.eyebrow{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.58)}
+.module h2{margin:6px 0 5px;font-size:18px;font-weight:600;line-height:1.28}.module p{margin:0;font-size:12px;line-height:1.45;color:rgba(255,255,255,.60)}
+.progress{padding:0 20px 15px}.progress-meta{display:flex;justify-content:space-between;margin-bottom:7px;font-size:11px;color:rgba(255,255,255,.58)}
+.track{height:5px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden}.track div{height:100%;background:rgba(255,255,255,.78)}
+.lesson-nav{padding:6px 10px 18px;display:grid;gap:3px;overflow:auto}.lesson-group{border-radius:7px;overflow:hidden}
+.lesson-toggle{width:100%;border:0;background:transparent;color:#fff;display:grid;grid-template-columns:30px minmax(0,1fr) 18px;gap:9px;align-items:center;min-height:48px;padding:8px 10px;border-radius:6px;text-align:left;cursor:pointer}
+.lesson-toggle:hover{background:rgba(255,255,255,.055)}.lesson-group.open>.lesson-toggle{background:rgba(255,255,255,.08)}
+.lesson-no{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.72);font-size:11px;font-weight:500}
+.lesson-copy strong{display:block;font-size:13px;line-height:1.3;font-weight:500;color:rgba(255,255,255,.92)}.lesson-copy small{display:block;margin-top:2px;font-size:10.5px;color:rgba(255,255,255,.52)}
+.caret{font-size:14px;color:rgba(255,255,255,.66);transition:transform .15s}.lesson-toggle[aria-expanded=true] .caret{transform:rotate(180deg)}
+.slide-list{display:grid;gap:2px;padding:3px 8px 7px 22px}.slide-list[hidden]{display:none}
+.slide-link{position:relative;width:100%;border:0;background:transparent;color:rgba(255,255,255,.72);padding:7px 10px;border-radius:4px;text-align:left;font-size:12px;line-height:1.3;cursor:pointer}
+.slide-link:hover{background:rgba(255,255,255,.055);color:#fff}.slide-link.active{background:rgba(255,255,255,.16);color:#fff;font-weight:500}
+.slide-link.active:before{content:"";position:absolute;left:-8px;top:6px;bottom:6px;width:2px;border-radius:2px;background:rgba(255,255,255,.85)}
+.sidebar-footer{margin-top:auto;padding:14px 16px 18px;border-top:1px solid rgba(255,255,255,.14)}
+.sidebar-footer button{width:100%;padding:10px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:rgba(255,255,255,.86);font-size:12px;font-weight:500}
+.main{min-width:0;display:flex;flex-direction:column}.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px}
+.topbar span{color:var(--slide);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}.topbar strong{display:block;margin-top:3px;font-size:16px;font-weight:600}
+.topbar .right{display:inline-flex;align-items:center;justify-content:center;min-width:96px;height:40px;border:1px solid var(--module-accent-line);background:var(--module-accent-soft);color:var(--module-accent);border-radius:999px;padding:0 16px;font-size:12px;font-weight:700;letter-spacing:.01em}
+.workspace{padding:26px 28px;display:flex;justify-content:center}.slide{width:min(1180px,100%);aspect-ratio:16/9;background:#fff;border:1px solid #cfd8e0;box-shadow:0 12px 35px rgba(40,53,80,.07);padding:42px 52px 42px;position:relative;overflow:auto}
+.kicker{color:var(--slide);font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}.slide h1{margin:7px 0 10px;font-size:35px;line-height:1.08;color:var(--slide);letter-spacing:-.02em}
+.rule{height:3px;background:var(--slide);margin-bottom:20px}.lead{font-size:19px;line-height:1.45;color:#3a4650;max-width:950px;margin:0 0 14px}.lead.small{font-size:17px}
+.section-title{font-size:21px;color:#2a3946;margin:0 0 10px;font-weight:650}p{font-size:15px;line-height:1.47;margin:0 0 8px}
+ul{margin:0;padding-left:23px}li{font-size:15px;line-height:1.4;margin:0 0 2px}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#152637;color:#eef5ff;border-radius:6px;padding:13px 15px;font-size:13px;line-height:1.5;white-space:pre-wrap;margin:0 0 9px}
+.callout{border-left:4px solid var(--slide2);padding:9px 0 9px 13px;font-size:14px;line-height:1.43;margin-top:10px}.callout.warn{border-left-color:#a56e31}
+.micro{font-size:12px;color:#68727d}.source-note{margin-top:8px;font-size:9.5px;color:#7e8993}
+.topic-list,.rule-list,.flow-vertical{display:grid;gap:8px}.topic-list>div,.rule-item,.flow-vertical>div{padding-bottom:8px;border-bottom:1px solid #e6ebef}.topic-list strong,.rule-item strong,.flow-vertical strong{display:block;color:var(--slide);font-size:15px;margin-bottom:2px}.topic-list span,.rule-item span,.flow-vertical span{font-size:13px;line-height:1.38;color:#4e5963}
+.clean-table{width:100%;border-collapse:collapse;font-size:13px}.clean-table th{text-align:left;color:var(--slide);font-size:12px;border-bottom:2px solid #cfd9e1;padding:7px}.clean-table td{border-bottom:1px solid #e5eaee;padding:7px;vertical-align:top;line-height:1.35}
+.mockapp{border:1px solid #cfd7df;border-radius:7px;overflow:hidden;background:#fbfcfd}.mockbar{padding:8px 11px;background:#e9eef3;color:#54616c;font-size:11px}.mockbody{padding:16px;position:relative;min-height:165px}.field{border:1px solid #ccd5dc;background:#fff;padding:8px 10px;margin-bottom:8px;font-size:12px}.btnrow{display:flex;gap:7px;justify-content:flex-end}.appbtn{padding:7px 13px;border-radius:4px;border:1px solid #aeb8c2;background:#fff;font-size:12px}.appbtn.primary{background:var(--slide);color:#fff;border-color:var(--slide)}
+.tip{position:absolute;max-width:220px;background:#263544;color:#fff;padding:10px 11px;border-radius:6px;font-size:11px;line-height:1.38;box-shadow:0 6px 18px rgba(0,0,0,.14)}.tip b{display:block;margin-bottom:3px}.tip.correct{right:16px;bottom:56px}.target-ring{outline:3px solid #5e86ae;outline-offset:2px}
+.summary-list{display:grid;gap:7px}.summary-list>div{display:grid;grid-template-columns:27px 1fr;gap:9px;align-items:start}.summary-list span{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#eaf1f6;color:var(--slide);font-size:11px;font-weight:700}.summary-list p{margin:2px 0 0;font-size:14px;line-height:1.38}
+.activity-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin-top:10px}.activity-grid>div{font-size:14px;line-height:1.4;padding-bottom:7px;border-bottom:1px solid #e7ebef}
+.reveal{margin-top:12px;background:var(--slide);color:#fff;border:0;border-radius:5px;padding:8px 12px;font-size:12px;cursor:pointer}.answer{margin-top:9px;padding:10px 12px;background:#f2f6f9;border-left:3px solid var(--slide);font-size:13px;line-height:1.42}
+.compare,.quality-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}.compare>div,.quality-grid>div{border-top:3px solid #cbd7e0;padding-top:8px}.compare strong,.quality-grid strong{display:block;color:var(--slide);font-size:14px}.compare code{display:block;margin:5px 0}.compare span,.quality-grid span{font-size:12px;line-height:1.35;color:#58636d}
+.quality-grid{grid-template-columns:repeat(5,1fr)}.workflow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:18px 0}.workflow span{padding:7px 9px;background:#eef3f7;border-radius:4px;font-size:12px}.workflow b{color:var(--slide)}
+.compact-ol{margin:0;padding-left:21px}.compact-ol li{margin-bottom:4px}.checklist{display:grid;gap:8px}.checklist label{font-size:14px}
+.slide-footer{position:absolute;left:52px;right:52px;bottom:14px;display:flex;justify-content:space-between;color:#8a949d;font-size:9.5px}.slide-footer strong{color:var(--slide)}
+.bottom{margin-top:auto;background:#fff;border-top:1px solid var(--line);padding:13px 30px;display:flex;align-items:center;justify-content:space-between}.navbtn{border:1px solid var(--line);background:#fff;color:var(--slide);border-radius:7px;padding:10px 15px;font-size:12px;font-weight:600;cursor:pointer}.navbtn.primary{background:var(--slide);border-color:var(--slide);color:#fff}.navbtn:disabled{opacity:.35}.counter{font-size:12px;color:#66717c}
+@media(max-width:1100px){.player{grid-template-columns:300px 1fr}.slide{padding:34px 38px}.quality-grid{grid-template-columns:repeat(2,1fr)}.four-col{grid-template-columns:1fr 1fr}}
+</style>
+
+<style>
+/* Intro splash */
+.module-splash{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(62,104,148,.20), transparent 30%),
+    radial-gradient(circle at 82% 78%, rgba(37,80,124,.22), transparent 34%),
+    #071d34;
+  color:#fff;
+  opacity:1;
+  visibility:visible;
+  transition:opacity .45s ease, visibility .45s ease;
+}
+.module-splash.is-hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.splash-panel{
+  width:min(940px,86vw);
+  min-height:520px;
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:22px;
+  background:rgba(9,33,58,.88);
+  box-shadow:0 30px 80px rgba(0,0,0,.34);
+  backdrop-filter:blur(16px);
+  transform:translateY(14px) scale(.985);
+  opacity:0;
+  animation:splashIn .7s cubic-bezier(.2,.8,.2,1) .08s forwards;
+}
+.splash-copy{
+  padding:54px 54px 48px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.splash-kicker{
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:#9ab8d8;
+  opacity:0;
+  transform:translateY(8px);
+  animation:fadeUp .55s ease .35s forwards;
+}
+.splash-copy h1{
+  margin:12px 0 14px;
+  font-size:48px;
+  line-height:1.05;
+  letter-spacing:-.035em;
+  font-weight:650;
+  opacity:0;
+  transform:translateY(10px);
+  animation:fadeUp .6s ease .48s forwards;
+}
+.splash-copy p{
+  margin:0;
+  max-width:620px;
+  font-size:18px;
+  line-height:1.58;
+  color:rgba(255,255,255,.78);
+  opacity:0;
+  transform:translateY(10px);
+  animation:fadeUp .6s ease .62s forwards;
+}
+.splash-meta{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:24px;
+  opacity:0;
+  transform:translateY(8px);
+  animation:fadeUp .55s ease .76s forwards;
+}
+.splash-meta span{
+  padding:7px 10px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:999px;
+  font-size:12px;
+  color:rgba(255,255,255,.78);
+  background:rgba(255,255,255,.05);
+}
+.start-module-btn{
+  margin-top:30px;
+  width:max-content;
+  border:0;
+  border-radius:10px;
+  padding:13px 19px;
+  background:#2a5d8e;
+  color:#fff;
+  font-size:14px;
+  font-weight:650;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+  opacity:0;
+  transform:translateY(8px);
+  animation:fadeUp .55s ease .9s forwards;
+  transition:transform .16s ease, background .16s ease;
+}
+.start-module-btn:hover{
+  background:#356d9f;
+  transform:translateY(-1px);
+}
+.splash-visual{
+  position:relative;
+  padding:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.015));
+  border-left:1px solid rgba(255,255,255,.10);
+}
+.splash-orbit{
+  width:250px;
+  height:250px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.14);
+  position:relative;
+  animation:slowSpin 16s linear infinite;
+}
+.splash-orbit:before,
+.splash-orbit:after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.10);
+}
+.splash-orbit:before{inset:30px}
+.splash-orbit:after{inset:62px}
+.splash-core{
+  position:absolute;
+  inset:50%;
+  width:92px;
+  height:92px;
+  margin:-46px 0 0 -46px;
+  border-radius:22px;
+  display:grid;
+  place-items:center;
+  background:#153f6b;
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 16px 34px rgba(0,0,0,.28);
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.03em;
+  animation:corePulse 2.8s ease-in-out infinite;
+}
+.splash-dot{
+  position:absolute;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#78a8d5;
+  box-shadow:0 0 0 6px rgba(120,168,213,.08);
+}
+.splash-dot.one{top:22px;left:50%;transform:translateX(-50%)}
+.splash-dot.two{right:24px;bottom:48px}
+.splash-dot.three{left:28px;bottom:62px}
+.splash-visual-label{
+  position:absolute;
+  bottom:28px;
+  left:36px;
+  right:36px;
+  text-align:center;
+  font-size:12px;
+  color:rgba(255,255,255,.54);
+}
+@keyframes splashIn{
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes fadeUp{
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes slowSpin{
+  to{transform:rotate(360deg)}
+}
+@keyframes corePulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.04)}
+}
+@media(max-width:820px){
+  .splash-panel{grid-template-columns:1fr;min-height:auto}
+  .splash-visual{min-height:230px;border-left:0;border-top:1px solid rgba(255,255,255,.10)}
+  .splash-copy{padding:38px 28px 32px}
+  .splash-copy h1{font-size:38px}
+}
+</style>
+
+
+
+
+
+<style>
+/* Centered opening slide for every lesson */
+.lesson-title-slide{
+  min-height:430px;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 54px;
+  position:relative;
+}
+
+.lesson-title-inner{
+  display:grid;
+  grid-template-columns:170px minmax(0, 620px);
+  gap:22px;
+  align-items:center;
+  justify-content:center;
+  width:max-content;
+  max-width:100%;
+}
+
+/* Flat icon — no background */
+.lesson-title-visual{
+  width:160px;
+  height:160px;
+  display:grid;
+  place-items:center;
+  color:#153f6b;
+}
+.lesson-title-visual:before{
+  display:none;
+}
+.lesson-title-visual svg{
+  width:138px;
+  height:118px;
+}
+
+.lesson-title-copy{
+  align-self:center;
+  max-width:620px;
+}
+.lesson-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:124px;
+  height:38px;
+  padding:0 16px;
+  margin-bottom:13px;
+  border-radius:7px;
+  background:#153f6b;
+  color:#fff;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.01em;
+}
+.lesson-title-text{
+  max-width:620px;
+  font-size:46px;
+  line-height:1.06;
+  letter-spacing:-.035em;
+  color:#0b2948;
+  font-weight:680;
+}
+.lesson-title-text:after{
+  content:"";
+  display:block;
+  width:64px;
+  height:4px;
+  margin-top:17px;
+  border-radius:999px;
+  background:#1d4f7f;
+}
+
+/* Hide normal slide title treatment */
+.slide:has(.lesson-title-slide) > .kicker,
+.slide:has(.lesson-title-slide) > h1,
+.slide:has(.lesson-title-slide) > .rule{
+  display:none;
+}
+
+.slide:has(.lesson-title-slide){
+  overflow:hidden;
+  background:#fff;
+}
+.slide:has(.lesson-title-slide):before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:7px;
+  background:#153f6b;
+}
+
+/* Fullscreen */
+:fullscreen .lesson-title-slide,
+:-webkit-full-screen .lesson-title-slide{
+  min-height:100%;
+  height:100%;
+  padding:48px 70px;
+}
+:fullscreen .lesson-title-inner,
+:-webkit-full-screen .lesson-title-inner{
+  grid-template-columns:200px minmax(0, 760px);
+  gap:26px;
+}
+:fullscreen .lesson-title-visual,
+:-webkit-full-screen .lesson-title-visual{
+  width:190px;
+  height:190px;
+}
+:fullscreen .lesson-title-visual svg,
+:-webkit-full-screen .lesson-title-visual svg{
+  width:162px;
+  height:140px;
+}
+:fullscreen .lesson-title-text,
+:-webkit-full-screen .lesson-title-text{
+  font-size:54px;
+  max-width:760px;
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .lesson-title-inner{
+    grid-template-columns:145px minmax(0, 520px);
+    gap:18px;
+  }
+  .lesson-title-visual{
+    width:135px;
+    height:135px;
+  }
+  .lesson-title-visual svg{
+    width:118px;
+    height:102px;
+  }
+  .lesson-title-text{
+    font-size:40px;
+  }
+}
+@media(max-width:700px){
+  .lesson-title-slide{
+    padding:28px 24px;
+  }
+  .lesson-title-inner{
+    grid-template-columns:1fr;
+    gap:10px;
+    text-align:center;
+    justify-items:center;
+    width:100%;
+  }
+  .lesson-title-copy{
+    display:grid;
+    justify-items:center;
+  }
+  .lesson-title-visual{
+    width:120px;
+    height:108px;
+  }
+  .lesson-title-visual svg{
+    width:104px;
+    height:90px;
+  }
+  .lesson-title-text{
+    font-size:34px;
+  }
+  .lesson-title-text:after{
+    margin-left:auto;
+    margin-right:auto;
+  }
+}
+</style>
+
+
+
+<style>
+.fullscreen-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--slide);
+  border-radius:8px;
+  padding:8px 11px;
+  font-size:11px;
+  font-weight:600;
+  cursor:pointer;
+  transition:background .15s ease,border-color .15s ease,transform .15s ease;
+}
+.fullscreen-btn:hover{
+  background:#f4f7fa;
+  border-color:#c8d4df;
+  transform:translateY(-1px);
+}
+.fullscreen-icon{
+  width:14px;
+  height:14px;
+  display:block;
+}
+.topbar-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+</style>
+
+
+<style>
+/* When browser fullscreen is active, maximize the learning slide */
+:fullscreen .player,
+:-webkit-full-screen .player{
+  min-height:100vh;
+  height:100vh;
+}
+
+:fullscreen .workspace,
+:-webkit-full-screen .workspace{
+  padding:10px 12px;
+  height:calc(100vh - 72px - 58px);
+  align-items:stretch;
+}
+
+:fullscreen .slide,
+:-webkit-full-screen .slide{
+  width:100%;
+  max-width:none;
+  height:100%;
+  aspect-ratio:auto;
+  border-radius:0;
+  box-shadow:none;
+  padding:42px 54px 38px;
+}
+
+/* Keep the sidebar and controls, but make the content canvas use all available space */
+:fullscreen .main,
+:-webkit-full-screen .main{
+  height:100vh;
+}
+
+:fullscreen .bottom,
+:-webkit-full-screen .bottom{
+  padding:10px 24px;
+}
+
+:fullscreen .topbar,
+:-webkit-full-screen .topbar{
+  height:72px;
+}
+
+/* Slightly scale opening/title slides so they feel intentionally full-screen */
+:fullscreen .lesson-title-slide,
+:-webkit-full-screen .lesson-title-slide{
+  min-height:100%;
+  height:100%;
+  padding:50px 90px 56px;
+}
+
+:fullscreen .lesson-title-text,
+:-webkit-full-screen .lesson-title-text{
+  font-size:56px;
+}
+
+:fullscreen .lesson-title-visual,
+:-webkit-full-screen .lesson-title-visual{
+  width:290px;
+  height:290px;
+}
+
+:fullscreen .lesson-title-visual svg,
+:-webkit-full-screen .lesson-title-visual svg{
+  width:210px;
+  height:175px;
+}
+
+/* Also maximize the intro splash if it is still open in fullscreen */
+:fullscreen .module-splash,
+:-webkit-full-screen .module-splash{
+  width:100vw;
+  height:100vh;
+}
+</style>
+
+
+<style>
+.activity-intro{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:10px}
+.activity-intro .lead{margin:0}
+.activity-standard{font-size:12px;color:#53616d;white-space:nowrap}
+.activity-player{border-top:1px solid #dfe6ec;padding-top:12px}
+.aq-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.aq-progress{font-size:12px;color:#66727d}.aq-score{font-size:12px;font-weight:600;color:#153f6b}
+.aq-track{height:5px;background:#e9eef2;border-radius:999px;overflow:hidden;margin-bottom:15px}.aq-track>div{height:100%;background:#1d4f7f;transition:width .2s ease}
+.aq-question{font-size:17px;font-weight:650;line-height:1.35;color:#263746;margin-bottom:10px}
+.aq-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#152637;color:#eef5ff;border-radius:6px;padding:11px 13px;font-size:12.5px;line-height:1.45;white-space:pre-wrap;margin:0 0 10px}
+.aq-help{font-size:11px;color:#72808b;margin-bottom:8px}
+.aq-options{display:grid;gap:6px}
+.aq-option{display:flex;align-items:flex-start;gap:9px;border:1px solid #d7dfe6;border-radius:6px;padding:8px 10px;background:#fff;cursor:pointer;font-size:13px;line-height:1.35}
+.aq-option:hover{background:#f7fafc}.aq-option input{margin-top:2px}
+.aq-option.is-correct{border-color:#8fbea0;background:#eef7f1}.aq-option.is-wrong{border-color:#d5a5a5;background:#fbefef}
+.aq-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:11px}
+.aq-btn{border:1px solid #cfd9e1;background:#fff;color:#153f6b;border-radius:6px;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer}
+.aq-btn.primary{background:#153f6b;border-color:#153f6b;color:#fff}.aq-btn:disabled{opacity:.4;cursor:not-allowed}
+.aq-feedback{font-size:12px;line-height:1.4;color:#53616d;min-height:18px}.aq-feedback strong{color:#263746}
+.aq-result{text-align:center;padding:20px 10px 8px}.aq-result-score{font-size:44px;font-weight:700;color:#153f6b;line-height:1}.aq-result h3{margin:8px 0 5px;font-size:20px}.aq-result p{max-width:620px;margin:0 auto 12px;color:#5c6872}
+.aq-review{margin:12px auto 0;max-width:720px;text-align:left;border-top:1px solid #e0e6eb;padding-top:10px}
+.aq-review-row{font-size:12px;padding:6px 0;border-bottom:1px solid #edf0f3}.aq-review-row b{color:#153f6b}
+</style>
+
+
+<style>
+/* Module home */
+.home-nav{
+  padding:0 10px 7px;
+}
+.home-link{
+  width:100%;
+  border:0;
+  background:rgba(255,255,255,.055);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 11px;
+  border-radius:6px;
+  text-align:left;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:500;
+}
+.home-link:hover{background:rgba(255,255,255,.09)}
+.home-link.active{
+  background:rgba(255,255,255,.16);
+  box-shadow:inset 2px 0 0 rgba(255,255,255,.85);
+}
+.home-mark{
+  width:28px;height:28px;border-radius:6px;
+  display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.16);
+  color:rgba(255,255,255,.78);
+  font-size:11px;
+}
+.module-home{
+  max-width:1050px;
+  margin:0 auto;
+  padding:8px 8px 18px;
+}
+.home-breadcrumb{
+  color:var(--slide);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-weight:700;
+  margin-bottom:12px;
+}
+.module-home h1{
+  margin:0;
+  color:var(--slide);
+  font-size:38px;
+  line-height:1.08;
+  letter-spacing:-.03em;
+}
+.home-subtitle{
+  font-size:17px;
+  line-height:1.5;
+  color:#4d5964;
+  max-width:850px;
+  margin:12px 0 0;
+}
+.home-divider{
+  height:3px;
+  width:86px;
+  background:var(--slide);
+  border-radius:999px;
+  margin:20px 0 24px;
+}
+.home-grid{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:28px;
+  align-items:start;
+}
+.home-section{
+  padding:0;
+}
+.home-section h2{
+  margin:0 0 10px;
+  color:#263746;
+  font-size:20px;
+}
+.home-section p,
+.home-section li{
+  font-size:14px;
+  line-height:1.45;
+}
+.home-objectives{
+  margin:0;
+  padding-left:22px;
+}
+.home-objectives li{margin-bottom:5px}
+.lesson-overview{
+  display:grid;
+  gap:0;
+  border-top:1px solid #dfe6ec;
+}
+.lesson-overview-item{
+  display:grid;
+  grid-template-columns:32px 1fr;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid #e7ecf0;
+}
+.lesson-overview-item .num{
+  width:27px;height:27px;border-radius:50%;
+  display:grid;place-items:center;
+  background:#eaf1f6;color:var(--slide);
+  font-size:11px;font-weight:700;
+}
+.lesson-overview-item strong{
+  display:block;
+  font-size:13px;
+  color:#263746;
+  margin-bottom:2px;
+}
+.lesson-overview-item span{
+  display:block;
+  font-size:12px;
+  color:#6b7580;
+  line-height:1.35;
+}
+.home-meta{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:16px;
+}
+.home-meta span{
+  border:1px solid #d5dee6;
+  background:#f7fafc;
+  color:#53616d;
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:11px;
+}
+.start-lesson-btn{
+  margin-top:18px;
+  border:0;
+  border-radius:7px;
+  padding:10px 14px;
+  background:var(--slide);
+  color:#fff;
+  font-size:12px;
+  font-weight:650;
+  cursor:pointer;
+}
+.start-lesson-btn:hover{background:var(--slide2)}
+@media(max-width:950px){
+  .home-grid{grid-template-columns:1fr}
+}
+</style>
+
+
+<style id="modern-learning-portal-overrides">
+/* Modern learning portal redesign — LinkedIn Learning / Coursera inspired */
+:root{
+  --portal-accent:#2563eb;
+  --portal-accent-soft:#eff6ff;
+  --portal-accent-line:#bfdbfe;
+  --portal-text:#172033;
+  --portal-muted:#667085;
+  --portal-border:#e6e9ef;
+  --portal-bg:#f7f8fa;
+  --portal-panel:#ffffff;
+  --portal-nav:#ffffff;
+  --portal-hover:#f4f6f8;
+  --portal-shadow:0 8px 28px rgba(16,24,40,.07);
+}
+html{background:var(--portal-bg)}
+body{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--portal-bg);color:var(--portal-text)}
+.player{grid-template-columns:300px minmax(0,1fr);background:var(--portal-bg)}
+.sidebar{background:var(--portal-nav);color:var(--portal-text);border-right:1px solid var(--portal-border);box-shadow:none;min-height:100vh}
+.brand{padding:22px 22px 18px;border-bottom:1px solid var(--portal-border)}
+.brand strong{font-size:15px;font-weight:700;letter-spacing:-.01em;color:#111827}
+.brand small{margin-top:4px;font-size:11px;color:#8a94a6}
+.module{padding:18px 22px 12px}
+.eyebrow{font-size:10px;color:var(--portal-accent);font-weight:800;letter-spacing:.08em}
+.module h2{font-size:17px;line-height:1.35;color:#1d2939;font-weight:700;margin:7px 0 7px;letter-spacing:-.015em}
+.module p{font-size:12px;line-height:1.5;color:var(--portal-muted)}
+.progress{padding:4px 22px 16px;border-bottom:1px solid var(--portal-border)}
+.progress-meta{font-size:11px;color:#7a8494;margin-bottom:8px}
+.track{height:6px;background:#edf0f3}
+.track div{background:var(--portal-accent)}
+.home-nav{padding:12px 12px 4px}
+.home-link{color:#344054;background:transparent;padding:10px 10px;border-radius:8px;font-size:13px;font-weight:600;gap:10px}
+.home-link:hover{background:var(--portal-hover)}
+.home-link.active{background:var(--portal-accent-soft);color:var(--portal-accent);box-shadow:none}
+.home-mark{width:30px;height:30px;border-radius:7px;border:1px solid var(--portal-border);color:#667085;background:#fff}
+.home-link.active .home-mark{border-color:var(--portal-accent-line);color:var(--portal-accent);background:#fff}
+.lesson-nav{padding:7px 12px 20px;gap:4px}
+.lesson-group{border-radius:9px}
+.lesson-toggle{color:#344054;grid-template-columns:30px minmax(0,1fr) 16px;min-height:50px;padding:8px 10px;border-radius:8px}
+.lesson-toggle:hover{background:var(--portal-hover)}
+.lesson-group.open>.lesson-toggle{background:#f8fafc}
+.lesson-no{width:28px;height:28px;border-radius:7px;border:1px solid #e1e5ea;color:#697386;background:#fff;font-size:11px}
+.lesson-copy strong{font-size:13px;color:#344054;font-weight:650}
+.lesson-copy small{color:#98a2b3;font-size:10.5px}
+.caret{color:#98a2b3}
+.slide-list{padding:2px 8px 7px 48px;gap:1px}
+.slide-link{color:#667085;padding:7px 9px;border-radius:6px;font-size:12px}
+.slide-link:hover{background:var(--portal-hover);color:#344054}
+.slide-link.active{background:var(--portal-accent-soft);color:var(--portal-accent);font-weight:650}
+.slide-link.active:before{left:-10px;background:var(--portal-accent);width:2px}
+.sidebar-footer{padding:14px 16px 18px;border-top:1px solid var(--portal-border)}
+.sidebar-footer button{background:#fff;color:#475467;border:1px solid var(--portal-border);border-radius:8px;padding:10px 12px}
+.main{background:var(--portal-bg)}
+.topbar{height:68px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--portal-border);padding:0 28px;position:sticky;top:0;z-index:20;backdrop-filter:blur(10px)}
+.topbar span{color:#8a94a6;font-size:10px;font-weight:750;letter-spacing:.07em}
+.topbar strong{font-size:15px;color:#1f2937;font-weight:650;margin-top:2px}
+.topbar .right,.right{height:34px;min-width:auto;padding:0 12px;border-radius:7px;border:1px solid var(--portal-accent-line);background:var(--portal-accent-soft);color:var(--portal-accent);font-size:11px;font-weight:750}
+.fullscreen-btn{height:34px;border-radius:7px;border-color:var(--portal-border);color:#475467;padding:0 10px;background:#fff}
+.fullscreen-btn:hover{background:#f8fafc;border-color:#d8dde5;transform:none}
+.workspace{padding:30px 34px 24px;align-items:flex-start;min-height:calc(100vh - 68px - 62px)}
+.slide{width:min(1120px,100%);aspect-ratio:auto;min-height:650px;background:var(--portal-panel);border:1px solid var(--portal-border);border-radius:14px;box-shadow:var(--portal-shadow);padding:48px 56px 54px;overflow:auto}
+.kicker{color:var(--portal-accent);font-size:10px;letter-spacing:.08em;font-weight:800}
+.slide h1{font-size:34px;color:#182230;line-height:1.12;letter-spacing:-.03em;margin:8px 0 12px}
+.rule{height:1px;background:var(--portal-border);margin-bottom:24px}
+.lead{font-size:18px;line-height:1.55;color:#475467;max-width:900px}
+.section-title{color:#1d2939}
+p{color:#475467;line-height:1.6}
+li{color:#475467;line-height:1.55}
+.callout{border-left:3px solid var(--portal-accent);background:var(--portal-accent-soft);padding:12px 14px;border-radius:0 8px 8px 0}
+.panel,.type-card,.ogl-shell,.mock-app{border-color:var(--portal-border);box-shadow:0 1px 2px rgba(16,24,40,.03)}
+.clean-table th{color:#344054;border-bottom-color:#dfe3e8;background:#fafbfc}
+.clean-table td{border-bottom-color:#eceff3}
+.workflow span,.step-chip{background:#f2f4f7;color:#475467}
+.summary-list span,.lesson-overview-item .num{background:var(--portal-accent-soft);color:var(--portal-accent)}
+.module-home{max-width:980px;padding:6px 4px 24px}
+.home-breadcrumb{color:#667085;text-transform:none;letter-spacing:0;font-weight:600;font-size:12px}
+.home-breadcrumb .module-chip{background:var(--portal-accent-soft);color:var(--portal-accent);border-color:var(--portal-accent-line);border-radius:6px}
+.module-home h1{color:#182230;font-size:40px;letter-spacing:-.035em}
+.home-subtitle{color:#667085;font-size:17px;line-height:1.55}
+.home-divider{height:1px;width:100%;background:var(--portal-border);margin:22px 0 26px}
+.home-grid{gap:40px}
+.home-section h2{font-size:18px;color:#1d2939}
+.home-meta span{border-color:var(--portal-border);background:#fff;color:#667085;border-radius:6px}
+.start-lesson-btn{background:var(--portal-accent);border-radius:8px;padding:11px 16px;font-size:13px;box-shadow:0 1px 2px rgba(16,24,40,.1)}
+.start-lesson-btn:hover{filter:brightness(.95);background:var(--portal-accent)}
+.lesson-title-slide{min-height:540px;padding:50px 54px}
+.lesson-title-inner{grid-template-columns:150px minmax(0,640px);gap:28px}
+.lesson-title-visual{color:var(--portal-accent);width:145px;height:145px}
+.lesson-badge{min-width:auto;height:32px;padding:0 12px;border-radius:6px;background:var(--portal-accent);font-size:12px}
+.lesson-title-text{font-size:46px;color:#182230;font-weight:720;letter-spacing:-.04em}
+.lesson-title-text:after{background:var(--portal-accent);height:3px;width:54px}
+.slide:has(.lesson-title-slide):before{width:0;background:transparent}
+.slide-footer{left:56px;right:56px;color:#98a2b3}
+.slide-footer strong{color:#667085}
+.bottom{height:62px;padding:10px 28px;background:#fff;border-top:1px solid var(--portal-border);position:sticky;bottom:0;z-index:18}
+.navbtn{border:1px solid var(--portal-border);color:#475467;background:#fff;border-radius:8px;padding:9px 14px;font-size:12px}
+.navbtn:hover:not(:disabled){background:#f8fafc}
+.navbtn.primary{background:var(--portal-accent);border-color:var(--portal-accent);color:#fff}
+.counter{color:#98a2b3;font-size:11px}
+/* splash */
+.module-splash{background:#f4f6f8;color:#172033}
+.splash-panel{width:min(980px,88vw);min-height:540px;grid-template-columns:1.15fr .85fr;border:1px solid #e1e5ea;border-radius:18px;background:#fff;box-shadow:0 28px 70px rgba(16,24,40,.14);backdrop-filter:none}
+.splash-copy{padding:58px 56px 52px}
+.splash-kicker{color:var(--portal-accent);letter-spacing:.1em}
+.splash-copy h1{color:#172033;font-size:46px}
+.splash-copy p{color:#667085;font-size:17px;line-height:1.6}
+.splash-meta span{border-color:#e2e7ed;background:#f8fafc;color:#667085;border-radius:6px}
+.start-module-btn{background:var(--portal-accent);border-radius:8px;box-shadow:0 4px 12px rgba(16,24,40,.12)}
+.start-module-btn:hover{background:var(--portal-accent);filter:brightness(.95)}
+.splash-visual{background:linear-gradient(145deg,var(--portal-accent-soft),#fff);border-left:1px solid var(--portal-border)}
+.splash-orbit{border-color:var(--portal-accent-line);border-radius:34px;animation:none}
+.splash-orbit:before,.splash-orbit:after{border-color:var(--portal-accent-line);border-radius:28px}
+.splash-core{background:var(--portal-accent);color:#fff;border-radius:24px;box-shadow:0 14px 28px rgba(16,24,40,.15)}
+.splash-dot{background:var(--portal-accent);box-shadow:0 0 0 6px rgba(37,99,235,.08)}
+.splash-visual-label{color:#667085}
+@media(max-width:1100px){.player{grid-template-columns:270px 1fr}.workspace{padding:22px}.slide{padding:40px 38px}.home-grid{grid-template-columns:1fr;gap:22px}}
+@media(max-width:820px){.player{display:block}.sidebar{min-height:auto;border-right:0;border-bottom:1px solid var(--portal-border)}.module,.progress,.lesson-nav,.sidebar-footer{display:none}.brand{padding:14px 18px}.home-nav{padding:8px 12px}.workspace{padding:14px}.slide{min-height:0;border-radius:10px;padding:30px 24px}.topbar{padding:0 16px}.bottom{padding:10px 16px}.splash-panel{grid-template-columns:1fr}.splash-visual{min-height:210px;border-left:0;border-top:1px solid var(--portal-border)}}
+</style>
+
+</head>
+<body>
+
+<div class="module-splash" id="moduleSplash" aria-modal="true" role="dialog" aria-labelledby="splashTitle">
+  <div class="splash-panel">
+    <div class="splash-copy">
+      <div class="splash-kicker">Oracle Guided Learning Developer · Module 1</div>
+      <h1 id="splashTitle">Welcome to Web Foundations and OGL Targeting</h1>
+      <p>
+        Build the technical foundation needed to inspect web interfaces, write and evaluate CSS selectors,
+        apply those selectors in Oracle Guided Learning, and troubleshoot targeting issues with confidence.
+      </p>
+      <div class="splash-meta">
+        <span>8 lessons</span>
+        <span>HTML + CSS</span>
+        <span>Selectors</span>
+        <span>OGL Targeting</span>
+      </div>
+      <button class="start-module-btn" id="startModuleBtn" type="button">Start Module →</button>
+    </div>
+    <div class="splash-visual" aria-hidden="true">
+      <div class="splash-orbit">
+        <span class="splash-dot one"></span>
+        <span class="splash-dot two"></span>
+        <span class="splash-dot three"></span>
+        <div class="splash-core">OGL</div>
+      </div>
+      <div class="splash-visual-label">Inspect · Target · Test · Troubleshoot</div>
+    </div>
+  </div>
+</div>
+
+<div class="player">
+<aside class="sidebar">
+  <div class="brand"><strong>Oracle Guided Learning Developer</strong><small>SeanDigital Learning</small></div>
+  <div class="module"><div class="eyebrow">Module 1</div><h2>Web Foundations and OGL Targeting</h2><p>Build the coding and selector skills required for reliable OGL guide development.</p></div>
+  <div class="progress"><div class="progress-meta"><span>Module progress</span><span id="progressText"></span></div><div class="track"><div id="progressBar"></div></div></div>
+  <div class="home-nav">
+  <button class="home-link active" id="homeLink" type="button">
+    <span class="home-mark" aria-hidden="true">
+  <svg viewBox="0 0 24 24" width="15" height="15">
+    <path d="M3 11.5 12 4l9 7.5M5.5 10.5V20h5v-5h3v5h5v-9.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</span>
+    <span>Module Info</span>
+  </button>
+</div>
+<nav class="lesson-nav" id="lessonNav"></nav>
+  <div class="sidebar-footer"><button>← Back to Course</button></div>
+</aside>
+<main class="main">
+<header class="topbar"><div><span id="topKicker"></span><strong id="topTitle"></strong></div><div class="topbar-actions">
+  <div class="right">Module 1</div>
+  <button class="fullscreen-btn" id="fullscreenBtn" type="button" aria-label="Enter full screen">
+    <svg class="fullscreen-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span id="fullscreenLabel">Full Screen</span>
+  </button>
+</div></header>
+<section class="workspace"><article class="slide" id="stage"></article></section>
+<footer class="bottom"><button class="navbtn" id="prevBtn">← Previous</button><div class="counter" id="counter"></div><button class="navbtn primary" id="nextBtn">Next →</button></footer>
+</main>
+</div>
+<script>
+const lessons = [{"title": "HTML and CSS", "slides": [{"title": "HTML and CSS", "nav": "HTML and CSS", "kicker": "Lesson 1", "body": "\n    <div class=\"lesson-title-slide\">\n      <div class=\"lesson-title-visual\"><svg viewBox=\"0 0 180 150\" aria-hidden=\"true\">\n      <rect x=\"28\" y=\"26\" width=\"124\" height=\"82\" rx=\"8\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\"/>\n      <line x1=\"28\" y1=\"45\" x2=\"152\" y2=\"45\" stroke=\"currentColor\" stroke-width=\"6\"/>\n      <circle cx=\"43\" cy=\"36\" r=\"3.5\" fill=\"currentColor\"/>\n      <circle cx=\"55\" cy=\"36\" r=\"3.5\" fill=\"currentColor\"/>\n      <circle cx=\"67\" cy=\"36\" r=\"3.5\" fill=\"currentColor\"/>\n      <path d=\"M58 69l-16 12 16 12M98 69l16 12-16 12M84 62L70 101\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n      <line x1=\"66\" y1=\"123\" x2=\"114\" y2=\"123\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    </svg></div>\n      <div class=\"lesson-title-copy\">\n        <div class=\"lesson-badge\">Lesson 1</div>\n        <div class=\"lesson-title-text\">HTML and CSS</div>\n      </div>\n    </div>\n    "}, {"title": "Objectives", "nav": "Objectives", "kicker": "Introduction", "body": "\n    <h2 class=\"section-title\">By the end of this lesson, learners will be able to:</h2>\n    <ul>\n      <li><strong>Identify</strong> common HTML elements and attributes used in enterprise web interfaces.</li>\n      <li><strong>Describe</strong> parent, child, descendant, and sibling relationships in a DOM structure.</li>\n      <li><strong>Differentiate</strong> between HTML structure and CSS presentation.</li>\n      <li><strong>Inspect</strong> a webpage using browser Developer Tools and record relevant targeting information for at least <strong>4 of 5</strong> specified interface elements.</li>\n    </ul>\n    "}, {"title": "Introduction", "nav": "Introduction", "kicker": "Introduction", "body": "\n    <p class=\"lead\">You are not learning frontend development so you can redesign the application. You are learning enough web development to understand what OGL is attaching to.</p>\n    <p>When you point to a button, field, tab, menu item, row, or modal in OGL, the browser represents that visible control as HTML in the Document Object Model (DOM). The more confidently you can inspect that structure, the more confidently you can build and repair guide targets.</p>\n    <div class=\"callout\"><strong>Guide Developer mindset:</strong> “What the user sees” and “what the browser contains” are related, but they are not the same thing. OGL targeting works with the browser’s representation of the page.</div>\n    "}, {"title": "Topics", "nav": "Topics", "kicker": "Introduction", "body": "\n    <div class=\"topic-list\">\n      <div><strong>1. HTML elements</strong><span>Tags, content, nesting, and common interactive controls.</span></div>\n      <div><strong>2. HTML attributes</strong><span>IDs, classes, names, roles, ARIA, and data attributes.</span></div>\n      <div><strong>3. The DOM</strong><span>Parent, child, descendant, and sibling relationships.</span></div>\n      <div><strong>4. CSS basics</strong><span>How CSS rules use selectors to find elements.</span></div>\n      <div><strong>5. DevTools</strong><span>Inspecting a live page and reading the underlying HTML.</span></div>\n    </div>\n    "}, {"title": "Reading an HTML Element", "nav": "Reading an HTML Element", "kicker": "Lesson Proper", "body": "\n    <div class=\"two-col\">\n      <div>\n        <h2 class=\"section-title\">Start with the element itself</h2>\n        <p>An HTML element usually consists of an opening tag, content, and a closing tag. Some form controls are represented differently, but the core idea is the same: the browser has a node that represents the control.</p>\n        <ul>\n          <li><code>&lt;button&gt;</code> identifies the type of element.</li>\n          <li><code>Save</code> is the visible content.</li>\n          <li>Attributes provide additional information about the element.</li>\n        </ul>\n      </div>\n      <div>\n        <pre class=\"code\"><code>&lt;button id=\"saveCustomer\"&gt;\n  Save\n&lt;/button&gt;</code></pre>\n        <p class=\"micro\"><strong>Element:</strong> button<br><strong>ID:</strong> saveCustomer<br><strong>Visible text:</strong> Save</p>\n      </div>\n    </div>\n    "}, {"title": "Attributes Guide Developers Should Notice", "nav": "Important HTML Attributes", "kicker": "Lesson Proper", "body": "\n    <p class=\"lead small\">Attributes often provide the information that later becomes useful for targeting.</p>\n    <table class=\"clean-table\">\n      <tr><th>Attribute</th><th>Example</th><th>Why it matters</th></tr>\n      <tr><td><code>id</code></td><td><code>id=\"saveCustomer\"</code></td><td>Can uniquely identify an element, but some applications generate IDs dynamically.</td></tr>\n      <tr><td><code>class</code></td><td><code>class=\"btn primary\"</code></td><td>Useful for grouping elements, but classes are often shared by many controls.</td></tr>\n      <tr><td><code>name</code></td><td><code>name=\"customerName\"</code></td><td>Often meaningful on form fields.</td></tr>\n      <tr><td><code>role</code></td><td><code>role=\"dialog\"</code></td><td>Can describe the semantic role of a custom UI component.</td></tr>\n      <tr><td><code>aria-*</code></td><td><code>aria-label=\"Save customer\"</code></td><td>May expose useful semantic labels for accessible controls.</td></tr>\n      <tr><td><code>data-*</code></td><td><code>data-action=\"save\"</code></td><td>Application-specific attributes can be highly useful when stable and meaningful.</td></tr>\n    </table>\n    "}, {"title": "Understanding the DOM", "nav": "The DOM", "kicker": "Lesson Proper", "body": "\n    <div class=\"two-col\">\n      <div>\n        <h2 class=\"section-title\">The DOM is a tree of elements</h2>\n        <p>The browser turns HTML into an object structure called the Document Object Model. Elements exist in relationships to one another.</p>\n        <ul>\n          <li><strong>Parent:</strong> immediately contains another element.</li>\n          <li><strong>Child:</strong> is immediately inside another element.</li>\n          <li><strong>Descendant:</strong> appears anywhere inside an ancestor.</li>\n          <li><strong>Sibling:</strong> shares the same parent.</li>\n        </ul>\n      </div>\n      <div>\n        <pre class=\"code\"><code>&lt;section id=\"customer-panel\"&gt;\n  &lt;div class=\"actions\"&gt;\n    &lt;button&gt;Cancel&lt;/button&gt;\n    &lt;button&gt;Save&lt;/button&gt;\n  &lt;/div&gt;\n&lt;/section&gt;</code></pre>\n        <p class=\"micro\">The <code>section</code> is an ancestor of both buttons. The two buttons are siblings.</p>\n      </div>\n    </div>\n    "}, {"title": "What CSS Adds", "nav": "What CSS Adds", "kicker": "Lesson Proper", "body": "\n    <p class=\"lead small\">HTML describes structure. CSS controls presentation by applying rules to elements that match a selector.</p>\n    <div class=\"two-col\">\n      <div>\n        <pre class=\"code\"><code>button.primary {\n  background: #153f6b;\n  color: white;\n}</code></pre>\n      </div>\n      <div>\n        <h2 class=\"section-title\">The key connection for Guide Developers</h2>\n        <p>The same selector syntax used by CSS to select elements can also be used by JavaScript—and by OGL targeting workflows—to identify elements in the page.</p>\n        <p>You do not need to master visual CSS design. You do need to understand the selectors that appear before the braces.</p>\n      </div>\n    </div>\n    "}, {"title": "Selector Preview", "nav": "Selector Preview", "kicker": "Lesson Proper", "body": "\n    <p>This lesson only introduces selector forms. Lesson 2 will unpack them in depth.</p>\n    <table class=\"clean-table\">\n      <tr><th>Selector</th><th>Meaning</th></tr>\n      <tr><td><code>button</code></td><td>All button elements.</td></tr>\n      <tr><td><code>#saveCustomer</code></td><td>The element with ID <code>saveCustomer</code>.</td></tr>\n      <tr><td><code>.primary</code></td><td>Any element with class <code>primary</code>.</td></tr>\n      <tr><td><code>[data-action=\"save\"]</code></td><td>Any element whose <code>data-action</code> value is <code>save</code>.</td></tr>\n      <tr><td><code>#customer-panel button</code></td><td>Any button that is a descendant of the customer panel.</td></tr>\n    </table>\n    <div class=\"callout\"><strong>Do not assume “ID = best.”</strong> A selector must be evaluated in the context of the application. Lesson 2 focuses heavily on this judgment.</div>\n    "}, {"title": "Inspecting a Live Page", "nav": "Using Browser Developer Tools", "kicker": "Lesson Proper", "body": "\n    <div class=\"two-col\">\n      <div>\n        <h2 class=\"section-title\">A practical inspection workflow</h2>\n        <ol class=\"compact-ol\">\n          <li>Right-click the control and choose <strong>Inspect</strong>.</li>\n          <li>Confirm that DevTools highlights the element you intended.</li>\n          <li>Read the element type, attributes, and visible text.</li>\n          <li>Look one or two levels up the DOM for meaningful parent context.</li>\n          <li>Record candidate attributes that appear stable and descriptive.</li>\n        </ol>\n      </div>\n      <div>\n        <pre class=\"code\"><code>&lt;button\n  class=\"oj-button primary\"\n  data-action=\"save\"\n  aria-label=\"Save customer\"&gt;\n  Save\n&lt;/button&gt;</code></pre>\n        <p class=\"micro\">Candidate information: element type, classes, <code>data-action</code>, ARIA label, and parent context.</p>\n      </div>\n    </div>\n    "}, {"title": "Summary", "nav": "Summary", "kicker": "Summary", "body": "\n    <div class=\"summary-list\">\n      <div><span>1</span><p>Web applications are represented as HTML elements in the DOM.</p></div>\n      <div><span>2</span><p>Attributes such as <code>id</code>, <code>class</code>, <code>role</code>, <code>aria-*</code>, and <code>data-*</code> help describe elements.</p></div>\n      <div><span>3</span><p>DOM relationships provide context when similar controls appear in different parts of a page.</p></div>\n      <div><span>4</span><p>CSS selectors are patterns used to match elements; Guide Developers need to read and test them even if they are not frontend designers.</p></div>\n      <div><span>5</span><p>DevTools is the primary place to inspect the page and gather targeting information.</p></div>\n    </div>\n    "}, {"title": "HTML and CSS Inspection Challenge", "nav": "Activity", "kicker": "Activity", "body": "\n            <div class=\"activity-intro\">\n              <p class=\"lead small\">Complete all six items. Questions combine code reading, selector analysis, and guide-development judgment.</p>\n              <div class=\"activity-standard\"><strong>Passing score:</strong> 5 of 6 (83%)</div>\n            </div>\n            <div class=\"activity-player\" data-activity=\"l1\"></div>\n            "}]}, {"title": "CSS Selectors for OGL Targeting", "slides": [{"title": "CSS Selectors for OGL Targeting", "nav": "CSS Selectors for OGL Targeting", "kicker": "Lesson 2", "body": "\n    <div class=\"lesson-title-slide\">\n      <div class=\"lesson-title-visual\"><svg viewBox=\"0 0 180 150\" aria-hidden=\"true\">\n      <rect x=\"24\" y=\"24\" width=\"132\" height=\"92\" rx=\"9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\"/>\n      <rect x=\"43\" y=\"47\" width=\"94\" height=\"48\" rx=\"5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\"/>\n      <path d=\"M55 60h26M55 72h45M55 84h33\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n      <circle cx=\"121\" cy=\"70\" r=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\"/>\n      <line x1=\"134\" y1=\"83\" x2=\"151\" y2=\"100\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n      <path d=\"M68 119v10M112 119v10M56 129h68\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    </svg></div>\n      <div class=\"lesson-title-copy\">\n        <div class=\"lesson-badge\">Lesson 2</div>\n        <div class=\"lesson-title-text\">CSS Selectors for OGL Targeting</div>\n      </div>\n    </div>\n    "}, {"title": "Objectives", "nav": "Objectives", "kicker": "Introduction", "body": "\n<h2 class=\"section-title\">By the end of this lesson, learners will be able to:</h2>\n<ul>\n<li><strong>Construct</strong> valid type, ID, class, attribute, compound, descendant, and child selectors.</li>\n<li><strong>Test</strong> candidate selectors using <code>querySelector()</code> and <code>querySelectorAll()</code>.</li>\n<li><strong>Compare</strong> selector candidates for uniqueness, stability, specificity, and maintainability.</li>\n<li><strong>Produce</strong> a reliable selector for at least <strong>4 of 5</strong> sample OGL targets.</li>\n</ul>\n"}, {"title": "Introduction", "nav": "Introduction", "kicker": "Introduction", "body": "\n<p class=\"lead\">A selector is not “good” simply because it returns an element.</p>\n<p>For OGL work, a selector has to locate the intended element in the correct context and continue doing so across realistic states of the application. This lesson therefore treats selector writing as an engineering judgment, not a syntax exercise.</p>\n<div class=\"callout\"><strong>Question to keep asking:</strong> If this selector works on my screen right now, what evidence do I have that it is the right selector for the guide?</div>\n"}, {"title": "Topics", "nav": "Topics", "kicker": "Introduction", "body": "\n<div class=\"topic-list\">\n<div><strong>1. Basic selector forms</strong><span>Type, ID, class, and attribute.</span></div>\n<div><strong>2. Combining selectors</strong><span>Compound selectors and multiple attributes.</span></div>\n<div><strong>3. DOM relationships</strong><span>Descendant, child, and sibling context.</span></div>\n<div><strong>4. Testing</strong><span><code>querySelector()</code>, <code>querySelectorAll()</code>, and match counts.</span></div>\n<div><strong>5. Reliability</strong><span>Uniqueness, stability, and maintainability.</span></div>\n</div>\n"}, {"title": "Type, ID, and Class Selectors", "nav": "Type, ID, and Class Selectors", "kicker": "Lesson Proper", "body": "\n<div class=\"two-col\"><div>\n<pre class=\"code\"><code>&lt;button\n  id=\"saveCustomer\"\n  class=\"oj-button primary\"&gt;\n  Save\n&lt;/button&gt;</code></pre>\n</div><div>\n<table class=\"clean-table\"><tr><th>Selector</th><th>Match</th><th>Risk</th></tr>\n<tr><td><code>button</code></td><td>Every button</td><td>Usually too broad.</td></tr>\n<tr><td><code>#saveCustomer</code></td><td>ID match</td><td>Strong only if the ID is stable.</td></tr>\n<tr><td><code>.primary</code></td><td>Every element with class primary</td><td>Often reused across a page.</td></tr>\n</table>\n</div></div>\n<div class=\"callout\">The selector's syntax tells you <em>how</em> it matches. It does not tell you whether the matched attribute is stable or unique in the application.</div>\n"}, {"title": "Attribute Selectors", "nav": "Attribute Selectors", "kicker": "Lesson Proper", "body": "\n<p>Attribute selectors can match elements based on the presence or value of an attribute.</p>\n<div class=\"two-col\">\n<pre class=\"code\"><code>[data-action]\n[data-action=\"save\"]\nbutton[data-action=\"save\"]\n[aria-label=\"Save customer\"]\ninput[name=\"invoiceNumber\"]</code></pre>\n<div>\n<h2 class=\"section-title\">Why they are useful</h2>\n<ul><li>They can express semantic application meaning.</li><li>They can combine the element type with a meaningful attribute.</li><li>They may be more readable than generated class chains.</li></ul>\n<p><strong>Caution:</strong> an attribute is only useful when its value is stable for the intended workflow.</p>\n</div></div>\n"}, {"title": "Compound Selectors", "nav": "Compound Selectors", "kicker": "Lesson Proper", "body": "\n<p class=\"lead small\">A compound selector combines simple selectors that must all match the same element.</p>\n<pre class=\"code\"><code>button.primary\nbutton.primary[data-action=\"save\"]\ninput.required[name=\"invoiceNumber\"]</code></pre>\n<div class=\"compare\">\n<div><strong>Too broad</strong><code>.primary</code><span>May match buttons, links, or other components.</span></div>\n<div><strong>More explicit</strong><code>button.primary</code><span>Restricts the match to buttons.</span></div>\n<div><strong>More semantic</strong><code>button[data-action=\"save\"]</code><span>Uses the application's action attribute.</span></div>\n</div>\n"}, {"title": "Descendant and Child Selectors", "nav": "Descendant and Child Selectors", "kicker": "Lesson Proper", "body": "\n<div class=\"two-col\">\n<div><pre class=\"code\"><code>&lt;section id=\"billing\"&gt;\n  &lt;div class=\"actions\"&gt;\n    &lt;button class=\"edit\"&gt;Edit&lt;/button&gt;\n  &lt;/div&gt;\n&lt;/section&gt;</code></pre></div>\n<div>\n<p><code>#billing .edit</code> matches an <code>.edit</code> element anywhere inside the billing section.</p>\n<p><code>#billing &gt; .edit</code> would only match an <code>.edit</code> element that is an immediate child of the billing section.</p>\n<div class=\"callout\">Use DOM relationships when the target itself is not unique but lives inside a meaningful, stable container.</div>\n</div></div>\n"}, {"title": "Sibling and Positional Selectors", "nav": "Sibling and Positional Selectors", "kicker": "Lesson Proper", "body": "\n<p>CSS also supports sibling relationships and positional pseudo-classes. These can be useful, but Guide Developers should be cautious when the selector depends heavily on position.</p>\n<pre class=\"code\"><code>label + input\n.action-bar button:first-child\n.table-row:nth-child(4) button.edit</code></pre>\n<ul>\n<li><code>+</code> means the next sibling.</li>\n<li><code>:first-child</code> selects based on position among siblings.</li>\n<li><code>:nth-child()</code> selects based on a specific position.</li>\n</ul>\n<div class=\"callout warn\"><strong>Maintenance risk:</strong> positional selectors can break when a new item is inserted or the layout changes. Prefer semantic attributes or stable context when available.</div>\n"}, {"title": "Testing Selectors in DevTools", "nav": "Testing Selectors", "kicker": "Lesson Proper", "body": "\n<div class=\"two-col\">\n<div>\n<h2 class=\"section-title\">Check the first match</h2>\n<pre class=\"code\"><code>document.querySelector(\n  '[data-action=\"save\"]'\n)</code></pre>\n<p><code>querySelector()</code> returns the first matching element.</p>\n</div>\n<div>\n<h2 class=\"section-title\">Check all matches</h2>\n<pre class=\"code\"><code>document.querySelectorAll(\n  '[data-action=\"save\"]'\n).length</code></pre>\n<p><code>querySelectorAll()</code> returns all matching elements. Match count is critical when evaluating uniqueness.</p>\n</div></div>\n"}, {"title": "Uniqueness Is Not Stability", "nav": "Uniqueness Is Not Stability", "kicker": "Lesson Proper", "body": "\n<div class=\"two-col\">\n<div>\n<h2 class=\"section-title\">Unique right now</h2>\n<pre class=\"code\"><code>&lt;button id=\"btn_837261\"&gt;Save&lt;/button&gt;\n\n#btn_837261\n// 1 match</code></pre>\n</div>\n<div>\n<h2 class=\"section-title\">After refresh</h2>\n<pre class=\"code\"><code>&lt;button id=\"btn_194830\"&gt;Save&lt;/button&gt;\n\n#btn_837261\n// 0 matches</code></pre>\n</div></div>\n<p>A selector can be unique and still be fragile. Generated IDs, generated classes, and layout-dependent selectors deserve additional scrutiny.</p>\n"}, {"title": "Stable Is Not Unique", "nav": "Stable Is Not Unique", "kicker": "Lesson Proper", "body": "\n<pre class=\"code\"><code>&lt;button class=\"edit-button\"&gt;Edit&lt;/button&gt;\n&lt;button class=\"edit-button\"&gt;Edit&lt;/button&gt;\n&lt;button class=\"edit-button\"&gt;Edit&lt;/button&gt;\n\ndocument.querySelectorAll('.edit-button').length\n// 3</code></pre>\n<p>The class may be stable across releases, but it does not distinguish the specific Edit button the guide needs.</p>\n<div class=\"callout\"><strong>Reliable targeting usually requires both:</strong> a stable basis for the selector and enough context to identify the intended instance.</div>\n"}, {"title": "Worked Selector Analysis", "nav": "Worked Selector Analysis", "kicker": "Lesson Proper", "body": "\n<pre class=\"code\"><code>&lt;section data-section=\"customer\"&gt;\n  &lt;button class=\"btn secondary\" data-action=\"cancel\"&gt;Cancel&lt;/button&gt;\n  &lt;button class=\"btn primary\" data-action=\"save\"&gt;Save&lt;/button&gt;\n&lt;/section&gt;\n\n&lt;section data-section=\"vendor\"&gt;\n  &lt;button class=\"btn primary\" data-action=\"save\"&gt;Save&lt;/button&gt;\n&lt;/section&gt;</code></pre>\n<table class=\"clean-table\">\n<tr><th>Candidate</th><th>Evaluation</th></tr>\n<tr><td><code>.primary</code></td><td>Stable-looking but matches both Save buttons.</td></tr>\n<tr><td><code>[data-action=\"save\"]</code></td><td>Semantic but still matches both Save buttons.</td></tr>\n<tr><td><code>[data-section=\"customer\"] [data-action=\"save\"]</code></td><td>Uses meaningful context to identify the customer Save control.</td></tr>\n</table>\n"}, {"title": "Selector Quality Checklist", "nav": "Selector Quality Checklist", "kicker": "Lesson Proper", "body": "\n<div class=\"quality-grid\">\n<div><strong>Correct</strong><span>Does it identify the element the user is actually expected to interact with?</span></div>\n<div><strong>Unique enough</strong><span>Does it avoid unintended matches in the current interface state?</span></div>\n<div><strong>Stable</strong><span>Does it avoid generated or transient values where possible?</span></div>\n<div><strong>Contextual</strong><span>Does it distinguish repeated controls using meaningful structure?</span></div>\n<div><strong>Maintainable</strong><span>Can another developer understand and repair it later?</span></div>\n</div>\n"}, {"title": "Summary", "nav": "Summary", "kicker": "Summary", "body": "\n<div class=\"summary-list\">\n<div><span>1</span><p>Selectors can match by type, ID, class, attributes, and DOM relationships.</p></div>\n<div><span>2</span><p><code>querySelectorAll()</code> helps you verify how many elements a candidate selector matches.</p></div>\n<div><span>3</span><p>Unique does not automatically mean stable, and stable does not automatically mean unique.</p></div>\n<div><span>4</span><p>Contextual selectors are often necessary in enterprise interfaces with repeated controls.</p></div>\n<div><span>5</span><p>Selector quality is a judgment about correctness, uniqueness, stability, context, and maintainability.</p></div>\n</div>\n"}, {"title": "Selector Construction Challenge", "nav": "Activity", "kicker": "Activity", "body": "\n            <div class=\"activity-intro\">\n              <p class=\"lead small\">Complete all six items. Questions combine code reading, selector analysis, and guide-development judgment.</p>\n              <div class=\"activity-standard\"><strong>Passing score:</strong> 5 of 6 (83%)</div>\n            </div>\n            <div class=\"activity-player\" data-activity=\"l2\"></div>\n            "}]}, {"title": "Applying Selectors in Oracle Guided Learning", "slides": [{"title": "Applying Selectors in Oracle Guided Learning", "nav": "Applying Selectors in Oracle Guided Learning", "kicker": "Lesson 3", "body": "\n    <div class=\"lesson-title-slide\">\n      <div class=\"lesson-title-visual\"><svg viewBox=\"0 0 180 150\" aria-hidden=\"true\">\n      <rect x=\"26\" y=\"25\" width=\"128\" height=\"90\" rx=\"8\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\"/>\n      <rect x=\"42\" y=\"43\" width=\"76\" height=\"12\" rx=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\"/>\n      <rect x=\"42\" y=\"67\" width=\"40\" height=\"28\" rx=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\"/>\n      <rect x=\"93\" y=\"67\" width=\"39\" height=\"28\" rx=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\"/>\n      <path d=\"M118 87l20 18 3-13 13-3-36-14z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linejoin=\"round\"/>\n    </svg></div>\n      <div class=\"lesson-title-copy\">\n        <div class=\"lesson-badge\">Lesson 3</div>\n        <div class=\"lesson-title-text\">Applying Selectors in Oracle Guided Learning</div>\n      </div>\n    </div>\n    "}, {"title": "Objectives", "nav": "Objectives", "kicker": "Introduction", "body": "\n<h2 class=\"section-title\">By the end of this lesson, learners will be able to:</h2>\n<ul><li><strong>Differentiate</strong> between an OGL target and the selector used to identify it.</li><li><strong>Evaluate</strong> whether a guide step points to the correct interface element.</li><li><strong>Use</strong> selector information when configuring OGL step conditions and target settings.</li><li><strong>Diagnose</strong> at least <strong>4 of 5</strong> cases where a valid selector produces an incorrect OGL experience.</li></ul>\n"}, {"title": "Introduction", "nav": "Introduction", "kicker": "Introduction", "body": "\n<p class=\"lead\">A technically valid selector can still produce a bad guide.</p>\n<p>You can choose the wrong element with a perfect selector, or the correct element with a weak selector. OGL development requires both instructional judgment and technical targeting judgment.</p>\n"}, {"title": "Topics", "nav": "Topics", "kicker": "Introduction", "body": "\n<div class=\"topic-list\"><div><strong>1. Target vs selector</strong><span>Separate the conceptual target from the code that identifies it.</span></div><div><strong>2. Target selection in OGL</strong><span>How guide steps become associated with interface elements.</span></div><div><strong>3. Tip placement</strong><span>How visual positioning relates to the target.</span></div><div><strong>4. Conditions</strong><span>Using element and visible-element checks.</span></div><div><strong>5. OGL-specific failure patterns</strong><span>Multiple matches, reappearing elements, and wrong-context targets.</span></div></div>\n"}, {"title": "Target vs Selector", "nav": "Target vs Selector", "kicker": "Lesson Proper", "body": "\n<div class=\"two-col\"><div><h2 class=\"section-title\">Target</h2><p>The interface element the guidance should belong to.</p><pre class=\"code\"><code>Save button in the Customer panel</code></pre></div><div><h2 class=\"section-title\">Selector</h2><p>The pattern OGL uses to identify that target.</p><pre class=\"code\"><code>[data-section=\"customer\"]\n[data-action=\"save\"]</code></pre></div></div>\n<div class=\"callout\"><strong>Keep the distinction clear:</strong> the target is the design decision; the selector is the identification mechanism.</div>\n"}, {"title": "Selecting a Target in the OGL Editor", "nav": "Selecting a Target in OGL", "kicker": "Lesson Proper", "body": "\n<p>When creating or editing a guide step, the developer selects the desired interface element. Oracle's editor stores selector information for the target and allows selector editing when a different or more precise expression is needed.</p>\n<div class=\"workflow\"><span>1. Identify intended user action</span><b>→</b><span>2. Select target element</span><b>→</b><span>3. Inspect selector</span><b>→</b><span>4. Test in context</span><b>→</b><span>5. Preview guide</span></div>\n<div class=\"source-note\">Oracle Guided Learning User Guide: guide content editing supports selecting an element and editing the selector in the selector dialog.</div>\n"}, {"title": "Valid Selector, Wrong Target", "nav": "Valid Selector, Wrong Target", "kicker": "Lesson Proper", "body": "\n<div class=\"two-col\"><pre class=\"code\"><code>button[data-action=\"cancel\"]</code></pre><div><h2 class=\"section-title\">The selector is valid</h2><p>It correctly finds the Cancel button.</p><h2 class=\"section-title\">The OGL step is still wrong</h2><p>If the tooltip says “Select Save to create the customer,” then Cancel is the wrong conceptual target.</p></div></div>\n<div class=\"callout\">Targeting correctness begins with the workflow requirement, not with selector syntax.</div>\n"}, {"title": "Correct Target, Weak Selector", "nav": "Correct Target, Weak Selector", "kicker": "Lesson Proper", "body": "\n<pre class=\"code\"><code>button\n// matches Cancel, Save, Delete, Submit...</code></pre>\n<p>The developer may intend to target Save, but <code>button</code> does not encode that intention. It leaves OGL with an ambiguous match set.</p>\n<div class=\"callout\"><strong>Correct target + weak selector = unreliable guide.</strong></div>\n"}, {"title": "Tip Placement Depends on the Target", "nav": "Tip Placement and Target", "kicker": "Lesson Proper", "body": "\n<div class=\"two-col\"><div><p>OGL display settings position a tooltip relative to its target—top, bottom, left, or right, with optional offsets.</p><p>If the wrong target is selected, tip placement can reinforce the error by visually attaching correct text to the wrong control.</p></div><div class=\"mockapp\"><div class=\"mockbar\">Customer</div><div class=\"mockbody\"><div class=\"field\">Name: Acme</div><div class=\"btnrow\"><button class=\"appbtn\">Cancel</button><button class=\"appbtn primary target-ring\">Save</button></div><div class=\"tip correct\"><b>Save the record</b>Select Save to continue.</div></div></div></div>\n<div class=\"source-note\">Oracle documentation: Display Settings allow tip placement relative to the target and pixel offsets for precise positioning.</div>\n"}, {"title": "Element vs Visible Element Conditions", "nav": "Element vs Visible Element", "kicker": "Lesson Proper", "body": "\n<p>OGL step and page conditions can distinguish between an element that exists in the DOM and an element that is visible to the user.</p>\n<div class=\"two-col\"><div><h2 class=\"section-title\">Element condition</h2><p>Checks whether a matching element exists in the DOM.</p></div><div><h2 class=\"section-title\">Visible Element condition</h2><p>Requires the matching element to be visible, which is more restrictive.</p></div></div>\n<div class=\"callout\">This distinction matters when an application keeps controls in the DOM while hiding them with tabs, panels, overlays, or state changes.</div>\n<div class=\"source-note\">Oracle OGL FAQ: Step Conditions and Page Conditions describe Element and Visible Element conditions.</div>\n"}, {"title": "Multiple Matches and Monitoring", "nav": "Multiple Matches and Monitoring", "kicker": "Lesson Proper", "body": "\n<ul><li>A target selector can match more than one element.</li><li>Oracle provides an <strong>Only display one tooltip</strong> option for cases where repeated matches would otherwise create duplicate tips.</li><li><strong>Monitor selector</strong> can keep OGL searching after a match is found, which is useful when an element can disappear and reappear.</li></ul>\n<div class=\"callout\">These settings do not replace good selector design. They address runtime behavior that can occur in complex applications.</div>\n<div class=\"source-note\">Oracle Guided Learning Advanced Settings documents multiple selector matches, Only display one tooltip, and Monitor selector.</div>\n"}, {"title": "Summary", "nav": "Summary", "kicker": "Summary", "body": "\n<div class=\"summary-list\"><div><span>1</span><p>The target is the intended interface element; the selector is how OGL identifies it.</p></div><div><span>2</span><p>A valid selector can still target the wrong element.</p></div><div><span>3</span><p>Tip placement and step behavior depend on correct target selection.</p></div><div><span>4</span><p>Element existence and element visibility are different runtime conditions.</p></div><div><span>5</span><p>OGL includes runtime settings for multiple matches and elements that disappear and reappear.</p></div></div>\n"}, {"title": "OGL Targeting Diagnosis", "nav": "Activity", "kicker": "Activity", "body": "\n            <div class=\"activity-intro\">\n              <p class=\"lead small\">Complete all six items. Questions combine code reading, selector analysis, and guide-development judgment.</p>\n              <div class=\"activity-standard\"><strong>Passing score:</strong> 5 of 6 (83%)</div>\n            </div>\n            <div class=\"activity-player\" data-activity=\"l3\"></div>\n            "}]}, {"title": "Targeting Repeated and Contextual Elements", "slides": [{"title": "Targeting Repeated and Contextual Elements", "nav": "Targeting Repeated and Contextual Elements", "kicker": "Lesson 4", "body": "\n    <div class=\"lesson-title-slide\">\n      <div class=\"lesson-title-visual\"><svg viewBox=\"0 0 180 150\" aria-hidden=\"true\">\n      <rect x=\"24\" y=\"28\" width=\"132\" height=\"84\" rx=\"8\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\"/>\n      <rect x=\"40\" y=\"47\" width=\"100\" height=\"15\" rx=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\"/>\n      <rect x=\"40\" y=\"74\" width=\"42\" height=\"20\" rx=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\"/>\n      <rect x=\"97\" y=\"74\" width=\"43\" height=\"20\" rx=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\"/>\n      <circle cx=\"118\" cy=\"84\" r=\"17\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\"/>\n      <path d=\"M130 96l16 16\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    </svg></div>\n      <div class=\"lesson-title-copy\">\n        <div class=\"lesson-badge\">Lesson 4</div>\n        <div class=\"lesson-title-text\">Targeting Repeated and Contextual Elements</div>\n      </div>\n    </div>\n    "}, {"title": "Objectives", "nav": "Objectives", "kicker": "Introduction", "body": "\n<h2 class=\"section-title\">By the end of this lesson, learners will be able to:</h2>\n<ul><li><strong>Recognize</strong> repeated-element patterns that create ambiguous selector matches.</li><li><strong>Construct</strong> contextual selectors using stable parent containers and attributes.</li><li><strong>Differentiate</strong> between page-level, row-level, modal-level, and card-level context.</li><li><strong>Resolve</strong> at least <strong>4 of 5</strong> repeated-element targeting scenarios.</li></ul>\n"}, {"title": "Introduction", "nav": "Introduction", "kicker": "Introduction", "body": "\n<p class=\"lead\">“Edit” is rarely unique in an enterprise application.</p>\n<p>Tables, cards, forms, and modal dialogs often repeat the same actions. The selector must therefore describe not only the control but also the context that makes that control the intended one.</p>\n"}, {"title": "Topics", "nav": "Topics", "kicker": "Introduction", "body": "\n<div class=\"topic-list\"><div><strong>1. Repeated controls</strong><span>Buttons, links, and fields with identical labels.</span></div><div><strong>2. Parent context</strong><span>Using a stable container to narrow the match.</span></div><div><strong>3. Tables and rows</strong><span>Targeting actions in a specific record.</span></div><div><strong>4. Modals and overlays</strong><span>Separating active dialog controls from background controls.</span></div><div><strong>5. Positional selectors</strong><span>When they help and why they can be fragile.</span></div></div>\n"}, {"title": "The Repeated Button Problem", "nav": "Repeated Buttons", "kicker": "Lesson Proper", "body": "\n<pre class=\"code\"><code>&lt;section data-section=\"customer\"&gt;\n  &lt;button class=\"edit\"&gt;Edit&lt;/button&gt;\n&lt;/section&gt;\n\n&lt;section data-section=\"billing\"&gt;\n  &lt;button class=\"edit\"&gt;Edit&lt;/button&gt;\n&lt;/section&gt;</code></pre>\n<p><code>.edit</code> matches both controls. The selector describes the button style, not the business context.</p>\n"}, {"title": "Use Stable Parent Context", "nav": "Parent Context", "kicker": "Lesson Proper", "body": "\n<pre class=\"code\"><code>[data-section=\"billing\"] .edit</code></pre>\n<p>Adding a meaningful parent container narrows the search to the billing section.</p>\n<div class=\"callout\">Context is strongest when the parent attribute itself is stable and semantically meaningful—not just another generated wrapper.</div>\n"}, {"title": "Targeting Table Rows", "nav": "Tables and Rows", "kicker": "Lesson Proper", "body": "\n<pre class=\"code\"><code>&lt;tr data-record-id=\"C1024\"&gt;\n  &lt;td&gt;Acme Retail&lt;/td&gt;\n  &lt;td&gt;&lt;button class=\"edit\"&gt;Edit&lt;/button&gt;&lt;/td&gt;\n&lt;/tr&gt;</code></pre>\n<p>Possible contextual selector:</p>\n<pre class=\"code\"><code>tr[data-record-id=\"C1024\"] button.edit</code></pre>\n<p>However, ask whether <code>C1024</code> is stable for the intended guide. If the guide must work for any customer, a record-specific selector may be inappropriate.</p>\n"}, {"title": "Targeting Generic Rows", "nav": "Generic Row Context", "kicker": "Lesson Proper", "body": "\n<p>If the workflow is meant to target the currently selected row rather than a fixed record, look for state or semantic attributes instead of record IDs.</p>\n<pre class=\"code\"><code>tr[aria-selected=\"true\"] button.edit\ntr.current-row button.edit\n[data-state=\"selected\"] [data-action=\"edit\"]</code></pre>\n<div class=\"callout\">The best contextual selector reflects the workflow state the guide depends on.</div>\n"}, {"title": "Modal vs Background Page", "nav": "Modal vs Background", "kicker": "Lesson Proper", "body": "\n<pre class=\"code\"><code>&lt;main&gt;\n  &lt;button data-action=\"save\"&gt;Save&lt;/button&gt;\n&lt;/main&gt;\n\n&lt;div role=\"dialog\"&gt;\n  &lt;button data-action=\"save\"&gt;Save&lt;/button&gt;\n&lt;/div&gt;</code></pre>\n<p><code>[data-action=\"save\"]</code> matches both. If the guide step is inside the dialog, use modal context:</p>\n<pre class=\"code\"><code>[role=\"dialog\"] [data-action=\"save\"]</code></pre>\n"}, {"title": "Avoid Over-Reliance on Position", "nav": "Positional Selectors", "kicker": "Lesson Proper", "body": "\n<p>Selectors such as <code>:nth-child()</code> may work, but they encode layout position rather than business meaning.</p>\n<pre class=\"code\"><code>.action-bar button:nth-child(2)</code></pre>\n<p>If a new button is inserted before Save, the second child may no longer be Save.</p>\n<div class=\"callout warn\">Use positional selectors when the structure is intentionally fixed and no stronger semantic option exists—not as the first choice.</div>\n"}, {"title": "Worked Contextual Example", "nav": "Worked Example", "kicker": "Lesson Proper", "body": "\n<pre class=\"code\"><code>&lt;div data-panel=\"customer\"&gt;\n  &lt;button data-action=\"edit\"&gt;Edit&lt;/button&gt;\n&lt;/div&gt;\n\n&lt;div data-panel=\"vendor\"&gt;\n  &lt;button data-action=\"edit\"&gt;Edit&lt;/button&gt;\n&lt;/div&gt;</code></pre>\n<table class=\"clean-table\"><tr><th>Selector</th><th>Result</th></tr><tr><td><code>[data-action=\"edit\"]</code></td><td>2 matches</td></tr><tr><td><code>[data-panel=\"vendor\"] [data-action=\"edit\"]</code></td><td>1 vendor Edit match</td></tr></table>\n"}, {"title": "Summary", "nav": "Summary", "kicker": "Summary", "body": "\n<div class=\"summary-list\"><div><span>1</span><p>Repeated controls are normal in enterprise interfaces.</p></div><div><span>2</span><p>Contextual selectors use stable containers or state to identify the intended instance.</p></div><div><span>3</span><p>Tables may require row context; modals may require dialog context.</p></div><div><span>4</span><p>Record-specific selectors can be too narrow when the guide should work generically.</p></div><div><span>5</span><p>Positional selectors are often more fragile than semantic context.</p></div></div>\n"}, {"title": "Contextual Targeting Challenge", "nav": "Activity", "kicker": "Activity", "body": "\n            <div class=\"activity-intro\">\n              <p class=\"lead small\">Complete all six items. Questions combine code reading, selector analysis, and guide-development judgment.</p>\n              <div class=\"activity-standard\"><strong>Passing score:</strong> 5 of 6 (83%)</div>\n            </div>\n            <div class=\"activity-player\" data-activity=\"l4\"></div>\n            "}]}, {"title": "Targeting Dynamic Interfaces", "slides": [{"title": "Targeting Dynamic Interfaces", "nav": "Targeting Dynamic Interfaces", "kicker": "Lesson 5", "body": "\n    <div class=\"lesson-title-slide\">\n      <div class=\"lesson-title-visual\"><svg viewBox=\"0 0 180 150\" aria-hidden=\"true\">\n      <rect x=\"31\" y=\"33\" width=\"118\" height=\"78\" rx=\"8\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\"/>\n      <path d=\"M58 70h64\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n      <path d=\"M50 49l-12 12 12 12M130 91l12-12-12-12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n      <circle cx=\"90\" cy=\"124\" r=\"5\" fill=\"currentColor\"/>\n      <path d=\"M72 124h-17M108 124h17\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    </svg></div>\n      <div class=\"lesson-title-copy\">\n        <div class=\"lesson-badge\">Lesson 5</div>\n        <div class=\"lesson-title-text\">Targeting Dynamic Interfaces</div>\n      </div>\n    </div>\n    "}, {"title": "Objectives", "nav": "Objectives", "kicker": "Introduction", "body": "\n<h2 class=\"section-title\">By the end of this lesson, learners will be able to:</h2>\n<ul><li><strong>Differentiate</strong> between absent, hidden, and dynamically recreated elements.</li><li><strong>Analyze</strong> how dropdowns, modals, async content, and SPAs affect target availability.</li><li><strong>Select</strong> an appropriate targeting strategy for elements that appear or reappear.</li><li><strong>Diagnose</strong> at least <strong>4 of 5</strong> dynamic-target scenarios.</li></ul>\n"}, {"title": "Introduction", "nav": "Introduction", "kicker": "Introduction", "body": "\n<p class=\"lead\">A selector can be correct while the element is unavailable at the moment OGL looks for it.</p>\n<p>Dynamic targeting problems are therefore not always selector problems. They can be timing, visibility, rendering, or application-state problems.</p>\n"}, {"title": "Topics", "nav": "Topics", "kicker": "Introduction", "body": "\n<div class=\"topic-list\"><div><strong>1. Element states</strong><span>Absent, present, hidden, visible.</span></div><div><strong>2. Async content</strong><span>Targets created after loading or user actions.</span></div><div><strong>3. Dropdowns and modals</strong><span>Controls that exist only while a component is open.</span></div><div><strong>4. SPA re-rendering</strong><span>Elements recreated without a page refresh.</span></div><div><strong>5. OGL runtime settings</strong><span>Visible-element checks, monitoring, and optional steps.</span></div></div>\n"}, {"title": "Absent vs Hidden", "nav": "Absent vs Hidden", "kicker": "Lesson Proper", "body": "\n<div class=\"two-col\"><div><h2 class=\"section-title\">Absent</h2><pre class=\"code\"><code>&lt;div id=\"menu\"&gt;&lt;/div&gt;\n// target not in DOM</code></pre></div><div><h2 class=\"section-title\">Hidden</h2><pre class=\"code\"><code>&lt;button\n  data-action=\"approve\"\n  style=\"display:none\"&gt;\n  Approve\n&lt;/button&gt;</code></pre></div></div>\n<p>OGL's Element and Visible Element conditions reflect this distinction.</p>\n"}, {"title": "Async Content", "nav": "Async Content", "kicker": "Lesson Proper", "body": "\n<p>Some controls are inserted only after data loads, a search completes, or another action finishes.</p>\n<pre class=\"code\"><code>// initial state\n&lt;div id=\"results\"&gt;Loading...&lt;/div&gt;\n\n// later state\n&lt;div id=\"results\"&gt;\n  &lt;button data-action=\"open\"&gt;Open&lt;/button&gt;\n&lt;/div&gt;</code></pre>\n<p>The selector may be perfect, but there is no match until the target exists.</p>\n"}, {"title": "Dropdowns", "nav": "Dropdown Targets", "kicker": "Lesson Proper", "body": "\n<p>Dropdown menu items often exist only while the menu is open.</p>\n<div class=\"workflow\"><span>Closed menu: 0 matches</span><b>→</b><span>User opens menu</span><b>→</b><span>Menu item rendered</span><b>→</b><span>Selector matches</span></div>\n<div class=\"callout\">Guide flow may need to wait for the correct state instead of assuming the element exists from the start.</div>\n"}, {"title": "Modals", "nav": "Modal Targets", "kicker": "Lesson Proper", "body": "\n<p>Modal dialogs are another dynamic context. The dialog may be inserted when opened and removed when closed.</p>\n<pre class=\"code\"><code>[role=\"dialog\"] [data-action=\"submit\"]</code></pre>\n<ul><li>Use dialog context to avoid matching background controls.</li><li>Verify the dialog exists before expecting the target.</li><li>Confirm that the element is visible, not simply present in the DOM.</li></ul>\n"}, {"title": "SPA Re-rendering", "nav": "SPA Re-rendering", "kicker": "Lesson Proper", "body": "\n<p>Single-page applications can destroy and recreate DOM nodes while the screen appears almost unchanged.</p>\n<div class=\"two-col\"><pre class=\"code\"><code>// old node\n&lt;button data-action=\"save\"&gt;Save&lt;/button&gt;</code></pre><pre class=\"code\"><code>// newly rendered node\n&lt;button data-action=\"save\"&gt;Save&lt;/button&gt;</code></pre></div>\n<p>The selector text can remain valid even though the actual DOM node is new. Runtime monitoring becomes important when a target can reappear.</p>\n"}, {"title": "Monitor Selector", "nav": "Monitor Selector", "kicker": "Lesson Proper", "body": "\n<p>Oracle's <strong>Monitor selector</strong> setting keeps searching for a target after a match has already been found, which is useful when an element may disappear and reappear.</p>\n<div class=\"callout\"><strong>Use it for runtime behavior, not to compensate for a poor selector.</strong> The selector still needs to describe the correct target.</div>\n<div class=\"source-note\">Oracle Guided Learning Advanced Settings documents Monitor selector for targets that can disappear and reappear.</div>\n"}, {"title": "Optional Steps and Conditions", "nav": "Optional Steps and Conditions", "kicker": "Lesson Proper", "body": "\n<p>Oracle allows step conditions and an option to skip a step when the element is not found or conditions are not met.</p>\n<ul><li>Useful when a workflow contains optional UI states.</li><li>Useful when some users or records do not display the same control.</li><li>Should be based on intentional workflow design, not used to hide unresolved targeting defects.</li></ul>\n<div class=\"source-note\">Oracle Editing Guide Content and Working with Step Settings describe optional steps and element-based step conditions.</div>\n"}, {"title": "Dynamic Target Diagnostic Flow", "nav": "Diagnostic Flow", "kicker": "Lesson Proper", "body": "\n<div class=\"flow-vertical\"><div><strong>1. Does the selector match in the current DOM?</strong><span>If no, determine whether the target is absent or the selector is wrong.</span></div><div><strong>2. Is the element visible?</strong><span>If present but hidden, check the required application state.</span></div><div><strong>3. Is the element created later?</strong><span>Look for loading, dropdown, modal, or async behavior.</span></div><div><strong>4. Is it recreated?</strong><span>Consider SPA rendering and monitoring behavior.</span></div><div><strong>5. Should the step be optional?</strong><span>Use conditions only when the workflow genuinely differs.</span></div></div>\n"}, {"title": "Summary", "nav": "Summary", "kicker": "Summary", "body": "\n<div class=\"summary-list\"><div><span>1</span><p>Dynamic-target failures can be caused by timing or state, not only selector syntax.</p></div><div><span>2</span><p>Absent and hidden elements are different conditions.</p></div><div><span>3</span><p>Dropdowns and modals often render targets only when opened.</p></div><div><span>4</span><p>SPAs can recreate elements while the visible screen appears unchanged.</p></div><div><span>5</span><p>OGL conditions, optional steps, and selector monitoring should support intentional workflow behavior.</p></div></div>\n"}, {"title": "Dynamic Interface Diagnosis", "nav": "Activity", "kicker": "Activity", "body": "\n            <div class=\"activity-intro\">\n              <p class=\"lead small\">Complete all six items. Questions combine code reading, selector analysis, and guide-development judgment.</p>\n              <div class=\"activity-standard\"><strong>Passing score:</strong> 5 of 6 (83%)</div>\n            </div>\n            <div class=\"activity-player\" data-activity=\"l5\"></div>\n            "}]}, {"title": "Troubleshooting Broken OGL Targets", "slides": [{"title": "Troubleshooting Broken OGL Targets", "nav": "Troubleshooting Broken OGL Targets", "kicker": "Lesson 6", "body": "\n    <div class=\"lesson-title-slide\">\n      <div class=\"lesson-title-visual\"><svg viewBox=\"0 0 180 150\" aria-hidden=\"true\">\n      <circle cx=\"74\" cy=\"66\" r=\"36\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\"/>\n      <line x1=\"100\" y1=\"92\" x2=\"135\" y2=\"127\" stroke=\"currentColor\" stroke-width=\"7\" stroke-linecap=\"round\"/>\n      <path d=\"M62 49l24 24M86 49L62 73\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n      <path d=\"M124 35h24v24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\"/>\n      <path d=\"M146 37l-22 22\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    </svg></div>\n      <div class=\"lesson-title-copy\">\n        <div class=\"lesson-badge\">Lesson 6</div>\n        <div class=\"lesson-title-text\">Troubleshooting Broken OGL Targets</div>\n      </div>\n    </div>\n    "}, {"title": "Objectives", "nav": "Objectives", "kicker": "Introduction", "body": "\n<h2 class=\"section-title\">By the end of this lesson, learners will be able to:</h2>\n<ul><li><strong>Classify</strong> common OGL targeting symptoms into likely failure categories.</li><li><strong>Apply</strong> a repeatable troubleshooting sequence using DevTools and selector testing.</li><li><strong>Differentiate</strong> selector issues from visibility, condition, role, and data-state issues.</li><li><strong>Repair</strong> at least <strong>4 of 5</strong> broken-target scenarios.</li></ul>\n"}, {"title": "Introduction", "nav": "Introduction", "kicker": "Introduction", "body": "\n<p class=\"lead\">Do not start by randomly changing the selector.</p>\n<p>A broken guide step is a symptom. Effective troubleshooting first identifies the failure category, then tests the smallest hypothesis that can explain it.</p>\n"}, {"title": "Topics", "nav": "Topics", "kicker": "Introduction", "body": "\n<div class=\"topic-list\"><div><strong>1. Symptom categories</strong><span>Not found, wrong target, multiple matches, wrong state.</span></div><div><strong>2. Selector validation</strong><span>Syntax, match count, and context.</span></div><div><strong>3. State validation</strong><span>Visibility, timing, role, record, and conditions.</span></div><div><strong>4. Repair</strong><span>Refining the selector without introducing new fragility.</span></div><div><strong>5. Retest</strong><span>Regression across realistic workflow states.</span></div></div>\n"}, {"title": "Start with the Symptom", "nav": "Classify the Symptom", "kicker": "Lesson Proper", "body": "\n<table class=\"clean-table\"><tr><th>Symptom</th><th>Likely categories</th></tr><tr><td>Tooltip does not appear</td><td>Target absent, selector mismatch, condition false, activation issue.</td></tr><tr><td>Tooltip points to wrong control</td><td>Wrong target selection, ambiguous selector, wrong context.</td></tr><tr><td>Duplicate tooltips</td><td>Selector matches multiple elements.</td></tr><tr><td>Works only sometimes</td><td>Dynamic rendering, role/data differences, unstable selector.</td></tr><tr><td>Broke after release</td><td>Changed DOM, renamed attributes/classes, new component structure.</td></tr></table>\n"}, {"title": "Step 1: Inspect the Actual Page", "nav": "Inspect the Actual Page", "kicker": "Lesson Proper", "body": "\n<ol class=\"compact-ol\"><li>Reproduce the failure in the same role and workflow state.</li><li>Inspect the intended control.</li><li>Confirm the element actually exists in the DOM.</li><li>Record current attributes and meaningful parent context.</li><li>Compare the live DOM with assumptions made when the guide was built.</li></ol>\n<div class=\"callout\">Troubleshoot the page that exists now, not the page you remember.</div>\n"}, {"title": "Step 2: Validate the Selector", "nav": "Validate the Selector", "kicker": "Lesson Proper", "body": "\n<div class=\"two-col\"><div><pre class=\"code\"><code>document.querySelectorAll(\n  '[data-action=\"save\"]'\n).length</code></pre></div><div><ul><li><strong>0 matches:</strong> selector mismatch or target not present.</li><li><strong>1 match:</strong> inspect whether it is the intended element.</li><li><strong>2+ matches:</strong> selector needs context or runtime handling.</li></ul></div></div>\n<p>Also check for syntax errors and attribute values that may have changed.</p>\n"}, {"title": "Step 3: Check Visibility and State", "nav": "Check Visibility and State", "kicker": "Lesson Proper", "body": "\n<ul><li>Is the correct tab or panel open?</li><li>Is a modal covering or replacing the original control?</li><li>Has the user completed the prerequisite action that renders the target?</li><li>Is the target present but hidden?</li><li>Did an async region finish loading?</li></ul>\n<p>Testing the selector in the wrong application state can lead to the wrong diagnosis.</p>\n"}, {"title": "Step 4: Compare Roles and Data", "nav": "Compare Roles and Data", "kicker": "Lesson Proper", "body": "\n<p>Enterprise applications can render different interfaces based on role, permissions, record state, localization, or data.</p>\n<div class=\"compare\"><div><strong>Role difference</strong><span>Administrator sees Edit; Viewer does not.</span></div><div><strong>Record state</strong><span>Approved records no longer show Approve.</span></div><div><strong>Data difference</strong><span>Optional section appears only for certain records.</span></div></div>\n<div class=\"callout\">A selector can be correct in one environment and irrelevant in another if the underlying interface differs.</div>\n"}, {"title": "Step 5: Check Conditions", "nav": "Check Conditions", "kicker": "Lesson Proper", "body": "\n<p>If the selector works but the step still does not appear, review step conditions and activation logic.</p>\n<ul><li>Element condition vs Visible Element condition.</li><li>URL/route or page condition.</li><li>Required variable or form value.</li><li>Optional-step logic.</li><li>Branching or guide state.</li></ul>\n<div class=\"source-note\">Oracle Working with Step Settings lists element, visible element, URL, variable, cookie, session variable, and form field conditions.</div>\n"}, {"title": "Step 6: Repair the Smallest Cause", "nav": "Repair the Smallest Cause", "kicker": "Lesson Proper", "body": "\n<p>A good fix addresses the actual failure without introducing unnecessary complexity.</p>\n<div class=\"two-col\"><div><h2 class=\"section-title\">Avoid</h2><pre class=\"code\"><code>body > div:nth-child(4)\n > div:nth-child(2)\n > button:nth-child(3)</code></pre></div><div><h2 class=\"section-title\">Prefer when supported by the app</h2><pre class=\"code\"><code>[data-panel=\"customer\"]\n[data-action=\"save\"]</code></pre></div></div>\n<p>Do not “solve” a targeting problem by creating a longer, more brittle selector unless the structure genuinely requires it.</p>\n"}, {"title": "Step 7: Retest Beyond the Happy Path", "nav": "Retest", "kicker": "Lesson Proper", "body": "\n<ul><li>Refresh the page.</li><li>Repeat with another record.</li><li>Test the intended user role.</li><li>Open and close dynamic components.</li><li>Navigate away and return.</li><li>Run the guide from the beginning—not only the repaired step.</li></ul>\n<div class=\"callout\">A selector fix is not complete until it survives the realistic states the guide is expected to encounter.</div>\n"}, {"title": "Troubleshooting Decision Tree", "nav": "Decision Tree", "kicker": "Lesson Proper", "body": "\n<div class=\"flow-vertical\"><div><strong>Does the intended element exist?</strong><span>No → investigate state/timing. Yes → continue.</span></div><div><strong>Does the selector match?</strong><span>No → inspect attributes/context. Yes → continue.</span></div><div><strong>How many matches?</strong><span>More than one → refine context. One → continue.</span></div><div><strong>Is the element visible/actionable?</strong><span>No → inspect UI state/conditions. Yes → continue.</span></div><div><strong>Does OGL logic permit the step?</strong><span>Review conditions, activation, optional-step, or branch logic.</span></div></div>\n"}, {"title": "Summary", "nav": "Summary", "kicker": "Summary", "body": "\n<div class=\"summary-list\"><div><span>1</span><p>Start with the symptom, not with random selector edits.</p></div><div><span>2</span><p>Validate the live DOM and match count.</p></div><div><span>3</span><p>Check visibility, timing, role, record, and data state.</p></div><div><span>4</span><p>Review OGL conditions when the selector itself works.</p></div><div><span>5</span><p>Repair the smallest cause and retest the entire workflow.</p></div></div>\n"}, {"title": "Broken Target Troubleshooting Lab", "nav": "Activity", "kicker": "Activity", "body": "\n            <div class=\"activity-intro\">\n              <p class=\"lead small\">Complete all six items. Questions combine code reading, selector analysis, and guide-development judgment.</p>\n              <div class=\"activity-standard\"><strong>Passing score:</strong> 5 of 6 (83%)</div>\n            </div>\n            <div class=\"activity-player\" data-activity=\"l6\"></div>\n            "}]}, {"title": "Selector Quality and Maintenance", "slides": [{"title": "Selector Quality and Maintenance", "nav": "Selector Quality and Maintenance", "kicker": "Lesson 7", "body": "\n    <div class=\"lesson-title-slide\">\n      <div class=\"lesson-title-visual\"><svg viewBox=\"0 0 180 150\" aria-hidden=\"true\">\n      <path d=\"M90 24l18 13 22-1 7 21 18 13-7 21 7 21-18 13-7 21-22-1-18 13-18-13-22 1-7-21-18-13 7-21-7-21 18-13 7-21 22 1z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5\"/>\n      <path d=\"M60 79l19 19 41-45\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n    </svg></div>\n      <div class=\"lesson-title-copy\">\n        <div class=\"lesson-badge\">Lesson 7</div>\n        <div class=\"lesson-title-text\">Selector Quality and Maintenance</div>\n      </div>\n    </div>\n    "}, {"title": "Objectives", "nav": "Objectives", "kicker": "Introduction", "body": "\n<h2 class=\"section-title\">By the end of this lesson, learners will be able to:</h2>\n<ul><li><strong>Evaluate</strong> selectors using a consistent quality framework.</li><li><strong>Identify</strong> brittle selector patterns that create maintenance risk.</li><li><strong>Document</strong> selector rationale and assumptions for future developers.</li><li><strong>Design</strong> a regression-testing approach for selector changes.</li></ul>\n"}, {"title": "Introduction", "nav": "Introduction", "kicker": "Introduction", "body": "\n<p class=\"lead\">Selector quality is a team-maintenance concern, not just an individual coding preference.</p>\n<p>A selector that only its original author understands becomes expensive when the UI changes. Strong Guide Development practices make selector choices visible, explainable, and testable.</p>\n"}, {"title": "Topics", "nav": "Topics", "kicker": "Introduction", "body": "\n<div class=\"topic-list\"><div><strong>1. Quality framework</strong><span>Correctness, uniqueness, stability, specificity, maintainability.</span></div><div><strong>2. Brittle patterns</strong><span>Generated values, deep chains, positional dependencies.</span></div><div><strong>3. Documentation</strong><span>Selector libraries, rationale, assumptions.</span></div><div><strong>4. Review</strong><span>Peer review and validation.</span></div><div><strong>5. Regression</strong><span>Retesting after releases and application updates.</span></div></div>\n"}, {"title": "The Selector Quality Framework", "nav": "Quality Framework", "kicker": "Lesson Proper", "body": "\n<div class=\"quality-grid\"><div><strong>Correctness</strong><span>Is this the intended workflow element?</span></div><div><strong>Uniqueness</strong><span>Does it avoid unintended matches?</span></div><div><strong>Stability</strong><span>Does it avoid transient/generated dependencies?</span></div><div><strong>Specificity</strong><span>Is it specific enough without encoding unnecessary structure?</span></div><div><strong>Maintainability</strong><span>Can another developer understand and repair it?</span></div></div>\n"}, {"title": "Brittle Pattern: Generated Values", "nav": "Generated Values", "kicker": "Lesson Proper", "body": "\n<pre class=\"code\"><code>#ext-gen-18472\n.css-1x9ab3\n#button_9384721</code></pre>\n<p>Generated IDs and classes may be unique but change across sessions, builds, or component renders.</p>\n<div class=\"callout\">Treat uniqueness as evidence to investigate—not proof that the selector is production-ready.</div>\n"}, {"title": "Brittle Pattern: Deep DOM Chains", "nav": "Deep DOM Chains", "kicker": "Lesson Proper", "body": "\n<pre class=\"code\"><code>body > div:nth-child(3)\n > div > div:nth-child(2)\n > section > div > button</code></pre>\n<p>Deep structural chains couple the selector to layout details that may have nothing to do with the business meaning of the target.</p>\n<p>Prefer shorter selectors based on stable semantic attributes and meaningful context when available.</p>\n"}, {"title": "Document Selector Rationale", "nav": "Document Rationale", "kicker": "Lesson Proper", "body": "\n<table class=\"clean-table\"><tr><th>Field</th><th>Example</th></tr><tr><td>Guide / step</td><td>Create Customer · Save step</td></tr><tr><td>Selector</td><td><code>[data-panel=\"customer\"] [data-action=\"save\"]</code></td></tr><tr><td>Why chosen</td><td>Both attributes are semantic and stable across tested records.</td></tr><tr><td>Known dependency</td><td>Requires Customer panel to be rendered.</td></tr><tr><td>Last validated</td><td>26B regression cycle</td></tr></table>\n"}, {"title": "Use a Selector Library", "nav": "Selector Library", "kicker": "Lesson Proper", "body": "\n<p>A shared selector library can reduce duplicate investigation and create consistent targeting patterns across guides.</p>\n<ul><li>Store commonly reused stable selectors.</li><li>Record application area, component, and intended use.</li><li>Document known exceptions.</li><li>Update the library when a selector changes.</li><li>Do not reuse a selector merely because it exists—verify it still fits the current workflow.</li></ul>\n"}, {"title": "Peer Review Selector Choices", "nav": "Peer Review", "kicker": "Lesson Proper", "body": "\n<p>Selector review should answer more than “Does it work on my machine?”</p>\n<div class=\"rule-list\"><div class=\"rule-item\"><strong>Match count</strong><span>How many elements does it match in realistic states?</span></div><div class=\"rule-item\"><strong>Stability basis</strong><span>Which attributes or containers make the selector resilient?</span></div><div class=\"rule-item\"><strong>Workflow fit</strong><span>Does it identify the correct business control?</span></div><div class=\"rule-item\"><strong>Failure mode</strong><span>What would likely break this selector?</span></div></div>\n"}, {"title": "Regression Testing After UI Changes", "nav": "Regression Testing", "kicker": "Lesson Proper", "body": "\n<ol class=\"compact-ol\"><li>Run affected guides end to end.</li><li>Verify selector match counts in changed areas.</li><li>Test primary supported roles and representative data states.</li><li>Test dynamic states such as modals, dropdowns, and refreshed regions.</li><li>Update selector documentation and shared libraries when repairs are made.</li></ol>\n<div class=\"callout\">Maintenance is part of Guide Development. A selector is not “finished forever” simply because it passed initial testing.</div>\n"}, {"title": "When to Refactor a Working Selector", "nav": "When to Refactor", "kicker": "Lesson Proper", "body": "\n<p>Refactor when the current selector works but carries unnecessary risk.</p>\n<ul><li>It depends on a generated value.</li><li>It relies on deep positional structure.</li><li>It produces multiple matches and depends on runtime luck.</li><li>It is difficult for another developer to interpret.</li><li>A new semantic attribute provides a simpler, more stable option.</li></ul>\n"}, {"title": "Summary", "nav": "Summary", "kicker": "Summary", "body": "\n<div class=\"summary-list\"><div><span>1</span><p>Production selector quality includes maintainability, not just immediate correctness.</p></div><div><span>2</span><p>Generated values and deep positional chains create unnecessary risk.</p></div><div><span>3</span><p>Selector rationale should be documented so future developers can maintain the guide.</p></div><div><span>4</span><p>Shared libraries and peer review create consistency across guides.</p></div><div><span>5</span><p>Regression testing is necessary after application releases and UI changes.</p></div></div>\n"}, {"title": "Selector Quality Review", "nav": "Activity", "kicker": "Activity", "body": "\n            <div class=\"activity-intro\">\n              <p class=\"lead small\">Complete all six items. Questions combine code reading, selector analysis, and guide-development judgment.</p>\n              <div class=\"activity-standard\"><strong>Passing score:</strong> 5 of 6 (83%)</div>\n            </div>\n            <div class=\"activity-player\" data-activity=\"l7\"></div>\n            "}]}, {"title": "End-of-Module Assessment: OGL Targeting Challenge", "slides": [{"title": "End-of-Module Assessment: OGL Targeting Challenge", "nav": "End-of-Module Assessment: OGL Targeting Challenge", "kicker": "Assessment", "body": "\n    <div class=\"lesson-title-slide\">\n      <div class=\"lesson-title-visual\"><svg viewBox=\"0 0 180 150\" aria-hidden=\"true\">\n      <rect x=\"42\" y=\"26\" width=\"96\" height=\"105\" rx=\"7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\"/>\n      <rect x=\"66\" y=\"18\" width=\"48\" height=\"20\" rx=\"6\" fill=\"white\" stroke=\"currentColor\" stroke-width=\"5\"/>\n      <path d=\"M59 57h62M59 76h62M59 95h42\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n      <path d=\"M109 104l9 9 18-21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n    </svg></div>\n      <div class=\"lesson-title-copy\">\n        <div class=\"lesson-badge\">Assessment</div>\n        <div class=\"lesson-title-text\">End-of-Module Assessment: OGL Targeting Challenge</div>\n      </div>\n    </div>\n    "}, {"title": "Assessment Outcomes", "nav": "Assessment Outcomes", "kicker": "Assessment", "body": "\n<h2 class=\"section-title\">This assessment requires learners to demonstrate that they can:</h2>\n<ul><li>Inspect HTML and DOM context.</li><li>Construct and test CSS selectors.</li><li>Apply selectors to OGL targeting decisions.</li><li>Handle repeated and dynamic elements.</li><li>Troubleshoot broken targets systematically.</li><li>Document selector rationale and maintenance considerations.</li></ul>\n"}, {"title": "Scenario", "nav": "Scenario", "kicker": "Assessment", "body": "\n<p class=\"lead small\">You are assigned to repair and complete an OGL guide for a customer-management workflow.</p>\n<p>The guide was started by another developer. Several tips fail intermittently, two selectors match the wrong controls, and one step only works for certain records.</p>\n<p>Your job is to produce a targeting package that another Guide Developer could review and maintain.</p>\n"}, {"title": "Application Markup", "nav": "Application Markup", "kicker": "Assessment", "body": "\n<pre class=\"code\"><code>&lt;section data-panel=\"customer\"&gt;\n  &lt;input name=\"customerName\" aria-label=\"Customer Name\"&gt;\n  &lt;button class=\"btn\" data-action=\"edit\"&gt;Edit&lt;/button&gt;\n  &lt;button class=\"btn primary\" data-action=\"save\"&gt;Save&lt;/button&gt;\n&lt;/section&gt;\n\n&lt;section data-panel=\"billing\"&gt;\n  &lt;button class=\"btn\" data-action=\"edit\"&gt;Edit&lt;/button&gt;\n&lt;/section&gt;\n\n&lt;div role=\"dialog\" hidden&gt;\n  &lt;button class=\"btn primary\" data-action=\"save\"&gt;Save&lt;/button&gt;\n&lt;/div&gt;</code></pre>\n<p>The live application may change state during the assessment. Inspect and test—do not rely only on this initial snippet.</p>\n"}, {"title": "Task 1: Inspect and Inventory", "nav": "Task 1: Inspect and Inventory", "kicker": "Assessment", "body": "\n<p>Inspect the specified interface elements and record:</p>\n<ul><li>Element type.</li><li>Visible text or accessible label.</li><li>Relevant stable-looking attributes.</li><li>Parent/context information.</li><li>Whether the element is present, visible, or conditional.</li></ul>\n<p><strong>Required targets:</strong> Customer Name field, Customer Edit, Customer Save, Billing Edit, Modal Save.</p>\n"}, {"title": "Task 2: Build and Test Selectors", "nav": "Task 2: Build and Test Selectors", "kicker": "Assessment", "body": "\n<p>For each required target:</p>\n<ol class=\"compact-ol\"><li>Write a candidate selector.</li><li>Test it with <code>querySelectorAll()</code>.</li><li>Record the match count.</li><li>Confirm the match is the intended element.</li><li>Revise if the selector is ambiguous or unstable.</li></ol>\n"}, {"title": "Task 3: Resolve Repeated Controls", "nav": "Task 3: Resolve Repeated Controls", "kicker": "Assessment", "body": "\n<p>The selector <code>[data-action=\"edit\"]</code> matches both Customer Edit and Billing Edit.</p>\n<p>Produce separate selectors for each control and explain the contextual information used to distinguish them.</p>\n"}, {"title": "Task 4: Handle the Dynamic Modal", "nav": "Task 4: Handle the Dynamic Modal", "kicker": "Assessment", "body": "\n<p>The modal is inserted or revealed only after a user action. The background page also contains a Save button.</p>\n<ul><li>Explain how you will avoid matching the background Save.</li><li>State how you will verify the modal Save is visible.</li><li>Describe any OGL runtime consideration needed if the modal appears later or is recreated.</li></ul>\n"}, {"title": "Task 5: Repair Broken Selectors", "nav": "Task 5: Repair Broken Selectors", "kicker": "Assessment", "body": "\n<table class=\"clean-table\"><tr><th>Existing selector</th><th>Observed issue</th></tr><tr><td><code>.btn</code></td><td>Matches every action button.</td></tr><tr><td><code>#button_9384721</code></td><td>Works once, fails after refresh.</td></tr><tr><td><code>button.primary</code></td><td>Matches Customer Save and Modal Save.</td></tr></table>\n<p>Replace each selector and explain why the replacement is stronger.</p>\n"}, {"title": "Task 6: Troubleshoot a Conditional Step", "nav": "Task 6: Troubleshoot Conditional Step", "kicker": "Assessment", "body": "\n<p>For some records, the Approve button does not appear. The current guide waits indefinitely for it.</p>\n<p>Determine whether this represents:</p>\n<ul><li>a selector defect,</li><li>a legitimate optional workflow,</li><li>a visibility problem, or</li><li>a timing problem.</li></ul>\n<p>Document the evidence you would collect before changing the OGL step configuration.</p>\n"}, {"title": "Task 7: Document Your Targeting Decisions", "nav": "Task 7: Document Decisions", "kicker": "Assessment", "body": "\n<table class=\"clean-table\"><tr><th>Required field</th><th>What to provide</th></tr><tr><td>Target</td><td>Business meaning of the element.</td></tr><tr><td>Selector</td><td>Final tested selector.</td></tr><tr><td>Match count</td><td>Number of matches in the required state.</td></tr><tr><td>Rationale</td><td>Why the selector is correct and stable enough.</td></tr><tr><td>Dependencies</td><td>Required panel, modal, role, record, or state.</td></tr><tr><td>Regression notes</td><td>States that must be retested after changes.</td></tr></table>\n"}, {"title": "Assessment Rubric", "nav": "Assessment Rubric", "kicker": "Assessment", "body": "\n<table class=\"clean-table\"><tr><th>Criterion</th><th>Weight</th><th>Evidence</th></tr><tr><td>Target accuracy</td><td>25%</td><td>Correct business element selected.</td></tr><tr><td>Selector construction</td><td>25%</td><td>Valid, appropriate selectors with verified match counts.</td></tr><tr><td>Context & dynamic handling</td><td>20%</td><td>Repeated and dynamic controls handled correctly.</td></tr><tr><td>Troubleshooting</td><td>15%</td><td>Systematic diagnosis rather than guesswork.</td></tr><tr><td>Maintenance rationale</td><td>15%</td><td>Clear documentation, dependencies, and regression plan.</td></tr></table>\n<p><strong>Recommended passing standard:</strong> 85%, with no critical target error on the core Save/Submit workflow.</p>\n"}, {"title": "Submission Checklist", "nav": "Submission Checklist", "kicker": "Assessment", "body": "\n<div class=\"checklist\">\n<label><input type=\"checkbox\"> Target inventory completed.</label>\n<label><input type=\"checkbox\"> Final selectors tested and match counts recorded.</label>\n<label><input type=\"checkbox\"> Repeated controls resolved with context.</label>\n<label><input type=\"checkbox\"> Dynamic modal strategy documented.</label>\n<label><input type=\"checkbox\"> Broken selectors repaired.</label>\n<label><input type=\"checkbox\"> Conditional-step diagnosis documented.</label>\n<label><input type=\"checkbox\"> Selector rationale and regression notes included.</label>\n</div>\n<div class=\"callout\"><strong>Assessment principle:</strong> the deliverable is not only working code. It is evidence that the learner can reason about OGL targeting as a maintainable development practice.</div>\n"}]}];
+let currentLesson=0,currentSlide=0,isHome=true;
+const nav=document.getElementById('lessonNav'),stage=document.getElementById('stage'),progressBar=document.getElementById('progressBar'),progressText=document.getElementById('progressText'),counter=document.getElementById('counter'),topKicker=document.getElementById('topKicker'),topTitle=document.getElementById('topTitle'),prev=document.getElementById('prevBtn'),next=document.getElementById('nextBtn');
+
+function buildNav(){
+  nav.innerHTML='';
+  lessons.forEach((lesson,li)=>{
+    const sec=document.createElement('section');sec.className='lesson-group'+(!isHome&&li===currentLesson?' open':'');
+    const toggle=document.createElement('button');toggle.className='lesson-toggle';toggle.setAttribute('aria-expanded',(!isHome&&li===currentLesson)?'true':'false');
+    toggle.innerHTML=`<span class="lesson-no">${String(li+1).padStart(2,'0')}</span><span class="lesson-copy"><strong>${lesson.title}</strong><small>${lesson.slides.length} slides</small></span><span class="caret">⌄</span>`;
+    const list=document.createElement('div');list.className='slide-list';list.hidden=isHome||li!==currentLesson;
+    lesson.slides.forEach((s,si)=>{
+      const b=document.createElement('button');b.className='slide-link'+(!isHome&&li===currentLesson&&si===currentSlide?' active':'');b.textContent=`${si+1}. ${s.nav}`;b.onclick=()=>{isHome=false;currentLesson=li;currentSlide=si;render();};list.appendChild(b);
+    });
+    toggle.onclick=()=>{
+      isHome=false;
+      const open=toggle.getAttribute('aria-expanded')==='true';
+      document.querySelectorAll('.lesson-group').forEach(g=>{g.classList.remove('open');g.querySelector('.lesson-toggle').setAttribute('aria-expanded','false');g.querySelector('.slide-list').hidden=true;});
+      if(!open){sec.classList.add('open');toggle.setAttribute('aria-expanded','true');list.hidden=false;}
+    };
+    sec.append(toggle,list);nav.appendChild(sec);
+  });
+}
+function modulePosition(){
+  let before=0,total=0;
+  lessons.forEach((l,i)=>{total+=l.slides.length;if(i<currentLesson)before+=l.slides.length;});
+  return {n:before+currentSlide+1,total};
+}
+
+function renderHome(){
+  isHome=true;
+  const homeLink=document.getElementById('homeLink');
+  if(homeLink) homeLink.classList.add('active');
+  document.querySelectorAll('.lesson-group').forEach(g=>{
+    g.classList.remove('open');
+    g.querySelector('.lesson-toggle').setAttribute('aria-expanded','false');
+    g.querySelector('.slide-list').hidden=true;
+  });
+
+  stage.innerHTML=`
+    <div class="module-home">
+      <div class="home-breadcrumb"><span class="module-chip">Module 1</span>Oracle Guided Learning Developer</div>
+      <h1>Web Foundations and OGL Targeting</h1>
+      <p class="home-subtitle">
+        This module builds the technical foundation Guide Developers need to inspect web interfaces,
+        construct reliable selectors, apply them in Oracle Guided Learning, and troubleshoot targeting
+        issues in complex enterprise applications.
+      </p>
+      <div class="home-divider"></div>
+
+      <div class="home-grid">
+        <section class="home-section">
+          <h2>Module Objectives</h2>
+          <p>By the end of this module, learners will be able to:</p>
+          <ul class="home-objectives">
+            <li><strong>Inspect</strong> HTML and DOM structures to identify relevant interface elements and attributes.</li>
+            <li><strong>Construct and test</strong> CSS selectors for common and complex targeting scenarios.</li>
+            <li><strong>Apply</strong> selector knowledge to Oracle Guided Learning targets and step behavior.</li>
+            <li><strong>Resolve</strong> repeated, contextual, hidden, and dynamically rendered targets.</li>
+            <li><strong>Troubleshoot</strong> broken OGL targets using a systematic diagnostic workflow.</li>
+            <li><strong>Evaluate and maintain</strong> selectors using correctness, uniqueness, stability, context, and maintainability criteria.</li>
+          </ul>
+
+          <div class="home-meta">
+            <span>Part of the course: Oracle Guided Learning Developer</span>
+            <span>7 lessons + assessment</span>
+            <span>Hands-on coding</span>
+            <span>Interactive activities</span>
+          </div>
+
+          <button class="start-lesson-btn" id="startLesson1" type="button">Start Lesson 1 →</button>
+        </section>
+
+        <section class="home-section">
+          <h2>Lessons in This Module</h2>
+          <div class="lesson-overview">
+            <div class="lesson-overview-item"><span class="num">1</span><div><strong>HTML and CSS</strong><span>Read web structure, attributes, DOM relationships, and basic selector syntax.</span></div></div>
+            <div class="lesson-overview-item"><span class="num">2</span><div><strong>CSS Selectors for OGL Targeting</strong><span>Build, test, compare, and strengthen selector patterns.</span></div></div>
+            <div class="lesson-overview-item"><span class="num">3</span><div><strong>Applying Selectors in Oracle Guided Learning</strong><span>Connect selector decisions to actual OGL targets and step behavior.</span></div></div>
+            <div class="lesson-overview-item"><span class="num">4</span><div><strong>Targeting Repeated and Contextual Elements</strong><span>Handle tables, cards, rows, repeated actions, and modals.</span></div></div>
+            <div class="lesson-overview-item"><span class="num">5</span><div><strong>Targeting Dynamic Interfaces</strong><span>Work with hidden, async, modal, dropdown, and SPA-rendered elements.</span></div></div>
+            <div class="lesson-overview-item"><span class="num">6</span><div><strong>Troubleshooting Broken OGL Targets</strong><span>Diagnose selector, state, role, condition, and release-related failures.</span></div></div>
+            <div class="lesson-overview-item"><span class="num">7</span><div><strong>Selector Quality and Maintenance</strong><span>Review, document, maintain, and regression-test production selectors.</span></div></div>
+            <div class="lesson-overview-item"><span class="num">8</span><div><strong>OGL Targeting Challenge</strong><span>Complete the end-of-module performance assessment.</span></div></div>
+          </div>
+        </section>
+      </div>
+    </div>`;
+
+  topKicker.textContent='Course · Oracle Guided Learning Developer';
+  topTitle.textContent='Module 1 · Web Foundations and OGL Targeting';
+  counter.textContent='Module Info';
+  progressText.textContent='Module overview';
+  progressBar.style.width='0%';
+  prev.disabled=true;
+  next.disabled=false;
+  next.textContent='Start Lesson 1 →';
+
+  const start=document.getElementById('startLesson1');
+  if(start) start.onclick=()=>{isHome=false;currentLesson=0;currentSlide=0;render();};
+  buildNav();
+}
+
+function render(){
+  if(isHome){ renderHome(); return; }
+  const homeLink=document.getElementById('homeLink'); if(homeLink) homeLink.classList.remove('active');
+  next.textContent='Next →';
+  const lesson=lessons[currentLesson],s=lesson.slides[currentSlide],pos=modulePosition();
+  stage.innerHTML=`<div class="kicker">${s.kicker}</div><h1>${s.title}</h1><div class="rule"></div>${s.body}<div class="slide-footer"><strong>Oracle Guided Learning Developer</strong><span>Module 1 · Web Foundations and OGL Targeting</span></div>`;
+  topKicker.textContent=`Lesson ${currentLesson+1} · Slide ${currentSlide+1} of ${lesson.slides.length}`;
+  topTitle.textContent=lesson.title;
+  counter.textContent=`Slide ${currentSlide+1} of ${lesson.slides.length}`;
+  progressText.textContent=`${pos.n} of ${pos.total} slides`;
+  progressBar.style.width=(pos.n/pos.total*100)+'%';
+  prev.disabled=currentLesson===0&&currentSlide===0;
+  next.disabled=currentLesson===lessons.length-1&&currentSlide===lesson.slides.length-1;
+  buildNav();
+  mountActivity();
+}
+prev.onclick=()=>{
+  if(isHome) return;
+  if(currentSlide>0) currentSlide--;
+  else if(currentLesson>0){currentLesson--;currentSlide=lessons[currentLesson].slides.length-1;}
+  else {isHome=true;}
+  render();
+};
+next.onclick=()=>{
+  if(isHome){isHome=false;currentLesson=0;currentSlide=0;render();return;}
+  if(currentSlide<lessons[currentLesson].slides.length-1) currentSlide++;
+  else if(currentLesson<lessons.length-1){currentLesson++;currentSlide=0;}
+  render();
+};
+const homeLink=document.getElementById('homeLink');
+if(homeLink) homeLink.addEventListener('click',()=>{isHome=true;render();});
+render();
+</script>
+
+<script>
+(function(){
+  const splash = document.getElementById('moduleSplash');
+  const start = document.getElementById('startModuleBtn');
+  if(!splash || !start) return;
+
+  // Lock page scroll until learner starts the module.
+  document.body.style.overflow = 'hidden';
+
+  function closeSplash(){
+    splash.classList.add('is-hidden');
+    document.body.style.overflow = '';
+    setTimeout(()=>{ splash.setAttribute('aria-hidden','true'); }, 460);
+  }
+
+  start.addEventListener('click', closeSplash);
+
+  // Keyboard accessibility: Enter/Space on button works natively; Escape also closes.
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && !splash.classList.contains('is-hidden')){
+      closeSplash();
+    }
+  });
+})();
+</script>
+
+
+<script>
+(function(){
+  const btn = document.getElementById('fullscreenBtn');
+  const label = document.getElementById('fullscreenLabel');
+  if(!btn) return;
+
+  function updateFullscreenUI(){
+    const active = !!document.fullscreenElement;
+    label.textContent = active ? 'Exit Full Screen' : 'Full Screen';
+    btn.setAttribute('aria-label', active ? 'Exit full screen' : 'Enter full screen');
+  }
+
+  async function toggleFullscreen(){
+    try{
+      if(!document.fullscreenElement){
+        await document.documentElement.requestFullscreen();
+      }else{
+        await document.exitFullscreen();
+      }
+    }catch(e){
+      console.warn('Fullscreen mode could not be activated:', e);
+    }
+  }
+
+  btn.addEventListener('click', toggleFullscreen);
+  document.addEventListener('fullscreenchange', updateFullscreenUI);
+  updateFullscreenUI();
+})();
+</script>
+
+
+<script>
+const activityBanks = {"l1": [{"type": "single", "q": "Which part of this element is the attribute name that most directly describes the intended action?", "code": "<button class=\"btn primary\" data-action=\"save\">Save</button>", "opts": ["button", "class", "data-action", "Save"], "ans": [2], "exp": "data-action is the attribute name; its value 'save' expresses the application action."}, {"type": "multi", "q": "Which statements about the DOM structure below are correct?", "code": "<section id=\"customer\">\\n  <div class=\"actions\">\\n    <button>Cancel</button>\\n    <button>Save</button>\\n  </div>\\n</section>", "opts": ["The section is an ancestor of both buttons.", "The two buttons are siblings.", "The div is a sibling of the buttons.", "The buttons are descendants of the section."], "ans": [0, 1, 3], "exp": "The buttons share the same parent, making them siblings; both are descendants of the section."}, {"type": "single", "q": "What is the best description of the relationship between HTML and CSS for Guide Developers?", "opts": ["HTML controls only color; CSS creates the DOM.", "HTML provides structure; CSS applies presentation using selectors.", "CSS is required to create HTML attributes.", "HTML and CSS are interchangeable in targeting."], "ans": [1], "exp": "Guide Developers primarily need HTML structure plus enough CSS selector knowledge to identify elements."}, {"type": "single", "q": "In DevTools, you inspect a Save button and see id='btn_9384721', class='primary', and data-action='save'. What should you do next before assuming the ID is the best targeting clue?", "opts": ["Use the ID immediately because IDs are always stable.", "Refresh or change state and check whether the ID remains the same.", "Ignore all attributes and target the visible text only.", "Use the longest CSS path available."], "ans": [1], "exp": "Generated-looking IDs should be tested across refresh/state changes before being trusted."}, {"type": "multi", "q": "Which information is useful to record while inspecting a possible OGL target?", "opts": ["Element type", "Relevant attributes", "Meaningful parent context", "Only the pixel position on screen"], "ans": [0, 1, 2], "exp": "Element type, attributes, and context help construct and troubleshoot selectors; screen position is not a reliable targeting identity."}, {"type": "single", "q": "Which selector would match every button in the page?", "opts": ["#saveCustomer", ".primary", "button", "[data-action='save']"], "ans": [2], "exp": "The type selector button matches all button elements."}], "l2": [{"type": "single", "q": "Which selector most precisely matches the Save button in this markup?", "code": "<button class=\"btn primary\" data-action=\"save\">Save</button>", "opts": ["button", ".primary", "button[data-action='save']", ".btn"], "ans": [2], "exp": "It combines the element type with a meaningful action attribute."}, {"type": "multi", "q": "Which selectors could match the same element below?", "code": "<input id=\"invoiceNumber\" class=\"required field\" name=\"invoiceNumber\">", "opts": ["#invoiceNumber", ".required", "input[name='invoiceNumber']", ".optional"], "ans": [0, 1, 2], "exp": "The element has the matching ID, class, and name attribute; it does not have class optional."}, {"type": "single", "q": "What does this selector mean?", "code": "#billing .edit", "opts": ["An element with both IDs billing and edit.", "Any .edit descendant inside #billing.", "Only an immediate .edit child of #billing.", "The element immediately after #billing."], "ans": [1], "exp": "A space is the descendant combinator."}, {"type": "single", "q": "A selector returns exactly one match, but it uses #button_827361 and the number changes after every refresh. Which quality criterion is failing?", "opts": ["Uniqueness", "Stability", "Syntax validity", "Visibility"], "ans": [1], "exp": "The selector is unique now but not stable across sessions."}, {"type": "multi", "q": "Which actions are appropriate when testing a selector in DevTools?", "opts": ["Check document.querySelectorAll(...).length", "Confirm the matched element is the intended business control", "Test after relevant state changes or refreshes", "Assume one match means the selector is production-ready"], "ans": [0, 1, 2], "exp": "Match count, target correctness, and state testing are all necessary; one match alone is insufficient."}, {"type": "single", "q": "Two Save buttons exist in Customer and Vendor sections. Which selector best targets only Customer Save?", "code": "<section data-section=\"customer\"><button data-action=\"save\">Save</button></section>\\n<section data-section=\"vendor\"><button data-action=\"save\">Save</button></section>", "opts": ["button", "[data-action='save']", "[data-section='customer'] [data-action='save']", ".primary"], "ans": [2], "exp": "The stable section context distinguishes the intended Save button."}], "l3": [{"type": "single", "q": "Which statement best distinguishes an OGL target from a selector?", "opts": ["The target is the intended interface element; the selector is how OGL identifies it.", "The selector is visible to the learner; the target is hidden code.", "They are exactly the same concept.", "The target is always an ID."], "ans": [0], "exp": "Target choice is the design decision; the selector is the technical identification mechanism."}, {"type": "single", "q": "A tooltip says 'Select Save' but the selector points to Cancel. The selector is syntactically valid. What is the primary failure?", "opts": ["Selector syntax", "Target selection", "Tooltip font", "Browser compatibility"], "ans": [1], "exp": "The developer identified the wrong conceptual target even though the selector itself is valid."}, {"type": "multi", "q": "Which statements describe a correct OGL targeting setup?", "opts": ["The instruction and visual target refer to the same action.", "The selector identifies the intended element in context.", "Tooltip placement reinforces the intended control.", "Any unique element is acceptable even if it is not the required action."], "ans": [0, 1, 2], "exp": "Instruction, selector, and visual placement must all align with the workflow requirement."}, {"type": "single", "q": "When would a Visible Element condition be more appropriate than an Element condition?", "opts": ["When the control may exist in the DOM but be hidden in an inactive panel.", "When the selector contains an ID.", "When every element is always visible.", "When the guide has only one step."], "ans": [0], "exp": "Visible Element is stricter and useful when DOM presence alone is not enough."}, {"type": "single", "q": "A selector matches three repeated controls and OGL could display duplicate tips. What should the developer evaluate first?", "opts": ["Whether the selector can be refined to the intended context.", "Whether the tooltip color should change.", "Whether the lesson needs fewer objectives.", "Whether the browser zoom is 100%."], "ans": [0], "exp": "Runtime options can help, but the first question is whether the selector itself is too broad."}, {"type": "multi", "q": "Which are examples of runtime targeting concerns rather than basic selector syntax problems?", "opts": ["Element disappears and later reappears.", "Target exists but is hidden.", "Selector uses an invalid closing bracket.", "Modal is rendered only after a click."], "ans": [0, 1, 3], "exp": "These concern application state and timing. Invalid syntax is a selector construction problem."}], "l4": [{"type": "single", "q": "Three Edit buttons share class .edit. What is the strongest general strategy?", "opts": ["Use .edit and hope OGL picks the right one.", "Add meaningful parent or state context.", "Use nth-child for every case.", "Use the visible word Edit only."], "ans": [1], "exp": "Context distinguishes repeated controls without relying on fragile position."}, {"type": "single", "q": "Which selector targets the Edit button inside the Billing section?", "code": "<section data-section=\"customer\"><button class=\"edit\">Edit</button></section>\\n<section data-section=\"billing\"><button class=\"edit\">Edit</button></section>", "opts": [".edit", "button", "[data-section='billing'] .edit", "section .edit"], "ans": [2], "exp": "The billing container provides the context needed to isolate the intended control."}, {"type": "multi", "q": "Why might tr[data-record-id='C1024'] button.edit be inappropriate for a reusable guide?", "opts": ["It may only work for record C1024.", "The guide may need to work for many records.", "Record IDs can encode data-specific context.", "Attribute selectors can never be used in OGL."], "ans": [0, 1, 2], "exp": "Record-specific values can make a selector too narrow for generic workflows."}, {"type": "single", "q": "A background Save button and a modal Save button both exist. Which selector best targets the modal control?", "opts": ["[data-action='save']", "button.primary", "[role='dialog'] [data-action='save']", "body button"], "ans": [2], "exp": "Dialog context distinguishes the active modal control."}, {"type": "single", "q": "Why is .action-bar button:nth-child(2) often less maintainable than a semantic attribute selector?", "opts": ["nth-child is invalid CSS.", "It depends on position, which can change when controls are inserted.", "It always matches zero elements.", "It cannot be tested in DevTools."], "ans": [1], "exp": "Positional selectors couple the guide to layout order rather than business meaning."}, {"type": "multi", "q": "Which context types can legitimately help identify a repeated control?", "opts": ["Stable panel/container", "Selected row state", "Dialog role", "Random generated wrapper depth"], "ans": [0, 1, 2], "exp": "Meaningful structure and state are useful; arbitrary wrapper depth is usually brittle."}], "l5": [{"type": "single", "q": "The selector is correct but returns 0 matches until a dropdown opens. What is the primary issue?", "opts": ["Selector syntax", "Target availability/state", "CSS specificity", "Duplicate tooltip setting"], "ans": [1], "exp": "The element does not exist until the dropdown is opened."}, {"type": "single", "q": "An Approve button exists in the DOM with display:none. Which statement is most accurate?", "opts": ["It is absent from the DOM.", "It exists but is not visible.", "The selector must be invalid.", "It is automatically actionable."], "ans": [1], "exp": "DOM presence and visibility are separate conditions."}, {"type": "multi", "q": "Which UI patterns commonly create dynamic targeting challenges?", "opts": ["Dropdown menus", "Modal dialogs", "Async search results", "Static paragraph text"], "ans": [0, 1, 2], "exp": "These components often appear, disappear, or render later."}, {"type": "single", "q": "A SPA replaces a Save button with a newly rendered DOM node after an update. The selector text still matches. Which OGL behavior may matter?", "opts": ["Monitoring for the selector as the element reappears.", "Changing the font weight.", "Using a more colorful tooltip.", "Removing all conditions."], "ans": [0], "exp": "Re-rendered nodes can require OGL to continue monitoring for the target."}, {"type": "single", "q": "Some records legitimately never display an Approve button. What should the developer determine before changing the selector?", "opts": ["Whether the step is an optional workflow state.", "Whether the button should be renamed.", "Whether the browser cache is empty.", "Whether all IDs should be removed."], "ans": [0], "exp": "The absence may be valid business logic rather than a targeting defect."}, {"type": "multi", "q": "For a dynamic target that intermittently fails, which checks belong in the diagnostic process?", "opts": ["Does the element exist now?", "Is it visible?", "Is it created later or recreated?", "Is the selector color-coded?"], "ans": [0, 1, 2], "exp": "Existence, visibility, and render timing are core dynamic-target checks."}], "l6": [{"type": "single", "q": "A tooltip does not appear. What is the best first troubleshooting move?", "opts": ["Immediately replace the selector with a longer one.", "Reproduce the failure and inspect whether the intended element exists in the current state.", "Delete the step.", "Change the tooltip position."], "ans": [1], "exp": "Start from the actual page state and observable symptom before modifying code."}, {"type": "single", "q": "document.querySelectorAll(selector).length returns 3. What should you investigate next?", "opts": ["Whether all three are intended matches and, if not, what context distinguishes the target.", "Whether the browser is in dark mode.", "Whether the slide deck has enough content.", "Whether the selector should be converted to XPath automatically."], "ans": [0], "exp": "Multiple matches indicate ambiguity that usually requires context or intentional runtime handling."}, {"type": "multi", "q": "A guide works for Administrator but not Viewer. Which checks are relevant?", "opts": ["Whether Viewer sees the same control", "Permission/role differences", "Whether step conditions depend on role-specific UI", "Only the font used in the tooltip"], "ans": [0, 1, 2], "exp": "Role differences can change both the rendered interface and condition behavior."}, {"type": "single", "q": "The selector returns one correct match, but the step still does not appear. What should be checked next?", "opts": ["Step/page conditions and activation logic", "Whether the selector has at least five classes", "Whether the code uses double quotes", "Whether the target is centered on screen"], "ans": [0], "exp": "If the selector is valid and correct, OGL logic may be preventing the step from appearing."}, {"type": "single", "q": "After a release, class .oj-old-button no longer exists. What is the strongest repair approach?", "opts": ["Add more nth-child selectors around the missing class.", "Inspect the new DOM and rebuild the selector using stable current attributes/context.", "Keep the old selector and retry repeatedly.", "Use the entire DOM path from body."], "ans": [1], "exp": "Repair should be based on the current interface, not on stale assumptions."}, {"type": "multi", "q": "Which belong in regression testing after a selector repair?", "opts": ["Refresh and retest", "Try representative records", "Test supported roles", "Run the guide from the beginning"], "ans": [0, 1, 2, 3], "exp": "A selector repair should survive realistic roles, records, states, and the full guide flow."}], "l7": [{"type": "single", "q": "Which selector has the highest obvious maintenance risk?", "opts": ["[data-action='save']", "[role='dialog'] [data-action='save']", "body > div:nth-child(4) > div:nth-child(2) > button:nth-child(3)", "input[name='invoiceNumber']"], "ans": [2], "exp": "The deep positional chain is tightly coupled to layout structure."}, {"type": "multi", "q": "Which criteria belong in a production selector quality review?", "opts": ["Correctness", "Uniqueness", "Stability", "Maintainability"], "ans": [0, 1, 2, 3], "exp": "All four are essential; specificity/context may also be considered."}, {"type": "single", "q": "Why should selector rationale be documented?", "opts": ["So future developers understand why the selector was chosen and what assumptions it depends on.", "Because CSS requires comments to run.", "To make the selector longer.", "To avoid all regression testing."], "ans": [0], "exp": "Documentation supports maintenance, peer review, and future repair."}, {"type": "single", "q": "A generated ID selector works today but changes every session. Which action best reflects good maintenance practice?", "opts": ["Keep it because it is currently unique.", "Replace it with a more stable semantic selector when available.", "Add more generated IDs.", "Convert it to a positional selector."], "ans": [1], "exp": "Uniqueness alone does not justify keeping a transient dependency."}, {"type": "multi", "q": "What should a shared selector library include?", "opts": ["Selector text", "Intended application area/control", "Known dependencies or exceptions", "Validation/review information"], "ans": [0, 1, 2, 3], "exp": "A useful library captures both the selector and the context needed to maintain it."}, {"type": "single", "q": "When should a working selector be refactored?", "opts": ["Never—working means finished.", "When it carries avoidable risk such as generated values or deep positional structure.", "Only when the tooltip text changes.", "Only if it matches zero elements."], "ans": [1], "exp": "Refactoring is appropriate when a selector works but is unnecessarily brittle or hard to maintain."}]};
+
+function mountActivity(){
+  const host = document.querySelector('.activity-player');
+  if(!host) return;
+  const id = host.dataset.activity;
+  const bank = activityBanks[id];
+  if(!bank) return;
+
+  let index=0, score=0, answered=false;
+  const responses=[];
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+  }
+
+  function renderQuestion(){
+    answered=false;
+    const item=bank[index];
+    const type=item.type==='multi'?'checkbox':'radio';
+    const help=item.type==='multi'?'Select all that apply.':'Select one answer.';
+    host.innerHTML=`
+      <div class="aq-head">
+        <div class="aq-progress">Question ${index+1} of ${bank.length}</div>
+        <div class="aq-score">Score: ${score}/${bank.length}</div>
+      </div>
+      <div class="aq-track"><div style="width:${(index/bank.length)*100}%"></div></div>
+      <div class="aq-question">${esc(item.q)}</div>
+      ${item.code?`<pre class="aq-code">${esc(item.code)}</pre>`:''}
+      <div class="aq-help">${help}</div>
+      <div class="aq-options">
+        ${item.opts.map((o,i)=>`<label class="aq-option"><input type="${type}" name="aq" value="${i}"><span>${esc(o)}</span></label>`).join('')}
+      </div>
+      <div class="aq-actions">
+        <div class="aq-feedback" aria-live="polite"></div>
+        <button type="button" class="aq-btn primary aq-submit">Submit Answer</button>
+      </div>`;
+
+    const submit=host.querySelector('.aq-submit');
+    submit.addEventListener('click',()=>{
+      if(answered) return;
+      const checked=[...host.querySelectorAll('input[name="aq"]:checked')].map(x=>Number(x.value)).sort((a,b)=>a-b);
+      if(!checked.length){
+        host.querySelector('.aq-feedback').textContent='Choose an answer before submitting.';
+        return;
+      }
+      answered=true;
+      const expected=[...item.ans].sort((a,b)=>a-b);
+      const correct=checked.length===expected.length && checked.every((v,i)=>v===expected[i]);
+      if(correct) score++;
+
+      responses.push({q:item.q, correct});
+      host.querySelectorAll('.aq-option').forEach((label,i)=>{
+        if(expected.includes(i)) label.classList.add('is-correct');
+        if(checked.includes(i) && !expected.includes(i)) label.classList.add('is-wrong');
+        label.querySelector('input').disabled=true;
+      });
+      host.querySelector('.aq-feedback').innerHTML=`<strong>${correct?'Correct.':'Not quite.'}</strong> ${esc(item.exp)}`;
+      submit.textContent=index===bank.length-1?'View Score':'Next Question';
+      submit.onclick=()=>{
+        if(index<bank.length-1){index++;renderQuestion();}
+        else renderResult();
+      };
+    });
+  }
+
+  function renderResult(){
+    const passed=score>=5;
+    const pct=Math.round(score/bank.length*100);
+    host.innerHTML=`
+      <div class="aq-result">
+        <div class="aq-result-score">${score}/${bank.length}</div>
+        <h3>${passed?'Activity passed':'Review and retry'}</h3>
+        <p>You scored ${pct}%. ${passed?'You met the 83% mastery threshold for this lesson activity.':'The mastery threshold is 5 of 6. Review the feedback and try again.'}</p>
+        <button type="button" class="aq-btn primary aq-retry">Retry Activity</button>
+        <div class="aq-review">
+          ${responses.map((r,i)=>`<div class="aq-review-row"><b>${r.correct?'✓':'✕'} Question ${i+1}</b> — ${esc(r.q)}</div>`).join('')}
+        </div>
+      </div>`;
+    host.querySelector('.aq-retry').addEventListener('click',()=>{index=0;score=0;responses.length=0;renderQuestion();});
+  }
+
+  renderQuestion();
+}
+</script>
+
+</body>
+</html>

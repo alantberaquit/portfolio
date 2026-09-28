@@ -6496,20 +6496,278 @@ body{
   }
 }
 
+
+/* ===== Focused portfolio: TaskFlow, Client Escalation, Guide Developer Modules, 3 Curricula ===== */
+#onboarding{scroll-margin-top:100px}
+.guide-module-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+}
+.guide-module-card{
+  position:relative;
+  min-height:360px;
+  padding:30px;
+  border:1px solid #d8e0e8;
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 10px 26px rgba(28,40,62,.055);
+  display:flex;
+  flex-direction:column;
+}
+.guide-module-number{
+  position:absolute;
+  right:24px;
+  top:22px;
+  color:#cbd4de;
+  font-family:"Outfit",sans-serif;
+  font-size:46px;
+  line-height:1;
+  font-weight:800;
+}
+.guide-module-card h3{
+  margin:13px 70px 10px 0;
+  font-family:"Outfit",sans-serif;
+  font-size:28px;
+  line-height:1.08;
+  letter-spacing:-.03em;
+}
+.guide-module-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:13.5px;
+  line-height:1.65;
+}
+.guide-module-card .tags{margin-top:18px}
+.guide-module-launch{
+  margin-top:auto;
+  padding-top:24px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--red);
+  font-family:"Outfit",sans-serif;
+  font-size:13px;
+  font-weight:800;
+}
+.guide-program-note{
+  margin-top:16px;
+  padding:16px 20px;
+  border-left:3px solid var(--red);
+  background:#fff;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:10px;
+  color:#667181;
+  font-size:12px;
+}
+.guide-program-note strong{color:var(--ink);font-family:"Outfit",sans-serif;margin-right:5px}
+.guide-program-note i{color:var(--red)}
+.scenario-featured{margin-top:28px}
+@media(max-width:820px){
+  .guide-module-grid{grid-template-columns:1fr}
+  .guide-module-card{min-height:0}
+}
 </style>
+<style>
+/* ===== v2 portfolio expansion: nav, module visuals, and TechTrain OS ===== */
+.navlinks{gap:22px !important; flex-wrap:wrap; justify-content:center;}
+.navlinks a{white-space:nowrap;}
+
+.visual-module-card{
+  padding:0 !important;
+  overflow:hidden;
+  min-height:0 !important;
+}
+.visual-module-card .guide-module-number{
+  top:16px !important;
+  right:18px !important;
+  color:rgba(255,255,255,.92) !important;
+  text-shadow:0 2px 12px rgba(44,47,69,.25);
+  z-index:2;
+}
+.guide-module-preview{
+  height:200px;
+  background:#d7ebfb;
+  border-bottom:1px solid #d8e0e8;
+}
+.guide-module-preview img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.guide-module-inner{
+  padding:24px 26px 28px;
+  display:flex;
+  flex-direction:column;
+  flex:1;
+}
+.guide-module-inner .card-kicker{margin-top:2px;}
+.visual-module-card h3{font-size:26px !important; margin:12px 70px 10px 0 !important;}
+.visual-module-card .tags{margin-top:16px !important;}
+.visual-module-card .guide-module-launch{padding-top:22px !important;}
+
+.web-additional{margin-top:14px;}
+.techtrain-card{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border:1px solid #d8e0e8;
+  border-radius:22px;
+  overflow:hidden;
+  background:#fff;
+}
+.techtrain-visual{
+  padding:18px;
+  background:#d5e8f7;
+}
+.techtrain-body{
+  padding:22px 22px 20px;
+  display:flex;
+  flex-direction:column;
+}
+.techtrain-body h3{
+  margin:8px 0 7px;
+  font-family:"Outfit",sans-serif;
+  font-size:24px;
+}
+.techtrain-body p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.62;
+}
+.techtrain-metrics{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:14px;
+}
+.techtrain-metrics div{
+  padding:8px 10px;
+  border-radius:12px;
+  background:#f4f7fa;
+}
+.techtrain-metrics strong,
+.techtrain-metrics small{display:block;}
+.techtrain-metrics strong{font-family:"Outfit",sans-serif;font-size:15px;color:var(--ink);}
+.techtrain-metrics small{margin-top:2px;color:#708091;font-size:10px;line-height:1.35;}
+.techtrain-schedule{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.techtrain-schedule span{
+  min-height:42px;
+  border-radius:12px;
+  background:#eef3f7;
+  border:1px solid #d8e0e8;
+}
+.techtrain-schedule span.wide{grid-column:1 / -1;}
+
+@media(max-width:1100px){
+  .topnav{height:auto !important; padding-top:18px !important; padding-bottom:18px !important;}
+  .techtrain-card{grid-template-columns:1fr;}
+}
+@media(max-width:820px){
+  .guide-module-preview{height:180px;}
+  .guide-module-inner{padding:22px 22px 24px;}
+}
+</style>
+
+<style>
+/* ===== v4 standardized section introductions + web layout safeguard ===== */
+.section-head{
+  grid-template-columns:minmax(0,1fr) minmax(320px,420px) !important;
+  gap:42px !important;
+  align-items:end !important;
+}
+.section-intro-wrap{
+  padding-left:18px;
+  border-left:3px solid var(--red);
+}
+.section-intro-kicker{
+  margin-bottom:8px;
+  color:var(--red);
+  font-family:"Outfit",sans-serif;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.section-head .section-intro{
+  margin:0 !important;
+  color:#414c5e !important;
+  font-size:14px !important;
+  line-height:1.65 !important;
+  font-weight:600 !important;
+  max-width:420px;
+}
+
+/* Keep the restored Web Development section structurally stable. */
+#web .conferia{
+  display:grid !important;
+  grid-template-columns:1.08fr .92fr !important;
+  align-items:stretch !important;
+}
+#web .conferia-copy,
+#web .conferia-visual{
+  min-width:0;
+}
+#web .conferia-visual{
+  min-height:350px;
+}
+#web .web-more{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:14px !important;
+  align-items:stretch !important;
+}
+#web .learnova-card,
+#web .third-project-row{
+  min-width:0;
+  height:100%;
+}
+#web .learnova-visual,
+#web .third-project-visual{
+  min-height:260px;
+}
+#web .web-additional{
+  margin-top:14px !important;
+}
+#web .techtrain-card{
+  grid-template-columns:1fr 1fr !important;
+  align-items:stretch !important;
+}
+#web .techtrain-visual{
+  min-height:300px;
+}
+
+@media(max-width:1050px){
+  .section-head{
+    grid-template-columns:1fr !important;
+    gap:16px !important;
+    align-items:start !important;
+  }
+  .section-head .section-intro{max-width:760px;}
+  #web .conferia{grid-template-columns:1fr !important;}
+  #web .techtrain-card{grid-template-columns:1fr !important;}
+}
+@media(max-width:820px){
+  #web .web-more{grid-template-columns:1fr !important;}
+  .section-intro-wrap{padding-left:14px;}
+}
+</style>
+
 </head>
 <body>
 <div class="outer">
 <div class="frame">
 <nav class="topnav">
 <div class="logo">AB</div>
-<div class="navlinks">
-<a href="#digital"><i class="lni lni-display-alt"></i> Digital Learning</a>
-<a href="#microlearning"><i class="lni lni-graduation"></i> Microlearning</a>
-<a href="#curriculum"><i class="lni lni-layers"></i> Curriculum</a>
-<a href="#web"><i class="lni lni-code-alt"></i> Web Development</a>
-<a href="#education"><i class="lni lni-blackboard"></i> Education</a>
-</div>
+<div class="navlinks"><a href="#digital"><i class="lni lni-display-alt"></i> Digital Learning</a><a href="#onboarding"><i class="lni lni-code-alt"></i> Guide Developer Onboarding</a><a href="#curriculum"><i class="lni lni-layers"></i> Curriculum</a><a href="#web"><i class="lni lni-code"></i> Web Development</a><a href="#education"><i class="lni lni-blackboard"></i> Education</a></div>
 <a class="nav-cta" href="mailto:alantberaquit@gmail.com">Contact <i class="lni lni-envelope"></i></a>
 </nav>
 <section class="hero" id="top">
@@ -6519,7 +6777,7 @@ body{
 <p>Built on 20+ years across education, technical training, workforce development, enterprise software learning, and Digital Adoption Platform design.</p>
 <div class="hero-actions">
 <a class="btn red" href="#digital"><i class="lni lni-arrow-down"></i> Explore work</a>
-<a class="btn dark" href="#web"><i class="lni lni-code-alt"></i> Web projects</a>
+<a class="btn dark" href="#web"><i class="lni lni-code-alt"></i> Web Development</a>
 </div>
 </div>
 <div aria-hidden="true" class="hero-visual">
@@ -6561,16 +6819,14 @@ body{
 </div>
 </section>
 <div class="content">
-
 <section class="section" id="digital">
 <div class="section-head">
 <div>
 <div class="section-label"><i class="lni lni-display-alt"></i> Digital Learning</div>
 <h2>Learning built into the work.</h2>
 </div>
-<p>Selected work across Digital Adoption Platforms, in-app learning, performance support, scenario-based learning, onboarding, and employee development.</p>
-</div>
-<div class="dle-group-head"><span>In-App Learning &amp; Performance Support</span><p>Learning does not always need to happen in a course. These experiences place guidance closer to the task itself, helping users learn while they work.</p></div>
+
+<div class="section-intro-wrap"><div class="section-intro-kicker">What this demonstrates</div><p class="section-intro">I design digital learning around real performance—using contextual guidance, authentic decisions, and practice that helps people act confidently in the flow of work.</p></div></div>
 <div class="dle-showcase dle-final-grid">
 <div class="dle-row dle-featured">
 <div class="dle-copy">
@@ -6580,7 +6836,7 @@ body{
 <p class="dle-secondary-copy">TaskFlow demonstrates how learning can be embedded directly into a software environment rather than separated into a traditional course. Guidance appears when it is needed and gradually reduces as the user gains confidence.</p>
 <div class="dle-tags"><span>Digital Adoption</span><span>In-App Learning</span><span>Workflow Guidance</span><span>Performance Support</span></div>
 <div class="dle-actions">
-<a class="dle-launch" href="taskflow.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a>
+<a class="dle-launch" href="taskflow.html" rel="noopener" target="_blank"><i class="lni lni-play"></i> Launch Experience</a>
 <button class="dle-action open-project" data-project="taskflow"><i class="lni lni-arrow-right"></i> View Project Details</button>
 </div>
 </div>
@@ -6588,196 +6844,47 @@ body{
 <div class="dle-illustration taskflow-illustration">
 <div class="tf-app">
 <div class="tf-sidebar"><span></span><span></span><span></span><span></span></div>
-<div class="tf-main">
-<div class="tf-toolbar"></div>
-<div class="tf-form"><span></span><span></span><span></span></div>
+<div class="tf-main"><div class="tf-toolbar"></div><div class="tf-form"><span></span><span></span><span></span></div></div>
 </div>
-</div>
-<div class="tf-guide">
-<i class="lni lni-pointer"></i>
-<strong>Guide step</strong>
-<span>Contextual instruction appears directly inside the workflow.</span>
-</div>
+<div class="tf-guide"><i class="lni lni-pointer"></i><strong>Guide step</strong><span>Contextual instruction appears directly inside the workflow.</span></div>
 </div>
 </div>
 </div>
 <div class="dle-feature-strip"><div><strong>Contextual Guidance</strong><span>Guidance appears inside the workflow at the point of need.</span></div><div><strong>Progressive Support</strong><span>Instruction decreases as the learner becomes more confident.</span></div><div><strong>Independent Practice</strong><span>The learner ultimately completes the task without step-by-step assistance.</span></div></div>
-
-<div class="dle-pair">
-<div class="dle-row dle-compact">
-<div class="dle-card-group">In-App Learning &amp; Performance Support</div>
-<div class="dle-visual pulsedesk">
-<div class="dle-illustration pulsedesk-illustration">
-<div class="pd-search"><i class="lni lni-search-alt"></i><span>Search support guidance...</span></div>
-<div class="pd-grid">
-<div class="pd-card"><i class="lni lni-lock-alt"></i><strong>Login &amp; Access</strong></div>
-<div class="pd-card"><i class="lni lni-timer"></i><strong>Slow Performance</strong></div>
-<div class="pd-card"><i class="lni lni-reload"></i><strong>Failed Sync</strong></div>
-<div class="pd-card"><i class="lni lni-display"></i><strong>Browser / Display</strong></div>
-</div>
-<div class="pd-alert"><i class="lni lni-warning"></i><span>Escalate when risk or impact crosses the defined threshold.</span></div>
-</div>
-</div>
+<div class="dle-row dle-featured scenario-featured">
 <div class="dle-copy">
-<div class="dle-type"><i class="lni lni-support"></i> Point-of-Need Performance Support</div>
-<h3>PulseDesk</h3>
-<p>A contextual support experience that helps employees diagnose issues, make decisions, and escalate appropriately while they work.</p>
-<div class="dle-tags"><span>Performance Support</span><span>Decision Support</span><span>Troubleshooting</span><span>Just-in-Time Guidance</span></div>
-<div class="dle-actions">
-<a class="dle-launch" href="pulsedesk_performance_support.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a>
-<button class="dle-action open-project" data-project="pulsedesk"><i class="lni lni-arrow-right"></i> View Project Details</button>
-</div>
-</div>
-</div>
-
-<div class="dle-row dle-compact">
-<div class="dle-card-group">Scenario-Based Learning</div>
-<div class="dle-copy">
-<div class="dle-type"><i class="lni lni-comments-alt"></i> Branching Scenario</div>
+<div class="dle-type"><i class="lni lni-comments-alt"></i> Scenario-Based Learning</div>
 <h3>Client Escalation: The Conversation</h3>
 <p>A branching learning experience that develops communication, diagnostic reasoning, escalation judgment, and expectation management through realistic client decisions.</p>
+<p class="dle-secondary-copy">Learners choose how to respond at key moments, see consequences unfold, and practice balancing investigation, empathy, escalation, and client expectations.</p>
 <div class="dle-tags"><span>Scenario-Based Learning</span><span>Branching</span><span>Decision Practice</span><span>Consequence-Based Feedback</span></div>
 <div class="dle-actions">
-<a class="dle-launch" href="client_escalation.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a>
+<a class="dle-launch" href="client_escalation.html" rel="noopener" target="_blank"><i class="lni lni-play"></i> Launch Experience</a>
 <button class="dle-action open-project" data-project="scenario"><i class="lni lni-arrow-right"></i> View Project Details</button>
 </div>
 </div>
 <div class="dle-visual scenario">
 <div class="dle-illustration scenario-illustration">
-<div class="sc-chat">
-<div class="bubble client">The month-end report is still showing stale data. We need this resolved today.</div>
-<div class="bubble learner">I understand the impact. Let me confirm a few details so I can determine the right next step.</div>
-</div>
-<div class="sc-options">
-<div><span>A</span><strong>Gather diagnostic information</strong></div>
-<div><span>B</span><strong>Promise an immediate resolution</strong></div>
-<div><span>C</span><strong>Escalate without investigating</strong></div>
+<div class="sc-chat"><div class="bubble client">The month-end report is still showing stale data. We need this resolved today.</div><div class="bubble learner">I understand the impact. Let me confirm a few details so I can determine the right next step.</div></div>
+<div class="sc-options"><div><span>A</span><strong>Gather diagnostic information</strong></div><div><span>B</span><strong>Promise an immediate resolution</strong></div><div><span>C</span><strong>Escalate without investigating</strong></div></div>
 </div>
 </div>
 </div>
-</div>
-</div>
-
-<div class="dle-structured-break"><span>Structured Employee Learning</span><p>Learning programs designed for longer-term capability building, onboarding, and role development.</p></div>
-<div class="prototype-context"><strong>Prototype context</strong><p>The following two experiences are set within SeanDigital Inc., a fictional software company created to demonstrate employee and manager learning within a shared internal learning environment.</p></div>
-<div class="dle-pair dle-course-pair">
-<div class="dle-row dle-compact">
-<div class="dle-visual employee"><div class="onboarding-preview"><div class="onboarding-preview-head"><strong>Employee Essentials</strong><span>New hire journey</span></div><div class="onboarding-modules"><div><i class="lni lni-apartment"></i>Company</div><div><i class="lni lni-shield"></i>Policies</div><div><i class="lni lni-display-alt"></i>Technology</div></div></div></div>
-<div class="dle-copy"><div class="dle-type"><i class="lni lni-users"></i> Company-Wide Onboarding</div><h3>Employee Essentials</h3><p>A structured onboarding experience for new employees covering company context, policies, technology, career expectations, performance practices, and the foundations needed before team-specific onboarding begins.</p><div class="dle-tags"><span>Employee Onboarding</span><span>Curriculum Architecture</span><span>Interactive Learning</span><span>Assessment Design</span></div><div class="dle-actions"><a class="dle-launch" href="employee_essentials.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a></div></div>
-</div>
-<div class="dle-row dle-compact">
-<div class="dle-visual manager"><div class="onboarding-preview"><div class="onboarding-preview-head"><strong>Manager Essentials</strong><span>First 30 days</span></div><div class="manager-path"><div><span>01</span>Set priorities and expectations</div><div><span>02</span>Delegate with clear guardrails</div><div><span>03</span>Build feedback and accountability</div></div></div></div>
-<div class="dle-copy"><div class="dle-type"><i class="lni lni-target"></i> First 30 Days Manager Onboarding</div><h3>Manager Essentials</h3><p>A leadership onboarding experience for newly promoted and newly hired managers focused on coaching, delegation, priorities, feedback, accountability, conflict, and leadership judgment.</p><div class="dle-tags"><span>Leadership Development</span><span>Scenario-Based Learning</span><span>Decision Practice</span><span>Applied Assessment</span></div><div class="dle-actions"><a class="dle-launch" href="manager_essentials.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch Experience</a></div></div>
-</div>
-</div>
-<div class="shared-course-note">Built on one shared design system, adapted for different audiences, responsibilities, and performance needs.</div>
-
 </div>
 </section>
-<section class="section" id="microlearning">
+<section class="section" id="onboarding">
 <div class="section-head">
 <div>
-<div class="section-label"><i class="lni lni-graduation"></i> Microlearning</div>
-<h2>Short learning experiences built around decisions.</h2>
-</div>
-<p>Focused learning interventions designed around a specific decision, behavior, or performance gap.</p>
+<div class="section-label"><i class="lni lni-code-alt"></i> Guide Developer Onboarding</div>
+<h2>Foundation first. Then authentic targeting practice.</h2>
 </div>
 
-<div class="microlearning-grid">
-
-
-<article class="micro-card">
-<div class="micro-preview selector">
-  <div class="selector-preview">
-    <div class="selector-window">
-      <div class="selector-top"><span></span><span></span><span></span></div>
-      <div class="selector-split">
-        <div class="selector-code">
-          <div class="s-code-label">DOM sample</div>
-          <code>&lt;button data-action="save"&gt;Save&lt;/button&gt;</code>
-          <code>&lt;input id="entityid" /&gt;</code>
-          <code>&lt;div class="x-grid-cell"&gt;...</code>
-        </div>
-        <div class="selector-rank">
-          <div class="s-code-label">Choose the best selector</div>
-          <div class="rank-item best"><i class="lni lni-checkmark"></i><span>#entityid</span></div>
-          <div class="rank-item good"><i class="lni lni-star-filled"></i><span>[data-action="save"]</span></div>
-          <div class="rank-item weak"><i class="lni lni-warning"></i><span>.x-grid-cell:nth-child(3)</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="section-intro-wrap"><div class="section-intro-kicker">What this demonstrates</div><p class="section-intro">I build technical onboarding in a deliberate progression: establish the web foundations first, then move learners into realistic targeting, DOM analysis, and independent problem solving.</p></div></div>
+<div class="guide-module-grid">
+<article class="guide-module-card visual-module-card"><div class="guide-module-number">01</div><div class="guide-module-preview"><img alt="Module 1 preview" loading="lazy" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221200%22%20height%3D%22700%22%20viewBox%3D%220%200%201200%20700%22%3E%0A%3Crect%20width%3D%221200%22%20height%3D%22700%22%20fill%3D%22%23d7ebfb%22/%3E%0A%3Crect%20x%3D%2285%22%20y%3D%2286%22%20width%3D%221030%22%20height%3D%22530%22%20rx%3D%2228%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%232c2f45%22%20stroke-width%3D%228%22/%3E%0A%3Crect%20x%3D%2285%22%20y%3D%2286%22%20width%3D%221030%22%20height%3D%2268%22%20rx%3D%2228%22%20fill%3D%22%232c2f45%22/%3E%0A%3Ccircle%20cx%3D%22138%22%20cy%3D%22120%22%20r%3D%2210%22%20fill%3D%22%23f06b7d%22/%3E%3Ccircle%20cx%3D%22173%22%20cy%3D%22120%22%20r%3D%2210%22%20fill%3D%22%23ffd166%22/%3E%3Ccircle%20cx%3D%22208%22%20cy%3D%22120%22%20r%3D%2210%22%20fill%3D%22%237bd389%22/%3E%0A%3Crect%20x%3D%22140%22%20y%3D%22195%22%20width%3D%22430%22%20height%3D%22355%22%20rx%3D%2218%22%20fill%3D%22%23f7fafc%22%20stroke%3D%22%23d3dde8%22%20stroke-width%3D%224%22/%3E%0A%3Crect%20x%3D%22650%22%20y%3D%22195%22%20width%3D%22330%22%20height%3D%22110%22%20rx%3D%2218%22%20fill%3D%22%23ffe8ec%22/%3E%0A%3Crect%20x%3D%22650%22%20y%3D%22330%22%20width%3D%22330%22%20height%3D%2295%22%20rx%3D%2218%22%20fill%3D%22%23edf5fb%22/%3E%0A%3Crect%20x%3D%22650%22%20y%3D%22450%22%20width%3D%22260%22%20height%3D%2270%22%20rx%3D%2216%22%20fill%3D%22%232c2f45%22/%3E%0A%3Ctext%20x%3D%22684%22%20y%3D%22251%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23d5425a%22%3EHTML%3C/text%3E%0A%3Ctext%20x%3D%22786%22%20y%3D%22251%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%232c2f45%22%3ECSS%3C/text%3E%0A%3Ctext%20x%3D%22685%22%20y%3D%22378%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2228%22%20font-weight%3D%22700%22%20fill%3D%22%232c2f45%22%3ESelector%20Basics%3C/text%3E%0A%3Ctext%20x%3D%22686%22%20y%3D%22494%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EPractice%20Activity%3C/text%3E%0A%3Ctext%20x%3D%22175%22%20y%3D%22255%22%20font-family%3D%22Courier%20New%2CCourier%2Cmonospace%22%20font-size%3D%2230%22%20fill%3D%22%232c2f45%22%3E%26lt%3Bdiv%20class%3D%22card%22%26gt%3B%3C/text%3E%0A%3Ctext%20x%3D%22175%22%20y%3D%22305%22%20font-family%3D%22Courier%20New%2CCourier%2Cmonospace%22%20font-size%3D%2230%22%20fill%3D%22%23d5425a%22%3E%20%20%26lt%3Bh1%26gt%3BWelcome%26lt%3B/h1%26gt%3B%3C/text%3E%0A%3Ctext%20x%3D%22175%22%20y%3D%22355%22%20font-family%3D%22Courier%20New%2CCourier%2Cmonospace%22%20font-size%3D%2230%22%20fill%3D%22%232c2f45%22%3E%20%20%26lt%3Bbutton%26gt%3BStart%26lt%3B/button%26gt%3B%3C/text%3E%0A%3Ctext%20x%3D%22175%22%20y%3D%22405%22%20font-family%3D%22Courier%20New%2CCourier%2Cmonospace%22%20font-size%3D%2230%22%20fill%3D%22%232c2f45%22%3E%26lt%3B/div%26gt%3B%3C/text%3E%0A%3Crect%20x%3D%22172%22%20y%3D%22455%22%20width%3D%22280%22%20height%3D%2216%22%20rx%3D%228%22%20fill%3D%22%23d6e5f1%22/%3E%3Crect%20x%3D%22172%22%20y%3D%22485%22%20width%3D%22220%22%20height%3D%2216%22%20rx%3D%228%22%20fill%3D%22%23f06b7d%22/%3E%3Crect%20x%3D%22172%22%20y%3D%22515%22%20width%3D%22180%22%20height%3D%2216%22%20rx%3D%228%22%20fill%3D%22%23d6e5f1%22/%3E%0A%3C/svg%3E"/></div><div class="guide-module-inner"><div class="card-kicker"><i class="lni lni-code-alt"></i> MODULE 1</div><h3>Foundations for Guide Developers</h3><p>Introduces the HTML, CSS, and selector knowledge learners need before working with advanced targeting. The emphasis is on understanding how interfaces are structured and how stable elements can be identified.</p><div class="tags"><span>HTML Structure</span><span>CSS Foundations</span><span>Selector Essentials</span><span>Practice Activities</span></div><a class="guide-module-launch" href="OGL_Onboarding_Module_1_Modern.html" rel="noopener" target="_blank"><i class="lni lni-play"></i> Launch Module 1</a></div></article>
+<article class="guide-module-card visual-module-card"><div class="guide-module-number">02</div><div class="guide-module-preview"><img alt="Module 2 preview" loading="lazy" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221200%22%20height%3D%22700%22%20viewBox%3D%220%200%201200%20700%22%3E%0A%3Crect%20width%3D%221200%22%20height%3D%22700%22%20fill%3D%22%23d7ebfb%22/%3E%0A%3Crect%20x%3D%2290%22%20y%3D%2286%22%20width%3D%221020%22%20height%3D%22530%22%20rx%3D%2228%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%232c2f45%22%20stroke-width%3D%228%22/%3E%0A%3Crect%20x%3D%2290%22%20y%3D%2286%22%20width%3D%221020%22%20height%3D%2268%22%20rx%3D%2228%22%20fill%3D%22%232c2f45%22/%3E%0A%3Ccircle%20cx%3D%22143%22%20cy%3D%22120%22%20r%3D%2210%22%20fill%3D%22%23f06b7d%22/%3E%3Ccircle%20cx%3D%22178%22%20cy%3D%22120%22%20r%3D%2210%22%20fill%3D%22%23ffd166%22/%3E%3Ccircle%20cx%3D%22213%22%20cy%3D%22120%22%20r%3D%2210%22%20fill%3D%22%237bd389%22/%3E%0A%3Crect%20x%3D%22140%22%20y%3D%22190%22%20width%3D%22300%22%20height%3D%22360%22%20rx%3D%2218%22%20fill%3D%22%23f7fafc%22%20stroke%3D%22%23d3dde8%22%20stroke-width%3D%224%22/%3E%0A%3Crect%20x%3D%22480%22%20y%3D%22190%22%20width%3D%22540%22%20height%3D%22360%22%20rx%3D%2218%22%20fill%3D%22%23f7fafc%22%20stroke%3D%22%23d3dde8%22%20stroke-width%3D%224%22/%3E%0A%3Ctext%20x%3D%22178%22%20y%3D%22242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2228%22%20font-weight%3D%22700%22%20fill%3D%22%232c2f45%22%3EDOM%20Tree%3C/text%3E%0A%3Ctext%20x%3D%22176%22%20y%3D%22300%22%20font-family%3D%22Courier%20New%2CCourier%2Cmonospace%22%20font-size%3D%2224%22%20fill%3D%22%232c2f45%22%3Ebody%3C/text%3E%0A%3Ctext%20x%3D%22206%22%20y%3D%22338%22%20font-family%3D%22Courier%20New%2CCourier%2Cmonospace%22%20font-size%3D%2224%22%20fill%3D%22%232c2f45%22%3Ediv.app-shell%3C/text%3E%0A%3Ctext%20x%3D%22236%22%20y%3D%22376%22%20font-family%3D%22Courier%20New%2CCourier%2Cmonospace%22%20font-size%3D%2224%22%20fill%3D%22%23d5425a%22%3Ediv.modal%3C/text%3E%0A%3Ctext%20x%3D%22266%22%20y%3D%22414%22%20font-family%3D%22Courier%20New%2CCourier%2Cmonospace%22%20font-size%3D%2224%22%20fill%3D%22%232c2f45%22%3Ebutton.primary%3C/text%3E%0A%3Ctext%20x%3D%22236%22%20y%3D%22452%22%20font-family%3D%22Courier%20New%2CCourier%2Cmonospace%22%20font-size%3D%2224%22%20fill%3D%22%232c2f45%22%3Eiframe%3C/text%3E%0A%3Ctext%20x%3D%22266%22%20y%3D%22490%22%20font-family%3D%22Courier%20New%2CCourier%2Cmonospace%22%20font-size%3D%2224%22%20fill%3D%22%232c2f45%22%3Einput%5Bname%3Demail%5D%3C/text%3E%0A%3Ctext%20x%3D%22516%22%20y%3D%22242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2228%22%20font-weight%3D%22700%22%20fill%3D%22%232c2f45%22%3ETargeting%20Workspace%3C/text%3E%0A%3Crect%20x%3D%22535%22%20y%3D%22286%22%20width%3D%22200%22%20height%3D%2230%22%20rx%3D%2210%22%20fill%3D%22%23d6e5f1%22/%3E%0A%3Crect%20x%3D%22535%22%20y%3D%22334%22%20width%3D%22320%22%20height%3D%2272%22%20rx%3D%2218%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%23f06b7d%22%20stroke-width%3D%228%22/%3E%0A%3Crect%20x%3D%22566%22%20y%3D%22358%22%20width%3D%22180%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23f06b7d%22/%3E%0A%3Crect%20x%3D%22535%22%20y%3D%22434%22%20width%3D%22250%22%20height%3D%2230%22%20rx%3D%2210%22%20fill%3D%22%23d6e5f1%22/%3E%0A%3Crect%20x%3D%22535%22%20y%3D%22482%22%20width%3D%22190%22%20height%3D%2230%22%20rx%3D%2210%22%20fill%3D%22%23d6e5f1%22/%3E%0A%3Crect%20x%3D%22820%22%20y%3D%22326%22%20width%3D%22156%22%20height%3D%2298%22%20rx%3D%2218%22%20fill%3D%22%23ffe8ec%22/%3E%0A%3Ctext%20x%3D%22846%22%20y%3D%22366%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2222%22%20font-weight%3D%22700%22%20fill%3D%22%23d5425a%22%3EStable%20Selector%3C/text%3E%0A%3Ctext%20x%3D%22846%22%20y%3D%22398%22%20font-family%3D%22Courier%20New%2CCourier%2Cmonospace%22%20font-size%3D%2220%22%20fill%3D%22%232c2f45%22%3E%5Bdata-test%3D%27submit%27%5D%3C/text%3E%0A%3C/svg%3E"/></div><div class="guide-module-inner"><div class="card-kicker"><i class="lni lni-target"></i> MODULE 2</div><h3>Building Oracle Guided Learning Guides</h3><p>Builds on Module 1 through realistic OGL authoring work: choosing content types, building Process Guides, writing in-app guidance, configuring behavior, testing complete experiences, and completing a performance assessment.</p><div class="tags"><span>Guide Authoring</span><span>Process Guides</span><span>Behavior Settings</span><span>Testing &amp; Assessment</span></div><a class="guide-module-launch" href="OGL_Onboarding_Module_2_Modern.html" rel="noopener" target="_blank"><i class="lni lni-play"></i> Launch Module 2</a></div></article>
 </div>
-<div class="micro-body">
-<div class="micro-eyebrow"><i class="lni lni-code-alt"></i> Technical Microlearning</div>
-<h3>Choosing the Best Target Selector</h3>
-<p>Technical microlearning focused on helping developers select reliable targeting strategies for contextual in-app guidance.</p>
-<div class="micro-meta"><span>Technical Training</span><span>Digital Adoption</span><span>Decision Support</span><span>Microlearning</span></div>
-<a class="micro-launch" href="microlearning_target_selectors.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch interactive module</a>
-</div>
-</article>
-
-
-<article class="micro-card">
-<div class="micro-preview instructor">
-  <div class="instructor-preview">
-    <div class="instructor-slide">
-      <div class="inst-head">
-        <div class="inst-chip">Instructor Onboarding</div>
-        <strong>Professional Judgment</strong>
-      </div>
-      <div class="inst-scenario">
-        <div class="inst-bubble learner">A learner is upset after public correction.</div>
-        <div class="inst-bubble instructor">How should the instructor respond?</div>
-      </div>
-      <div class="inst-options">
-        <div><span>A</span><em>Pause and respond privately</em></div>
-        <div><span>B</span><em>Continue the correction publicly</em></div>
-        <div><span>C</span><em>Ignore the learner reaction</em></div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="micro-body">
-<div class="micro-eyebrow"><i class="lni lni-users"></i> Situational Microlearning</div>
-<h3>Professional Judgment &amp; Decorum</h3>
-<p>Situational judgment learning focused on professional behavior, communication, and workplace decision-making.</p>
-<div class="micro-meta"><span>Behavioral Learning</span><span>Situational Judgment</span><span>Workplace Skills</span><span>Microlearning</span></div>
-<a class="micro-launch" href="microlearning_instructor_judgment.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch interactive module</a>
-</div>
-</article>
-
-
-<article class="micro-card">
-<div class="micro-preview security">
-  <div class="security-preview">
-    <div class="security-mail">
-      <div class="security-mail-top"><span></span><span></span><span></span></div>
-      <div class="security-mail-body">
-        <div class="sec-from">IT Support &lt;security@company-helpdesk.net&gt;</div>
-        <div class="sec-subject">Mailbox suspension in 30 minutes</div>
-        <div class="sec-link">verify-user-access.com/security</div>
-        <div class="sec-flags">
-          <span>Urgency</span><span>Domain mismatch</span><span>Credential trap</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="micro-body">
-<div class="micro-eyebrow"><i class="lni lni-shield"></i> Security Awareness</div>
-<h3>Spot the Risk Before You Click</h3>
-<p>Cybersecurity microlearning that asks learners to identify risk signals before taking action.</p>
-<div class="micro-meta"><span>Cybersecurity</span><span>Risk Awareness</span><span>Decision Practice</span><span>Microlearning</span></div>
-<a class="micro-launch" href="microlearning_cybersecurity.html" target="_blank" rel="noopener"><i class="lni lni-play"></i> Launch interactive module</a>
-</div>
-</article>
-
-</div>
-
-<div class="micro-card-note">
-These portfolio modules use representative or fictionalized examples. They demonstrate the learning design, interaction, feedback, and assessment approach without exposing proprietary production materials.
-</div>
+<div class="guide-program-note"><strong>Program logic</strong><span>Foundation</span><i class="lni lni-arrow-right"></i><span>Application</span><i class="lni lni-arrow-right"></i><span>Independent performance</span></div>
 </section>
 <section class="section" id="curriculum">
 <div class="section-head">
@@ -6785,8 +6892,8 @@ These portfolio modules use representative or fictionalized examples. They demon
 <div class="section-label"><i class="lni lni-layers"></i> Curriculum Development</div>
 <h2>Programs built for progression.</h2>
 </div>
-<p>Structured learning programs designed around progression, practice, assessment, and real-world application.</p>
-</div>
+
+<div class="section-intro-wrap"><div class="section-intro-kicker">What this demonstrates</div><p class="section-intro">I design curricula as connected learning systems—sequencing knowledge, practice, assessment, and applied performance so learners can build mastery over time.</p></div></div>
 <div class="card-grid-2">
 <article class="curr-card">
 <div class="curr-visual">
@@ -6865,15 +6972,14 @@ These portfolio modules use representative or fictionalized examples. They demon
 </div>
 </article>
 </div>
-</section>
-<section class="section" id="web">
+</section><section class="section" id="web">
 <div class="section-head">
 <div>
 <div class="section-label"><i class="lni lni-code-alt"></i> Web Development</div>
 <h2>Full-stack and product development alongside learning design.</h2>
 </div>
-<p>Selected full-stack and learning-technology projects, including Conferia, Learnova, and SkillTrack.</p>
-</div>
+
+<div class="section-intro-wrap"><div class="section-intro-kicker">What this demonstrates</div><p class="section-intro">I build working web applications that demonstrate product thinking, interface design, workflow logic, and full-stack development—not just front-end presentation.</p></div></div>
 <div class="conferia">
 <div class="conferia-copy">
 <span class="conferia-badge"><i class="lni lni-code-alt"></i> Full-Stack Event Platform</span><h3>Conferia</h3>
@@ -6940,50 +7046,45 @@ These portfolio modules use representative or fictionalized examples. They demon
 </div>
 <div class="web-more">
 <article class="learnova-card">
-
-
-
 <div class="learnova-visual webapp-theme">
-  <div class="webapp-browser learnova-webapp">
-    <div class="webapp-browser-bar">
-      <div class="browser-dots"><span></span><span></span><span></span></div>
-      <div class="browser-address"></div>
-    </div>
-    <div class="webapp-ui">
-      <aside class="webapp-nav">
-        <div class="webapp-mark">L</div>
-        <span></span><span></span><span></span><span></span>
-      </aside>
-      <main class="webapp-main">
-        <div class="webapp-heading">
-          <div>
-            <strong>Today’s Learning Path</strong>
-            <small>Recommended from current mastery</small>
-          </div>
-          <i class="lni lni-graduation"></i>
-        </div>
-        <div class="learnova-simple-card">
-          <div>
-            <small>Recommended next</small>
-            <strong>Fractions · Worksheet 024</strong>
-          </div>
-          <span class="learnova-level">Level 2</span>
-        </div>
-        <div class="learnova-simple-progress">
-          <span style="width:72%"></span>
-        </div>
-        <div class="learnova-simple-flow">
-          <span>Assess</span><i class="lni lni-arrow-right"></i>
-          <span>Practice</span><i class="lni lni-arrow-right"></i>
-          <span>Recommend</span>
-        </div>
-      </main>
-    </div>
-  </div>
+<div class="webapp-browser learnova-webapp">
+<div class="webapp-browser-bar">
+<div class="browser-dots"><span></span><span></span><span></span></div>
+<div class="browser-address"></div>
+</div>
+<div class="webapp-ui">
+<aside class="webapp-nav">
+<div class="webapp-mark">L</div>
+<span></span><span></span><span></span><span></span>
+</aside>
+<main class="webapp-main">
+<div class="webapp-heading">
+<div>
+<strong>Today’s Learning Path</strong>
+<small>Recommended from current mastery</small>
+</div>
+<i class="lni lni-graduation"></i>
+</div>
+<div class="learnova-simple-card">
+<div>
+<small>Recommended next</small>
+<strong>Fractions · Worksheet 024</strong>
+</div>
+<span class="learnova-level">Level 2</span>
+</div>
+<div class="learnova-simple-progress">
+<span style="width:72%"></span>
+</div>
+<div class="learnova-simple-flow">
+<span>Assess</span><i class="lni lni-arrow-right"></i>
+<span>Practice</span><i class="lni lni-arrow-right"></i>
+<span>Recommend</span>
+</div>
+</main>
+</div>
+</div>
 </div>
 <div class="learnova-body">
-
-
 <div class="card-kicker"><i class="lni lni-target"></i> LEARNING PLATFORM / SAAS APPLICATION</div>
 <h3>Learnova</h3>
 <p>A learning platform concept that combines structured progression, assessments, question banks, readiness gates, learner tracking, and administrative controls.</p>
@@ -7000,31 +7101,29 @@ These portfolio modules use representative or fictionalized examples. They demon
 </div>
 </article>
 <article class="third-project-row">
-
 <div class="third-project-visual skilltrack-visual">
-  <div class="skilltrack-board">
-    <div class="skilltrack-head">
-      <div class="skilltrack-person"><div class="skilltrack-avatar">ES</div><div><strong>Everett Sean</strong><small>Customer Support Specialist</small></div></div>
-      <div class="skilltrack-role">Target: Team Lead</div>
-    </div>
-    <div class="skilltrack-content">
-      <div class="readiness-ring"><div><strong>8/10</strong><small>Role readiness</small></div></div>
-      <div class="skilltrack-skills">
-        <div class="skilltrack-skill"><span>Mentoring</span><div class="skilltrack-bar"><i style="width:62%"></i></div><em>62%</em></div>
-        <div class="skilltrack-skill"><span>Leadership</span><div class="skilltrack-bar"><i style="width:74%"></i></div><em>74%</em></div>
-        <div class="skilltrack-skill"><span>Delegation</span><div class="skilltrack-bar"><i style="width:48%"></i></div><em>48%</em></div>
-        <div class="skilltrack-skill"><span>Analysis</span><div class="skilltrack-bar"><i style="width:86%"></i></div><em>86%</em></div>
-      </div>
-    </div>
-    <div class="skilltrack-evidence">
-      <div><strong>3 activities</strong><small>In progress</small></div>
-      <div><strong>6 evidence items</strong><small>Submitted</small></div>
-      <div><strong>2 validations</strong><small>Manager approved</small></div>
-    </div>
-  </div>
+<div class="skilltrack-board">
+<div class="skilltrack-head">
+<div class="skilltrack-person"><div class="skilltrack-avatar">ES</div><div><strong>Everett Sean</strong><small>Customer Support Specialist</small></div></div>
+<div class="skilltrack-role">Target: Team Lead</div>
+</div>
+<div class="skilltrack-content">
+<div class="readiness-ring"><div><strong>8/10</strong><small>Role readiness</small></div></div>
+<div class="skilltrack-skills">
+<div class="skilltrack-skill"><span>Mentoring</span><div class="skilltrack-bar"><i style="width:62%"></i></div><em>62%</em></div>
+<div class="skilltrack-skill"><span>Leadership</span><div class="skilltrack-bar"><i style="width:74%"></i></div><em>74%</em></div>
+<div class="skilltrack-skill"><span>Delegation</span><div class="skilltrack-bar"><i style="width:48%"></i></div><em>48%</em></div>
+<div class="skilltrack-skill"><span>Analysis</span><div class="skilltrack-bar"><i style="width:86%"></i></div><em>86%</em></div>
+</div>
+</div>
+<div class="skilltrack-evidence">
+<div><strong>3 activities</strong><small>In progress</small></div>
+<div><strong>6 evidence items</strong><small>Submitted</small></div>
+<div><strong>2 validations</strong><small>Manager approved</small></div>
+</div>
+</div>
 </div>
 <div class="third-project-body">
-
 <div class="card-kicker"><i class="lni lni-target"></i> SKILLS &amp; PROGRESSION APPLICATION</div>
 <h3>SkillTrack</h3>
 <p>A professional-growth platform that connects role goals with skill gaps, practical development activities, workplace evidence, and manager validation—not just course completion.</p>
@@ -7038,15 +7137,56 @@ These portfolio modules use representative or fictionalized examples. They demon
 </div>
 </article>
 </div>
-</section>
-<section class="section" id="education">
+<div class="web-additional"><article class="techtrain-card">
+<div class="techtrain-visual webapp-theme">
+<div class="webapp-browser techtrain-webapp">
+<div class="webapp-browser-bar">
+<div class="browser-dots"><span></span><span></span><span></span></div>
+<div class="browser-address"></div>
+</div>
+<div class="webapp-ui">
+<aside class="webapp-nav">
+<div class="webapp-mark">T</div>
+<span></span><span></span><span></span><span></span>
+</aside>
+<main class="webapp-main">
+<div class="webapp-heading">
+<div>
+<strong>Center Operations Dashboard</strong>
+<small>Programs, trainees, schedules, and resources</small>
+</div>
+<i class="lni lni-apartment"></i>
+</div>
+<div class="techtrain-metrics">
+<div><strong>12</strong><small>Active programs</small></div>
+<div><strong>08</strong><small>Labs in use</small></div>
+<div><strong>146</strong><small>Trainees</small></div>
+</div>
+<div class="techtrain-schedule">
+<span class="wide"></span>
+<span></span>
+<span></span>
+<span class="wide"></span>
+</div>
+</main>
+</div>
+</div>
+</div>
+<div class="techtrain-body">
+<div class="card-kicker"><i class="lni lni-apartment"></i> TECHNICAL TRAINING CENTER SOFTWARE</div>
+<h3>TechTrain OS</h3>
+<p>A software concept for technical training centers that brings together trainee records, enrollment, schedules, trainer assignments, assessments, and day-to-day center operations in one system.</p>
+<div class="tags"><span>Training Center Operations</span><span>Scheduling</span><span>Trainee Records</span><span>Assessment Tracking</span></div>
+<button class="card-action" data-project="techtrain"><i class="lni lni-eye"></i> View project details</button>
+</div>
+</article></div></section><section class="section" id="education">
 <div class="section-head">
 <div>
 <div class="section-label"><i class="lni lni-blackboard"></i> Education</div>
 <h2>The practice behind the portfolio.</h2>
 </div>
-<p>Teaching and facilitation remain part of the work, while the portfolio itself stays focused on the artifacts, systems, and learning experiences that came from that practice.</p>
-</div>
+
+<div class="section-intro-wrap"><div class="section-intro-kicker">What this demonstrates</div><p class="section-intro">My work is grounded in more than two decades of teaching, facilitation, instructor support, assessment design, and data-informed learning decisions across multiple education and training contexts.</p></div></div>
 <div class="education-row">
 <div class="edu"><i class="lni lni-blackboard"></i><h4>Teaching &amp; Facilitation</h4><p>Technical and computing subjects across secondary, higher education, workforce development, and adult-learning contexts.</p></div>
 <div class="edu"><i class="lni lni-users"></i><h4>Instructor Support</h4><p>Coaching, onboarding, mentoring, and supporting instructors and learners across varying skill levels and delivery environments.</p></div>
@@ -7158,13 +7298,6 @@ const data={
     demo:"Guided practice, scaffolding, gradual release, authentic workflow practice, progressive disclosure, and point-of-need performance support.",
     tags:["Guided Learning","Product Education","Onboarding","Performance Support"]
   },
-  pulsedesk:{
-    title:"PulseDesk Performance Support Kit",
-    sub:"Digital Performance Support · Decision Support",
-    what:"A just-in-time support hub for employees who already know the process and need fast troubleshooting, decision, and escalation support while working.",
-    demo:"Performance support, cognitive-load reduction, information retrieval, progressive disclosure, decision support, and risk-based escalation.",
-    tags:["Performance Support","Troubleshooting","Decision Support","Escalation"]
-  },
   scenario:{
     title:"Client Escalation: The Conversation",
     sub:"Digital Learning Experience · Scenario-Based Learning",
@@ -7197,17 +7330,24 @@ const data={
     title:"Learnova",
     sub:"Learning Platform / SaaS Application",
     what:"A learning platform concept that combines structured progression, assessments, question banks, readiness gates, learner tracking, and administrative controls.",
-    demo:"A mastery-driven learning loop where the system assesses performance, assigns practice, analyzes results, recommends the next activity, tests progress, adjusts mastery, and advances or reviews as needed. Learning areas include Mathematics, Science, Abstract Reasoning, Logical Reasoning, and Reading Comprehension.",
-    tags:["Adaptive Learning","Mastery","Assessment","Worksheets","Reasoning","College Entrance Preparation"]
+    demo:"A mastery-driven learning loop that recommends the next activity, checks readiness, tracks performance, and supports progression based on demonstrated understanding rather than simple completion.",
+    tags:["Adaptive Learning","Mastery","Assessment","Learner Tracking"]
   },
   skilltrack:{
     title:"SkillTrack",
     sub:"Skills & Progression Application",
-    what:"A professional-growth application for employees, managers, and Learning & Development teams. It compares an employee's current capabilities with the competencies required for a target role, then turns identified gaps into a practical development path.",
-    demo:"A broader view of skill development that connects courses and microlearning with projects, workplace assignments, mentoring, guided practice, assessments, workshops, job shadowing, certifications, evidence of work, and manager observations. Progress is measured through demonstrated competencies and role readiness rather than course completion alone.",
-    tags:["Competency Mapping","Role Readiness","Development Paths","Workplace Learning","Evidence","Manager Validation"]
+    what:"A professional-growth platform that connects role goals with skill gaps, development activities, evidence of work, and manager validation.",
+    demo:"Competency mapping, development planning, workplace evidence, validation workflows, and progression support beyond course completion.",
+    tags:["Competency Mapping","Development Paths","Evidence of Work","Manager Validation"]
+  },
+  techtrain:{
+    title:"TechTrain OS",
+    sub:"Training Center Operations Software",
+    what:"A software concept for technical training centers that centralizes trainee records, enrollment, schedules, trainer assignments, assessments, and operational oversight.",
+    demo:"Workflow mapping, systems thinking, administrative UX, data organization, and product design for technical and workforce training environments.",
+    tags:["Training Center Operations","Scheduling","Trainee Records","Assessment Tracking","Workforce Training"]
   }
-};
+}
 
 function openDrawer(key,trigger){
   const d=data[key];
