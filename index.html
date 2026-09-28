@@ -6864,6 +6864,32 @@ body{
 #web .web-concepts p{
   font-size:12px !important;
 }
+#web .concept-actions{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:auto;
+  padding-top:17px;
+}
+#web .concept-actions .card-action{
+  margin:0 !important;
+  padding:9px 0 !important;
+}
+#web .demo-placeholder{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-height:36px;
+  padding:9px 12px;
+  border-radius:999px;
+  background:var(--navy);
+  color:#fff !important;
+  font:800 11px "Outfit",sans-serif;
+  opacity:.78;
+  pointer-events:none;
+  cursor:default;
+}
 
 @media(max-width:1050px){
   #web .web-secondary-project{grid-template-columns:1fr !important;}
@@ -7203,7 +7229,7 @@ body{
 <div class="learnova-body">
 <div class="card-kicker"><i class="lni lni-target"></i> LEARNING PLATFORM / SAAS APPLICATION</div>
 <h3>Learnova</h3>
-<p>A learning platform concept that combines structured progression, assessments, question banks, readiness gates, learner tracking, and administrative controls.</p>
+<p>A learning platform that combines structured progression, assessments, question banks, readiness gates, learner tracking, and administrative controls.</p>
 <div class="tags">
 <span>Adaptive Learning</span>
 <span>Mastery</span>
@@ -7217,7 +7243,7 @@ body{
 </div>
 </article>
 </div>
-<div class="web-concepts-head"><div><span>Product concepts in development</span><h3>Exploring the next set of workflow products.</h3></div><p>These concepts communicate the product direction and core use case while their fuller workflows continue to develop.</p></div>
+<div class="web-concepts-head"><div><span>Additional web applications</span><h3>More workflow-focused product work.</h3></div><p>SkillTrack and TechTrain OS extend the portfolio into employee development and technical-training operations.</p></div>
 <div class="web-concepts">
 <article class="third-project-row concept-card">
 <div class="third-project-visual skilltrack-visual">
@@ -7252,7 +7278,7 @@ body{
 <span>Evidence of Work</span>
 <span>Manager Validation</span>
 </div>
-<button class="card-action" data-project="skilltrack"><i class="lni lni-eye"></i> View project details</button>
+<div class="concept-actions"><a aria-disabled="true" class="placeholder-link demo-placeholder" href="#" tabindex="-1"><i class="lni lni-website"></i> Live demo</a><button class="card-action" data-project="skilltrack"><i class="lni lni-eye"></i> View project details</button></div>
 </div>
 </article>
 <article class="techtrain-card concept-card">
@@ -7293,9 +7319,9 @@ body{
 <div class="techtrain-body">
 <div class="card-kicker"><i class="lni lni-apartment"></i> TECHNICAL TRAINING CENTER SOFTWARE</div>
 <h3>TechTrain OS</h3>
-<p>A software concept for technical training centers that brings together trainee records, enrollment, schedules, trainer assignments, assessments, and day-to-day center operations in one system.</p>
+<p>A software platform for technical training centers that brings together trainee records, enrollment, schedules, trainer assignments, assessments, and day-to-day center operations in one system.</p>
 <div class="tags"><span>Training Center Operations</span><span>Scheduling</span><span>Trainee Records</span><span>Assessment Tracking</span></div>
-<button class="card-action" data-project="techtrain"><i class="lni lni-eye"></i> View project details</button>
+<div class="concept-actions"><a aria-disabled="true" class="placeholder-link demo-placeholder" href="#" tabindex="-1"><i class="lni lni-website"></i> Live demo</a><button class="card-action" data-project="techtrain"><i class="lni lni-eye"></i> View project details</button></div>
 </div>
 </article></div></section><section class="section" id="education">
 <div class="section-head">
@@ -7447,7 +7473,7 @@ const data={
   learnova:{
     title:"Learnova",
     sub:"Learning Platform / SaaS Application",
-    what:"A learning platform concept that combines structured progression, assessments, question banks, readiness gates, learner tracking, and administrative controls.",
+    what:"A learning platform that combines structured progression, assessments, question banks, readiness gates, learner tracking, and administrative controls.",
     demo:"A mastery-driven learning loop that recommends the next activity, checks readiness, tracks performance, and supports progression based on demonstrated understanding rather than simple completion.",
     tags:["Adaptive Learning","Mastery","Assessment","Learner Tracking"]
   },
@@ -7461,7 +7487,7 @@ const data={
   techtrain:{
     title:"TechTrain OS",
     sub:"Training Center Operations Software",
-    what:"A software concept for technical training centers that centralizes trainee records, enrollment, schedules, trainer assignments, assessments, and operational oversight.",
+    what:"A software platform for technical training centers that centralizes trainee records, enrollment, schedules, trainer assignments, assessments, and operational oversight.",
     demo:"Workflow mapping, systems thinking, administrative UX, data organization, and product design for technical and workforce training environments.",
     tags:["Training Center Operations","Scheduling","Trainee Records","Assessment Tracking","Workforce Training"]
   }
