@@ -6759,6 +6759,120 @@ body{
   #web .web-more{grid-template-columns:1fr !important;}
   .section-intro-wrap{padding-left:14px;}
 }
+
+/* ===== v6 web-development hierarchy ===== */
+#web .web-feature-label{
+  width:max-content;
+  max-width:100%;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin:2px 0 10px;
+  padding:7px 11px;
+  border-radius:999px;
+  background:#fff0f3;
+  color:var(--red);
+  font:800 10px "Outfit",sans-serif;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+#web .web-primary-project{
+  border:2px solid rgba(44,47,69,.16) !important;
+  box-shadow:0 18px 42px rgba(35,40,63,.09) !important;
+}
+#web .web-more{
+  display:block !important;
+  margin-top:34px !important;
+}
+#web .learnova-feature-label{
+  background:#edf6fc;
+  color:#2f6f9e;
+}
+#web .web-secondary-project{
+  width:100% !important;
+  display:grid !important;
+  grid-template-columns:1.08fr .92fr !important;
+  min-height:340px !important;
+  border:2px solid rgba(44,47,69,.16) !important;
+  box-shadow:0 18px 42px rgba(35,40,63,.09) !important;
+}
+#web .web-secondary-project .learnova-visual{
+  min-height:340px !important;
+}
+#web .web-secondary-project .learnova-body{
+  padding:34px !important;
+}
+#web .web-secondary-project h3{
+  font-size:30px !important;
+}
+#web .web-concepts-head{
+  display:grid;
+  grid-template-columns:1fr minmax(300px,430px);
+  gap:34px;
+  align-items:end;
+  margin:52px 0 18px;
+  padding-top:30px;
+  border-top:1px solid #d8e0e8;
+}
+#web .web-concepts-head span{
+  color:var(--red);
+  font:800 10px "Outfit",sans-serif;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+#web .web-concepts-head h3{
+  margin:8px 0 0;
+  font:800 25px/1.2 "Outfit",sans-serif;
+}
+#web .web-concepts-head p{
+  margin:0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.65;
+}
+#web .web-concepts{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+#web .web-concepts .concept-card{
+  width:100% !important;
+  min-width:0;
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  align-content:start;
+  border:1px solid #d8e0e8 !important;
+  box-shadow:none !important;
+  overflow:hidden;
+}
+#web .web-concepts .third-project-visual,
+#web .web-concepts .techtrain-visual{
+  min-height:210px !important;
+  height:210px !important;
+  padding:18px !important;
+  overflow:hidden;
+}
+#web .web-concepts .third-project-body,
+#web .web-concepts .techtrain-body{
+  min-height:250px;
+  padding:23px !important;
+  justify-content:flex-start !important;
+}
+#web .web-concepts h3{
+  font-size:22px !important;
+}
+#web .web-concepts p{
+  font-size:12px !important;
+}
+
+@media(max-width:1050px){
+  #web .web-secondary-project{grid-template-columns:1fr !important;}
+  #web .web-concepts-head{grid-template-columns:1fr;gap:10px;}
+}
+@media(max-width:820px){
+  #web .web-concepts{grid-template-columns:1fr;}
+  #web .web-secondary-project .learnova-body{padding:24px !important;}
+}
 </style>
 
 </head>
@@ -6980,7 +7094,8 @@ body{
 </div>
 
 <div class="section-intro-wrap"><div class="section-intro-kicker">What this demonstrates</div><p class="section-intro">I build working web applications that demonstrate product thinking, interface design, workflow logic, and full-stack development—not just front-end presentation.</p></div></div>
-<div class="conferia">
+<div class="web-feature-label"><i class="lni lni-star-filled"></i> Primary full-stack project</div>
+<div class="conferia web-primary-project">
 <div class="conferia-copy">
 <span class="conferia-badge"><i class="lni lni-code-alt"></i> Full-Stack Event Platform</span><h3>Conferia</h3>
 <p>A web application for managing conferences, sessions, speakers, participants, scheduling, and event operations.</p>
@@ -7045,7 +7160,8 @@ body{
 </div>
 </div>
 <div class="web-more">
-<article class="learnova-card">
+<div class="web-feature-label learnova-feature-label"><i class="lni lni-graduation"></i> Featured learning platform</div>
+<article class="learnova-card web-secondary-project">
 <div class="learnova-visual webapp-theme">
 <div class="webapp-browser learnova-webapp">
 <div class="webapp-browser-bar">
@@ -7100,7 +7216,10 @@ body{
 <button class="card-action" data-project="learnova"><i class="lni lni-eye"></i> View project details</button>
 </div>
 </article>
-<article class="third-project-row">
+</div>
+<div class="web-concepts-head"><div><span>Product concepts in development</span><h3>Exploring the next set of workflow products.</h3></div><p>These concepts communicate the product direction and core use case while their fuller workflows continue to develop.</p></div>
+<div class="web-concepts">
+<article class="third-project-row concept-card">
 <div class="third-project-visual skilltrack-visual">
 <div class="skilltrack-board">
 <div class="skilltrack-head">
@@ -7136,8 +7255,7 @@ body{
 <button class="card-action" data-project="skilltrack"><i class="lni lni-eye"></i> View project details</button>
 </div>
 </article>
-</div>
-<div class="web-additional"><article class="techtrain-card">
+<article class="techtrain-card concept-card">
 <div class="techtrain-visual webapp-theme">
 <div class="webapp-browser techtrain-webapp">
 <div class="webapp-browser-bar">
