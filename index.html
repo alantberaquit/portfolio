@@ -6963,6 +6963,64 @@ body{
 #web .easybiz-stock-line{display:flex;align-items:center;justify-content:space-between;margin-top:9px;padding-bottom:7px;border-bottom:1px solid #eef0f4;color:#7e8291;font-size:6px;}
 #web .easybiz-stock-line b{color:#3f3e57;font-size:7px;}
 
+/* ===== v8 senior learning-technology positioning ===== */
+.hero-name{margin:0 0 12px;color:var(--red);font:800 12px "Outfit",sans-serif;letter-spacing:.12em;text-transform:uppercase;}
+.hero-role{display:block;margin-top:14px;color:var(--navy);font:800 15px "Outfit",sans-serif;}
+.positioning-band{display:grid;grid-template-columns:1.45fr repeat(4,1fr);gap:1px;margin:0 0 18px;border:1px solid #d7e0e8;background:#d7e0e8;}
+.positioning-lead,.positioning-pillar{padding:20px;background:#fff;}
+.positioning-lead strong,.positioning-lead span,.positioning-pillar strong,.positioning-pillar span{display:block;}
+.positioning-lead strong{color:var(--navy);font:800 14px "Outfit",sans-serif;}
+.positioning-lead span{margin-top:6px;color:var(--muted);font-size:11px;line-height:1.55;}
+.positioning-pillar i{color:var(--red);font-size:17px;}
+.positioning-pillar strong{margin-top:10px;color:var(--navy);font:800 11px/1.35 "Outfit",sans-serif;}
+.mobile-section-nav{display:none;}
+.dle-copy>p{max-width:630px;}
+.dle-featured .dle-secondary-copy{display:none;}
+#web .web-concepts p{max-width:500px;}
+#web .demo-placeholder{display:none;}
+.institutions-grid{grid-template-columns:repeat(5,minmax(0,1fr)) !important;}
+.institution{min-height:120px !important;padding:15px !important;}
+.institution-logo-wrap{height:50px !important;}
+.guide-module-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+.guide-module-card{min-width:0;}
+.module-three-preview{position:relative;display:grid;place-items:center;padding:24px;background:linear-gradient(145deg,#d9eafb,#e8e4f5);overflow:hidden;}
+.qa-preview{width:100%;max-width:330px;padding:15px;border:2px solid var(--navy);border-radius:15px;background:#fff;box-shadow:9px 9px 0 rgba(72,95,135,.13);}
+.qa-preview-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid #d8e0e8;}
+.qa-preview-head strong{color:var(--navy);font:800 11px "Outfit",sans-serif;}
+.qa-preview-head span{padding:5px 7px;border-radius:999px;background:#eef5fb;color:#4d6d89;font-size:7px;font-weight:800;letter-spacing:.06em;}
+.qa-checks{display:grid;gap:5px;margin-top:8px;}
+.qa-check{display:grid;grid-template-columns:19px 1fr auto;align-items:center;gap:7px;padding:6px;border-radius:8px;background:#f5f7fa;color:#5f6978;font-size:7.5px;font-weight:700;}
+.qa-check i{width:19px;height:19px;display:grid;place-items:center;border-radius:6px;background:#dff3e8;color:#258156;font-size:10px;}
+.qa-check:last-child i{background:#fff0f3;color:var(--red);}
+.qa-check b{color:var(--navy);font-size:7px;text-transform:uppercase;letter-spacing:.05em;}
+.guide-module-status{margin-top:auto;padding-top:22px;display:inline-flex;align-items:center;gap:8px;color:#697587;font:800 12px "Outfit",sans-serif;}
+.guide-module-status i{color:var(--red);}
+
+@media(max-width:1050px){
+  .positioning-band{grid-template-columns:repeat(2,1fr);}
+  .positioning-lead{grid-column:1 / -1;}
+  .guide-module-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .guide-module-card:nth-child(3){grid-column:1 / -1;}
+}
+@media(max-width:900px){
+  .mobile-section-nav{display:flex;gap:8px;overflow-x:auto;margin:0 -4px 22px;padding:2px 4px 8px;scrollbar-width:none;}
+  .mobile-section-nav::-webkit-scrollbar{display:none;}
+  .mobile-section-nav a{flex:0 0 auto;padding:9px 12px;border:1px solid #d7e0e8;border-radius:999px;background:#fff;color:var(--navy);font:800 10px "Outfit",sans-serif;text-decoration:none;}
+}
+@media(max-width:620px){
+  .positioning-band{grid-template-columns:1fr 1fr;}
+  .positioning-lead{grid-column:1 / -1;}
+  .positioning-pillar{padding:15px;}
+  .institutions-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+  .institution{min-height:105px !important;}
+  .guide-module-grid{grid-template-columns:1fr;}
+  .guide-module-card:nth-child(3){grid-column:auto;}
+  #web .web-concepts .third-project-visual,
+  #web .web-concepts .techtrain-visual{display:none !important;}
+  #web .web-concepts .third-project-body,
+  #web .web-concepts .techtrain-body{min-height:0 !important;}
+}
+
 @media(max-width:1050px){
   #web .web-secondary-project{grid-template-columns:1fr !important;}
   #web .web-concepts-head{grid-template-columns:1fr;gap:10px;}
@@ -6985,17 +7043,19 @@ body{
 <div class="frame">
 <nav class="topnav">
 <div class="logo">AB</div>
-<div class="navlinks"><a href="#digital"><i class="lni lni-display-alt"></i> Digital Learning</a><a href="#onboarding"><i class="lni lni-code-alt"></i> Guide Developer Onboarding</a><a href="#curriculum"><i class="lni lni-layers"></i> Curriculum</a><a href="#web"><i class="lni lni-code"></i> Web Development</a><a href="#education"><i class="lni lni-blackboard"></i> Education</a></div>
+<div class="navlinks"><a href="#digital"><i class="lni lni-display-alt"></i> Learning Technology</a><a href="#web"><i class="lni lni-code"></i> Web Development</a><a href="#onboarding"><i class="lni lni-code-alt"></i> Enablement</a><a href="#curriculum"><i class="lni lni-layers"></i> Technical Education</a><a href="#education"><i class="lni lni-blackboard"></i> Leadership</a></div>
 <a class="nav-cta" href="mailto:alantberaquit@gmail.com">Contact <i class="lni lni-envelope"></i></a>
 </nav>
 <section class="hero" id="top">
 <div class="hero-copy">
 <div class="hero-kicker"><i class="lni lni-sparkles"></i> Portfolio · 2026</div>
-<h1>Technical education and digital learning experiences.</h1>
-<p>Built on 20+ years across education, technical training, workforce development, enterprise software learning, and Digital Adoption Platform design.</p>
+<div class="hero-name">Alan Beraquit</div>
+<h1>Learning technology. Technical education. Real performance.</h1>
+<p>I connect learning design, technical education, software development, AI, and performance support to help people succeed inside complex systems.</p>
+<span class="hero-role">Learning Technology, Digital Learning &amp; Technical Education Professional · 20+ years</span>
 <div class="hero-actions">
-<a class="btn red" href="#digital"><i class="lni lni-arrow-down"></i> Explore work</a>
-<a class="btn dark" href="#web"><i class="lni lni-code-alt"></i> Web Development</a>
+<a class="btn red" href="#digital"><i class="lni lni-arrow-down"></i> View flagship work</a>
+<a class="btn dark" href="#web"><i class="lni lni-code-alt"></i> Explore development</a>
 </div>
 </div>
 <div aria-hidden="true" class="hero-visual">
@@ -7037,22 +7097,29 @@ body{
 </div>
 </section>
 <div class="content">
+<div class="positioning-band">
+<div class="positioning-lead"><strong>Principal Web Curriculum Developer</strong><span>Oracle NetSuite Guided Learning · Contextual in-app learning, technical QA, SME collaboration, and release-based content maintenance.</span></div>
+<div class="positioning-pillar"><i class="lni lni-display-alt"></i><strong>Digital Learning &amp; Performance Support</strong></div>
+<div class="positioning-pillar"><i class="lni lni-code-alt"></i><strong>Learning Technology Development &amp; AI</strong></div>
+<div class="positioning-pillar"><i class="lni lni-layers"></i><strong>Technical Education &amp; Curriculum</strong></div>
+<div class="positioning-pillar"><i class="lni lni-blackboard"></i><strong>Enablement &amp; Program Leadership</strong></div>
+</div>
+<nav class="mobile-section-nav" aria-label="Portfolio sections"><a href="#digital">Learning Technology</a><a href="#web">Web Development</a><a href="#onboarding">Enablement</a><a href="#curriculum">Technical Education</a><a href="#education">Leadership</a></nav>
 <section class="section" id="digital">
 <div class="section-head">
 <div>
-<div class="section-label"><i class="lni lni-display-alt"></i> Digital Learning</div>
-<h2>Learning built into the work.</h2>
+<div class="section-label"><i class="lni lni-display-alt"></i> Digital Learning &amp; Learning Technology</div>
+<h2>Learning built into real workflows.</h2>
 </div>
 
-<div class="section-intro-wrap"><div class="section-intro-kicker">What this demonstrates</div><p class="section-intro">I design learning technology around real performance—combining contextual guidance, AI-enabled coaching, authentic decisions, and independent practice inside the tools people use to work.</p></div></div>
+<div class="section-intro-wrap"><div class="section-intro-kicker">Core specialization</div><p class="section-intro">Contextual guidance, AI-enabled coaching, authentic decisions, and independent practice—designed around what users need to accomplish.</p></div></div>
 <div class="dle-showcase dle-final-grid">
 <div class="dle-row dle-featured guidepilot-featured">
 <div class="dle-copy">
 <div class="dle-type"><i class="lni lni-sparkles"></i> AI-Enabled Learning / Software Onboarding</div>
 <h3>GuidePilot</h3>
-<p>An AI-enabled software onboarding and performance-support layer embedded within OrbitOps, a simulated operations SaaS platform. GuidePilot combines contextual coaching, adaptive hints, explain-why support, independent practice, and performance feedback inside authentic software workflows.</p>
-<p class="dle-secondary-copy">The learning experience separates AI coaching from task validation: GuidePilot can guide, explain, and provide feedback, while successful task completion is determined by actual application state. The architecture supports OpenRouter, OpenAI, and deterministic fallback modes.</p>
-<div class="dle-tags"><span>AI-Enabled Learning</span><span>Digital Adoption</span><span>React + Node.js</span><span>Adaptive Coaching</span><span>Performance Support</span><span>Learning Technology</span></div>
+<p>Software onboarding often separates guidance from real work. I built an AI-powered coaching layer inside a simulated operations platform, with task completion verified by application state—not model judgment.</p>
+<div class="dle-tags"><span>AI-Enabled Learning</span><span>Performance Support</span><span>React + Node.js</span><span>OpenRouter / OpenAI</span></div>
 <div class="dle-actions">
 <a class="dle-launch" href="https://orbitops-guidepilot.vercel.app/" rel="noopener" target="_blank"><i class="lni lni-play"></i> Launch Experience</a>
 <button class="dle-action open-project" data-project="guidepilot"><i class="lni lni-arrow-right"></i> View Project Details</button>
@@ -7080,8 +7147,7 @@ body{
 <div class="dle-copy">
 <div class="dle-type"><i class="lni lni-direction"></i> In-App Learning / Digital Adoption</div>
 <h3>TaskFlow</h3>
-<p>A guided learning experience embedded within a simulated SaaS workflow, designed to help users complete tasks through contextual instruction, progressive guidance, and independent practice.</p>
-<p class="dle-secondary-copy">TaskFlow demonstrates how learning can be embedded directly into a software environment rather than separated into a traditional course. Guidance appears when it is needed and gradually reduces as the user gains confidence.</p>
+<p>New users often lose context when training sits outside the product. I designed an in-app experience that moves them from guided workflow practice to independent performance.</p>
 <div class="dle-tags"><span>Digital Adoption</span><span>In-App Learning</span><span>Workflow Guidance</span><span>Performance Support</span></div>
 <div class="dle-actions">
 <a class="dle-launch" href="taskflow.html" rel="noopener" target="_blank"><i class="lni lni-play"></i> Launch Experience</a>
@@ -7098,13 +7164,11 @@ body{
 </div>
 </div>
 </div>
-<div class="dle-feature-strip"><div><strong>Contextual Guidance</strong><span>Guidance appears inside the workflow at the point of need.</span></div><div><strong>Progressive Support</strong><span>Instruction decreases as the learner becomes more confident.</span></div><div><strong>Independent Practice</strong><span>The learner ultimately completes the task without step-by-step assistance.</span></div></div>
 <div class="dle-row dle-featured scenario-featured">
 <div class="dle-copy">
 <div class="dle-type"><i class="lni lni-comments-alt"></i> Scenario-Based Learning</div>
 <h3>Client Escalation: The Conversation</h3>
-<p>A branching learning experience that develops communication, diagnostic reasoning, escalation judgment, and expectation management through realistic client decisions.</p>
-<p class="dle-secondary-copy">Learners choose how to respond at key moments, see consequences unfold, and practice balancing investigation, empathy, escalation, and client expectations.</p>
+<p>Client-facing teams need safe practice for high-stakes conversations. I designed a branching simulation built around investigation, empathy, escalation judgment, and realistic consequences.</p>
 <div class="dle-tags"><span>Scenario-Based Learning</span><span>Branching</span><span>Decision Practice</span><span>Consequence-Based Feedback</span></div>
 <div class="dle-actions">
 <a class="dle-launch" href="client_escalation.html" rel="noopener" target="_blank"><i class="lni lni-play"></i> Launch Experience</a>
@@ -7123,25 +7187,26 @@ body{
 <section class="section" id="onboarding">
 <div class="section-head">
 <div>
-<div class="section-label"><i class="lni lni-code-alt"></i> Guide Developer Onboarding</div>
-<h2>Foundation first. Then authentic targeting practice.</h2>
+<div class="section-label"><i class="lni lni-code-alt"></i> Training, Enablement &amp; Knowledge Management</div>
+<h2>Technical onboarding designed for confident performance.</h2>
 </div>
 
-<div class="section-intro-wrap"><div class="section-intro-kicker">What this demonstrates</div><p class="section-intro">I build technical onboarding in a deliberate progression: establish the web foundations first, then move learners into realistic targeting, DOM analysis, and independent problem solving.</p></div></div>
+<div class="section-intro-wrap"><div class="section-intro-kicker">Enablement approach</div><p class="section-intro">A progressive onboarding pathway connecting web foundations, authentic guide-authoring work, technical QA, and independent problem solving.</p></div></div>
 <div class="guide-module-grid">
-<article class="guide-module-card visual-module-card"><div class="guide-module-number">01</div><div class="guide-module-preview"><img alt="Module 1 preview" loading="lazy" src="assets/ogl-module-1-foundations.svg"/></div><div class="guide-module-inner"><div class="card-kicker"><i class="lni lni-code-alt"></i> MODULE 1</div><h3>Foundations for Guide Developers</h3><p>Introduces the HTML, CSS, and selector knowledge learners need before working with advanced targeting. The emphasis is on understanding how interfaces are structured and how stable elements can be identified.</p><div class="tags"><span>HTML Structure</span><span>CSS Foundations</span><span>Selector Essentials</span><span>Practice Activities</span></div><a class="guide-module-launch" href="OGL_Onboarding_Module_1_Modern.html" rel="noopener" target="_blank"><i class="lni lni-play"></i> Launch Module 1</a></div></article>
-<article class="guide-module-card visual-module-card"><div class="guide-module-number">02</div><div class="guide-module-preview"><img alt="Module 2 preview" loading="lazy" src="assets/ogl-module-2-authoring.svg"/></div><div class="guide-module-inner"><div class="card-kicker"><i class="lni lni-target"></i> MODULE 2</div><h3>Building Oracle Guided Learning Guides</h3><p>Builds on Module 1 through realistic OGL authoring work: choosing content types, building Process Guides, writing in-app guidance, configuring behavior, testing complete experiences, and completing a performance assessment.</p><div class="tags"><span>Guide Authoring</span><span>Process Guides</span><span>Behavior Settings</span><span>Testing &amp; Assessment</span></div><a class="guide-module-launch" href="OGL_Onboarding_Module_2_Modern.html" rel="noopener" target="_blank"><i class="lni lni-play"></i> Launch Module 2</a></div></article>
+<article class="guide-module-card visual-module-card"><div class="guide-module-number">01</div><div class="guide-module-preview"><img alt="Module 1 preview" loading="lazy" src="assets/ogl-module-1-foundations.svg"/></div><div class="guide-module-inner"><div class="card-kicker"><i class="lni lni-code-alt"></i> MODULE 1</div><h3>Foundations for Guide Developers</h3><p>Builds the HTML, CSS, and selector knowledge needed to identify stable interface elements and troubleshoot targeting.</p><div class="tags"><span>HTML Structure</span><span>CSS Foundations</span><span>Selectors</span><span>Practice</span></div><a class="guide-module-launch" href="OGL_Onboarding_Module_1_Modern.html" rel="noopener" target="_blank"><i class="lni lni-play"></i> Launch Module 1</a></div></article>
+<article class="guide-module-card visual-module-card"><div class="guide-module-number">02</div><div class="guide-module-preview"><img alt="Module 2 preview" loading="lazy" src="assets/ogl-module-2-authoring.svg"/></div><div class="guide-module-inner"><div class="card-kicker"><i class="lni lni-target"></i> MODULE 2</div><h3>Building Oracle Guided Learning Guides</h3><p>Moves learners into authentic guide authoring, behavior configuration, end-to-end testing, and performance assessment.</p><div class="tags"><span>Guide Authoring</span><span>Process Guides</span><span>Technical QA</span><span>Assessment</span></div><a class="guide-module-launch" href="OGL_Onboarding_Module_2_Modern.html" rel="noopener" target="_blank"><i class="lni lni-play"></i> Launch Module 2</a></div></article>
+<article class="guide-module-card visual-module-card"><div class="guide-module-number">03</div><div class="guide-module-preview module-three-preview"><div class="qa-preview"><div class="qa-preview-head"><strong>Release Readiness</strong><span>QA WORKSPACE</span></div><div class="qa-checks"><div class="qa-check"><i class="lni lni-checkmark"></i><span>Targeting resilience</span><b>Passed</b></div><div class="qa-check"><i class="lni lni-checkmark"></i><span>Cross-step validation</span><b>Passed</b></div><div class="qa-check"><i class="lni lni-warning"></i><span>Regression review</span><b>Inspect</b></div></div></div></div><div class="guide-module-inner"><div class="card-kicker"><i class="lni lni-shield"></i> MODULE 3 · CAPSTONE</div><h3>Advanced Targeting, Troubleshooting &amp; QA</h3><p>Applies foundation and authoring skills to dynamic interfaces, targeting failures, regression testing, and release-ready validation.</p><div class="tags"><span>Advanced Targeting</span><span>Troubleshooting</span><span>Technical QA</span><span>Release Validation</span></div><span class="guide-module-status"><i class="lni lni-graduation"></i> Capstone module</span></div></article>
 </div>
-<div class="guide-program-note"><strong>Program logic</strong><span>Foundation</span><i class="lni lni-arrow-right"></i><span>Application</span><i class="lni lni-arrow-right"></i><span>Independent performance</span></div>
+<div class="guide-program-note"><strong>Program logic</strong><span>Foundation</span><i class="lni lni-arrow-right"></i><span>Authoring</span><i class="lni lni-arrow-right"></i><span>QA &amp; validation</span><i class="lni lni-arrow-right"></i><span>Independent performance</span></div>
 </section>
 <section class="section" id="curriculum">
 <div class="section-head">
 <div>
-<div class="section-label"><i class="lni lni-layers"></i> Curriculum Development</div>
-<h2>Programs built for progression.</h2>
+<div class="section-label"><i class="lni lni-layers"></i> Technical Education &amp; Curriculum Development</div>
+<h2>Programs designed for technical capability and applied performance.</h2>
 </div>
 
-<div class="section-intro-wrap"><div class="section-intro-kicker">What this demonstrates</div><p class="section-intro">I design curricula as connected learning systems—sequencing knowledge, practice, assessment, and applied performance so learners can build mastery over time.</p></div></div>
+<div class="section-intro-wrap"><div class="section-intro-kicker">Curriculum leadership</div><p class="section-intro">Technical curricula connecting concepts, guided practice, assessment, projects, and workplace application.</p></div></div>
 <div class="card-grid-2">
 <article class="curr-card">
 <div class="curr-visual">
@@ -7223,16 +7288,16 @@ body{
 </section><section class="section" id="web">
 <div class="section-head">
 <div>
-<div class="section-label"><i class="lni lni-code-alt"></i> Web Development</div>
-<h2>Full-stack and product development alongside learning design.</h2>
+<div class="section-label"><i class="lni lni-code-alt"></i> Learning Technology Development &amp; Web Applications</div>
+<h2>Software development as a major supporting capability.</h2>
 </div>
 
-<div class="section-intro-wrap"><div class="section-intro-kicker">What this demonstrates</div><p class="section-intro">I build working web applications that demonstrate product thinking, interface design, workflow logic, and full-stack development—not just front-end presentation.</p></div></div>
+<div class="section-intro-wrap"><div class="section-intro-kicker">Development capability</div><p class="section-intro">I use full-stack development to prototype learning technology, model complex workflows, and turn product ideas into working systems.</p></div></div>
 <div class="web-feature-label"><i class="lni lni-star-filled"></i> Primary full-stack project</div>
 <div class="conferia web-primary-project">
 <div class="conferia-copy">
 <span class="conferia-badge"><i class="lni lni-code-alt"></i> Full-Stack Event Platform</span><h3>Conferia</h3>
-<p>A web application for managing conferences, sessions, speakers, participants, scheduling, and event operations.</p>
+<p>A full-stack event operations platform connecting registration, sessions, speakers, scheduling, participants, and administrative workflows.</p>
 <div class="stack"><span>React</span><span>Vite</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>JWT</span><span>Vercel</span></div>
 <div class="conferia-actions">
 <a class="primary" href="https://conferia-phi.vercel.app/events" rel="noopener" target="_blank"><i class="lni lni-website"></i> Live demo</a>
@@ -7337,7 +7402,7 @@ body{
 <div class="learnova-body">
 <div class="card-kicker"><i class="lni lni-target"></i> LEARNING PLATFORM / SAAS APPLICATION</div>
 <h3>Learnova</h3>
-<p>A learning platform that combines structured progression, assessments, question banks, readiness gates, learner tracking, and administrative controls.</p>
+<p>A mastery-driven learning platform connecting assessment, readiness gates, learner progression, question banks, and administration.</p>
 <div class="tags">
 <span>Adaptive Learning</span>
 <span>Mastery</span>
@@ -7357,7 +7422,7 @@ body{
 <div class="easybiz-body">
 <div class="card-kicker"><i class="lni lni-apartment"></i> FULL-STACK BUSINESS APPLICATION</div>
 <h3>EasyBiz</h3>
-<p>A unified workspace for small-business operations. Its live LPG module connects customers, sales, payments, pricing, tank inventory, refill cycles, and reporting in one authenticated application.</p>
+<p>A multi-business workspace whose live LPG module connects customers, sales, payments, inventory, refill cycles, and reporting.</p>
 <div class="tags"><span>React</span><span>Express</span><span>MongoDB</span><span>Sales &amp; Inventory</span><span>Business Operations</span></div>
 <div class="easybiz-actions">
 <a href="https://easybiz-sooty.vercel.app" rel="noopener" target="_blank"><i class="lni lni-website"></i> Live demo</a>
@@ -7389,7 +7454,7 @@ body{
 </div>
 </article>
 </div>
-<div class="web-concepts-head"><div><span>Additional web applications</span><h3>More workflow-focused product work.</h3></div><p>SkillTrack and TechTrain OS extend the portfolio into employee development and technical-training operations.</p></div>
+<div class="web-concepts-head"><div><span>Selected product concepts</span><h3>Additional workflow-focused systems.</h3></div><p>Compact concepts extending the portfolio into employee development and technical-training operations.</p></div>
 <div class="web-concepts">
 <article class="third-project-row concept-card">
 <div class="third-project-visual skilltrack-visual">
@@ -7417,14 +7482,14 @@ body{
 <div class="third-project-body">
 <div class="card-kicker"><i class="lni lni-target"></i> SKILLS &amp; PROGRESSION APPLICATION</div>
 <h3>SkillTrack</h3>
-<p>A professional-growth platform that connects role goals with skill gaps, practical development activities, workplace evidence, and manager validation—not just course completion.</p>
+<p>Connects role goals with skill gaps, development activities, workplace evidence, and manager validation.</p>
 <div class="tags">
 <span>Competency Mapping</span>
 <span>Development Paths</span>
 <span>Evidence of Work</span>
 <span>Manager Validation</span>
 </div>
-<div class="concept-actions"><a aria-disabled="true" class="placeholder-link demo-placeholder" href="#" tabindex="-1"><i class="lni lni-website"></i> Live demo</a><button class="card-action" data-project="skilltrack"><i class="lni lni-eye"></i> View project details</button></div>
+<div class="concept-actions"><button class="card-action" data-project="skilltrack"><i class="lni lni-eye"></i> View project details</button></div>
 </div>
 </article>
 <article class="techtrain-card concept-card">
@@ -7465,23 +7530,23 @@ body{
 <div class="techtrain-body">
 <div class="card-kicker"><i class="lni lni-apartment"></i> TECHNICAL TRAINING CENTER SOFTWARE</div>
 <h3>TechTrain OS</h3>
-<p>A software platform for technical training centers that brings together trainee records, enrollment, schedules, trainer assignments, assessments, and day-to-day center operations in one system.</p>
+<p>Centralizes trainee records, enrollment, schedules, trainer assignments, assessments, and training-center operations.</p>
 <div class="tags"><span>Training Center Operations</span><span>Scheduling</span><span>Trainee Records</span><span>Assessment Tracking</span></div>
-<div class="concept-actions"><a aria-disabled="true" class="placeholder-link demo-placeholder" href="#" tabindex="-1"><i class="lni lni-website"></i> Live demo</a><button class="card-action" data-project="techtrain"><i class="lni lni-eye"></i> View project details</button></div>
+<div class="concept-actions"><button class="card-action" data-project="techtrain"><i class="lni lni-eye"></i> View project details</button></div>
 </div>
 </article></div></section><section class="section" id="education">
 <div class="section-head">
 <div>
-<div class="section-label"><i class="lni lni-blackboard"></i> Education</div>
-<h2>The practice behind the portfolio.</h2>
+<div class="section-label"><i class="lni lni-blackboard"></i> Education, Enablement &amp; Program Leadership</div>
+<h2>Two decades across education and workforce learning.</h2>
 </div>
 
-<div class="section-intro-wrap"><div class="section-intro-kicker">What this demonstrates</div><p class="section-intro">My work is grounded in more than two decades of teaching, facilitation, instructor support, assessment design, and data-informed learning decisions across multiple education and training contexts.</p></div></div>
+<div class="section-intro-wrap"><div class="section-intro-kicker">Leadership foundation</div><p class="section-intro">Experience spanning education, workforce learning, instructor development, assessment, program delivery, and data-informed improvement.</p></div></div>
 <div class="education-row">
-<div class="edu"><i class="lni lni-blackboard"></i><h4>Teaching &amp; Facilitation</h4><p>Technical and computing subjects across secondary, higher education, workforce development, and adult-learning contexts.</p></div>
-<div class="edu"><i class="lni lni-users"></i><h4>Instructor Support</h4><p>Coaching, onboarding, mentoring, and supporting instructors and learners across varying skill levels and delivery environments.</p></div>
-<div class="edu"><i class="lni lni-target"></i><h4>Assessment &amp; Progression</h4><p>Practice and evaluation designed to connect learning objectives, demonstrated mastery, and progression toward real performance.</p></div>
-<div class="edu"><i class="lni lni-stats-up"></i><h4>Data-Informed Decision Making</h4><p>Gathering and analyzing learning, performance, and operational data to identify patterns, evaluate effectiveness, and guide evidence-based decisions.</p></div>
+<div class="edu"><i class="lni lni-blackboard"></i><h4>Teaching &amp; Facilitation</h4><p>Technical and computing education across schools, higher education, workforce development, and adult learning.</p></div>
+<div class="edu"><i class="lni lni-users"></i><h4>Instructor &amp; Designer Development</h4><p>Coaching, onboarding, mentoring, and quality support across varied delivery environments.</p></div>
+<div class="edu"><i class="lni lni-target"></i><h4>Assessment &amp; Progression</h4><p>Evaluation aligned with objectives, demonstrated mastery, and real performance.</p></div>
+<div class="edu"><i class="lni lni-stats-up"></i><h4>Program Improvement</h4><p>Learning and operational data used to evaluate effectiveness and guide decisions.</p></div>
 </div>
 <div class="institutions-block">
 <div class="institutions-head">
@@ -7557,7 +7622,7 @@ body{
 </section>
 <footer class="footer">
 <div>© 2026 Alan Beraquit · Portfolio</div>
-<div class="footer-links"><a href="mailto:alantberaquit@gmail.com"><i class="lni lni-envelope"></i> Email</a><a href="https://www.linkedin.com/in/alan-beraquit-94200b12a/" target="_blank"><i class="lni lni-linkedin"></i> LinkedIn</a></div>
+<div class="footer-links"><a href="mailto:alantberaquit@gmail.com"><i class="lni lni-envelope"></i> Email</a><a href="https://www.linkedin.com/in/alan-beraquit-94200b12a/" rel="noopener" target="_blank"><i class="lni lni-linkedin"></i> LinkedIn</a><a href="https://github.com/alantberaquit" rel="noopener" target="_blank"><i class="lni lni-github-original"></i> GitHub</a></div>
 </footer>
 </div>
 </div>
@@ -7579,6 +7644,11 @@ body{
 </aside>
 <script>
 const body=document.body;
+const digitalSection=document.getElementById("digital");
+const webSection=document.getElementById("web");
+if(digitalSection && webSection){
+  digitalSection.insertAdjacentElement("afterend",webSection);
+}
 let drawerTrigger=null;
 const data={
   guidepilot:{
