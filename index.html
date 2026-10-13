@@ -6461,6 +6461,38 @@ body{
 .dle-course-pair .dle-visual{min-height:220px}
 .dle-course-pair + .shared-course-note{text-align:center;margin-bottom:0}
 
+/* GuidePilot featured visual */
+.guidepilot-featured{border-top:1px solid #d7e0e8;}
+.guidepilot-illustration{position:relative;width:100%;min-height:300px;padding:20px;background:#d5e8f7;overflow:hidden;}
+.gp-app{position:absolute;left:5%;top:34px;width:68%;height:220px;border:2px solid var(--navy);background:#fff;box-shadow:10px 10px 0 rgba(67,115,162,.14);}
+.gp-app-head{height:38px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #d8e0e8;background:#f7fafc;}
+.gp-brand{font:800 11px "Outfit",sans-serif;color:var(--navy)}
+.gp-status{font-size:8px;font-weight:800;color:#708091;text-transform:uppercase;letter-spacing:.08em}
+.gp-app-body{display:grid;grid-template-columns:62px 1fr;height:calc(100% - 38px)}
+.gp-mini-nav{padding:16px 10px;background:#eef4f8;border-right:1px solid #d8e0e8;display:grid;align-content:start;gap:11px}
+.gp-mini-nav span{height:7px;border-radius:999px;background:#95c5e7}
+.gp-mini-nav span:nth-child(2),.gp-mini-nav span:nth-child(4){width:70%}
+.gp-workspace{padding:18px}
+.gp-titlebar{width:46%;height:10px;background:var(--navy);margin-bottom:20px}
+.gp-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.gp-row.short{grid-template-columns:1fr 1fr;width:72%}
+.gp-row span{height:38px;border:1px solid #d5dde6;background:#f7f9fb}
+.gp-coach{position:absolute;right:3%;top:54px;width:43%;min-height:188px;padding:16px;background:var(--navy);color:#fff;border:2px solid var(--navy);box-shadow:8px 8px 0 rgba(232,65,90,.24);}
+.gp-coach-head{display:flex;align-items:center;gap:9px}
+.gp-coach-head>i{font-size:20px;color:#ff8a9b}
+.gp-coach-head strong,.gp-coach-head span{display:block}
+.gp-coach-head strong{font:800 13px "Outfit",sans-serif}
+.gp-coach-head span{margin-top:2px;font-size:8px;color:#cbd2df}
+.gp-coach p{margin:14px 0 12px;font-size:10px;line-height:1.5;color:#eef1f6}
+.gp-modes{display:flex;flex-wrap:wrap;gap:5px}
+.gp-modes span{padding:5px 7px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);font-size:7.5px;font-weight:800}
+
+@media(max-width:760px){
+  .guidepilot-illustration{min-height:330px;padding:14px}
+  .gp-app{left:4%;top:24px;width:82%;height:200px}
+  .gp-coach{right:4%;top:142px;width:70%;min-height:162px}
+}
+
 @media(max-width:1050px){
   .dle-featured{grid-template-columns:1fr}
   .dle-featured .dle-visual{grid-column:1}
@@ -7012,8 +7044,38 @@ body{
 <h2>Learning built into the work.</h2>
 </div>
 
-<div class="section-intro-wrap"><div class="section-intro-kicker">What this demonstrates</div><p class="section-intro">I design digital learning around real performance—using contextual guidance, authentic decisions, and practice that helps people act confidently in the flow of work.</p></div></div>
+<div class="section-intro-wrap"><div class="section-intro-kicker">What this demonstrates</div><p class="section-intro">I design learning technology around real performance—combining contextual guidance, AI-enabled coaching, authentic decisions, and independent practice inside the tools people use to work.</p></div></div>
 <div class="dle-showcase dle-final-grid">
+<div class="dle-row dle-featured guidepilot-featured">
+<div class="dle-copy">
+<div class="dle-type"><i class="lni lni-sparkles"></i> AI-Enabled Learning / Software Onboarding</div>
+<h3>GuidePilot</h3>
+<p>An AI-enabled software onboarding and performance-support layer embedded within OrbitOps, a simulated operations SaaS platform. GuidePilot combines contextual coaching, adaptive hints, explain-why support, independent practice, and performance feedback inside authentic software workflows.</p>
+<p class="dle-secondary-copy">The learning experience separates AI coaching from task validation: GuidePilot can guide, explain, and provide feedback, while successful task completion is determined by actual application state. The architecture supports OpenRouter, OpenAI, and deterministic fallback modes.</p>
+<div class="dle-tags"><span>AI-Enabled Learning</span><span>Digital Adoption</span><span>React + Node.js</span><span>Adaptive Coaching</span><span>Performance Support</span><span>Learning Technology</span></div>
+<div class="dle-actions">
+<a class="dle-launch" href="https://orbitops-guidepilot.vercel.app/" rel="noopener" target="_blank"><i class="lni lni-play"></i> Launch Experience</a>
+<button class="dle-action open-project" data-project="guidepilot"><i class="lni lni-arrow-right"></i> View Project Details</button>
+</div>
+</div>
+<div class="dle-visual guidepilot">
+<div class="guidepilot-illustration">
+<div class="gp-app">
+<div class="gp-app-head"><span class="gp-brand">OrbitOps</span><span class="gp-status">Workspace</span></div>
+<div class="gp-app-body">
+<div class="gp-mini-nav"><span></span><span></span><span></span><span></span></div>
+<div class="gp-workspace"><div class="gp-titlebar"></div><div class="gp-row"><span></span><span></span><span></span></div><div class="gp-row short"><span></span><span></span></div></div>
+</div>
+</div>
+<div class="gp-coach">
+<div class="gp-coach-head"><i class="lni lni-sparkles"></i><div><strong>GuidePilot</strong><span>AI Coach • OpenRouter</span></div></div>
+<p>You’re in the right workspace. Before I give you the next step, where would you expect customer records to be created?</p>
+<div class="gp-modes"><span>Guide Me</span><span>Hint</span><span>Explain Why</span><span>Let Me Try</span></div>
+</div>
+</div>
+</div>
+</div>
+<div class="dle-feature-strip"><div><strong>AI Coaching</strong><span>Context-aware coaching adapts hints and explanations to the learner’s current task and actions.</span></div><div><strong>Deterministic Validation</strong><span>The AI supports performance, but actual task completion is verified by application state.</span></div><div><strong>Independent Practice</strong><span>Learners can reduce guidance and complete authentic workflows with minimal intervention.</span></div></div>
 <div class="dle-row dle-featured">
 <div class="dle-copy">
 <div class="dle-type"><i class="lni lni-direction"></i> In-App Learning / Digital Adoption</div>
@@ -7519,6 +7581,13 @@ body{
 const body=document.body;
 let drawerTrigger=null;
 const data={
+  guidepilot:{
+    title:"GuidePilot",
+    sub:"AI-Enabled Learning · Software Onboarding",
+    what:"An AI-enabled software onboarding and performance-support layer embedded inside OrbitOps, a simulated operations SaaS platform. Learners complete realistic tasks while GuidePilot provides contextual coaching, hints, explanations, and reflective feedback.",
+    demo:"AI-enabled coaching, adaptive scaffolding, independent practice, structured feedback, provider-agnostic architecture, graceful fallback, and deterministic task validation based on real application state rather than model judgment.",
+    tags:["AI-Enabled Learning","Software Onboarding","Digital Adoption","Adaptive Coaching","React + Node.js","Performance Support"]
+  },
   taskflow:{
     title:"TaskFlow",
     sub:"Digital Learning Experience · Product Education",
