@@ -6996,6 +6996,48 @@ body{
 .guide-module-status{margin-top:auto;padding-top:22px;display:inline-flex;align-items:center;gap:8px;color:#697587;font:800 12px "Outfit",sans-serif;}
 .guide-module-status i{color:var(--red);}
 
+/* v9 locally previewed hero artwork */
+.hero-new-art{
+  display:block;
+  width:118%;
+  max-width:780px;
+  height:auto;
+  object-fit:contain;
+  filter:drop-shadow(0 22px 22px rgba(42,63,96,.12));
+}
+.hero-visual>.illus{display:none !important;}
+
+/* Give the curriculum diagrams restrained depth while preserving their flat clarity. */
+#curriculum .curr-visual{
+  background:linear-gradient(145deg,#dcecf8 0%,#c9e1f2 100%) !important;
+}
+#curriculum .curr-illustration{
+  transform:translateY(-2px);
+  box-shadow:0 16px 26px rgba(39,62,96,.13),7px 7px 0 rgba(67,115,162,.12);
+}
+#curriculum .roadmap-illustration,
+#curriculum .analytics-illustration,
+#curriculum .cyber-illustration{
+  border-color:#252b45;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 16px 26px rgba(39,62,96,.13),7px 7px 0 rgba(67,115,162,.12);
+}
+#curriculum .road-node{
+  box-shadow:0 7px 13px rgba(39,62,96,.14),4px 4px 0 rgba(67,115,162,.15);
+}
+#curriculum .analytics-panel{
+  border:1px solid rgba(37,43,69,.18);
+  box-shadow:0 8px 16px rgba(39,62,96,.12),5px 5px 0 rgba(67,115,162,.12);
+}
+#curriculum .bar-chart span{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),2px 0 4px rgba(39,62,96,.08);
+}
+#curriculum .cyber-center{
+  box-shadow:0 9px 16px rgba(39,62,96,.16),5px 5px 0 rgba(67,115,162,.15);
+}
+#curriculum .cyber-node{
+  box-shadow:0 6px 12px rgba(39,62,96,.12),3px 3px 0 rgba(67,115,162,.12);
+}
+
 /* Keep the three-part positioning statement compact and intentional. */
 @media(min-width:901px){
   .hero{grid-template-columns:minmax(0,1.08fr) minmax(500px,.92fr);gap:46px;}
@@ -7017,6 +7059,7 @@ body{
 @media(max-width:620px){
   .hero h1.hero-title{font-size:clamp(32px,8vw,38px) !important;}
   .hero-title span{display:block;}
+  .hero-new-art{width:min(112%,620px);max-width:none;}
   .positioning-band{grid-template-columns:1fr 1fr;}
   .positioning-lead{grid-column:1 / -1;}
   .positioning-pillar{padding:15px;}
@@ -7068,6 +7111,7 @@ body{
 </div>
 </div>
 <div aria-hidden="true" class="hero-visual">
+<img class="hero-new-art" src="assets/hero-learning-technology-system-v5.png" alt=""/>
 <div class="illus">
 <div class="screen-lg"></div>
 <div class="screen-md"></div>
