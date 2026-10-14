@@ -6996,6 +6996,13 @@ body{
 .guide-module-status{margin-top:auto;padding-top:22px;display:inline-flex;align-items:center;gap:8px;color:#697587;font:800 12px "Outfit",sans-serif;}
 .guide-module-status i{color:var(--red);}
 
+/* Keep the three-part positioning statement compact and intentional. */
+@media(min-width:901px){
+  .hero{grid-template-columns:minmax(0,1.08fr) minmax(500px,.92fr);gap:46px;}
+  .hero h1.hero-title{font-size:clamp(58px,4.5vw,72px) !important;line-height:.98 !important;}
+  .hero-title span{display:block;white-space:nowrap;}
+}
+
 @media(max-width:1050px){
   .positioning-band{grid-template-columns:repeat(2,1fr);}
   .positioning-lead{grid-column:1 / -1;}
@@ -7008,6 +7015,8 @@ body{
   .mobile-section-nav a{flex:0 0 auto;padding:9px 12px;border:1px solid #d7e0e8;border-radius:999px;background:#fff;color:var(--navy);font:800 10px "Outfit",sans-serif;text-decoration:none;}
 }
 @media(max-width:620px){
+  .hero h1.hero-title{font-size:clamp(32px,8vw,38px) !important;}
+  .hero-title span{display:block;}
   .positioning-band{grid-template-columns:1fr 1fr;}
   .positioning-lead{grid-column:1 / -1;}
   .positioning-pillar{padding:15px;}
@@ -7050,7 +7059,7 @@ body{
 <div class="hero-copy">
 <div class="hero-kicker"><i class="lni lni-sparkles"></i> Portfolio · 2026</div>
 <div class="hero-name">Alan Beraquit</div>
-<h1>Learning technology. Technical education. Real performance.</h1>
+<h1 class="hero-title"><span>Learning technology.</span><span>Technical education.</span><span>Real performance.</span></h1>
 <p>I connect learning design, technical education, software development, AI, and performance support to help people succeed inside complex systems.</p>
 <span class="hero-role">Learning Technology, Digital Learning &amp; Technical Education Professional · 20+ years</span>
 <div class="hero-actions">
