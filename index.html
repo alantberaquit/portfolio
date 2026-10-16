@@ -7038,6 +7038,211 @@ body{
   box-shadow:0 6px 12px rgba(39,62,96,.12),3px 3px 0 rgba(67,115,162,.12);
 }
 
+/* ===== Curriculum Studio feature + compact curriculum index ===== */
+#curriculum .curriculum-studio-feature{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(330px,.88fr);gap:0;margin-top:40px;overflow:hidden;border:1px solid #d6dfe8;border-radius:22px;background:#fff;box-shadow:0 18px 42px rgba(38,56,84,.08);}
+#curriculum .studio-copy{padding:42px 44px;}
+#curriculum .studio-eyebrow{display:flex;align-items:center;gap:9px;color:var(--red);font:800 10px "Outfit",sans-serif;letter-spacing:.1em;text-transform:uppercase;}
+#curriculum .studio-eyebrow i{font-size:17px;}
+#curriculum .studio-copy h3{margin:14px 0 5px;color:var(--navy);font:800 clamp(30px,3.2vw,45px)/1 "Outfit",sans-serif;}
+#curriculum .studio-subtitle{color:#506174;font:700 14px/1.5 "Outfit",sans-serif;}
+#curriculum .studio-description{max-width:690px;margin:20px 0 0;color:var(--muted);font-size:14px;line-height:1.7;}
+#curriculum .studio-lifecycle{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:25px;}
+#curriculum .studio-lifecycle span{padding:7px 10px;border-radius:999px;background:#f4f7fa;color:var(--navy);font:800 9px "Outfit",sans-serif;letter-spacing:.04em;text-transform:uppercase;}
+#curriculum .studio-lifecycle i{color:var(--red);font-size:10px;}
+#curriculum .studio-capabilities{display:grid;align-content:center;gap:1px;padding:28px;background:#dcecf8;}
+#curriculum .studio-capability{display:grid;grid-template-columns:35px 1fr;align-items:center;gap:12px;padding:15px 16px;background:rgba(255,255,255,.82);}
+#curriculum .studio-capability:first-child{border-radius:14px 14px 0 0;}
+#curriculum .studio-capability:last-child{border-radius:0 0 14px 14px;}
+#curriculum .studio-capability i{width:35px;height:35px;display:grid;place-items:center;border-radius:10px;background:#fff0f3;color:var(--red);font-size:16px;}
+#curriculum .studio-capability span{color:var(--navy);font:800 11px/1.35 "Outfit",sans-serif;}
+#curriculum .curricula-intro{display:flex;align-items:end;justify-content:space-between;gap:30px;margin:48px 0 14px;}
+#curriculum .curricula-intro h3{margin:0;color:var(--navy);font:800 24px/1.15 "Outfit",sans-serif;}
+#curriculum .curricula-intro p{max-width:520px;margin:0;color:var(--muted);font-size:12px;line-height:1.6;text-align:right;}
+#curriculum .curriculum-list{border-top:1px solid #d6dfe8;}
+#curriculum .curriculum-row{display:grid;grid-template-columns:64px minmax(220px,.72fr) minmax(320px,1.28fr) 170px;align-items:center;gap:24px;padding:25px 4px;border-bottom:1px solid #d6dfe8;}
+#curriculum .curriculum-number{color:var(--red);font:800 13px "Outfit",sans-serif;letter-spacing:.08em;}
+#curriculum .curriculum-row h4{margin:0;color:var(--navy);font:800 18px/1.25 "Outfit",sans-serif;}
+#curriculum .curriculum-row p{margin:0;color:var(--muted);font-size:12px;line-height:1.62;}
+#curriculum .curriculum-area{justify-self:end;padding:7px 10px;border-radius:999px;background:#f2f6f9;color:#566778;font:800 8px "Outfit",sans-serif;letter-spacing:.06em;text-align:center;text-transform:uppercase;}
+
+@media(max-width:950px){
+  #curriculum .curriculum-studio-feature{grid-template-columns:1fr;}
+  #curriculum .studio-capabilities{grid-template-columns:repeat(2,minmax(0,1fr));}
+  #curriculum .studio-capability:first-child{border-radius:14px 0 0 0;}
+  #curriculum .studio-capability:nth-child(2){border-radius:0 14px 0 0;}
+  #curriculum .studio-capability:last-child{border-radius:0 0 14px 0;}
+  #curriculum .curriculum-row{grid-template-columns:52px minmax(200px,.8fr) minmax(280px,1.2fr);}
+  #curriculum .curriculum-area{grid-column:2 / -1;justify-self:start;}
+}
+@media(max-width:680px){
+  #curriculum .curriculum-studio-feature{margin-top:28px;border-radius:16px;}
+  #curriculum .studio-copy{padding:28px 22px;}
+  #curriculum .studio-description{font-size:13px;}
+  #curriculum .studio-lifecycle{gap:6px;}
+  #curriculum .studio-lifecycle i{display:none;}
+  #curriculum .studio-capabilities{grid-template-columns:1fr;padding:18px;}
+  #curriculum .studio-capability,#curriculum .studio-capability:first-child,#curriculum .studio-capability:nth-child(2),#curriculum .studio-capability:last-child{border-radius:10px;}
+  #curriculum .curricula-intro{display:block;margin-top:36px;}
+  #curriculum .curricula-intro p{margin-top:8px;text-align:left;}
+  #curriculum .curriculum-row{grid-template-columns:42px 1fr;gap:8px 14px;padding:22px 0;}
+  #curriculum .curriculum-row p,#curriculum .curriculum-area{grid-column:2;}
+}
+
+/* ===== Curriculum section concept B: editorial system map ===== */
+#curriculum .curriculum-studio-feature{
+  position:relative;
+  grid-template-columns:minmax(0,.92fr) minmax(420px,1.08fr);
+  margin-top:44px;
+  border:0;
+  border-radius:0;
+  background:var(--navy);
+  box-shadow:none;
+}
+#curriculum .curriculum-studio-feature::before{
+  content:"FEATURE 01";
+  position:absolute;
+  top:20px;
+  right:24px;
+  color:rgba(255,255,255,.28);
+  font:800 9px "Outfit",sans-serif;
+  letter-spacing:.14em;
+}
+#curriculum .studio-copy{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:52px 48px;
+}
+#curriculum .studio-eyebrow{color:#ff7189;}
+#curriculum .studio-copy h3{color:#fff;font-size:clamp(38px,4vw,56px);}
+#curriculum .studio-subtitle{color:#cbd5e4;}
+#curriculum .studio-description{color:#dfe5ee;font-size:13px;line-height:1.72;}
+#curriculum .studio-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px;}
+#curriculum .studio-action{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 16px;border:1px solid rgba(255,255,255,.25);border-radius:999px;background:transparent;color:#fff;font:800 10px "Outfit",sans-serif;text-decoration:none;cursor:pointer;}
+#curriculum .studio-action.primary{border-color:#ff536f;background:#ff536f;}
+#curriculum .studio-action i{font-size:15px;}
+#curriculum .studio-action:hover{transform:translateY(-1px);}
+#curriculum .studio-lifecycle{
+  position:relative;
+  justify-content:space-between;
+  gap:0;
+  margin-top:32px;
+  padding-top:17px;
+  border-top:1px solid rgba(255,255,255,.18);
+}
+#curriculum .studio-lifecycle span{
+  position:relative;
+  padding:0;
+  background:transparent;
+  color:#fff;
+  font-size:8px;
+}
+#curriculum .studio-lifecycle span::before{
+  content:"";
+  position:absolute;
+  top:-21px;
+  left:0;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#ff536f;
+  box-shadow:0 0 0 4px rgba(255,83,111,.18);
+}
+#curriculum .studio-lifecycle i{display:none;}
+#curriculum .studio-capabilities{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-content:stretch;
+  gap:10px;
+  padding:18px;
+  background:#dce9f3;
+}
+#curriculum .studio-capability,
+#curriculum .studio-capability:first-child,
+#curriculum .studio-capability:last-child{
+  grid-template-columns:58px 1fr;
+  align-content:center;
+  align-items:center;
+  gap:17px;
+  min-height:126px;
+  padding:24px 22px;
+  border:1px solid rgba(35,48,73,.08);
+  border-radius:14px;
+  background:#fff;
+  box-shadow:0 7px 20px rgba(35,48,73,.06);
+}
+#curriculum .studio-capability i{
+  width:58px;
+  height:58px;
+  border-radius:15px;
+  background:var(--red);
+  color:#fff;
+  box-shadow:0 9px 20px rgba(240,62,91,.22);
+  font-size:23px;
+}
+#curriculum .studio-capability-copy{display:grid;gap:5px;}
+#curriculum .studio-capability strong{color:var(--navy);font:800 15px/1.25 "Outfit",sans-serif;}
+#curriculum .studio-capability small{color:#647487;font:500 11px/1.45 "DM Sans",sans-serif;}
+#curriculum .curricula-intro{
+  align-items:center;
+  margin:54px 0 20px;
+  padding:0 0 0 20px;
+  border-left:4px solid var(--red);
+}
+#curriculum .curricula-intro h3{font-size:28px;}
+#curriculum .curriculum-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;border-top:0;counter-reset:curriculum-item;}
+#curriculum .curriculum-row{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:0;
+  min-height:300px;
+  padding:26px;
+  border:1px solid #d4dde6;
+  border-top:4px solid var(--navy);
+  background:#fff;
+  overflow:hidden;
+}
+#curriculum .curriculum-row:nth-child(2){border-top-color:var(--red);}
+#curriculum .curriculum-row:nth-child(3){border-top-color:#3f7fa9;}
+#curriculum .curriculum-row::after{content:"";position:absolute;right:-34px;bottom:-42px;width:130px;height:130px;border-radius:50%;background:#f1f6fa;}
+#curriculum .curriculum-number{
+  position:relative;
+  z-index:1;
+  align-self:auto;
+  display:block;
+  margin-bottom:30px;
+  border-right:0;
+  color:var(--red);
+  font-size:13px;
+}
+#curriculum .curriculum-number i{display:block;margin-bottom:13px;color:var(--navy);font-size:27px;}
+#curriculum .curriculum-row h4{position:relative;z-index:1;margin-bottom:13px;font-size:22px;}
+#curriculum .curriculum-row p{position:relative;z-index:1;font-size:12.5px;line-height:1.65;}
+#curriculum .curriculum-area{position:relative;z-index:1;justify-self:auto;margin-top:auto;padding-top:22px;background:transparent;border:0;color:var(--red);}
+
+@media(max-width:950px){
+  #curriculum .curriculum-studio-feature{grid-template-columns:1fr;}
+  #curriculum .studio-capabilities{grid-template-columns:repeat(2,minmax(0,1fr));}
+  #curriculum .curriculum-list{grid-template-columns:1fr;}
+  #curriculum .curriculum-row{min-height:0;}
+}
+@media(max-width:680px){
+  #curriculum .curriculum-studio-feature{margin-top:30px;}
+  #curriculum .curriculum-studio-feature::before{top:16px;right:18px;}
+  #curriculum .studio-copy{padding:42px 24px 34px;}
+  #curriculum .studio-copy h3{font-size:38px;}
+  #curriculum .studio-lifecycle{margin-top:28px;}
+  #curriculum .studio-lifecycle span{font-size:7px;}
+  #curriculum .studio-capabilities{grid-template-columns:1fr;gap:8px;padding:12px;}
+  #curriculum .studio-capability,#curriculum .studio-capability:first-child,#curriculum .studio-capability:nth-child(2),#curriculum .studio-capability:last-child{grid-column:auto;min-height:108px;border-radius:12px;padding:18px;}
+  #curriculum .curricula-intro{margin-top:42px;padding-left:15px;}
+  #curriculum .curricula-intro h3{font-size:24px;}
+  #curriculum .curriculum-row{padding:22px;}
+  #curriculum .curriculum-number{margin-bottom:22px;font-size:12px;}
+  #curriculum .curriculum-number i{font-size:24px;}
+}
+
 /* Keep the three-part positioning statement compact and intentional. */
 @media(min-width:901px){
   .hero{grid-template-columns:minmax(0,1.08fr) minmax(500px,.92fr);gap:46px;}
@@ -7255,88 +7460,37 @@ body{
 <section class="section" id="curriculum">
 <div class="section-head">
 <div>
-<div class="section-label"><i class="lni lni-layers"></i> Technical Education &amp; Curriculum Development</div>
-<h2>End-to-End Curriculum &amp; Instructional Design</h2>
+<div class="section-label"><i class="lni lni-layers"></i> Curriculum Development</div>
+<h2>From curriculum architecture to instructional delivery.</h2>
 </div>
 
-<div class="section-intro-wrap"><div class="section-intro-kicker">Complete Instructor's Kit</div><p class="section-intro">Instructor-ready programs with curriculum architecture, lesson content, instructor guides, slides, activities, assessments, rubrics, and capstone projects.</p></div></div>
-<div class="card-grid-2">
-<article class="curr-card">
-<div class="curr-visual">
-<div class="curr-illustration roadmap-illustration">
-<div class="road-node n1"><i class="lni lni-code-alt"></i><span>JS</span></div>
-<div class="road-line l1"></div>
-<div class="road-node n2"><i class="lni lni-react"></i><span>React</span></div>
-<div class="road-line l2"></div>
-<div class="road-node n3"><i class="lni lni-database"></i><span>MongoDB</span></div>
-<div class="road-line l3"></div>
-<div class="road-node n4"><i class="lni lni-rocket"></i><span>Full Stack</span></div>
+<div class="section-intro-wrap"><div class="section-intro-kicker">End-to-end practice</div><p class="section-intro">I design complete technical learning programs and build the tools that support their development, management, and classroom delivery. My work connects structured curricula, instructional content, practical activities, assessments, and teaching resources into cohesive learning experiences.</p></div></div>
+<article class="curriculum-studio-feature" data-demo-url="https://curriculum-studio-lilac.vercel.app/demo">
+<div class="studio-copy">
+<div class="studio-eyebrow"><i class="lni lni-laptop-phone"></i> Featured learning platform</div>
+<h3>Curriculum Studio</h3>
+<div class="studio-subtitle">Technical Curriculum Authoring &amp; Delivery Platform</div>
+<p class="studio-description">A custom-built platform for developing and managing technical learning programs. Curriculum Studio brings course creation, structured lesson authoring, code examples, instructional resources, activities, assessment rubrics, content review, and instructor delivery into one workspace.</p>
+<div class="studio-actions"><a class="studio-action primary" href="https://curriculum-studio-lilac.vercel.app/demo" rel="noopener" target="_blank"><i class="lni lni-play"></i> Guest Demo</a><a class="studio-action" href="https://curriculum-studio-lilac.vercel.app/" rel="noopener" target="_blank"><i class="lni lni-lock"></i> Private Workspace</a><button class="studio-action card-action" data-project="curriculumstudio" type="button"><i class="lni lni-eye"></i> Project Details</button></div>
+<div class="studio-lifecycle" aria-label="Instructional content lifecycle"><span>Create</span><i class="lni lni-arrow-right"></i><span>Author</span><i class="lni lni-arrow-right"></i><span>Review</span><i class="lni lni-arrow-right"></i><span>Publish</span><i class="lni lni-arrow-right"></i><span>Deliver</span></div>
 </div>
-</div>
-<div class="curr-body">
-<div class="card-kicker"><i class="lni lni-code-alt"></i> TECHNICAL CURRICULUM</div>
-<h3>DICT MERN Full-Stack Curriculum</h3>
-<p>A complete, instructor-ready full-stack program sequencing core concepts, guided practice, assessment, and a capstone application.</p>
-<div class="tags"><span>Instructor's Kit</span><span>Lessons &amp; Slides</span><span>Assessments &amp; Rubrics</span><span>Capstone Project</span></div>
-<button class="card-action" data-project="mern"><i class="lni lni-eye"></i> View curriculum details</button>
+<div class="studio-capabilities" aria-label="Curriculum Studio capabilities">
+<div class="studio-capability"><i class="lni lni-write"></i><div class="studio-capability-copy"><strong>Course &amp; session authoring</strong><small>Structure programs, modules, and lessons.</small></div></div>
+<div class="studio-capability"><i class="lni lni-code-alt"></i><div class="studio-capability-copy"><strong>Technical content editing</strong><small>Build code-aware instructional content.</small></div></div>
+<div class="studio-capability"><i class="lni lni-checkmark-circle"></i><div class="studio-capability-copy"><strong>Activities &amp; rubric design</strong><small>Align practice with measurable outcomes.</small></div></div>
+<div class="studio-capability"><i class="lni lni-users"></i><div class="studio-capability-copy"><strong>Review &amp; approval</strong><small>Support quality checks and collaboration.</small></div></div>
+<div class="studio-capability"><i class="lni lni-blackboard"></i><div class="studio-capability-copy"><strong>Instructor delivery</strong><small>Put teaching resources at point of use.</small></div></div>
+<div class="studio-capability"><i class="lni lni-cloud-upload"></i><div class="studio-capability-copy"><strong>Publishing workflow</strong><small>Move approved content into delivery.</small></div></div>
 </div>
 </article>
-<article class="curr-card">
-<div class="curr-visual">
-<div class="curr-illustration analytics-illustration">
-<div class="analytics-panel">
-<div class="analytics-head">
-<i class="lni lni-bar-chart"></i>
-<span>Data Analysis</span>
+<div class="curricula-intro">
+<h3>Complete technical learning programs.</h3>
+<p>Three instructor-ready curricula developed as comprehensive learning experiences. Data Analytics is being integrated into Curriculum Studio; the others remain independent programs.</p>
 </div>
-<div class="bar-chart">
-<span style="height:34%"></span>
-<span style="height:58%"></span>
-<span style="height:76%"></span>
-<span style="height:48%"></span>
-<span style="height:88%"></span>
-</div>
-<div class="analytics-metrics">
-<div><strong>01</strong><small>Explore</small></div>
-<div><strong>02</strong><small>Analyze</small></div>
-<div><strong>03</strong><small>Interpret</small></div>
-</div>
-</div>
-</div>
-</div>
-<div class="curr-body">
-<div class="card-kicker"><i class="lni lni-bar-chart"></i> DATA ANALYTICS EDUCATION</div>
-<h3>Data Analytics Curriculum</h3>
-<p>A complete, instructor-ready analytics program progressing from data preparation and exploration to interpretation, assessment, and a capstone.</p>
-<div class="tags"><span>Instructor's Kit</span><span>Lessons &amp; Slides</span><span>Assessments &amp; Rubrics</span><span>Capstone Project</span></div>
-<button class="card-action" data-project="analytics"><i class="lni lni-eye"></i> View curriculum details</button>
-</div>
-</article>
-<article class="curr-card">
-<div class="curr-visual">
-<div class="curr-illustration cyber-illustration">
-<div class="cyber-center">
-<i class="lni lni-shield"></i>
-</div>
-<div class="cyber-node c1"><i class="lni lni-lock"></i></div>
-<div class="cyber-node c2"><i class="lni lni-network"></i></div>
-<div class="cyber-node c3"><i class="lni lni-user"></i></div>
-<div class="cyber-node c4"><i class="lni lni-warning"></i></div>
-<span class="cyber-line cl1"></span>
-<span class="cyber-line cl2"></span>
-<span class="cyber-line cl3"></span>
-<span class="cyber-line cl4"></span>
-<div class="cyber-label">Security Awareness</div>
-</div>
-</div>
-<div class="curr-body">
-<div class="card-kicker"><i class="lni lni-shield"></i> CYBERSECURITY EDUCATION</div>
-<h3>Cybersecurity Curriculum</h3>
-<p>A complete, instructor-ready cybersecurity program combining foundational concepts, risk scenarios, practical activities, assessment, and a capstone.</p>
-<div class="tags"><span>Instructor's Kit</span><span>Lessons &amp; Slides</span><span>Assessments &amp; Rubrics</span><span>Capstone Project</span></div>
-<button class="card-action" data-project="cybersecurity"><i class="lni lni-eye"></i> View curriculum details</button>
-</div>
-</article>
+<div class="curriculum-list">
+<article class="curriculum-row"><div class="curriculum-number"><i class="lni lni-code-alt"></i>01</div><h4>DICT MERN Full-Stack Development</h4><p>A comprehensive technical curriculum progressing from programming fundamentals to full-stack application development through structured instruction, guided coding, practical exercises, and applied projects.</p><span class="curriculum-area">Software Development</span></article>
+<article class="curriculum-row"><div class="curriculum-number"><i class="lni lni-bar-chart"></i>02</div><h4>Data Analytics</h4><p>A complete instructor-led learning program integrating detailed lesson content, presentation materials, technical exercises, and practical data analysis activities.</p><span class="curriculum-area">Data &amp; Analytics</span></article>
+<article class="curriculum-row"><div class="curriculum-number"><i class="lni lni-shield"></i>03</div><h4>Cybersecurity</h4><p>A structured technical learning program connecting cybersecurity concepts with practical exercises, scenario-based instruction, and competency development.</p><span class="curriculum-area">Cybersecurity</span></article>
 </div>
 </section><section class="section" id="web">
 <div class="section-head">
@@ -7345,7 +7499,7 @@ body{
 <h2>Software development as a major supporting capability.</h2>
 </div>
 
-<div class="section-intro-wrap"><div class="section-intro-kicker">Development capability</div><p class="section-intro">I use full-stack development to prototype learning technology, model complex workflows, and turn product ideas into working systems.</p></div></div>
+<div class="section-intro-wrap"><div class="section-intro-kicker">Development capability</div><p class="section-intro">My development work includes business applications and specialized learning platforms, translating operational and instructional requirements into functional software.</p></div></div>
 <div class="web-feature-label"><i class="lni lni-star-filled"></i> Primary full-stack project</div>
 <div class="conferia web-primary-project">
 <div class="conferia-copy">
@@ -7704,6 +7858,13 @@ if(digitalSection && webSection){
 }
 let drawerTrigger=null;
 const data={
+  curriculumstudio:{
+    title:"Curriculum Studio",
+    sub:"Technical Curriculum Authoring & Delivery Platform",
+    what:"A custom-built platform supporting the instructional content lifecycle—from course and session creation through structured authoring, review, publication, and instructor-facing delivery.",
+    demo:"Learning systems architecture, technical content authoring, code-aware editing, activity and rubric design, curriculum governance, review workflows, and classroom delivery support.",
+    tags:["Curriculum Authoring","Learning Systems","Technical Education","Content Review","Instructor Delivery"]
+  },
   guidepilot:{
     title:"GuidePilot",
     sub:"AI-Enabled Learning · Software Onboarding",
